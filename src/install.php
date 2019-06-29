@@ -2,8 +2,8 @@
 
 require_once 'includes/meta.php';
 require_once 'functions.php';
-require_once  'classes/DatabaseControl.php';
-require_once  'classes/DatabaseStructure.php';
+require_once 'classes/DatabaseControl.php';
+require_once 'classes/DatabaseStructure.php';
 
 page_header();
 
@@ -15,7 +15,7 @@ function install_generate_random_prefix( $len=3 ){
     $result = '';
 
     $now = explode( ' ', microtime() )[1];
-    while ($now >= $base ){
+    while ( $now >= $base ){
         $i = $now % $base;
         $result = $charset[$i] . $result;
         $now /= $base;
@@ -24,10 +24,9 @@ function install_generate_random_prefix( $len=3 ){
 }
 
 echo "<form method='post' action='index.php'>";
-// echo "<form method='post' action='src/install.php'>";
+
 switch ( $token ){
     case 'run_install':
-        $db_structure = new DatabaseStructure;
         if ( $_POST['db_name'] == '' || 
              $_POST['db_user'] == '' || 
              $_POST['db_pass'] == '' || 
@@ -36,10 +35,7 @@ switch ( $token ){
             echo "One of the fields are missing!";
             unset( $token );
             lines(2);
-            // echo "</form>";
-            // echo "<form method='post' action='install.php'>";
             echo "<input type='submit' value='Back'>";
-            // echo "</form>";
             footer();
             die;
         } else{
@@ -73,23 +69,19 @@ define( 'DB_NAME', TBL_PFX . '$db_name' );
 define( 'DB_LOC', '$db_loc' );
 define( 'DB_USER', '$db_user' );
 define( 'DB_PASS', '$db_pass' );
-define( 'USER_ACCOUNTS', TBL_PFX . 'user_accounts' );";
+
+define( 'SITE_TABLES', array( 'user_accounts' => TBL_PFX . 'user_accounts' ) );";
         
         $file = fopen( INCLUDES_PATH . 'config.php', 'w' ) or die( "Unable to write config.php file" );
         fwrite( $file, $config );
         fclose( $file );
         require 'includes/config.php';
-        // $link = connectDB();
+        $db_structure = new DatabaseStructure;
         
         $db_structure->create_tables();
-        // sql_insert( "INSERT INTO " . SITE_TABLES['user_accounts'] . " (user_name, password) VALUES ('$site_admin', '$site_password')", $link );
-        
-        
-        
-        
-        
-        // mysqli_close( $link );
-        // header( "Location: " . HOME_PATH . "index.php" );
+        $db_structure->sql_execute( "INSERT INTO " . SITE_TABLES['user_accounts'] . " (user_name, password) VALUES ('$site_admin', '$site_password')" );
+
+        header( "Location: " . "index.php" );
         break;
     default:
         echo "Database Name <input type='text' name='db_name'>";

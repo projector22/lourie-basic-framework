@@ -78,6 +78,29 @@ class DatabaseControl {
             return false;
         }//catch
     }//public function sql_select( $sql )
+
+    /**
+     * 
+     * Performs sql queries such as "INSERT INTO..." and others where no response is required, simply the execution.
+     * 
+     * @param   string      $sql    An sql string command
+     * @return  true        If the query was successful
+     * @return  false       If the query has an error in it.
+     */
+    
+    public function sql_execute( $sql ){
+        try {
+            if ( !isset( $this->conn ) ){
+                $this->conn = $this->connect_db();
+            }
+            $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            $this->conn->exec( $sql );
+            return true;
+        } catch( PDOException $e ) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }//catch
+    }
     
     /**
      * Destructor method, things to do when the class is closed

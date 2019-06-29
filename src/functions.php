@@ -40,6 +40,13 @@ function dot(){
     echo "<b>.</b>";
 }
 
+function remove_trailing_chars( $data, $test ){
+    while ( substr( $data, -1 ) == $test ){
+        $data = rtrim( $data, $test );  
+    }//while
+    return $data;
+}
+
 
 
 

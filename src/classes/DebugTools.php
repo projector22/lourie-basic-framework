@@ -9,7 +9,7 @@
  * @since   0.1 Pre-alpha
  */
 
-class DebugTools {
+class DebugTools extends DatabaseControl {
 
     /**
      * Consructor method, things to do when the class is loaded
@@ -19,6 +19,43 @@ class DebugTools {
     public function __construct(){
 
     }//__construct
+
+    /**
+     * 
+     * Perform an uninstall - deletes the config.php file and drops the table
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    public function perform_uninstall(){
+        $test = $this->sql_execute( "DROP DATABASE " . DB_NAME );
+        if ( !$test ){
+            echo "<br>Could not drop the database for the above stated reason<br>";
+        } else {
+            echo "Database dropped<br>";
+        }
+        if ( file_exists( INCLUDES_PATH . 'config.php' ) ){
+            unlink( INCLUDES_PATH . 'config.php' );
+            echo "Config file successfully removed<br>";
+        } else {
+            echo "Config file already removed<br>";
+        }
+    }
+
+    /**
+     * 
+     * Adds the form element for running an uninstall, uses the get method and creates a $_GET['perform_uninstall'] == 1
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+
+    public function uninstall_form(){
+        echo "<form method='get'>";
+        echo "<input type='submit' value='Uninstall'>";
+        echo "<input type='hidden' name='perform_uninstall' value='1'>";
+        echo "</form>";
+    }
 
     /**
      * 

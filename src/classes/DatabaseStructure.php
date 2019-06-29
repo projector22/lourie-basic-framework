@@ -20,12 +20,12 @@ class DatabaseStructure extends DatabaseControl {
      * 
      * The user tables that make up the database structure, organised in an array
      * 
-     * @var array
+     * @var array   List of all tables in 
      * 
      * @since   0.1 Pre-alpha
      */
 
-    private $tables;
+    private $table_names = array( TBL_PFX . 'user_accounts' );
 
     /**
      * Consructor method, things to do when the class is loaded
@@ -34,7 +34,7 @@ class DatabaseStructure extends DatabaseControl {
      */
 
     public function __construct(){
-        $this->tables = array( USER_ACCOUNTS );
+
     }//__construct
     
     /**
@@ -48,10 +48,9 @@ class DatabaseStructure extends DatabaseControl {
 
     private function database_tables(){
         $data = [];
-        foreach( SITE_TABLES as $i => $tbl ){
+        foreach( $this->table_names as $i => $tbl ){
             switch( $i ) {
                 case 0:
-                    //students
                     $data[] = array ( 'id' => 'INT NOT NULL PRIMARY KEY AUTO_INCREMENT',
                                       'user_name' => 'VARCHAR(50) NOT NULL',
                                       'password' => 'VARCHAR(50) NOT NULL' );
@@ -80,9 +79,9 @@ class DatabaseStructure extends DatabaseControl {
             }//foreach
             $sql = remove_trailing_chars( $sql, ',' );  
             $sql .= ')';
-            $query = mysqli_query( $this->conn, $sql );
+            $query = $this->sql_execute( $sql );
             if ( !$query ){
-                $errors[] = "Table $i : Creation failed (" . $this->conn->error . ")";
+                $errors[] = "Table $i : Creation failed";
             }
         }//foreach
         lines(2);
