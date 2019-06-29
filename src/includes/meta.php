@@ -1,8 +1,13 @@
 <?php
 
-/*
- * Site Author: Gareth Palmer
- * Start Date: 2019-05-11
+/**
+ * 
+ * Contains meta information used by the site, mostly in the form of defined constants. 
+ * This is often information that the site admin may wish to fiddle with over time according to their needs
+ * 
+ * @author  Gareth  Palmer  @evangeltheology
+ * 
+ * @since   0.1 Pre-alpha
  */
 
 $site_version = '0.0 Pre-Alpha';
@@ -11,9 +16,14 @@ $site_author = 'Gareth Palmer';
 
 $max_upload_size = 30000000;
 
+//Comment out whichever is inapropriate, set to live for the production environment.
+// $environment = 'live';
+$environment = 'dev';
+
 define( 'PROGRAM_VERSION', $site_version );
 define( 'PROGRAM_NAME', $program_name );
 define( 'SITE_AUTHOR', $site_author );
+define( 'ENVIRONMENT', $environment );
 
 // This section is where most key global constants are defined
 $name = explode( "\\", dirname( __FILE__ ) );

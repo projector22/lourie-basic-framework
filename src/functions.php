@@ -74,29 +74,3 @@ function protect( $data ) {
     $data = htmlspecialchars( $data, ENT_QUOTES );
     return $data;
 }
-
-function serverlist(){
-    $array = $_SERVER;
-    $list_title = array_keys( $array );
-    echo "<table>";
-    echo "<tr><th>Index</th><th>Key</th></tr>";
-
-    foreach ( $array as $key => $list ){
-        $arr_key = array_search( $key, array_keys( $array ) );
-        $item = $list_title[ $arr_key ];
-        echo "<tr><td>$item</td><td>$list</td></tr>";
-    }//foreach
-    echo "</table>";
-}
-
-function display_array( $data ){
-    echo "<pre>";
-    print_r( $data );
-    echo "</pre>";
-}
-
-function see_whats_posted( $post ){
-    foreach ( $post as $i => $k ){
-        echo "<b>$i</b>: $k<br>";
-    }
-}

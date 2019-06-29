@@ -1,13 +1,51 @@
 <?php
 
+/**
+ * 
+ * Class for controlling and building the site's database. Can be used to install or repair the database structure.
+ * 
+ * @link https://www.guru99.com/alter-drop-rename.html
+ * @link https://dev.mysql.com/doc/refman/8.0/en/alter-table-examples.html
+ * 
+ * @author  Gareth  Palmer  @evangeltheology
+ * 
+ * @since   0.1 Pre-alpha
+ */
+
 class DatabaseStructure extends DatabaseControl {
+    //TO DO - Needs a public function for doing update repair as well as reseting default values in prefilled settings tables
+    //TO DO - Move SQL over to PDO
     
-private $tables;
+    /** 
+     * 
+     * The user tables that make up the database structure, organised in an array
+     * 
+     * @var array
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    private $tables;
+
+    /**
+     * Consructor method, things to do when the class is loaded
+     * 
+     * @since   0.1 Pre-alpha
+     */
 
     public function __construct(){
         $this->tables = array( USER_ACCOUNTS );
     }//__construct
     
+    /**
+     * 
+     * Creates array of all the elements of each table to be created/ updated.
+     * 
+     * @return  array   Returns the complete array with the entire database structure.
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
     private function database_tables(){
         $data = [];
         foreach( SITE_TABLES as $i => $tbl ){
@@ -23,6 +61,13 @@ private $tables;
         }//foreach
         return $data;
     }//database_tables
+
+    /**
+     * 
+     * Executes the creation of all the tables in the database from the array data returned from database_tables()
+     * 
+     * @since   0.1 Pre-alpha
+     */
     
     public function create_tables(){
         $errors = [];
@@ -46,6 +91,13 @@ private $tables;
         }//foreach
     }//execute_create_tables
 
+    /** 
+     * 
+     * Checks the structure of any table pulled from database_tables() and adds any missing columns
+     * 
+     * @since   0.1 Pre-alpha
+     */
+    
     public function fix_missing_column(){
         $errors = [];
         $database_name = DB_NAME;
@@ -65,7 +117,6 @@ private $tables;
                         }//if execute update
                         lines(2);
                     } else {
-                        // $sql2 = "ALTER TABLE $table MODIFY $column $info";
                         $sql2 = "ALTER TABLE $table CHANGE COLUMN $column $column $info";
                         $query = mysqli_query( $this->conn, $sql2 );
                         if( $query ){
@@ -77,17 +128,13 @@ private $tables;
         }//foreach
     }//execute_fix_missing_column
     
-    public function __destruct(){}//__destruct
+    /**
+     * Destructor method, things to do when the class is closed
+     * 
+     * @since   0.1 Pre-alpha
+     */
 
-//need a public function for doing update repair as well as reseting default values in prefilled settings tables    
+    public function __destruct(){
+
+    }//__destruct
 }
-
-
-/**
- ** Usage:
- ** execute_create_tables( $link, $table_names );
- ** execute_fix_missing_column( $link, $table_names );
- **/
-//Reference
-//https://www.guru99.com/alter-drop-rename.html
-//https://dev.mysql.com/doc/refman/8.0/en/alter-table-examples.html

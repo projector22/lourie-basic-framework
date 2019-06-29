@@ -1,12 +1,44 @@
 <?php
 
+/**
+ * 
+ * General methods of interacting with the database
+ * 
+ * @author  Gareth  Palmer  @evangeltheology
+ * 
+ * @since   0.1 Pre-alpha
+ */
+
 class DatabaseControl {
 
+    /**
+     * @var pdo connection
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
     protected $conn;
+
+    /**
+     * Consructor method, things to do when the class is loaded
+     * 
+     * @since   0.1 Pre-alpha
+     * 
+     */
 
     public function __construct(){
         $this->conn = $this->connect_db();
     }//__construct
+
+
+    /**
+     * 
+     * Connects the app to the database
+     * 
+     * @return  $conn   The connection variable
+     * 
+     * @since   0.1 Pre-alpha
+     */
 
     private function connect_db(){
         $servername = DB_LOC;
@@ -23,6 +55,17 @@ class DatabaseControl {
         }//catch
     }//public function connect_db()
 
+    /**
+     * 
+     * Performs an SQL PDO select query
+     * 
+     * @param   string      $sql    An sql statement, something like "SELECT * FROM ..."
+     * @return  $results    The results of the query
+     * @return  false       If the query has an error in it.
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
     public function sql_select( $sql ){
         try {
             $statement = $this->conn->prepare( $sql );
@@ -36,8 +79,15 @@ class DatabaseControl {
         }//catch
     }//public function sql_select( $sql )
     
+    /**
+     * Destructor method, things to do when the class is closed
+     * 
+     * Closes the open database connection
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
     public function __destruct(){
-        //Close connection
         $this->conn = null;
     }//__destruct
 }
