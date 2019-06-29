@@ -76,6 +76,8 @@ if ( ENVIRONMENT == 'dev' ){
 // Hook in the general app functions
 require_once 'functions.php';
 
+page_header();
+
 if ( !is_file( HOME_PATH . 'src/includes/config.php' ) ){
     require HOME_PATH . 'src/install.php';
 } else {

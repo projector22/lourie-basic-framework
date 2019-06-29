@@ -52,7 +52,7 @@ class DatabaseStructure extends DatabaseControl {
             switch( $i ) {
                 case 0:
                     $data[] = array ( 'id' => 'INT NOT NULL PRIMARY KEY AUTO_INCREMENT',
-                                      'user_name' => 'VARCHAR(50) NOT NULL',
+                                      'user_name' => 'VARCHAR(50) NOT NULL UNIQUE',
                                       'password' => 'VARCHAR(50) NOT NULL' );
                     break;
 
