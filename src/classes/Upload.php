@@ -1,14 +1,15 @@
 <?php
+
 /**
  * 
- * Desciption
+ * Handle the uploading of files
  * 
  * @author  Gareth  Palmer  @evangeltheology
  * 
  * @since   0.1 Pre-alpha
  */
 
-class LDAP {
+class Upload {
 
     /**
      * Consructor method, things to do when the class is loaded

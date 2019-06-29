@@ -14,7 +14,6 @@
 
 class DatabaseStructure extends DatabaseControl {
     //TO DO - Needs a public function for doing update repair as well as reseting default values in prefilled settings tables
-    //TO DO - Move SQL over to PDO
     
     /** 
      * 
@@ -103,26 +102,22 @@ class DatabaseStructure extends DatabaseControl {
         $data = $this->database_tables( $this->table_names );    
         foreach ( $this->table_names as $i => $table ){
             foreach( $data[$i] as $column => $info ){
-                $sql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='$database_name' AND TABLE_NAME='$table' AND COLUMN_NAME='$column'";
-                if ( $result = mysqli_query( $this->conn, $sql ) ){
-                    if ( mysqli_num_rows( $result ) == 0 ){
-                        echo "Adding $column to $table<br>";
-                        $sql2 = "ALTER TABLE $table ADD $column $info";
-                        $query = mysqli_query( $this->conn, $sql2 );
-                        if( !$query ){
-                            echo "Problem adding $column to $table : Creation failed (" . $this->conn->error . ")<br>";
-                        } else { 
-                            echo "Success: Added $column to $table<br>";
-                        }//if execute update
-                        lines(2);
-                    } else {
-                        $sql2 = "ALTER TABLE $table CHANGE COLUMN $column $column $info";
-                        $query = mysqli_query( $this->conn, $sql2 );
-                        if( $query ){
-                            dot();
-                        }//if execute update
-                    }
-                } else {execute_error( $sql, $this->conn );}            
+                $results = $this->sql_select( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='$database_name' AND TABLE_NAME='$table' AND COLUMN_NAME='$column'" );
+                if ( $results > 0 ){
+                    $query = $this->sql_execute( "ALTER TABLE $table CHANGE COLUMN $column $column $info" );
+                    if( $query ){
+                        dot();
+                    }//if execute update
+                } else {
+                    echo "Adding $column to $table<br>";
+                    $query = $this->sql_execute( "ALTER TABLE $table ADD $column $info" );
+                    if( !$query ){
+                        echo "Problem adding $column to $table : Creation failed (" . $this->conn->error . ")<br>";
+                    } else { 
+                        echo "Success: Added $column to $table<br>";
+                    }//if execute update
+                    lines(2);
+                }//if results > 0
             }//foreach
         }//foreach
     }//execute_fix_missing_column

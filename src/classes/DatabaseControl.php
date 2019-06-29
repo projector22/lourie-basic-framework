@@ -86,6 +86,8 @@ class DatabaseControl {
      * @param   string      $sql    An sql string command
      * @return  true        If the query was successful
      * @return  false       If the query has an error in it.
+     * 
+     * @since   0.1 Pre-alpha
      */
     
     public function sql_execute( $sql ){
@@ -102,6 +104,23 @@ class DatabaseControl {
         }//catch
     }
     
+    /**
+     * 
+     * Method to sanitize any form data that may be used to perform a malicious attack
+     * 
+     * @param   string  $data   Any string of data that needs to be sanitized
+     * @return  string  $data   After sanitizing the string, return it
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    public function protect( $data ) {
+        $data = trim( $data );
+        $data = stripslashes( $data );
+        $data = htmlspecialchars( $data, ENT_QUOTES );
+        return $data;
+    }
+
     /**
      * Destructor method, things to do when the class is closed
      * 

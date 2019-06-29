@@ -1,7 +1,12 @@
 <?php
 
-echo "<h1>Page not found - error 404</h1>";
+/**
+ * 
+ * Page is loaded when a 404 error is thrown
+ * 
+ * @author  Gareth  Palmer  @evangeltheology
+ * 
+ * @since   0.1 Pre-alpha
+ */
 
-// foreach ( $_SERVER as $i => $s ){
-//     echo $i . ' - ' . $s . '<br>';
-// }
+echo "<h1>Page not found - error 404</h1>";
