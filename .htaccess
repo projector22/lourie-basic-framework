@@ -1,0 +1,7 @@
+ErrorDocument 404 /lourie-basic-framework/src/404.php
+
+# Need to find a way of setting finding subfolder indirectly
+
+# %{DOCUMENT_ROOT}%{REQUEST_URI} 
+# /src/404.php
+# %{DOCUMENT_ROOT}/src/404.php
