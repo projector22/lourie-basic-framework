@@ -102,7 +102,12 @@ define( 'DB_LOC', '$db_loc' );
 define( 'DB_USER', '$db_user' );
 define( 'DB_PASS', '$db_pass' );
 
-define( 'SITE_TABLES', array( 'user_accounts' => TBL_PFX . 'user_accounts' ) );";
+//Site tables
+define( 'USER_ACCOUNTS', TBL_PFX . 'user_accounts' );
+define( 'USER_GROUPS', TBL_PFX . 'user_groups' );
+define( 'SESSION_LOGS', TBL_PFX . 'session_logs' );
+define( 'LDAP_CONFIG', TBL_PFX . 'ldap_config' );
+";
         
         $file = fopen( INCLUDES_PATH . 'config.php', 'w' ) or die( "Unable to write config.php file" );
         fwrite( $file, $config );
@@ -113,8 +118,7 @@ define( 'SITE_TABLES', array( 'user_accounts' => TBL_PFX . 'user_accounts' ) );"
         $db_structure = new DatabaseStructure;
         
         $db_structure->create_tables();
-        $db_structure->sql_execute( "INSERT INTO " . SITE_TABLES['user_accounts'] . " (user_name, password) VALUES ('$site_admin', '$site_password')" );
-
+        $db_structure->sql_execute( "INSERT INTO " . USER_ACCOUNTS . " (account_name, password) VALUES ('$site_admin', '$site_password')" );
         //Load the index page
         header( "Location: " . "index.php" );
         break;
@@ -143,9 +147,9 @@ define( 'SITE_TABLES', array( 'user_accounts' => TBL_PFX . 'user_accounts' ) );"
         echo "<span></span><i>** You can leave this as randomly generated or set your own. 
         If you set it to blank, no table prefix will be set - not recommended</i>";
         element_spacer_one();
-        echo "Admin Account username: <input type='text' name='site_admin'>";
+        echo "Admin username: <input type='text' name='site_admin'>";
         element_spacer_one();
-        echo "Admin Account password <input type='password' name='site_password'>";
+        echo "Admin password <input type='password' name='site_password'>";
         element_spacer_one();
         echo "</div>";//install_form_elements
 

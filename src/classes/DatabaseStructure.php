@@ -24,7 +24,11 @@ class DatabaseStructure extends DatabaseControl {
      * @since   0.1 Pre-alpha
      */
 
-    private $table_names = array( TBL_PFX . 'user_accounts' );
+    private $table_names = array( USER_ACCOUNTS,
+                                  USER_GROUPS,
+                                  SESSION_LOGS,
+                                  LDAP_CONFIG
+                                );
 
     /**
      * Consructor method, things to do when the class is loaded
@@ -50,11 +54,46 @@ class DatabaseStructure extends DatabaseControl {
         foreach( $this->table_names as $i => $tbl ){
             switch( $i ) {
                 case 0:
+                    //User accounts
                     $data[] = array ( 'id' => 'INT NOT NULL PRIMARY KEY AUTO_INCREMENT',
-                                      'user_name' => 'VARCHAR(50) NOT NULL UNIQUE',
-                                      'password' => 'VARCHAR(50) NOT NULL' );
+                                      'account_name' => 'VARCHAR(50) UNIQUE NOT NULL',
+                                      'password' => 'VARCHAR(255) NOT NULL',
+                                      'email' => 'VARCHAR(255)',
+                                      'last_login' => 'DATETIME',
+                                      'first_name' => 'VARCHAR(100)',
+                                      'last_name' => 'VARCHAR(100)',
+                                      'ldap_user' => 'VARCHAR(1) NOT NULL DEFAULT "0"',
+                                      'ldap_dn' => 'VARCHAR(255)',
+                                      'account_status' => 'VARCHAR(10) NOT NULL DEFAULT "active"', //active or suspended
+                                      'account_permissions' => 'VARCHAR(50)', //list groups, like site_admin, teacher
+                                      'ldap_password_fragment' => 'VARCHAR(10)' );
                     break;
-
+                case 1:
+                    //user groups
+                    $data[] = array( 'id' => 'INT NOT NULL PRIMARY KEY AUTO_INCREMENT',
+                                     'group_name' => 'VARCHAR(250) NOT NULL UNIQUE',
+                                     'built_in' => 'VARCHAR(1) NOT NULL DEFAULT "0"',
+                                     'position_index' => 'VARCHAR(3) NOT NULL' );
+                    break;
+                case 2:
+                    //session_logs, or user logins records
+                    $data[] = array( 'id' => 'INT NOT NULL PRIMARY KEY AUTO_INCREMENT',
+                                     'account_id' => 'VARCHAR(50) NOT NULL',
+                                     'ip' => 'VARCHAR(50) NOT NULL',
+                                     'browser' => 'VARCHAR(255)',
+                                     'timestamp' => 'DATETIME' );
+                    break;
+                case 3:
+                    //ldap config
+                    $data[] = array( 'id' => 'INT NOT NULL PRIMARY KEY AUTO_INCREMENT',
+                                     'ldap_enabled' => 'VARCHAR(1) NOT NULL',
+                                     'dn' => 'VARCHAR(255)',
+                                     'dn_password' => 'VARCHAR(255)',
+                                     'address' => 'VARCHAR(255)',
+                                     'search_ou' => 'VARCHAR(255)',
+                                     'student_search_ou' => 'VARCHAR(255)',
+                                     'port' => 'VARCHAR(10) DEFAULT "389"' );
+                    break;
             }//switch
         }//foreach
         return $data;
