@@ -114,7 +114,7 @@ class DatabaseControl {
      * @since   0.1 Pre-alpha
      */
 
-    public function protect( $data ) {
+    public static function protect( $data ) {
         $data = trim( $data );
         $data = stripslashes( $data );
         $data = htmlspecialchars( $data, ENT_QUOTES );

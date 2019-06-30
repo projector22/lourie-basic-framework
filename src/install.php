@@ -54,23 +54,23 @@ switch ( $token ){
             footer();
             die;
         } else{
-            $db_name =       $this->protect( $_POST['db_name'] );
-            $db_user =       $this->protect( $_POST['db_user'] );
-            $db_pass =       $this->protect( $_POST['db_pass'] );
-            $site_admin =    $this->protect( $_POST['site_admin'] );
+            $db_name =       DatabaseControl::protect( $_POST['db_name'] );
+            $db_user =       DatabaseControl::protect( $_POST['db_user'] );
+            $db_pass =       DatabaseControl::protect( $_POST['db_pass'] );
+            $site_admin =    DatabaseControl::protect( $_POST['site_admin'] );
             $site_password = password_hash(  $_POST['site_password'], PASSWORD_DEFAULT );
         }
         
         if ( $_POST['db_loc'] == '' ){
             $db_loc = '127.0.0.1';
         } else{
-            $db_loc = $this->protect( $_POST['db_loc'] );
+            $db_loc = DatabaseControl::protect( $_POST['db_loc'] );
         }
         
         if ( $_POST['db_tbl_pfx'] == '' ){
             $tbl_pfx = '';
         } else {
-            $tbl_pfx = $this->protect( $_POST['db_tbl_pfx'] ) . '_';
+            $tbl_pfx = DatabaseControl::protect( $_POST['db_tbl_pfx'] ) . '_';
         }
 
         //Create table

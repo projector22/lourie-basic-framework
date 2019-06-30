@@ -69,5 +69,5 @@ body {
 }
 
 .submit_button_one:hover, .submit_button_one:active{
-    border: 2px solid red;
+    border: 2px solid #29d;
 }
