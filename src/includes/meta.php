@@ -56,3 +56,6 @@ if ( !defined( 'HOME_PATH' ) ){
 define( 'SRC_PATH', HOME_PATH . 'src/' );
 define( 'INCLUDES_PATH', SRC_PATH . 'includes/' );
 define( 'CLASSES_PATH', SRC_PATH . 'classes/' );
+define( 'JS_PATH', SRC_PATH . 'js/' );
+define( 'IMG_PATH', SRC_PATH . 'img/' );
+define( 'STYLES_PATH', SRC_PATH . 'styles/' );

@@ -14,9 +14,13 @@ echo "<!DOCTYPE html>
 <head>
     <meta charset='UTF-8'>
     <title>" . PROGRAM_NAME . "</title>
-    <link rel='stylesheet' type='text/css' href='styles-small.css'>
-    <link rel='stylesheet' type='text/css' href='styles-large.css'>
+    <link rel='stylesheet' type='text/css' href='src/styles/styles-small.css'>
+    <link rel='stylesheet' type='text/css' href='src/styles/styles-large.css'>
     <script src='src/js/scripts.js'></script>
-</head>
-<body>";
-echo "<div class='wrapper'>";
+    <meta name='viewport' content='width=device-width, initial-scale=1'>\n";
+    if ( ENVIRONMENT == 'dev' ){
+        echo "\t<meta name='robots' content='noindex, nofollow'>\n\t<meta name='googlebot' content='noindex, nofollow'>";
+    }
+echo "\n</head>
+<body>
+<div class='wrapper'>\n";

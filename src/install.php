@@ -120,23 +120,34 @@ define( 'SITE_TABLES', array( 'user_accounts' => TBL_PFX . 'user_accounts' ) );"
         break;
     default:
         //The install page form
-        echo "Database Name <input type='text' name='db_name'>";
-        lines(1);
-        echo "Database username <input type='text' name='db_user'>";
-        lines(1);
+        echo "<div class='install_form_contain'>";
+        echo "Fill in the following categories below to begin installing your app";
+
+        echo "\n<div class='install_form_elements'>";
+        echo "Database Name<input type='text' name='db_name'>";
+        element_spacer_one();
+        echo "Database username<input type='text' name='db_user'>";
+        element_spacer_one();
         echo "Database password <input type='text' name='db_pass'>";
-        lines(1);
-        echo "Database address/ IP <input type='text' name='db_loc'> <i>* Leave blank to set to 127.0.01 - recommended</i>";
-        lines(1);
+        element_spacer_one();
+        echo "Database address/ IP* <input type='text' name='db_loc' placeholder='127.0.0.1'>";
+        echo "<span></span><i>* Leave blank to set to 127.0.01 - recommended</i>";
+        element_spacer_one();
         $rand = generate_random_prefix();
-        echo "Desired table prefix <input type='text' name='db_tbl_pfx' value='$rand'> <i>* You can leave this as randomly generated or set your own. If you set it to blank, no table prefix will be user - not recommended</i>";
-        lines(1);
+        echo "Desired table prefix** <input type='text' name='db_tbl_pfx' value='$rand'>";
+        echo "<span></span><i>** You can leave this as randomly generated or set your own. 
+        If you set it to blank, no table prefix will be set - not recommended</i>";
+        element_spacer_one();
         echo "Admin Account username: <input type='text' name='site_admin'>";
-        lines(1);
+        element_spacer_one();
         echo "Admin Account password <input type='password' name='site_password'>";
-        lines(2);
+        element_spacer_one();
+        echo "</div>";//install_form_elements
+
         token('run_install');
+        lines(2);
         echo "<input type='submit' name='submit' value='Begin Install'>";
+        echo "</div>";//install_form_contain
         break;
 }//switch $token
 echo "</form>";

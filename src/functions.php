@@ -47,7 +47,9 @@ function remove_trailing_chars( $data, $test ){
     return $data;
 }
 
-
+function element_spacer_one() {
+    echo "<span class='element_spacer_one'></span><span></span>";    
+}
 
 
 // function get_contents( $file ){
