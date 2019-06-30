@@ -121,9 +121,14 @@ define( 'SITE_TABLES', array( 'user_accounts' => TBL_PFX . 'user_accounts' ) );"
     default:
         //The install page form
         echo "<div class='install_form_contain'>";
+        echo "<div class='install_form_heading'>";
+        echo "<img src='src/img/placeholder.png' alt='Logo Placeholder' width='200px'>";
+        echo "<h1>Placeholder Text</h1>";
+        echo "</div>";//install_form_heading
+        echo "<div class='install_form_instructions'>";
         echo "Fill in the following categories below to begin installing your app";
-
-        echo "\n<div class='install_form_elements'>";
+        echo "</div>";//install_form_instructions
+        echo "<div class='install_form_elements'>";
         echo "Database Name<input type='text' name='db_name'>";
         element_spacer_one();
         echo "Database username<input type='text' name='db_user'>";
@@ -146,7 +151,9 @@ define( 'SITE_TABLES', array( 'user_accounts' => TBL_PFX . 'user_accounts' ) );"
 
         token('run_install');
         lines(2);
-        echo "<input type='submit' name='submit' value='Begin Install'>";
+        echo "<div class='install_form_submit'>";
+        echo "<input type='submit' name='submit' class='submit_button_one' value='Begin Install'>";
+        echo "</div>";//install_form_submit
         echo "</div>";//install_form_contain
         break;
 }//switch $token

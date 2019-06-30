@@ -1,0 +1,27 @@
+@media only screen and (min-width: 769px) {
+
+    /* Install Page */
+
+    .install_form_heading {
+        padding: 15px 0;
+    }
+
+    .install_form_instructions {
+        justify-self: left;
+        padding-bottom: 30px;
+    }
+
+    .install_form_elements {
+        grid-template-columns: 200px 500px;
+        font-size: 18px;
+    }
+
+    .install_form_elements input {
+        font-size: 18px;
+    }
+
+    .install_form_submit {
+        justify-self: right;
+    }
+
+}
