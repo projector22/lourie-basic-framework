@@ -93,20 +93,29 @@ switch ( $token ){
         }
         $conn = null;
 
+        //Set app hashes
+        $session_hash = md5( date( 'Y-m-d G:i:s' ) . time() . $tbl_pfx . $db_name . $db_user );
+        $cookie_hash = md5( date( 'Y-m-d G:i:s' ) . time() . $tbl_pfx . $db_name );
+
         //Create config.php file
         $config = "<?php
 
+//Server Config
 define( 'TBL_PFX', '$tbl_pfx' );
 define( 'DB_NAME', TBL_PFX . '$db_name' );
 define( 'DB_LOC', '$db_loc' );
 define( 'DB_USER', '$db_user' );
 define( 'DB_PASS', '$db_pass' );
 
-//Site tables
+//Site Tables
 define( 'USER_ACCOUNTS', TBL_PFX . 'user_accounts' );
 define( 'USER_GROUPS', TBL_PFX . 'user_groups' );
 define( 'SESSION_LOGS', TBL_PFX . 'session_logs' );
 define( 'LDAP_CONFIG', TBL_PFX . 'ldap_config' );
+
+//Authentication Hashes
+define( 'SESSION_HASH', '$session_hash' );
+define( 'COOKIE_HASH', '$cookie_hash' );
 ";
         
         $file = fopen( INCLUDES_PATH . 'config.php', 'w' ) or die( "Unable to write config.php file" );
@@ -126,7 +135,7 @@ define( 'LDAP_CONFIG', TBL_PFX . 'ldap_config' );
         //The install page form
         echo "<div class='install_form_contain'>";
         echo "<div class='install_form_heading'>";
-        echo "<img src='src/img/placeholder.png' alt='Logo Placeholder' width='200px'>";
+        echo "<img src='src/img/" . SITE_LOGO . "' alt='Logo Placeholder' width='200px'>";
         echo "<h1>Placeholder Text</h1>";
         echo "</div>";//install_form_heading
         echo "<div class='install_form_instructions'>";

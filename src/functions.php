@@ -1,5 +1,23 @@
 <?php
 
+/**
+ * 
+ * Loads the defined class
+ * 
+ * @param   string  $class  The class name that needs to be loaded
+ * @return  false   If the file does not exist
+ * @version 1.0
+ * @since   0.1 Pre-alpha
+ */
+
+function load_class( $class ){
+    $path = CLASSES_PATH . '/' . $class . '.php';
+    if ( !file_exists ( $path ) ){
+        return false;
+    }
+    require_once $path;
+}
+
 function connectDB(){
     $link = mysqli_connect( DB_LOC, DB_USER, DB_PASS, DB_NAME );
     if( $link === false ){
@@ -77,9 +95,9 @@ function delete_folder( $path ){
     }
 }
 
-function protect( $data ) {
-    $data = trim( $data );
-    $data = stripslashes( $data );
-    $data = htmlspecialchars( $data, ENT_QUOTES );
-    return $data;
-}
+// function protect( $data ) {
+//     $data = trim( $data );
+//     $data = stripslashes( $data );
+//     $data = htmlspecialchars( $data, ENT_QUOTES );
+//     return $data;
+// }

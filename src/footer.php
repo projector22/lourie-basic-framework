@@ -8,7 +8,6 @@
  * 
  * @since   0.1 Pre-alpha
  */
-
 echo "\n<footer> Created by " . SITE_AUTHOR . "<br>Version " . PROGRAM_VERSION . "</footer>";
 echo "\n</div>";//wrapper
 echo "\n</body>

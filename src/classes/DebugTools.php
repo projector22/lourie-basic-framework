@@ -89,7 +89,7 @@ class DebugTools extends DatabaseControl {
      * @since   0.1 Pre-alpha
      */
     
-    public function display_array( $data ){
+    public static function display_array( $data ){
         if ( !is_array( $data ) ){
             return "<h2>Error - data is not an array</h2>";
         }
@@ -97,7 +97,6 @@ class DebugTools extends DatabaseControl {
         print_r( $data );
         echo "</pre>";
     }
-    
 
     /**
      * 

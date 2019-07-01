@@ -10,23 +10,8 @@
  * @since   0.1 Pre-alpha
  */
 
-/**
- * 
- * Loads the defined class
- * 
- * @param   string  $class  The class name that needs to be loaded
- * @return  false   If the file does not exist
- * @version 1.0
- * @since   0.1 Pre-alpha
- */
-
-function load_class( $class ){
-    $path = CLASSES_PATH . '/' . $class . '.php';
-    if ( !file_exists ( $path ) ){
-        return false;
-    }
-    require_once $path;
-}
+//Hook in the general app functions
+require_once 'functions.php';
 
 if ( PHP_OS === 'WINNT' ){
     
@@ -63,26 +48,28 @@ foreach ( $files as $file ){
 
 spl_autoload_register( 'load_class' );
 
-@session_start();
-
-//Set site wide class variables
-$permit = new SitePermissions;
-$menu = new Menu;
-
 if ( ENVIRONMENT == 'dev' ){
     $debug_tools = new DebugTools;
 }
 
-// Hook in the general app functions
-require_once 'functions.php';
-
-page_header();
-
-if ( !is_file( HOME_PATH . 'src/includes/config.php' ) ){
-    require HOME_PATH . 'src/install.php';
-} else {
-    require HOME_PATH . 'src/home.php';
-}
+//Draw the site's header information
+require_once 'header.php';
 
 //Check if the server meets the minimum requirements to run the app and all the required files are present and loaded
 $check_site = new SiteChecks;
+
+//Check for complete instalation
+if ( !is_file( INCLUDES_PATH . 'config.php' ) ){
+    require SRC_PATH . 'install.php';
+} else {
+    @session_start();
+
+    //Set site wide class variables
+    $permit = new SitePermissions;
+    $menu = new Menu;
+    $permit->check_logout();
+    $permit->check_login();
+    if ( strpos( $_SERVER['PHP_SELF'], 'index.php' ) > -1 ) {
+        require SRC_PATH . 'home.php';
+    }
+}

@@ -21,6 +21,8 @@ $debug_tools->uninstall_form();
 echo "<h1>This is the home page</h1>";
 echo "The rain in Spain stays mainly on the plain!";
 
+$debug_tools->display_array( $_SESSION );
+
 $debug_tools->serverlist();
 
 footer();

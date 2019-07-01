@@ -86,12 +86,12 @@ class DatabaseStructure extends DatabaseControl {
                 case 3:
                     //ldap config
                     $data[] = array( 'id' => 'INT NOT NULL PRIMARY KEY AUTO_INCREMENT',
-                                     'ldap_enabled' => 'VARCHAR(1) NOT NULL',
+                                     'ldap_enabled' => 'VARCHAR(1) NOT NULL DEFAULT "0"',
                                      'dn' => 'VARCHAR(255)',
                                      'dn_password' => 'VARCHAR(255)',
                                      'address' => 'VARCHAR(255)',
                                      'search_ou' => 'VARCHAR(255)',
-                                     'student_search_ou' => 'VARCHAR(255)',
+                                    //  'student_search_ou' => 'VARCHAR(255)',
                                      'port' => 'VARCHAR(10) DEFAULT "389"' );
                     break;
             }//switch
@@ -142,7 +142,7 @@ class DatabaseStructure extends DatabaseControl {
         foreach ( $this->table_names as $i => $table ){
             foreach( $data[$i] as $column => $info ){
                 $results = $this->sql_select( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='$database_name' AND TABLE_NAME='$table' AND COLUMN_NAME='$column'" );
-                if ( $results > 0 ){
+                if ( count( $results ) > 0 ){
                     $query = $this->sql_execute( "ALTER TABLE $table CHANGE COLUMN $column $column $info" );
                     if( $query ){
                         dot();

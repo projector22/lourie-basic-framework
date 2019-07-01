@@ -15,16 +15,20 @@ class SitePermissions {
     
     /**
      * 
-     * @var string  $session_var    Session variable, can be renamed to purpose or made dynamic as per requirement
+     * @var string  $session_login_var      Session login variable, used to test if the user is logged in or not
+     * @var string  $session_permit_var     Session variable, can be renamed to purpose or made dynamic as per requirement
+     * @var string  $cookie_session_var     Cookie variable, used to signify the login session of the user
      * 
      * @since   0.1 Pre-alpha
      */
 
-    private $session_var = 'permissions';
+    public $session_login_var =     'account' . SESSION_HASH;
+    public $session_permit_var =    'permissions' . SESSION_HASH;
+    public $cookie_session_var =    'login_session_id_' . COOKIE_HASH;
 
     /**
      * 
-     * @var array   $permission_id  Array from the site variable $_SESSION[$this->session_var]
+     * @var array   $permission_id  Array from the site variable $_SESSION[$this->session_permit_var]
      * 
      * @since   0.1 Pre-alpha
      */
@@ -43,12 +47,31 @@ class SitePermissions {
 
     public $super_admin = false;
     public $site_admin = false;
+
+    /**
+     * Consructor method, things to do when the class is loaded
+     * 
+     * @since   0.1 Pre-alpha
+     */
     
     public function __construct(){
-        if ( !isset( $_SESSION[$this->session_var] ) ){
+        if ( isset( $_SESSION[$this->session_login_var] ) ){
+            $this->set_permit_var();
+        }
+    }//__construct
+
+    /**
+     * 
+     * Sets the permissions variables
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    private function set_permit_var(){
+        if ( !isset( $_SESSION[$this->session_permit_var] ) ){
             return;
         }
-        $this->permission_id = str_split( $_SESSION[$this->session_var] );
+        $this->permission_id = str_split( $_SESSION[$this->session_permit_var] );
         
         if ( $this->permission_id[0] == '1' ){
             $this->super_admin = true;
@@ -57,8 +80,46 @@ class SitePermissions {
         if ( $this->permission_id[1] == '1' ){
             $this->site_admin = true;
         }
-    }//__construct
-    
+    }
+
+    /**
+     * 
+     * Checks if the login session variable is set and forces login if not
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    public function check_login(){
+        if ( !isset( $_SESSION[$this->session_login_var] ) ){
+            require SRC_PATH . 'login.php';
+            footer();
+            die;
+        }
+    }
+
+    /**
+     * 
+     * Checks if the logout requirements are fulfilled then performs the logout
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    public function check_logout(){
+        if ( isset( $_GET['logout'] ) && $_GET['logout'] == '1' ){
+            if ( isset( $_SESSION[$this->session_login_var] ) ){
+                unset( $_SESSION[$this->session_login_var]);
+                unset( $_COOKIE[$this->cookie_session_var]);
+                setcookie( $this->cookie_session_var, '', 1, '/' );
+            }//isset( $_SESSION[$this->session_login_var]
+        }//isset( $_GET['logout'] ) && $_GET['logout'] == '1'        
+    }
+
+
+    /**
+     * Destructor method, things to do when the class is closed
+     * 
+     * @since   0.1 Pre-alpha
+     */
     public function __destruct(){
 
     }//__destruct

@@ -48,7 +48,8 @@ class Menu {
     public function main_menu(){
         $menu = array( 'index.php' => 'Home',
                        'admin.php' => 'Admin',
-                       'help.php'  => 'Help' );
+                       'help.php'  => 'Help',
+                       '?logout=1' => 'Logout' );
         $this->menu_structure( $menu );
     }//main menu
 

@@ -52,10 +52,15 @@ if ( realpath( $_SERVER['DOCUMENT_ROOT'] . '/src' ) == dirname( __FILE__ ) ){
 if ( !defined( 'HOME_PATH' ) ){
     define( 'HOME_PATH',  $together. '/' );
 }
-
 define( 'SRC_PATH', HOME_PATH . 'src/' );
 define( 'INCLUDES_PATH', SRC_PATH . 'includes/' );
 define( 'CLASSES_PATH', SRC_PATH . 'classes/' );
 define( 'JS_PATH', SRC_PATH . 'js/' );
 define( 'IMG_PATH', SRC_PATH . 'img/' );
 define( 'STYLES_PATH', SRC_PATH . 'styles/' );
+
+//Pages
+define( "HOME_PAGE", "index.php" );
+
+//Logo
+define( "SITE_LOGO", "placeholder.png" );
