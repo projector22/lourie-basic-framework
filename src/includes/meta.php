@@ -61,6 +61,7 @@ define( 'STYLES_PATH', SRC_PATH . 'styles/' );
 
 //Pages
 define( "HOME_PAGE", "index.php" );
+define( 'SITE_HELP', '#' );
 
 //Logo
 define( "SITE_LOGO", "placeholder.png" );

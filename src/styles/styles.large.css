@@ -24,4 +24,51 @@
         justify-self: right;
     }
 
+    /* Login Page */
+
+    .login_contain {
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: 45% 10% 45%;
+        grid-template-areas:
+            "login-heading login-heading login-heading"
+            "login-explain . login-form";
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    .login_heading {
+        grid-area: login-heading;
+        padding-top: 15px;
+    }
+
+    .login_explain {
+        grid-area: login-explain;
+        display: block;
+        text-align: left;
+        max-width: 500px;
+        justify-self: right;
+    }
+
+    .login_form_elements {
+        grid-area: login-form;
+        justify-self: left;
+        max-width: 500px;
+        margin: 0;
+    }
+
+    .login_items_header_text {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .login_form_item {
+        padding: 0 25px;
+    }
+
+    .login_form_item input {
+        font-size: 25px;
+        width: 100%;
+    }
+
 }

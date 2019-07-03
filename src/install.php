@@ -135,7 +135,7 @@ define( 'COOKIE_HASH', '$cookie_hash' );
         //The install page form
         echo "<div class='install_form_contain'>";
         echo "<div class='install_form_heading'>";
-        echo "<img src='src/img/" . SITE_LOGO . "' alt='Logo Placeholder' width='200px'>";
+        PageElements::site_logo();
         echo "<h1>Placeholder Text</h1>";
         echo "</div>";//install_form_heading
         echo "<div class='install_form_instructions'>";

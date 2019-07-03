@@ -35,8 +35,8 @@ body {
 }
 
 .install_form_instructions {
-    padding-bottom: 25px;
     grid-area: inst-instructions;
+    padding-bottom: 25px;
     justify-self: center;
 }
 
@@ -61,13 +61,59 @@ body {
     padding-top: 20px;
 }
 
+/* Login Page */
 
-.submit_button_one{
+.login_contain {
+    text-align: center;
+}
+
+.login_heading {
+    padding-top: 15px;
+}
+
+.login_explain {
+    display: none;
+}
+
+.login_form_elements {
+    border: 1px solid #e1e1e1;
+    border-radius: 1px;
+    background-color: #fbfbfb;
+    width: 90%;
+    margin: 0 auto;
+    padding: 15px 0;
+}
+
+.login_items_header_text {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.login_form_item input {
+    border-radius: 3px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    width: 95%;
+}
+
+.login_submit {
+    margin-top: 20px;
+}
+
+.login_error {
+    font-size: 18px;
+    padding: 45px 0;
+}
+
+/* Buttons */
+
+.submit_button_one {
     font-size: 20px;
     border-radius: 6px;
     padding: 8px 25px;
 }
 
-.submit_button_one:hover, .submit_button_one:active{
+.submit_button_one:hover,
+.submit_button_one:active {
     border: 2px solid #29d;
 }

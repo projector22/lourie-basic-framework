@@ -89,12 +89,34 @@ class Login {
 
     /**
      * 
-     * Part of the static 
+     * Part of the login page, in this case the header image and heading
+     * 
+     * @since   0.1 Pre-alpha
      */
     
-    public function login_heading(){
-        echo "<img src='src/img/" . SITE_LOGO . "' alt='Logo Placeholder' width='200px'>";
-        echo "<h1 class='login_heading'>Login</h1>";
+    public function login_logo_top(){
+        echo "<div class='login_heading'>";
+        PageElements::site_logo();
+        echo "<h1>Login</h1>";
+        echo "</div>";
+    }
+
+        /**
+     * 
+     * Part of the login page, in this case any explanitory text as needed;
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    public function login_explain(){
+        echo "<div class='login_explain'>";
+        echo "<h3 style='text-align: center;'>Welcome to " . PROGRAM_NAME . "</h3>";
+        echo "In order to access any content you need to log in.";
+        lines(2);
+        echo "For more information on <i>" . PROGRAM_NAME . "</i> please see the <a href=" . SITE_HELP . ">help page</a>";
+        lines(2);
+        echo "If you are unsure of your login information or have forgotten your password, please contact the app administrator";
+        echo "</div>";//login_explain
     }
 
     /**

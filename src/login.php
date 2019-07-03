@@ -109,51 +109,57 @@ switch ( $token ){
         }// if isset
         break;
     case 'pass-error':
-        $login->login_heading();
+        echo "<div class='login_contain'>";
+        $login->login_logo_top();
+        $login->login_explain();
+        echo "<div class='login_form_elements'>";
         echo "<div class='login_error'>Password incorrect</div>";
         PageElements::back_button( HOME_PAGE );
+        echo "</div>";//login_form_elements
+        echo "</div>";//login container
         break;
     case 'user-error':
-        $login->login_heading();
+        echo "<div class='login_contain'>";
+        $login->login_logo_top();
+        $login->login_explain();
+        echo "<div class='login_form_elements'>";
         echo "<div class='login_error'>No user by that name found</div>";
         PageElements::back_button( HOME_PAGE );
+        echo "</div>";//login_form_elements
+        echo "</div>";//login container
         break;
     case 'disable-error':
-        $login->login_heading();
+        echo "<div class='login_contain'>";
+        $login->login_logo_top();
+        $login->login_explain();
+        echo "<div class='login_form_elements'>";
         echo "<div class='login_error'>User is disabled</div>";
         PageElements::back_button( HOME_PAGE );
+        echo "</div>";//login_form_elements
+        echo "</div>";//login container
         break;          
     default:
         if( !isset( $_SESSION[$permit->session_login_var] ) ) {
-            echo "<div class='logincontain'>";
             echo "<form class='loginForm' action='src/login.php' method='post'>";
             token( 'logmein' );
-            $login->login_heading();
-            echo "<div class='login_explain'>";
-            echo "In order to access any content you need to log in.";
-            lines(2);
-            echo "For more information on the <i>" . PROGRAM_NAME . "</i> please see the <a href=#>help page</a>";
-            lines(2);
-            echo "If you are unsure of your login information or have forgotten your password, please contact the app administrator";
-            echo "</div>";//login_explain
-
+            echo "<div class='login_contain'>";
+            $login->login_logo_top();
+            $login->login_explain();
             echo "<div class='login_form_elements'>";
             echo "<div class='login_form_item'>";
-            echo "<p class='login_form_items_head'><b>Username</b></p><br>";
+            echo "<p class='login_items_header_text'><b>Username</b></p>";
             echo "<input class='login_form_items_input' type='text' name='username'>";
             echo "</div>";//login_form_item
-
             echo "<div class='login_form_item'>";
-            echo "<p class='login_form_items_head'><b>Password</b></p><br>";
+            echo "<p class='login_items_header_text'><b>Password</b></p>";
             echo "<input class='login_form_items_input' type='password' name='password'>";
             echo "</div>";//login_form_item
-
-            echo "<div class='login_form_item'>";
-            echo "</div>";//login_form_item
-            echo "<input type='submit' name='submit' value='Login'>";
+            echo "<div class='login_submit'>";
+            echo "<input type='submit' name='submit' class='submit_button_one' value='Login'>";
+            echo "</div>";//login_submit
             echo "</div>";//login_form_elements
-            echo "</form>";
             echo "</div>";//login container
+            echo "</form>";
         }//if isset $_SESSION['account']
         break;
 }//switch
