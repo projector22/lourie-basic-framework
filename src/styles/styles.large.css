@@ -1,5 +1,36 @@
 @media only screen and (min-width: 769px) {
 
+    footer {
+        color: #fff;
+        background-color: #2f3036;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-top: 55px;
+        font-size: 12px;
+        display: flex;
+    }
+    
+    .foot_details {
+        text-align: left;
+        flex: 1;
+        padding-left: 50px;
+    }
+    
+    .foot_login {
+        text-align: right;
+        flex: 1;
+        padding-right: 50px;
+    }
+    
+    .foot_login a {
+        color: #fff;
+    }
+
+
+
+
+
     /* Install Page */
 
     .install_form_heading {

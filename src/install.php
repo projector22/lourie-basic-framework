@@ -93,6 +93,8 @@ switch ( $token ){
         }
         $conn = null;
 
+        $date = date('Y');
+
         //Set app hashes
         $session_hash = md5( date( 'Y-m-d G:i:s' ) . time() . $tbl_pfx . $db_name . $db_user );
         $cookie_hash = md5( date( 'Y-m-d G:i:s' ) . time() . $tbl_pfx . $db_name );
@@ -116,6 +118,9 @@ define( 'LDAP_CONFIG', TBL_PFX . 'ldap_config' );
 //Authentication Hashes
 define( 'SESSION_HASH', '$session_hash' );
 define( 'COOKIE_HASH', '$cookie_hash' );
+
+//Starting Year
+define( 'START_YEAR', '$date' );
 ";
         
         $file = fopen( INCLUDES_PATH . 'config.php', 'w' ) or die( "Unable to write config.php file" );
