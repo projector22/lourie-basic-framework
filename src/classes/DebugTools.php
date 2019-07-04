@@ -65,7 +65,7 @@ class DebugTools extends DatabaseControl {
      * @since 0.1 Pre-alpha
      */
 
-    public function serverlist(){
+    public static function serverlist(){
         $array = $_SERVER;
         $list_title = array_keys( $array );
         echo "<table>";

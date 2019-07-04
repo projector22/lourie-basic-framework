@@ -78,14 +78,13 @@ switch ( $token ){
                             die;
                         }//check if ldap is enabled
                         
-                        $ldap_con = ldap_connect( $address, $port );
-                        ldap_set_option( $ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3 );
-                        ldap_bind( $ldap_con, $dn, $password );
-                        if ( ldap_bind( $ldap_con, $dn, $password ) ) {
+                        $ldap = new LDAP( $dn, $password );
+
+                        if ( $ldap->ldap_login() ) {
                             $password_fragment = $login->password_substr( password_hash( $password, PASSWORD_DEFAULT ) );
                             $db_control->sql_execute( "UPDATE " . USER_ACCOUNTS . " SET ldap_password_fragment='$password_fragment' WHERE account_name='$username'" );
-                            mysqli_query( $link, $sql );
                             $login->set_session( $username, $row['account_permissions'], $password_fragment );
+                            unset( $ldap );
                             header( "Location: ../index.php" );
                         } else {
                             header( "Location: ../index.php?token=pass-error" );

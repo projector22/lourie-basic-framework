@@ -136,6 +136,13 @@ define( 'START_YEAR', '$date' );
             fclose( $file );
         }
 
+        //check if running folders exist
+        if ( !file_exists( UPLOADS_PATH ) ){
+            if ( !mkdir( UPLOADS_PATH ) ){
+                die( "ERROR: Required directory could not be created - this is probably because file permissions are not set properly" );
+            }//if
+        }//if
+
         //Create tables and insert default values
         $db_structure = new DatabaseStructure;
         

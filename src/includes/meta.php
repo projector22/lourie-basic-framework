@@ -70,6 +70,7 @@ if ( !defined( 'HOME_PATH' ) ){
 define( 'HOME_LOC', $server_loc );
 
 define( 'SRC_PATH', HOME_PATH . 'src/' );
+define( 'UPLOADS_PATH', HOME_PATH . 'uploads/' );
 define( 'INCLUDES_PATH', SRC_PATH . 'includes/' );
 define( 'CLASSES_PATH', SRC_PATH . 'classes/' );
 define( 'JS_PATH', SRC_PATH . 'js/' );
@@ -82,3 +83,6 @@ define( 'SITE_HELP', '#' );
 
 //Logo
 define( "SITE_LOGO", "placeholder.png" );
+
+//Upload Size
+define( 'MAX_UPLOAD_SIZE', 300000 );

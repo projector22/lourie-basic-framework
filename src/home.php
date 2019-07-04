@@ -9,12 +9,24 @@
  * @since   0.1 Pre-alpha
  */
 
-echo $menu->main_menu();
+$menu->main_menu();
 
 if ( isset( $_GET['perform_uninstall'] ) && $_GET['perform_uninstall'] == '1' ) {
     $debug_tools->perform_uninstall();
     header( 'Location: index.php' );
 }//if
+
+$upload = new Upload;
+
+$upload->upload_form( 'index.php', 'cheese' );
+
+if ( isset( $_FILES['cheese'] ) ){
+    if ( $upload->handle_upload( 'cheese', ['png','jpg'] ) ){
+        echo "Upload successful";
+    } else {
+        echo "Upload failed";
+    }
+}
 
 $debug_tools->uninstall_form();
 
