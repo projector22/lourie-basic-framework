@@ -129,11 +129,12 @@ define( 'START_YEAR', '$date' );
         require 'includes/config.php';
 
         //Create .htaccess file
-        $htaccess = "ErrorDocument 404 /lourie-basic-framework/src/404.php";
+        $htaccess = "ErrorDocument 404 " . HOME_LOC . "src/404.php";
                 
-        $file = fopen( HOME_PATH . '.htaccess', 'a' ) or die( "Unable to write config.php file" );
-        fwrite( $file, $htaccess );
-        fclose( $file );
+        if ( $file = fopen( HOME_PATH . '.htaccess', 'w' ) ){
+            fwrite( $file, $htaccess );
+            fclose( $file );
+        }
 
         //Create tables and insert default values
         $db_structure = new DatabaseStructure;
