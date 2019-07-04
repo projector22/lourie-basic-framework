@@ -10,26 +10,22 @@
         font-size: 12px;
         display: flex;
     }
-    
+
     .foot_details {
         text-align: left;
         flex: 1;
         padding-left: 50px;
     }
-    
+
     .foot_login {
         text-align: right;
         flex: 1;
         padding-right: 50px;
     }
-    
+
     .foot_login a {
         color: #fff;
     }
-
-
-
-
 
     /* Install Page */
 

@@ -36,11 +36,28 @@ foreach ( $name as $i => $n ){
     }//if - look for 'scripts'
 }//foreach
 
+$server_request = explode( '/', $_SERVER['REQUEST_URI'] );
+$server_loc = '/';
+foreach( $server_request as $i => $s ){
+    if ( $i == 0 ){
+        continue;
+    }
+    if ( strpos( $s, '.php' ) == false ){
+        $server_loc .= $s . '/';
+    } else {
+        break;
+    }
+}
+
+echo $server_loc;
 /*
  * This checks for the location of the whole scripts, if its hosted on the main site or in a subfolder
  * For example example.com vs example.com/lourie-registration-system
  * This makes a difference in how HOME_PATH is defined
  */ 
+
+
+die;
 
 if ( realpath( $_SERVER['DOCUMENT_ROOT'] . '/src' ) == dirname( __FILE__ ) ){
     $together = $_SERVER['DOCUMENT_ROOT'];
@@ -52,6 +69,7 @@ if ( realpath( $_SERVER['DOCUMENT_ROOT'] . '/src' ) == dirname( __FILE__ ) ){
 if ( !defined( 'HOME_PATH' ) ){
     define( 'HOME_PATH',  $together. '/' );
 }
+
 define( 'SRC_PATH', HOME_PATH . 'src/' );
 define( 'INCLUDES_PATH', SRC_PATH . 'includes/' );
 define( 'CLASSES_PATH', SRC_PATH . 'classes/' );
