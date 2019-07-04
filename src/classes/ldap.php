@@ -10,6 +10,8 @@
 
 class LDAP {
 
+    //Still TO DO - Create a method of searching through an ldap query and returning the data
+
     /**
      * 
      * Variables representing various LDAP components
