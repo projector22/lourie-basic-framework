@@ -91,7 +91,6 @@ class DatabaseStructure extends DatabaseControl {
                                      'dn_password' => 'VARCHAR(255)',
                                      'address' => 'VARCHAR(255)',
                                      'search_ou' => 'VARCHAR(255)',
-                                    //  'student_search_ou' => 'VARCHAR(255)',
                                      'port' => 'VARCHAR(10) DEFAULT "389"' );
                     break;
             }//switch

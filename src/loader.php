@@ -55,7 +55,14 @@ if ( ENVIRONMENT == 'dev' ){
 //Draw the site's header information
 require_once 'header.php';
 
-//Check if the server meets the minimum requirements to run the app and all the required files are present and loaded
+/**
+ * 
+ * Check if the server meets the minimum requirements to run the app 
+ * and all the required files are present and loaded 
+ * 
+ * All the methods are loaded in the constructor
+ */
+
 $check_site = new SiteChecks;
 
 //Check for complete instalation

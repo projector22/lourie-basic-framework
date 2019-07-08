@@ -173,3 +173,19 @@ class Upload {
 
     }//__destruct
 }
+
+/*
+Usage
+
+$upload = new Upload;
+
+$upload->upload_form( 'index.php', 'cheese' );
+
+if ( isset( $_FILES['cheese'] ) ){
+    if ( $upload->handle_upload( 'cheese', ['png','jpg'] ) ){
+        echo "Upload successful";
+    } else {
+        echo "Upload failed";
+    }
+}
+*/
