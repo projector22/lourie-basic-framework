@@ -84,41 +84,33 @@ class LDAP {
         }
     }
 
-    /**
-     * Destructor method, things to do when the class is closed
-     * 
-     * @since   0.1 Pre-alpha
-     */
-
-    public function __destruct(){
-
-    }//__destruct
+}
+/*
+$ldap_con = ldap_connect( $address, $port );
+ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
+$conn = ldap_bind( $ldap_con, $dn, $dn_password );
+if ( $conn ){
+    $filter = "(&(objectCategory=user)(samaccountname=*))";
+    $results = ldap_search( $ldap_con, $search_ou, $filter );
+    $entries = ldap_get_entries( $ldap_con, $results ) or die( 'Sync failed ' );
+} else { 
+    action_error( "sync failed" );
+    die; 
 }
 
-// $ldap_con = ldap_connect( $address, $port );
-// ldap_set_option($ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3);
-// $conn = ldap_bind( $ldap_con, $dn, $dn_password );
-// if ( $conn ){
-//     $filter = "(&(objectCategory=user)(samaccountname=*))";
-//     $results = ldap_search( $ldap_con, $search_ou, $filter );
-//     $entries = ldap_get_entries( $ldap_con, $results ) or die( 'Sync failed ' );
-// } else { 
-//     action_error( "sync failed" );
-//     die; 
-// }
+$a = 0;//count num of new entries
+$k = 0;//count num of failures
 
-// $a = 0;//count num of new entries
-// $k = 0;//count num of failures
-
-// foreach ( $entries as $i => $entry ){
-//     if ( $entries[$i]['objectclass'][1] == 'person' ){
-//         $heading = "(school_num, last_name, first_name, year_created)";
-//         $data = "('" . $entries[$i]['samaccountname'][0] . "', '" . $entries[$i]['sn'][0] . "', '" . $entries[$i]['givenname'][0] . "', '$year')";
-//         $sql = "INSERT INTO $persons $heading VALUES $data";
-//         if ( mysqli_query( $link, $sql ) ){
-//             $a++;
-//         } else {
-//             $k++;
-//         }
-//     }//if a person
-// }
+foreach ( $entries as $i => $entry ){
+    if ( $entries[$i]['objectclass'][1] == 'person' ){
+        $heading = "(school_num, last_name, first_name, year_created)";
+        $data = "('" . $entries[$i]['samaccountname'][0] . "', '" . $entries[$i]['sn'][0] . "', '" . $entries[$i]['givenname'][0] . "', '$year')";
+        $sql = "INSERT INTO $persons $heading VALUES $data";
+        if ( mysqli_query( $link, $sql ) ){
+            $a++;
+        } else {
+            $k++;
+        }
+    }//if a person
+}
+*/

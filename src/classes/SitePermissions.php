@@ -46,7 +46,7 @@ class SitePermissions {
      */
 
     public $super_admin = false;
-    public $site_admin = false;
+    public $site_admin  = false;
 
     /**
      * Consructor method, things to do when the class is loaded
@@ -114,13 +114,4 @@ class SitePermissions {
         }//isset( $_GET['logout'] ) && $_GET['logout'] == '1'        
     }
 
-
-    /**
-     * Destructor method, things to do when the class is closed
-     * 
-     * @since   0.1 Pre-alpha
-     */
-    public function __destruct(){
-
-    }//__destruct
 }

@@ -98,4 +98,63 @@
         width: 100%;
     }
 
+    /* Main Menu */
+
+    .main_menu {
+        position: sticky;
+        top: 0;
+        display: grid;
+        grid-template-columns: auto 60px;
+    }
+
+    .main_menu a {
+        transition: none;
+    }
+
+    .main_menu a:hover {
+        color: #fff;
+        background-color: tomato;
+    }
+
+    .main_menu img {
+        display: block;
+        place-self: center;
+    }
+
+    .menu_toggle {
+        padding: 0;
+    }
+
+    .menu_toggle input {
+        display: none;
+    }
+
+    .menu_toggle span {
+        display: none;
+    }
+
+    .main_menu_items {
+        position: static;
+        display: flex;
+        display: grid;
+        align-items: stretch;
+        justify-content: stretch;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        margin: 0;
+        padding: 0;
+        transform-origin: unset;
+        transform: none;
+        transition: none;
+    }
+
+    .main_menu_items li {
+        display: flex;
+        padding: 0;
+    }
+
+    .main_menu_items li a {
+        text-align: center;
+        flex: 1;
+        padding: 10px 0;
+    }
 }

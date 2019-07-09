@@ -31,16 +31,6 @@ class DatabaseStructure extends DatabaseControl {
                                 );
 
     /**
-     * Consructor method, things to do when the class is loaded
-     * 
-     * @since   0.1 Pre-alpha
-     */
-
-    public function __construct(){
-
-    }//__construct
-    
-    /**
      * 
      * Creates array of all the elements of each table to be created/ updated.
      * 
@@ -159,14 +149,5 @@ class DatabaseStructure extends DatabaseControl {
             }//foreach
         }//foreach
     }//execute_fix_missing_column
-    
-    /**
-     * Destructor method, things to do when the class is closed
-     * 
-     * @since   0.1 Pre-alpha
-     */
 
-    public function __destruct(){
-
-    }//__destruct
 }

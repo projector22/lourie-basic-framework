@@ -10,17 +10,6 @@
  */
 
 class PageElements {
-
-
-    /**
-     * Consructor method, things to do when the class is loaded
-     * 
-     * @since   0.1 Pre-alpha
-     */
-    public function __construct(){
-
-    }//__construct
-
     
     /**
      * 
@@ -51,13 +40,4 @@ class PageElements {
         echo "<img src='src/img/" . SITE_LOGO . "' alt='Logo Placeholder' width='$width" . "px'>";
     }
 
-    /**
-     * Destructor method, things to do when the class is closed
-     * 
-     * @since   0.1 Pre-alpha
-     */
-
-    public function __destruct(){
-
-    }//__destruct
 }

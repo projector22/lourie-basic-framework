@@ -12,16 +12,6 @@
 class Upload {
 
     /**
-     * Consructor method, things to do when the class is loaded
-     * 
-     * @since   0.1 Pre-alpha
-     */
-
-    public function __construct(){
-
-    }//__construct
-
-    /**
      * 
      * The upload form, the <form></form> elements to upload a file
      * 
@@ -163,15 +153,6 @@ class Upload {
         return $upload_test;
     }
 
-    /**
-     * Destructor method, things to do when the class is closed
-     * 
-     * @since   0.1 Pre-alpha
-     */
-
-    public function __destruct(){
-
-    }//__destruct
 }
 
 /*

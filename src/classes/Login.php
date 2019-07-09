@@ -119,13 +119,4 @@ class Login {
         echo "</div>";//login_explain
     }
 
-    /**
-     * Destructor method, things to do when the class is closed
-     * 
-     * @since   0.1 Pre-alpha
-     */
-
-    public function __destruct(){
-
-    }//__destruct
 }
