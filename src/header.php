@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * The basic HTML which forms the top elements of the generated HTML of the app
  * 
  * @author  Gareth  Palmer  @evangeltheology
@@ -13,7 +12,6 @@ $favicon = 'placeholder.png';
 
 
 /**
- * 
  * This function will dynamically load any styles besides the two main ones already defined (styles.small.css & 
  * style.large.css)
  * 

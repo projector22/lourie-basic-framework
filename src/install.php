@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * Script to perform a clean install of the app, and to display the install form as needed
  * 
  * @author  Gareth  Palmer  @evangeltheology
@@ -49,7 +48,7 @@ switch ( $token ){
             //if form element is missing     
             echo "One of the fields are missing!";
             unset( $token );
-            lines(2);
+            PageElements::lines(2);
             echo "<input type='submit' value='Back'>";
             footer();
             die;
@@ -86,7 +85,7 @@ switch ( $token ){
                 $e->getMessage();
             }
             unset( $token );
-            lines(2);
+            PageElements::lines(2);
             echo "<input type='submit' value='Back'>";
             footer();
             die;
@@ -129,8 +128,22 @@ define( 'START_YEAR', '$date' );
         require 'includes/config.php';
 
         //Create .htaccess file
-        $htaccess = "ErrorDocument 404 " . HOME_LOC . "src/404.php";
-                
+        $htaccess = '';
+        if ( file_exists( HOME_PATH . '.htaccess' ) ){
+            $file_content = fopen( HOME_PATH . '.htaccess', 'r' );
+            while ( !feof( $file_content ) ){
+                $line = fgets( $file_content );
+                if ( strpos( $line, 'ErrorDocument 404' ) !== false ) {
+                    $htaccess .= "ErrorDocument 404 " . HOME_LOC . "src/404.php\n";
+                } else {
+                    $htaccess .= $line;
+                }//if pattern is matched
+            }//while not end of file
+            fclose( $file_content );
+        } else {
+            $htaccess .= "ErrorDocument 404 " . HOME_LOC . "src/404.php";
+        }
+              
         if ( $file = fopen( HOME_PATH . '.htaccess', 'w' ) ){
             fwrite( $file, $htaccess );
             fclose( $file );
@@ -148,6 +161,7 @@ define( 'START_YEAR', '$date' );
         
         $db_structure->create_tables();
         $db_structure->sql_execute( "INSERT INTO " . USER_ACCOUNTS . " (account_name, password) VALUES ('$site_admin', '$site_password')" );
+        $db_structure->sql_execute( "INSERT INTO " . LDAP_CONFIG . " (ldap_enabled) VALUES ('0')" );
         //Load the index page
         header( "Location: " . "index.php" );
         break;
@@ -163,27 +177,27 @@ define( 'START_YEAR', '$date' );
         echo "</div>";//install_form_instructions
         echo "<div class='install_form_elements'>";
         echo "Database Name<input type='text' name='db_name'>";
-        element_spacer_one();
+        PageElements::element_spacer_one();
         echo "Database username<input type='text' name='db_user'>";
-        element_spacer_one();
+        PageElements::element_spacer_one();
         echo "Database password <input type='text' name='db_pass'>";
-        element_spacer_one();
+        PageElements::element_spacer_one();
         echo "Database address/ IP* <input type='text' name='db_loc' placeholder='127.0.0.1'>";
         echo "<span></span><i>* Leave blank to set to 127.0.01 - recommended</i>";
-        element_spacer_one();
+        PageElements::element_spacer_one();
         $rand = generate_random_prefix();
         echo "Desired table prefix** <input type='text' name='db_tbl_pfx' value='$rand'>";
         echo "<span></span><i>** You can leave this as randomly generated or set your own. 
         If you set it to blank, no table prefix will be set - not recommended</i>";
-        element_spacer_one();
+        PageElements::element_spacer_one();
         echo "Admin username: <input type='text' name='site_admin'>";
-        element_spacer_one();
+        PageElements::element_spacer_one();
         echo "Admin password <input type='password' name='site_password'>";
-        element_spacer_one();
+        PageElements::element_spacer_one();
         echo "</div>";//install_form_elements
 
         token('run_install');
-        lines(2);
+        PageElements::lines(2);
         echo "<div class='install_form_submit'>";
         echo "<input type='submit' name='submit' class='submit_button_one' value='Begin Install'>";
         echo "</div>";//install_form_submit
@@ -193,5 +207,5 @@ define( 'START_YEAR', '$date' );
 echo "</form>";
 
 
-lines(5);
-footer();
+PageElements::lines(5);
+PageElements::footer();

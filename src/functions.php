@@ -18,22 +18,6 @@ function load_class( $class ){
     require_once $path;
 }
 
-function connectDB(){
-    $link = mysqli_connect( DB_LOC, DB_USER, DB_PASS, DB_NAME );
-    if( $link === false ){
-        die( "ERROR: Could not connect. " . mysqli_connect_error() );
-    }
-    return $link;
-}
-
-function page_header(){
-    require_once( 'header.php' );
-}
-
-function footer(){
-    require_once( 'footer.php' );
-}
-
 function token( $token ){
     echo "<input type='hidden' value='$token' name='token' id='token'>";
 }
@@ -48,16 +32,6 @@ function setToken() {
     }
 }
 
-function lines( $k ){
-    for( $i = 0; $i < $k; $i++){
-        echo "<br>";
-    }
-}
-
-function dot(){
-    echo "<b>.</b>";
-}
-
 function remove_trailing_chars( $data, $test ){
     while ( substr( $data, -1 ) == $test ){
         $data = rtrim( $data, $test );  
@@ -65,9 +39,7 @@ function remove_trailing_chars( $data, $test ){
     return $data;
 }
 
-function element_spacer_one() {
-    echo "<span class='element_spacer_one'></span><span></span>";    
-}
+
 
 
 // function get_contents( $file ){

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * Class for controlling and building the site's database. Can be used to install or repair the database structure.
  * 
  * @link https://www.guru99.com/alter-drop-rename.html
@@ -16,7 +15,6 @@ class DatabaseStructure extends DatabaseControl {
     //TO DO - Needs a public function for doing update repair as well as reseting default values in prefilled settings tables
     
     /** 
-     * 
      * The user tables that make up the database structure, organised in an array
      * 
      * @var array   List of all tables in 
@@ -31,7 +29,6 @@ class DatabaseStructure extends DatabaseControl {
                                 );
 
     /**
-     * 
      * Creates array of all the elements of each table to be created/ updated.
      * 
      * @return  array   Returns the complete array with the entire database structure.
@@ -89,7 +86,6 @@ class DatabaseStructure extends DatabaseControl {
     }//database_tables
 
     /**
-     * 
      * Executes the creation of all the tables in the database from the array data returned from database_tables()
      * 
      * @since   0.1 Pre-alpha
@@ -99,7 +95,7 @@ class DatabaseStructure extends DatabaseControl {
         $errors = [];
         $data = $this->database_tables();
         foreach ( $this->table_names as $i => $table ){
-            dot();
+            PageElements::dot();
             $sql = "CREATE TABLE IF NOT EXISTS $table(";
             foreach ( $data[$i] as $k => $d ){
                 $sql .= "$k $d,";      
@@ -111,14 +107,13 @@ class DatabaseStructure extends DatabaseControl {
                 $errors[] = "Table $i : Creation failed";
             }
         }//foreach
-        lines(2);
+        PageElements::lines(2);
         foreach( $errors as $msg ) {
             echo "$msg <br>";
         }//foreach
     }//execute_create_tables
 
     /** 
-     * 
      * Checks the structure of any table pulled from database_tables() and adds any missing columns
      * 
      * @since   0.1 Pre-alpha
@@ -134,7 +129,7 @@ class DatabaseStructure extends DatabaseControl {
                 if ( count( $results ) > 0 ){
                     $query = $this->sql_execute( "ALTER TABLE $table CHANGE COLUMN $column $column $info" );
                     if( $query ){
-                        dot();
+                        PageElements::dot();
                     }//if execute update
                 } else {
                     echo "Adding $column to $table<br>";
@@ -144,7 +139,7 @@ class DatabaseStructure extends DatabaseControl {
                     } else { 
                         echo "Success: Added $column to $table<br>";
                     }//if execute update
-                    lines(2);
+                    PageElements::lines(2);
                 }//if results > 0
             }//foreach
         }//foreach

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * This class gets the $_SESSION permissions variable and sets a public function for each permission level.
  * It then sets each as a boolean variable which can be pulled from outside class to test site permissions.
  * 
@@ -14,7 +13,6 @@ class SitePermissions {
     //TO DO - Make the public variables more dynamic, possibly pulled from a list in the database
     
     /**
-     * 
      * @var string  $session_login_var      Session login variable, used to test if the user is logged in or not
      * @var string  $session_permit_var     Session variable, can be renamed to purpose or made dynamic as per requirement
      * @var string  $cookie_session_var     Cookie variable, used to signify the login session of the user
@@ -27,7 +25,6 @@ class SitePermissions {
     public $cookie_session_var =    'login_session_id_' . COOKIE_HASH;
 
     /**
-     * 
      * @var array   $permission_id  Array from the site variable $_SESSION[$this->session_permit_var]
      * 
      * @since   0.1 Pre-alpha
@@ -36,7 +33,6 @@ class SitePermissions {
     private $permission_id;
 
     /**
-     * 
      * Should be made dynamic in the future
      * 
      * @var boolean $super_admin    Default: false
@@ -61,7 +57,6 @@ class SitePermissions {
     }//__construct
 
     /**
-     * 
      * Sets the permissions variables
      * 
      * @since   0.1 Pre-alpha
@@ -83,7 +78,6 @@ class SitePermissions {
     }
 
     /**
-     * 
      * Checks if the login session variable is set and forces login if not
      * 
      * @since   0.1 Pre-alpha
@@ -92,13 +86,12 @@ class SitePermissions {
     public function check_login(){
         if ( !isset( $_SESSION[$this->session_login_var] ) ){
             require SRC_PATH . 'login.php';
-            footer();
+            PageElements::footer();
             die;
         }
     }
 
     /**
-     * 
      * Checks if the logout requirements are fulfilled then performs the logout
      * 
      * @since   0.1 Pre-alpha

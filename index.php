@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * This app is meant to function as a template for future projects. This needs quite a bit more filling out - TBD.
  * 
  * Start Date   2019-05-11

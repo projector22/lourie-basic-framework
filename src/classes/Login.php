@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * Functions to perform login functions
  * 
  * @author  Gareth  Palmer  @evangeltheology
@@ -26,7 +25,6 @@ class Login {
     }//__construct
 
     /**
-     * 
      * Generate the session ID key
      * 
      * @param   string  $username   The username of the user loggin in
@@ -42,7 +40,6 @@ class Login {
     }
 
     /**
-     * 
      * Grab a substring of the user's already hashed password
      * 
      * @param   string  $password   The user's already hashed password
@@ -57,7 +54,6 @@ class Login {
     }
     
     /**
-     * 
      * Once authenticated, this starts the session, sets the session variables and creates the session cookie to keep the user logged in.
      * Also it updates the database where required.
      * 
@@ -88,7 +84,6 @@ class Login {
     }
 
     /**
-     * 
      * Part of the login page, in this case the header image and heading
      * 
      * @since   0.1 Pre-alpha
@@ -101,8 +96,7 @@ class Login {
         echo "</div>";
     }
 
-        /**
-     * 
+    /**
      * Part of the login page, in this case any explanitory text as needed;
      * 
      * @since   0.1 Pre-alpha
@@ -112,9 +106,9 @@ class Login {
         echo "<div class='login_explain'>";
         echo "<h3 style='text-align: center;'>Welcome to " . PROGRAM_NAME . "</h3>";
         echo "In order to access any content you need to log in.";
-        lines(2);
+        PageElements::lines(2);
         echo "For more information on <i>" . PROGRAM_NAME . "</i> please see the <a href=" . SITE_HELP . ">help page</a>";
-        lines(2);
+        PageElements::lines(2);
         echo "If you are unsure of your login information or have forgotten your password, please contact the app administrator";
         echo "</div>";//login_explain
     }

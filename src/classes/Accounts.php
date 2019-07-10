@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * User account controls
  * 
  * @author  Gareth  Palmer  @evangeltheology
@@ -17,6 +16,7 @@ class Accounts {
      * 
      * @since   0.1 Pre-alpha
      */
+    
     public function __construct(){
 
     }//__construct

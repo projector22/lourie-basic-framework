@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * Class for showing various menus as needed throughout the app
  * 
  * @author  Gareth  Palmer  @evangeltheology
@@ -35,7 +34,6 @@ class Menu {
     }//__construct
 
     /**
-     * 
      * A template method for displaying the menu
      * 
      * @param   array   $menu   A list of the menu items

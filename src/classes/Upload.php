@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * Handle the uploading of files
  * 
  * @author  Gareth  Palmer  @evangeltheology
@@ -12,7 +11,6 @@
 class Upload {
 
     /**
-     * 
      * The upload form, the <form></form> elements to upload a file
      * 
      * @param   string  $action     The page this form will execute to, e.g. 'actions.php'                        REQUIRED
@@ -32,7 +30,6 @@ class Upload {
     }
 
     /**
-     * 
      * Upload form elements, the actual <input> tag
      * 
      * @param   string  $name       The name element of the tag name='$name'        Set null to bypass    DEFAULT = null
@@ -64,7 +61,6 @@ class Upload {
     }
 
     /**
-     * 
      * Handle the file that is uploaded
      * 
      * @param   string  $name                   The input name, The name='' part of the <input> tag.                        REQUIRED
@@ -107,7 +103,6 @@ class Upload {
     }
 
     /**
-     * 
      * Check the uploaded file to make sure it doesn't break any policies or requirements
      * 
      * @param   string  $file_size              The file size sent from $_FILES[$name]['size']                          REQUIRED

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * This class allows the site to check for any prerequisites and to either die immediately if the problem cannot be fixed or ignored
  * from the user's side, or to return a variable $passes_all_checks with a true or false which allows the user to take action accordingly.
  * 
@@ -43,7 +42,6 @@ class SiteChecks {
     }//__construct
 
     /**
-     * 
      * Check the php version, dies if test fails
      * 
      * @since   0.1 Pre-alpha

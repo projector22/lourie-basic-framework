@@ -1,7 +1,6 @@
 <?php
 
 /**
- * 
  * General methods of interacting with the database
  * 
  * @author  Gareth  Palmer  @evangeltheology
@@ -32,7 +31,6 @@ class DatabaseControl {
 
 
     /**
-     * 
      * Connects the app to the database
      * 
      * @return  $conn   The connection variable
@@ -56,7 +54,6 @@ class DatabaseControl {
     }//public function connect_db()
 
     /**
-     * 
      * Performs an SQL PDO select query
      * 
      * @param   string      $sql    An sql statement, something like "SELECT * FROM ..."
@@ -80,7 +77,6 @@ class DatabaseControl {
     }//public function sql_select( $sql )
 
     /**
-     * 
      * Performs sql queries such as "INSERT INTO..." and others where no response is required, simply the execution.
      * 
      * @param   string      $sql    An sql string command
@@ -105,7 +101,6 @@ class DatabaseControl {
     }
     
     /**
-     * 
      * Method to sanitize any form data that may be used to perform a malicious attack
      * 
      * @param   string  $data   Any string of data that needs to be sanitized

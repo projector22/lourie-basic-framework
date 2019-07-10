@@ -69,13 +69,13 @@ if ( !defined( 'HOME_PATH' ) ){
 //The installed server location, root or subfolder
 define( 'HOME_LOC', $server_loc );
 
-define( 'SRC_PATH', HOME_PATH . 'src/' );
-define( 'UPLOADS_PATH', HOME_PATH . 'uploads/' );
-define( 'INCLUDES_PATH', SRC_PATH . 'includes/' );
-define( 'CLASSES_PATH', SRC_PATH . 'classes/' );
-define( 'JS_PATH', SRC_PATH . 'js/' );
-define( 'IMG_PATH', SRC_PATH . 'img/' );
-define( 'STYLES_PATH', SRC_PATH . 'styles/' );
+define( 'SRC_PATH',      HOME_PATH . 'src/' );
+define( 'UPLOADS_PATH',  HOME_PATH . 'uploads/' );
+define( 'INCLUDES_PATH', SRC_PATH  . 'includes/' );
+define( 'CLASSES_PATH',  SRC_PATH  . 'classes/' );
+define( 'JS_PATH',       SRC_PATH  . 'js/' );
+define( 'IMG_PATH',      SRC_PATH  . 'img/' );
+define( 'STYLES_PATH',   SRC_PATH  . 'styles/' );
 
 //Pages
 define( "HOME_PAGE", "index.php" );
@@ -86,3 +86,10 @@ define( "SITE_LOGO", "placeholder.png" );
 
 //Upload Size
 define( 'MAX_UPLOAD_SIZE', 300000 );
+
+//Update URLs
+//These have placeholder values and will need to be changed to appropriate values
+define( 'UPDATE_URL',         'https://path.to.your.update.net' );
+define( 'UPDATE_FILE',         UPDATE_URL . '/file.zip' );
+define( 'GIT_REPO_URL',       'https://github.com/your-username/your-project.git' );
+define( 'FRAMEWORK_REPO_URL', 'https://gitlab.com/projector22/lourie-basic-framework.git' );

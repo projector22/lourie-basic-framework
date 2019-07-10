@@ -1,6 +1,5 @@
 <?php
 
-//TO DO - Convert the LDAP logins to the LDAP Class when that is built
 //TO DO - Test LDAP Logging
 
 require_once 'includes/meta.php';
