@@ -28,6 +28,7 @@ if ( isset( $_COOKIE[$permit->cookie_session_var] ) ){
     $username = explode( '|', $cookie_test )[0];
     $password_test = explode( '|', $cookie_test )[1];
     $row = $db_control->sql_select( "SELECT * FROM " . USER_ACCOUNTS . " WHERE account_name='$username'" )[0];
+    // FIX HERE
     if ( count( $result ) > 0 ){
         if ( $row['ldap_user'] == 0 ){
             //Not LDAP
