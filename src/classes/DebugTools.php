@@ -3,7 +3,7 @@
 /**
  * A set of tools that can be called to help in the development and debugging of this app.
  * 
- * @author  Gareth  Palmer  @evangeltheology
+ * @author  Gareth Palmer  @evangeltheology
  * 
  * @since   0.1 Pre-alpha
  */
@@ -31,12 +31,12 @@ class DebugTools extends DatabaseControl {
         }
     }
 
+
     /**
      * Adds the form element for running an uninstall, uses the get method and creates a $_GET['perform_uninstall'] == 1
      * 
      * @since   0.1 Pre-alpha
      */
-
 
     public function uninstall_form(){
         echo "<form method='get'>";
@@ -44,6 +44,21 @@ class DebugTools extends DatabaseControl {
         echo "<input type='hidden' name='perform_uninstall' value='1'>";
         echo "</form>";
     }
+
+
+    /**
+     * Puts an uninstall button on the screen and handles the button press
+     * 
+     * @since   3.1
+     */
+    
+    public function uninstall_button(){
+        $this->uninstall_form();
+        if ( isset( $_GET['perform_uninstall'] ) && $_GET['perform_uninstall'] == 1 ){
+            $this->perform_uninstall();
+        }
+    }
+
 
     /**
      * Displays all the variables neatly in the $_SERVER variable
@@ -66,6 +81,7 @@ class DebugTools extends DatabaseControl {
         echo "</table>";
     }
 
+
     /**
      * Performs a <pre>print_r</pre> on any array
      * 
@@ -84,6 +100,7 @@ class DebugTools extends DatabaseControl {
         echo "</pre>";
     }
 
+
     /**
      * See what has been posted
      * 
@@ -98,6 +115,7 @@ class DebugTools extends DatabaseControl {
         }
     }
 
+    
     /**
      * Display a block of text on the screen for demo or testing purposes
      * 

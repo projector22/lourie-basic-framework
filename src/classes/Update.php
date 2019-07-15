@@ -22,6 +22,7 @@ class Update {
     private $remote_file;
     private $local_file = 'tmp.zip';
 
+
     /**
      * Consructor method, things to do when the class is loaded
      * 
@@ -35,6 +36,7 @@ class Update {
             $this->remote_file = UPDATE_FILE;
         }
     }//__construct
+
 
     /**
      * Goes to the online non git repository and checks for the most up to date version update available
@@ -94,8 +96,8 @@ class Update {
                 return "Program is up to date";
             }//if new version is available
         }
-
     }
+
 
     /**
      * Should be called if an online update is invoked. Downloads and extracts the update then calls for the post update instructions
@@ -110,12 +112,14 @@ class Update {
         $post_update->run_post_update();
     }
 
+
     /**
      * Extracts the recently downloaded tempory zip file and places the files in their correct place, thus performing the physical update. 
      * Finally removes the tempory zip file.
      * 
      * @since   0.1 Pre-alpha
      */
+
     private function extract_update(){
         $zip = new ZipArchive;
         if( $zip->open( $this->local_file ) != "true" ){
@@ -132,11 +136,13 @@ class Update {
         unlink( $this->local_file );
     }
 
+
     /**
      * Performs a CURL download from the remote update URL
      * 
      * @since   0.1 Pre-alpha
      */
+    
     private function download_update(){
         $zipResource = fopen( $this->local_file, "w" );
         // Get The Zip File From Server

@@ -3,7 +3,7 @@
 /**
  * Handle the uploading of files
  * 
- * @author  Gareth  Palmer  @evangeltheology
+ * @author  Gareth Palmer  @evangeltheology
  * 
  * @since   0.1 Pre-alpha
  */
@@ -28,6 +28,7 @@ class Upload {
         echo "<input type='submit'>";
         echo "</form>";
     }
+
 
     /**
      * Upload form elements, the actual <input> tag
@@ -59,6 +60,7 @@ class Upload {
         $file_form .= ">";
         echo "$file_form\n";
     }
+
 
     /**
      * Handle the file that is uploaded
@@ -101,6 +103,7 @@ class Upload {
             return;
         }
     }
+
 
     /**
      * Check the uploaded file to make sure it doesn't break any policies or requirements

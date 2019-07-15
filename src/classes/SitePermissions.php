@@ -4,7 +4,7 @@
  * This class gets the $_SESSION permissions variable and sets a public function for each permission level.
  * It then sets each as a boolean variable which can be pulled from outside class to test site permissions.
  * 
- * @author  Gareth  Palmer  @evangeltheology
+ * @author  Gareth Palmer  @evangeltheology
  * 
  * @since   0.1 Pre-alpha
  */
@@ -24,6 +24,7 @@ class SitePermissions {
     public $session_permit_var =    'permissions' . SESSION_HASH;
     public $cookie_session_var =    'login_session_id_' . COOKIE_HASH;
 
+
     /**
      * @var array   $permission_id  Array from the site variable $_SESSION[$this->session_permit_var]
      * 
@@ -31,6 +32,7 @@ class SitePermissions {
      */
 
     private $permission_id;
+
 
     /**
      * Should be made dynamic in the future
@@ -44,6 +46,7 @@ class SitePermissions {
     public $super_admin = false;
     public $site_admin  = false;
 
+
     /**
      * Consructor method, things to do when the class is loaded
      * 
@@ -55,6 +58,7 @@ class SitePermissions {
             $this->set_permit_var();
         }
     }//__construct
+
 
     /**
      * Sets the permissions variables
@@ -77,6 +81,7 @@ class SitePermissions {
         }
     }
 
+
     /**
      * Checks if the login session variable is set and forces login if not
      * 
@@ -91,6 +96,7 @@ class SitePermissions {
         }
     }
 
+    
     /**
      * Checks if the logout requirements are fulfilled then performs the logout
      * 

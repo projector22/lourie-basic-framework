@@ -3,7 +3,7 @@
 /**
  * Class for showing various menus as needed throughout the app
  * 
- * @author  Gareth  Palmer  @evangeltheology
+ * @author  Gareth Palmer  @evangeltheology
  * @since   0.1 Pre-alpha
  */
 
@@ -16,6 +16,7 @@ class Menu {
      */
 
     private $menu_called;
+
 
     /**
      * This method can be used to call any menu within the structure of the app
@@ -32,6 +33,7 @@ class Menu {
         $call_menu = $this->menu_called . '_menu';
         $this->$call_menu();
     }//__construct
+
 
     /**
      * A template method for displaying the menu
@@ -68,6 +70,7 @@ class Menu {
         PageElements::site_logo( 30 );
         echo "</nav>\n";
     }
+    
     
     /**
      * The site's main menu. Define your own elements

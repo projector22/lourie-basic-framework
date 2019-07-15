@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Various methods for performing and executing LDAP queries
  * 
@@ -22,6 +23,7 @@ class LDAP {
     private $search_ou;
 
     private $results;
+    
     
     /**
      * Consructor method, things to do when the class is loaded.
@@ -68,6 +70,7 @@ class LDAP {
 
     }//__construct
 
+
     /**
      * Test an ldap sync with the assigned data
      * 
@@ -86,6 +89,7 @@ class LDAP {
             return false;
         }
     }
+
 
     /**
      * Pull entries out of an Active Directory via LDAP into an array
@@ -135,6 +139,7 @@ class LDAP {
         }//if a person
     }
     */
+
 
     /**
      * Checks if LDAP is enabled on the system or not

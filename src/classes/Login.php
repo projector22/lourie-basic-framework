@@ -3,7 +3,7 @@
 /**
  * Functions to perform login functions
  * 
- * @author  Gareth  Palmer  @evangeltheology
+ * @author  Gareth Palmer  @evangeltheology
  * 
  * @since   0.1 Pre-alpha
  */
@@ -12,6 +12,7 @@ class Login {
 
     private $db_control;
     private $permit;
+
 
     /**
      * Consructor method, things to do when the class is loaded
@@ -23,6 +24,7 @@ class Login {
         $this->db_control = new DatabaseControl;
         $this->permit     = new SitePermissions;
     }//__construct
+
 
     /**
      * Generate the session ID key
@@ -39,6 +41,7 @@ class Login {
         return $key;
     }
 
+
     /**
      * Grab a substring of the user's already hashed password
      * 
@@ -53,6 +56,7 @@ class Login {
         return $sub;
     }
     
+
     /**
      * Once authenticated, this starts the session, sets the session variables and creates the session cookie to keep the user logged in.
      * Also it updates the database where required.
@@ -83,6 +87,7 @@ class Login {
         $this->db_control->sql_execute( "UPDATE " . USER_ACCOUNTS . " SET last_login='$ts' WHERE account_name='$username'" );
     }
 
+
     /**
      * Part of the login page, in this case the header image and heading
      * 
@@ -96,6 +101,7 @@ class Login {
         echo "</div>";
     }
 
+    
     /**
      * Part of the login page, in this case any explanitory text as needed;
      * 

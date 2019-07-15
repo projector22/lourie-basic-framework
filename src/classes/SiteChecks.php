@@ -4,7 +4,7 @@
  * This class allows the site to check for any prerequisites and to either die immediately if the problem cannot be fixed or ignored
  * from the user's side, or to return a variable $passes_all_checks with a true or false which allows the user to take action accordingly.
  * 
- * @author  Gareth  Palmer  @evangeltheology
+ * @author  Gareth Palmer  @evangeltheology
  * 
  * @since   0.1 Pre-alpha
  */
@@ -21,6 +21,7 @@ class SiteChecks {
 
     private $min_php_version = '7.2.0';
 
+
     /**
      * Variable to be called if testing for all checks to be successfully passed
      *
@@ -30,6 +31,7 @@ class SiteChecks {
      */
 
     public $passes_all_checks = true;
+
 
     /**
      * Consructor method, things to do when the class is loaded
@@ -41,6 +43,7 @@ class SiteChecks {
         $this->check_php_version();
     }//__construct
 
+    
     /**
      * Check the php version, dies if test fails
      * 

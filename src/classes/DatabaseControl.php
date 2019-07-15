@@ -3,7 +3,7 @@
 /**
  * General methods of interacting with the database
  * 
- * @author  Gareth  Palmer  @evangeltheology
+ * @author  Gareth Palmer  @evangeltheology
  * 
  * @since   0.1 Pre-alpha
  */
@@ -16,6 +16,7 @@ class DatabaseControl {
      * @since   0.1 Pre-alpha
      */
 
+     
     protected $conn;
 
     /**
