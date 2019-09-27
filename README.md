@@ -4,7 +4,7 @@ This project will function as a basic framework and template for future webapps.
 
 ## Features
 
-| Feature | Alpha | Beta | Production |
+| **Feature** | **Alpha** | **Beta** | **Production** |
 | ------ | :------: | :------: | :------: |
 | Installation | ✓ | ✓ | ✓ |
 | Database Functions | ✓ | ✓ | ✓ |
