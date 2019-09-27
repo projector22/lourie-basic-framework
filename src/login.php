@@ -57,8 +57,8 @@ switch ( $token ){
         if ( isset( $_POST['password'] ) ){
 
             //get values from login form
-            $username = DatabaseControl::protect( $_POST['username'] );
-            $password = DatabaseControl::protect( $_POST['password'] );
+            $username = protect( $_POST['username'] );
+            $password = $_POST['password'];
 
             $result = $db_control->sql_select( "SELECT * FROM " . USER_ACCOUNTS . " WHERE account_name='$username'" );
             if ( count( $result ) > 0 ){

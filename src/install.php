@@ -53,23 +53,23 @@ switch ( $token ){
             footer();
             die;
         } else{
-            $db_name =       DatabaseControl::protect( $_POST['db_name'] );
-            $db_user =       DatabaseControl::protect( $_POST['db_user'] );
-            $db_pass =       DatabaseControl::protect( $_POST['db_pass'] );
-            $site_admin =    DatabaseControl::protect( $_POST['site_admin'] );
+            $db_name =       protect( $_POST['db_name'] );
+            $db_user =       protect( $_POST['db_user'] );
+            $db_pass =       protect( $_POST['db_pass'] );
+            $site_admin =    protect( $_POST['site_admin'] );
             $site_password = password_hash(  $_POST['site_password'], PASSWORD_DEFAULT );
         }
         
         if ( $_POST['db_loc'] == '' ){
             $db_loc = '127.0.0.1';
         } else{
-            $db_loc = DatabaseControl::protect( $_POST['db_loc'] );
+            $db_loc = protect( $_POST['db_loc'] );
         }
         
         if ( $_POST['db_tbl_pfx'] == '' ){
             $tbl_pfx = '';
         } else {
-            $tbl_pfx = DatabaseControl::protect( $_POST['db_tbl_pfx'] ) . '_';
+            $tbl_pfx = protect( $_POST['db_tbl_pfx'] ) . '_';
         }
 
         //Create table
@@ -160,8 +160,9 @@ define( 'START_YEAR', '$date' );
         $db_structure = new DatabaseStructure;
         
         $db_structure->create_tables();
-        $db_structure->sql_execute( "INSERT INTO " . USER_ACCOUNTS . " (account_name, password) VALUES ('$site_admin', '$site_password')" );
+        $db_structure->sql_execute( "INSERT INTO " . USER_ACCOUNTS . " (account_name, password, account_permissions) VALUES ('$site_admin', '$site_password','11')" );
         $db_structure->sql_execute( "INSERT INTO " . LDAP_CONFIG . " (ldap_enabled) VALUES ('0')" );
+        $db_structure->sql_execute( "INSERT INTO " . USER_GROUPS . " (group_name,built_in,position_index) VALUES ('Super Admin','1','0'),('Site Admin','1','1')" );
         //Load the index page
         header( "Location: " . "index.php" );
         break;

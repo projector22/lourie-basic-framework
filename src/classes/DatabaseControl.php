@@ -19,6 +19,7 @@ class DatabaseControl {
      
     protected $conn;
 
+
     /**
      * Consructor method, things to do when the class is loaded
      * 
@@ -39,7 +40,7 @@ class DatabaseControl {
      * @since   0.1 Pre-alpha
      */
 
-    private function connect_db(){
+    protected function connect_db(){
         $servername = DB_LOC;
         $username   = DB_USER;
         $password   = DB_PASS;
@@ -53,6 +54,7 @@ class DatabaseControl {
             die( "Connection failed: " . $e->getMessage() );
         }//catch
     }//public function connect_db()
+
 
     /**
      * Performs an SQL PDO select query
@@ -72,10 +74,11 @@ class DatabaseControl {
             $results = $statement->fetchAll();
             return $results;
         } catch( PDOException $e ) {
-            echo "Error: " . $e->getMessage();
-            return false;
+            // echo "Error: " . $e->getMessage();
+            return [];
         }//catch
     }//public function sql_select( $sql )
+
 
     /**
      * Performs sql queries such as "INSERT INTO..." and others where no response is required, simply the execution.
@@ -96,26 +99,35 @@ class DatabaseControl {
             $this->conn->exec( $sql );
             return true;
         } catch( PDOException $e ) {
-            echo "Error: " . $e->getMessage();
+            // echo "Error: " . $e->getMessage();
             return false;
         }//catch
     }
     
+
     /**
-     * Method to sanitize any form data that may be used to perform a malicious attack
+     * Performs sql queries such as "INSERT INTO..." and returns the error object $e when an error occures
      * 
-     * @param   string  $data   Any string of data that needs to be sanitized
-     * @return  string  $data   After sanitizing the string, return it
+     * @param   string      $sql    An sql string command
+     * @return  true        If the query was successful
+     * @return  object      If the query has an error in it, return the error object
      * 
      * @since   0.1 Pre-alpha
      */
-
-    public static function protect( $data ) {
-        $data = trim( $data );
-        $data = stripslashes( $data );
-        $data = htmlspecialchars( $data, ENT_QUOTES );
-        return $data;
+    
+    public function sql_execute_return_error( $sql ){
+        try {
+            if ( !isset( $this->conn ) ){
+                $this->conn = $this->connect_db();
+            }
+            $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            $this->conn->exec( $sql );
+            return true;
+        } catch( PDOException $e ) {
+            return $e;
+        }//catch
     }
+
 
     /**
      * Destructor method, things to do when the class is closed

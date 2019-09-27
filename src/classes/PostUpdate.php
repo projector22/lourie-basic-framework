@@ -59,6 +59,8 @@ class PostUpdate {
     /**
      * Runs post update instructions which may change from update to update, according to what is being updated
      * 
+     * IMPORTANT: If anything new is being defined in meta.php or config.php and needs to be used here... it also needs to be defined in this method
+     * 
      * @since   0.1 Pre-alpha
      */
 

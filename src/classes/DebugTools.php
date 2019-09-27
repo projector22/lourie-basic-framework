@@ -38,7 +38,7 @@ class DebugTools extends DatabaseControl {
      * @since   0.1 Pre-alpha
      */
 
-    public function uninstall_form(){
+    public static function uninstall_form(){
         echo "<form method='get'>";
         echo "<input type='submit' value='Uninstall'>";
         echo "<input type='hidden' name='perform_uninstall' value='1'>";
@@ -124,8 +124,8 @@ class DebugTools extends DatabaseControl {
      * @since   0.1 Pre-alpha
      */
 
-    public static function show_lorium( $count=1 ){
-        for ($i = 0; $i < $count; $i++){
+    public static function show_lorium( $count = 1 ){
+        for ( $i = 0; $i < $count; $i++ ){
             echo "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id suscipit lorem. Aliquam erat volutpat. Quisque congue dapibus pulvinar. Maecenas viverra elementum velit. Suspendisse ullamcorper quis tortor sed aliquet. Vestibulum congue ligula semper arcu euismod egestas. Ut vel placerat sapien, sit amet lacinia nibh. Duis egestas orci nec est rutrum elementum. Suspendisse vel vulputate dolor. Donec dapibus lorem eget diam ornare, vitae feugiat nunc mattis. Curabitur vel congue mi, ut iaculis urna. Nullam non quam ultricies, pulvinar lorem sed, cursus nulla. Sed id vehicula leo. Cras ante massa, sagittis consectetur ipsum in, aliquet cursus dolor. Nulla facilisi. In quis molestie lorem.</p>
             <p>Suspendisse porta sollicitudin dolor non tincidunt. Duis eget vulputate ipsum, eu tincidunt justo. Ut eget tincidunt orci. Suspendisse ac quam et nulla interdum imperdiet non at ante. Aenean condimentum nec nisl vitae faucibus. Nam diam elit, finibus vel quam vel, luctus ultrices tellus. Phasellus in lorem vitae nisl gravida bibendum eget in ante. Sed maximus venenatis maximus. Aliquam rutrum, leo sed dignissim commodo, nisl nisi ultrices tellus, sed tempus urna tortor vel ante. Aliquam congue orci id tortor elementum, at tempus nulla egestas. Nunc mattis lacus id odio mollis, vitae lacinia massa ornare. Ut ultricies felis lacus, et mollis nunc eleifend sit amet. Quisque arcu sem, faucibus eu dolor in, pretium tempor dolor. Duis convallis auctor mi, in accumsan nibh rhoncus eget. Mauris at est libero.</p>
             <p>Cras justo mi, fringilla quis arcu sed, viverra congue quam. Duis rhoncus metus diam, quis fermentum leo dignissim eget. Nullam fringilla enim ac turpis vulputate dapibus. Aliquam quis dolor sapien. Duis a arcu mauris. Ut eget erat sagittis, efficitur mi sed, porta justo. Fusce porta purus convallis eleifend tempor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vitae iaculis lacus. Sed in eleifend est. Quisque id nunc porttitor, accumsan massa in, sagittis elit. Phasellus auctor viverra iaculis.</p>

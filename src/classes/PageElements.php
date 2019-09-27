@@ -75,8 +75,8 @@ class PageElements {
     public static function site_page_header(){
         echo "\n\t<div class='pagehead'>";
         //Your code here
-        // echo "\n\t\t<div><h1>" . SCH_NAME . "</h1></div>";
-        // echo "\n\t\t<div><h2>School Registration</h2></div>";
+        // echo "\n\t\t<div><h1>Heading</h1></div>";
+        // echo "\n\t\t<div><h2>Subheading</h2></div>";
         echo "\n\t</div>\n";
     }
     
@@ -90,7 +90,7 @@ class PageElements {
     public static function top_of_page(){
         self::site_page_header();
         $menu = new Menu;
-        $menu->main_menu();
+        $menu->show_menu();
     }
 
     /**
@@ -177,6 +177,91 @@ class PageElements {
     public static function clipboardButton(){
         echo "\n<script src='src\js\clipboard.min.js'></script>";
         echo "\n<script>var clipboard = new Clipboard('.btn');</script>";
+    }
+
+
+    /**
+     * Draws an appropriate error message
+     * 
+     * @param   string  $info   What message to show    Default: ''
+     * 
+     * @since   0.1 Pre-alpha
+     */
+    
+    public static function action_error( $info='' ){
+        if ( $info == '' ){
+            echo "An error has occured ";
+        } else {
+            echo "An error has occured, $info ";
+        }
+    }
+
+
+    /**
+     * Draw out a <span> which is used in the description in an admin or discipline page element
+     * 
+     * @param   string  $input  The string to be displayed on the screen
+     * @param   int     $lines  The number of lines to be drawn before the text     Default: 1
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    public static function item_description( $input, $lines=1 ){
+        PageElements::lines( $lines );
+        echo "<span>$input</span>";
+    }
+
+    /**
+     * Draw out a span which will be used to draw the response text from JS AJAX calls 
+     * 
+     * @param   string  $id     Desired span id elemenet
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    public static function response_text( $id ){
+        echo "<span id='$id'></span>"; 
+    }
+
+
+    /**
+     * Draw out the JS to change default behaviour of a button press
+     * 
+     * @param   string  $input      The id of the item to be monitored
+     * @param   string  $button     The button to be clicked when the appropriate button is pressed
+     * @param   string  $keycode    The key to be monitored, Default: 13 (Enter)
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    public static function change_button_behaviour( $input, $button, $keycode = 13 ){
+        echo "\n<script>
+        var input = document.getElementById('$input');
+        input.addEventListener('keyup', function(event) {
+            if (event.keyCode === $keycode) {
+                event.preventDefault();
+                document.getElementById('$button').click();
+            }
+        });\n</script>\n";
+    }
+
+    
+    /**
+     * Draw out the JS to stop the default behaviour of a defined key press
+     * 
+     * @param   string  $keycode    The key to be monitored, Default: 13 (Enter)
+     * 
+     * @since   0.1 Pre-alpha
+     */
+
+    public static function block_default_button_press( $keycode = 13 ){
+        echo "\n<script>
+        window.addEventListener('keydown', function (event) {
+            if (event.keyCode === $keycode) {
+                event.preventDefault();
+                return false;
+            }
+        });\n</script>\n";
     }    
     
 }

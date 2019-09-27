@@ -5,7 +5,7 @@
  * executes the rest of the site or the installer as needed.
  * 
  * @author  Gareth  Palmer  @evangeltheology
- * @version 1.0
+ * 
  * @since   0.1 Pre-alpha
  */
 
@@ -70,11 +70,6 @@ if ( !is_file( INCLUDES_PATH . 'config.php' ) ){
     $menu = new Menu;
     $permit->check_logout();
     $permit->check_login();
-
-    //Maybe no longer needed
-    if ( ENVIRONMENT == 'dev' ){
-        $debug_tools = new DebugTools;
-    }
 
     //Load the home page if on index.php otherwise load whatever page is called
     if ( strpos( $_SERVER['PHP_SELF'], 'index.php' ) > -1 ) {

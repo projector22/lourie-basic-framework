@@ -27,13 +27,16 @@ define( 'ENVIRONMENT', $environment );
 
 // This section is where most key global constants are defined
 $name = explode( "\\", dirname( __FILE__ ) );
-
 $path = $name[3];
 
 foreach ( $name as $i => $n ){
-    if ( $n == 'src' ){
-        $path = $name[$i-1];
-    }//if - look for 'scripts'
+    if ( $n == 'src' ) {
+        if ( $name[$i-1] != 'www' ){
+            $path = $name[$i-1];
+        } else {
+            $path = '..';
+        }//if $name[$i-1] != 'www'
+    }// if $n == 'src'
 }//foreach
 
 $server_request = explode( '/', $_SERVER['REQUEST_URI'] );
@@ -63,11 +66,20 @@ if ( realpath( $_SERVER['DOCUMENT_ROOT'] . '/src' ) == dirname( __FILE__ ) ){
 
 //Folder Paths
 if ( !defined( 'HOME_PATH' ) ){
+    if ( realpath( $_SERVER['DOCUMENT_ROOT'] . '/src/includes' ) == dirname( __FILE__ ) ){
+        $together = $_SERVER['DOCUMENT_ROOT'];
+    } else {
+        $together = $_SERVER['DOCUMENT_ROOT'] . "\\" .  $path;
+    }
+
     define( 'HOME_PATH',  $together. '/' );
 }
 
 //The installed server location, root or subfolder
 define( 'HOME_LOC', $server_loc );
+
+//The path - checking for subdirectory url or not
+define( 'WEB_PATH', $path . '/' );
 
 define( 'SRC_PATH',      HOME_PATH . 'src/' );
 define( 'UPLOADS_PATH',  HOME_PATH . 'uploads/' );
@@ -78,14 +90,15 @@ define( 'IMG_PATH',      SRC_PATH  . 'img/' );
 define( 'STYLES_PATH',   SRC_PATH  . 'styles/' );
 
 //Pages
-define( "HOME_PAGE", "index.php" );
-define( 'SITE_HELP', '#' );
+define( "HOME_PAGE",  "index.php" );
+define( "ADMIN_PAGE", "admin.php" );
+define( 'SITE_HELP',  "help.php" );
 
 //Logo
 define( "SITE_LOGO", "placeholder.png" );
 
 //Upload Size
-define( 'MAX_UPLOAD_SIZE', 300000 );
+define( 'MAX_UPLOAD_SIZE', $max_upload_size );
 
 //Update URLs
 //These have placeholder values and will need to be changed to appropriate values

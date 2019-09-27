@@ -125,6 +125,18 @@ class DatabaseStructure extends DatabaseControl {
         $data = $this->database_tables( $this->table_names );    
         foreach ( $this->table_names as $i => $table ){
             foreach( $data[$i] as $column => $info ){
+                //Drop the index if not primary
+                $result = $this->sql_select( "SELECT DISTINCT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = '$database_name' and TABLE_NAME='$table'" );
+                if ( count( $result ) > 0 ){
+                    foreach( $result as $row ){
+                        if ( $row['INDEX_NAME'] != 'PRIMARY' ){
+                            $this->sql_execute( "ALTER TABLE $table DROP INDEX " . $row['INDEX_NAME'] );
+                            PageElements::dot();
+                        }//if
+                    }//foreach
+                }//if $result > 0
+
+                //Check each column
                 $results = $this->sql_select( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='$database_name' AND TABLE_NAME='$table' AND COLUMN_NAME='$column'" );
                 if ( count( $results ) > 0 ){
                     $query = $this->sql_execute( "ALTER TABLE $table CHANGE COLUMN $column $column $info" );
@@ -135,7 +147,7 @@ class DatabaseStructure extends DatabaseControl {
                     echo "Adding $column to $table<br>";
                     $query = $this->sql_execute( "ALTER TABLE $table ADD $column $info" );
                     if( !$query ){
-                        echo "Problem adding $column to $table : Creation failed (" . $this->conn->error . ")<br>";
+                        echo "<br>Problem adding $column to $table<br>";
                     } else { 
                         echo "Success: Added $column to $table<br>";
                     }//if execute update
