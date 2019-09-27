@@ -2,6 +2,14 @@
 
 This project will function as a basic framework and template for future webapps. 
 
+## Features
+
+| Feature | Alpha | Beta | Production |
+| ------ | :------: | :------: | :------: |
+| Installation | ✓ | ✓ | ✓ |
+| Database Functions | ✓ | ✓ | ✓ |
+| LDAP |  ✓ | | |
+
 ## Acknowledgements
 
 ### The following Open Source items are included or adapted into this project
