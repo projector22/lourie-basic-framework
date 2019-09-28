@@ -15,7 +15,7 @@ This project will function as a basic framework and template for future webapps.
 | 404 page | ✓ | | |
 | App updates | ✓ | ✓ | |
 | Upload Tools | ✓ | ✓ | |
-| Admin Functions | ✓ | | |
+| Admin Functions | ✓ | ✓ | |
 | Help page | ✓ | | |
 | Backup & Restore | | | |
 
