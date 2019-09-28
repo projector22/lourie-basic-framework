@@ -261,3 +261,39 @@ function url_sub_search(id, order) {
     }
     return paste;
 }
+
+/**
+ * Draw the page elements to create a loading animation on the screen
+ */
+
+function loading_animation() {
+    var g = '<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>';
+    return g;
+}
+
+
+/**
+ * Performs an AJAX to check for online updates
+ */
+
+function check_for_updates() {
+    var token, post, response;
+    response = 'check_for_update_response';
+    document.getElementById(response).innerHTML = loading_animation();
+    token = 'token=check_for_online_update';
+    post = token;
+    execute_ajax_post(post, response);
+}
+
+/**
+ * Performs an AJAX to check for online updates
+ */
+
+function perform_updates() {
+    var token, post, response;
+    response = 'check_for_update_response';
+    document.getElementById(response).innerHTML = loading_animation();
+    token = 'token=perform_update';
+    post = token;
+    execute_ajax_post(post, response);
+}

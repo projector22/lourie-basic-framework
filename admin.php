@@ -26,6 +26,9 @@ if ( isset( $_GET['p'] ) ){
 
 switch ( $page ){ 
     default:
-        'Nothing to see here yet';
+        echo "<div class='admin_item'>";
+        echo "<input type='button' onClick='check_for_updates()' value='Check for updates'>";
+        echo "<div id='check_for_update_response'></div>";
+        echo "</div>";//admin_item
         break;
 }

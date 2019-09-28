@@ -17,6 +17,7 @@ This project will function as a basic framework and template for future webapps.
 | Upload Tools | ✓ | ✓ | |
 | Admin Functions | ✓ | | |
 | Help page | ✓ | | |
+| Backup & Restore | | | |
 
 ## Acknowledgements
 

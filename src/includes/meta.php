@@ -88,6 +88,7 @@ define( 'CLASSES_PATH',  SRC_PATH  . 'classes/' );
 define( 'JS_PATH',       SRC_PATH  . 'js/' );
 define( 'IMG_PATH',      SRC_PATH  . 'img/' );
 define( 'STYLES_PATH',   SRC_PATH  . 'styles/' );
+define( 'JSON_PATH',     SRC_PATH  . 'json/' );
 
 //Pages
 define( "HOME_PAGE",  "index.php" );
@@ -106,3 +107,5 @@ define( 'UPDATE_URL',         'https://path.to.your.update.net' );
 define( 'UPDATE_FILE',         UPDATE_URL . '/file.zip' );
 define( 'GIT_REPO_URL',       'https://github.com/your-username/your-project.git' );
 define( 'FRAMEWORK_REPO_URL', 'https://gitlab.com/projector22/lourie-basic-framework.git' );
+
+define( "UPDATE_CREDENTIALS", JSON_PATH . "updatecredentials.json" );
