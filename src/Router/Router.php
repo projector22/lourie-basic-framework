@@ -1,14 +1,18 @@
 <?php
 
-namespace Framework\Router;
+namespace LBS\Router;
 
 use LBS\Auth\Api;
 use App\Auth\Permissions;
+use LBS\Auth\Api;
 
 /**
  * Handle the routing of requests throughout the app.
  * 
- * use Framework\Router\Router;
+ * use LBS\Router\Router;
+ * 
+ * @property    string  $page_to_load
+ * @property    integer $response_code
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
@@ -116,7 +120,7 @@ class Router {
                         $class = "\\App\\PDF\\{$this->page_to_load}PDF";
                         break;
                     case 'docs':
-                        $class = "\\Framework\\Docs\\DocLoader";
+                        $class = "\\LBS\\Docs\\DocLoader";
                         break;
                     case 'download':
                         require APP_PATH . 'Actions' . DIR_SEP . 'DownloadHandler.php';
@@ -125,7 +129,7 @@ class Router {
                         $class = "\\App\\Pages\\Maintenance\\Dashboard";
                         break;
                     case 'dev-tools':
-                        $class = "\\Framework\\DevTools\\Dashboard";
+                        $class = "\\LBS\\DevTools\\Dashboard";
                         break;
                     default: // (http)
                         $class = "\\App\\Web\\{$this->page_to_load}Page";

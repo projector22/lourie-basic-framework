@@ -2,10 +2,12 @@
 
 namespace LBS\DevTools;
 
+use App\Auth\Sessions;
 use LBS\HTML\Draw;
 use LBS\HTML\Form;
 use LBS\HTML\HTML;
 use LBS\HTML\Button;
+use LBS\Auth\Session;
 use LBS\Db\ConnectMySQL;
 
 /**
