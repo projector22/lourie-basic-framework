@@ -1,19 +1,17 @@
 <?php
 
-namespace Framework\DevTools;
+namespace LBS\DevTools;
 
-use App\Auth\Sessions;
-use Framework\HTML\Draw;
-use Framework\HTML\Form;
-use Framework\HTML\HTML;
-use Framework\HTML\Button;
-use Framework\Auth\Session;
-use Framework\Db\ConnectMySQL;
+use LBS\HTML\Draw;
+use LBS\HTML\Form;
+use LBS\HTML\HTML;
+use LBS\HTML\Button;
+use LBS\Db\ConnectMySQL;
 
 /**
  * This class handles the dev tools mode dashboard.
  * 
- * use Framework\DevTools\Dashboard;
+ * use LBS\DevTools\Dashboard;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
@@ -45,7 +43,12 @@ class Dashboard extends ConnectMySQL {
         HTML::div( ['class' => 'maintenance_mode_content'] );
         HTML::heading( 1, "Development Mode - Tools", ['class' => 'text_align_center'] );
 
-        $is_super_admin = Session::value( Sessions::SESSION_USER_PERMISSIONS, 'super_admin' );
+        /**
+         * @todo
+         * 
+         * Figure out a generic way of determining if the site is in DEV mode, and therefore this is enabled.
+         */
+        $is_super_admin = true; // Session::value( Sessions::SESSION_USER_PERMISSIONS, 'super_admin' );
         if ( $is_super_admin ) {
             $this->draw_dashboard();
         } else {

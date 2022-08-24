@@ -1,18 +1,18 @@
 <?php
 
-namespace Framework\Tools\JSON;
+namespace LBS\Tools\JSON;
 
-use Framework\HTML\Draw;
+use LBS\HTML\Draw;
 
 /**
  * Hold and contain the various JSON data within the app.
  * 
- * use Framework\Tools\JSON\JSONTools;
+ * use LBS\Tools\JSON\JSONTools;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.8.0
- * @since	3.11.0	Moved to Framework\Tools\JSONData from Tools\JSONData
+ * @since	3.11.0	Moved to LBS\Tools\JSONData from Tools\JSONData
  * @since   3.14.4  Renamed JSONTools
  */
 

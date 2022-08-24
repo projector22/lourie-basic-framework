@@ -1,13 +1,13 @@
 <?php
 
-namespace Framework\HTML;
+namespace LBS\HTML;
 
-use Framework\HTML\Forms;
+use LBS\HTML\Forms;
 
 /**
  * This class is to draw out form elements on the page
  * 
- * use Framework\HTML\Form;
+ * use LBS\HTML\Form;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

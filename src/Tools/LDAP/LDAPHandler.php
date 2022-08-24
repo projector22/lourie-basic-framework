@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Tools\LDAP;
+namespace LBS\Tools\LDAP;
 
 use \Exception;
 use App\Db\Data\GeneralConfigData;
@@ -8,12 +8,12 @@ use App\Db\Data\GeneralConfigData;
 /**
  * Various methods for performing and executing LDAP queries
  * 
- * use Framework\Tools\LDAP\LDAPHandler;
+ * use LBS\Tools\LDAP\LDAPHandler;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.1.0
- * @since   3.11.0  Moved to Framework\Tools\LDAPHandler and class renamed DownloadHandler from LDAP
+ * @since   3.11.0  Moved to LBS\Tools\LDAPHandler and class renamed DownloadHandler from LDAP
  */
 
 class LDAPHandler {
@@ -83,14 +83,18 @@ class LDAPHandler {
      * @param   string  $dn_password    The specified domain dn_password        Default: null
      * @param   string  $ldap_server    The specified domain ldap_server        Default: null
      * @param   string  $port           The specified domain port               Default: null
-     * @param   string  $search_ou      A custom search ou in which to look     Default: null
      * 
      * @access  public
      * @since   3.1.0
      * @since   3.11.0  Removed param $search_ou
      */
 
-    public function __construct( ?string $dn = null, ?string $dn_password = null, ?string $ldap_server = null, ?string $port = null ) {
+    public function __construct( 
+        ?string $dn = null,
+        ?string $dn_password = null,
+        ?string $ldap_server = null,
+        ?string $port = null
+    ) {
         // Check if PHP_LDAP exists on the system
         $this->check_ldap();
 

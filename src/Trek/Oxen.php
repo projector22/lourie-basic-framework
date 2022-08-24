@@ -1,13 +1,13 @@
 <?php
 
-namespace Framework\Trek;
+namespace LBS\Trek;
 
-use Framework\Db\ConnectMySQL;
+use LBS\Db\ConnectMySQL;
 
 /**
  * Tools to be used in normal post update `trek` class
  * 
- * use Framework\Trek\Oxen;
+ * use LBS\Trek\Oxen;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

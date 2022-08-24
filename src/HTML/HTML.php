@@ -1,13 +1,13 @@
 <?php
 
-namespace Framework\HTML;
+namespace LBS\HTML;
 
-use Framework\HTML\HTMLElements;
+use LBS\HTML\HTMLElements;
 
 /**
  * This class is to draw out basic HTML elements.
  * 
- * use Framework\HTML\HTML;
+ * use LBS\HTML\HTML;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

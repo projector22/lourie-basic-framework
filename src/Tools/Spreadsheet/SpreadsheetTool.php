@@ -1,14 +1,14 @@
 <?php
 
-namespace Framework\Tools\Spreadsheet;
+namespace LBS\Tools\Spreadsheet;
 
 use Exception;
-use Framework\Tools\Spreadsheet\SpreadsheetEngine;
+use LBS\Tools\Spreadsheet\SpreadsheetEngine;
 
 /**
  * This class handles any file upload requests
  * 
- * use Framework\Tools\Spreadsheet\SpreadsheetTool;
+ * use LBS\Tools\Spreadsheet\SpreadsheetTool;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

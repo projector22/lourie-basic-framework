@@ -1,24 +1,24 @@
 <?php
 
-namespace Framework\HTML;
+namespace LBS\HTML;
 
 use Exception;
 use App\Enums\SVGImages;
-use Framework\HTML\JS;
-use Framework\HTML\HTML;
+use LBS\HTML\JS;
+use LBS\HTML\HTML;
 use SVGTools\SVG;
 
 /**
  * This class is to draw out form elements on the page
  * 
- * use Framework\HTML\Forms;
+ * use LBS\HTML\Forms;
  * 
  * @composer-requires    SVGTools\SVG
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.6.0
- * @since   3.11.0  Moved to Framework\HTML namespace from PageElements
+ * @since   3.11.0  Moved to LBS\HTML namespace from PageElements
  */
 
 class Forms {

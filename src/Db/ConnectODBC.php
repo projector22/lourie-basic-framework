@@ -1,16 +1,16 @@
 <?php
 
-namespace Framework\Db;
+namespace LBS\Db;
 
 use Exception;
 use \PDO;
 use \PDOException;
-use Framework\HTML\Draw;
+use LBS\HTML\Draw;
 
 /**
  * Tools for connecting to a MDB file
  * 
- * use Framework\Db\ConnectODBC;
+ * use LBS\Db\ConnectODBC;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

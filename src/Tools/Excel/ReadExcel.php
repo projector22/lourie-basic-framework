@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Tools\Excel;
+namespace LBS\Tools\Excel;
 
 use Debugger\Debug;
 use \ZipArchive;
@@ -9,7 +9,7 @@ use \SimpleXMLElement;
 /**
  * Read and extract the data of an Excel (.xlsx) Spreadsheet.
  * 
- * use Framework\Tools\Excel\ReadExcel;
+ * use LBS\Tools\Excel\ReadExcel;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
@@ -360,7 +360,7 @@ class ReadExcel {
      * 
      * @access  private
      * @since   3.1.0
-     * @since   3.11.1  Moved from App\Admin\ImportHandler to Framework\Tools\Excel\ReadExcel
+     * @since   3.11.1  Moved from App\Admin\ImportHandler to LBS\Tools\Excel\ReadExcel
      */
 
     private function delete_files( string $target ): void {

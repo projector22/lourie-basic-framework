@@ -2,16 +2,13 @@
 
 namespace Framework\Router;
 
+use LBS\Auth\Api;
 use App\Auth\Permissions;
-use Framework\Auth\Api;
 
 /**
  * Handle the routing of requests throughout the app.
  * 
  * use Framework\Router\Router;
- * 
- * @property    string  $page_to_load
- * @property    integer $response_code
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
@@ -54,6 +51,8 @@ class Router {
      * 
      * @access  public
      * @since   3.15.0
+     * 
+     * @todo    Make more general
      */
 
     public $path = 'http';
@@ -72,7 +71,28 @@ class Router {
 
         $this->check_file_exists();
         if ( $type !== 'maintenance' && $type !== 'dev-tools' ) {
-            $this->check_permissions();
+            /**
+             * Perform site permissions checks
+             * 
+             * @since   3.15.0
+             */
+            $permits = new Permissions;
+            /**
+             * @todo
+             * Move back to apps
+             */
+            $permits->check_user_page_permission();
+            if ( $permits->permission_error ) {
+                $this->response_code = 404;
+            } else if ( !$permits->can_access ) {
+                $this->response_code = 403;
+            }
+            if ( !is_null( Api::get_key() ) && $this->path == 'http' ) {
+                $this->response_code = 401;
+            }
+            if ( $this->path == 'docs' ) {
+                $this->response_code = 200;
+            }
         }
 
         if ( $this->response_code == 0 ) {
@@ -151,30 +171,6 @@ class Router {
             case 'docs':
                 $this->response_code = 200;
                 break;
-        }
-    }
-
-
-    /**
-     * Perform site permissions checks
-     * 
-     * @access  private
-     * @since   3.15.0
-     */
-
-    private function check_permissions() {
-        $permits = new Permissions;
-        $permits->check_user_page_permission();
-        if ( $permits->permission_error ) {
-            $this->response_code = 404;
-        } else if ( !$permits->can_access ) {
-            $this->response_code = 403;
-        }
-        if ( !is_null( Api::get_key() ) && $this->path == 'http' ) {
-            $this->response_code = 401;
-        }
-        if ( $this->path == 'docs' ) {
-            $this->response_code = 200;
         }
     }
 

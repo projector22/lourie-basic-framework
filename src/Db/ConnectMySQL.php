@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Db;
+namespace LBS\Db;
 
 use \PDO;
 use Exception;
@@ -10,7 +10,7 @@ use \PDOException;
 /**
  * New fully revamped MySQL interface class, making use of PDO prepared statements.
  * 
- * use Framework\Db\ConnectMySQL;
+ * use LBS\Db\ConnectMySQL;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
