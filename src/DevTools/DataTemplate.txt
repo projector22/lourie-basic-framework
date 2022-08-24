@@ -1,0 +1,141 @@
+<?php
+
+namespace App\Db\Data;
+
+use App\Db\DbTemplate;
+use Framework\Db\ConnectMySQL;
+
+/**
+ * Interface with class <<ORIGONAL_TABLE_NAME>>, and perform SQL commands on it as required.
+ * 
+ * use App\Db\Data\<<CLASS_TABLE_NAME>>;
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   <<CURRENT_VERSION>>
+ */
+
+class <<CLASS_TABLE_NAME>> extends ConnectMySQL implements DbTemplate {
+
+    /**
+     * The value by which to index searched for data
+     * 
+     * @var string  $index_by
+     * 
+     * @access  private
+     * @since   <<CURRENT_VERSION>>
+     */
+
+    private string $index_by = '<<PRIMARY_KEY>>';
+
+    /**
+     * Items which are marked as UNIQUE on the database. Only these msy be used as indexing keys
+     * 
+     * @var array   $unique_values
+     * 
+     * @access  public
+     * @since   <<CURRENT_VERSION>>
+     */
+
+    public array $unique_values = [
+        <<UNIQUE_VALUES>>
+    ];
+
+    /**
+     * Whether or not a row has a 'hidden' column with a UNIX timestamp as to
+     * indicate that it is hidden.
+     * 
+     * @access  public
+     * @since   <<CURRENT_VERSION>>
+     */
+
+    const CAN_BE_HIDDEN = <<CAN_BE_HIDDEN>>;
+
+    /**
+     * Whether or not a row has a 'archived' column with a UNIX timestamp as to
+     * indicate that it is hidden.
+     * 
+     * @access  public
+     * @since   <<CURRENT_VERSION>>
+     */
+
+    const CAN_BE_ARCHIVED = <<CAN_BE_ARCHIVED>>;
+
+    /**
+     * Whether or not a row has a 'deleted' column with a UNIX timestamp as to
+     * indicate that it is hidden.
+     * 
+     * Note, being marked as deleted is not the same as physically deleting the
+     * record from the table.
+     * 
+     * @access  public
+     * @since   <<CURRENT_VERSION>>
+     */
+
+    const CAN_BE_DELETED = <<CAN_BE_DELETED>>;
+
+
+    /**
+     * Constructor method, things to do when the class is loaded
+     * 
+     * @param   boolean $select_all     If true, instatiating the class will populate $this->data with all rows from the database,
+     *                                  Default: false
+     * @param   array   $search_params  Current search parameters
+     *                                  ## Options
+     *                                  - include_hidden
+     *                                  - include_archived
+     *                                  - include_deleted
+     * 
+     *                                  Default: []
+     * 
+     * @access  public
+     * @since   <<CURRENT_VERSION>>
+     */
+
+    public function __construct( bool $select_all = false, array $search_params = [] ) {
+        $this->check_db_connection();
+
+        $this->set_table( <<TABLE_NAME_SHORTCUT>> );
+        $this->set_template_class( '<<TEMPLATE_CLASS_NAME>>' );
+        $this->set_index_data_by( $this->index_by );
+
+        foreach ( self::DEFAULT_SEARCH_PARAMS as $index => $value ) {
+            if ( !isset( $search_params[$index] ) ) {
+                $search_params[$index] = $value;
+            }
+        }
+
+        $this->can_be_hidden   = self::CAN_BE_HIDDEN;
+        $this->can_be_deleted  = self::CAN_BE_DELETED;
+        $this->can_be_archived = self::CAN_BE_ARCHIVED;
+
+        if ( self::CAN_BE_ARCHIVED ) {
+            $this->include_inactive = $search_params['include_archived'];
+        }
+        if ( self::CAN_BE_DELETED ) {
+            $this->include_deleted = $search_params['include_deleted'];
+        }
+        if ( self::CAN_BE_HIDDEN ) {
+            $this->include_hidden = $search_params['include_hidden'];
+        }
+
+        if ( $select_all ) {
+            $this->select_all();
+        }
+    }
+
+
+    /**
+     * Destructor method, things to do when the class is closed
+     * 
+     * Closes the open database connection
+     * 
+     * @access  public
+     * @since   <<CURRENT_VERSION>>
+     */
+
+    public function __destruct() {
+        $this->close_connection();
+    }
+
+}

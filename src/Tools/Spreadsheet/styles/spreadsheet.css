@@ -1,0 +1,93 @@
+:root {
+    --TABLE_ID-cell_width: DEFAULT_COL_WIDTH;
+    /* --TABLE_ID-selected_colour: #e1ecfc; */
+    --TABLE_ID-selected_colour: #0e65eb;
+    --TABLE_ID-selected_border-width: 1.5px;
+    --TABLE_ID-selected_border-colour: #196ddb;
+}
+
+.TABLE_ID__spreadsheet_container {
+    border: 1px solid #c0c0c0;
+    background: #cdcdcd;
+    max-height: 80vh;
+    overflow-x: auto;
+    display: grid;
+    grid-gap: 1px;
+    grid-template-rows: auto;
+    grid-auto-flow: column;
+    /* CALC_WIDTH; */
+}
+
+.TABLE_ID__spreadsheet_cell,
+.TABLE_ID__spreadsheet_header_cell {
+    padding: 0 6px;
+}
+
+.TABLE_ID__spreadsheet_cell {
+    border: none;
+    font-family: monospace;
+    font-size: 1.5em;
+    background-color: #fff;
+}
+
+.TABLE_ID__spreadsheet_cell:disabled {
+    background: #fff;
+    opacity: 1;
+}
+
+.TABLE_ID__spreadsheet_header_cell {
+    font-size: 1.2em;
+    background-color: #dedede;
+    text-align: center;
+}
+
+.TABLE_ID__cell_input {
+    width: --TABLE_ID-cell_width;
+}
+
+.TABLE_ID__selection_window_container {
+    position: fixed!important;
+    top: 0;
+    left: 0;
+}
+
+.TABLE_ID__spreadsheet_canvas {
+    /* position: relative; */
+    /* top: 0;
+    right: 0; */
+    /* width: 100%; */
+    /* height: 100vh; */
+    border: 3px solid green;
+}
+
+.TABLE_ID__selection_window {
+    background: var(--TABLE_ID-selected_colour);
+    opacity: 0.1;
+    display: none;
+    position: absolute;
+    outline: 1px solid var(--TABLE_ID-selected_border-colour);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.TABLE_ID__cell_selected {
+    background: var(--TABLE_ID-selected_colour);
+    opacity: 0.1;
+    outline: 1px solid var(--TABLE_ID-selected_border-colour);
+}
+
+.TABLE_ID__cell_selected-top {
+    border-top: var(--TABLE_ID-selected_border-width) solid var(--TABLE_ID-selected_border-colour) !important;
+}
+
+.TABLE_ID__cell_selected-bottom {
+    border-bottom: var(--TABLE_ID-selected_border-width) solid var(--TABLE_ID-selected_border-colour) !important;
+}
+
+.TABLE_ID__cell_selected-left {
+    border-left: var(--TABLE_ID-selected_border-width) solid var(--TABLE_ID-selected_border-colour) !important;
+}
+
+.TABLE_ID__cell_selected-right {
+    border-right: var(--TABLE_ID-selected_border-width) solid var(--TABLE_ID-selected_border-colour) !important;
+}

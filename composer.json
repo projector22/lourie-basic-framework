@@ -1,0 +1,24 @@
+{
+    "name": "projector22/lourie-basic-framework",
+    "type": "library",
+    "description": "A basic framework library for creating PHP projects",
+    "license": "mit",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "LBS\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gareth Palmer",
+            "email": "bravdthepally@gmail.com",
+            "role": "lead"
+        }
+    ],
+    "require-dev": {
+        "projector22/php-debuggin-tool": "^1.0"
+    }
+}

@@ -1,0 +1,62 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "1fdb32a578b474f63187a16d6b046485",
+    "packages": [],
+    "packages-dev": [
+        {
+            "name": "projector22/php-debuggin-tool",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/projector22/php-debuggin-tools.git",
+                "reference": "9eb09927161348f7092a7bb982fab997bcab0b72"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/projector22/php-debuggin-tools/zipball/9eb09927161348f7092a7bb982fab997bcab0b72",
+                "reference": "9eb09927161348f7092a7bb982fab997bcab0b72",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Debugger\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "mit"
+            ],
+            "authors": [
+                {
+                    "name": "Gareth Palmer",
+                    "email": "bravdthepally@gmail.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "Various php debugging tools",
+            "support": {
+                "issues": "https://github.com/projector22/php-debuggin-tools/issues",
+                "source": "https://github.com/projector22/php-debuggin-tools/tree/1.0.4"
+            },
+            "time": "2022-05-16T12:04:42+00:00"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=8.1"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
+}

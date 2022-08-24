@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Db\Tables;
+
+/**
+ * Access data from the <<ORIGONAL_TABLE_NAME>> table
+ * 
+ * use App\Db\Tables\<<CLASS_TABLE_NAME>>;
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   <<CURRENT_VERSION>>
+ */
+
+class <<CLASS_TABLE_NAME>> {
+<<CLASS_PROPERTIES>>
+    /**
+     * Constructor method, things to do when the class is loaded
+     * 
+     * @access  public
+     * @since   <<CURRENT_VERSION>>
+     */
+
+    public function __construct() {
+        // Add any extra property asignments here.
+    }
+
+}
