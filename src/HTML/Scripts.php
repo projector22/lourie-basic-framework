@@ -1,15 +1,11 @@
 <?php
 
-namespace LBS\HTML;
-
-use App\Db\Data\ScheduleData;
-use App\Db\Data\GeneralConfigData;
-use LBS\HTML\HTML;
+namespace Framework\HTML;
 
 /**
  * This class is to draw out various inline Javascript elements withing <script> tags.
  * 
- * use LBS\HTML\Scripts;
+ * use Framework\HTML\Scripts;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
@@ -39,7 +35,7 @@ class Scripts {
      * @return  string  The formed script element
      * 
      * @since   3.7.6
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts. Added return & param $src
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts. Added return & param $src
      */
 
     public static function script( string $script, ?string $src = null ) {
@@ -138,7 +134,7 @@ class Scripts {
      * 
      * @access  public
      * @since   3.1.0
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
     public static function clipboardButton( string $id = '.btn' ) {
@@ -193,7 +189,7 @@ class Scripts {
      * @access  public
      * @since   3.2.2
      * @since   3.4.5   $do_nothing added
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
     public static function change_button_behaviour( string $input, string $button, int $keycode = 13, bool $do_nothing = false ): void {
@@ -224,7 +220,7 @@ class Scripts {
      * 
      * @access  public
      * @since   3.2.2
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
     public static function block_default_button_press( int $keycode = 13 ): void {
@@ -252,7 +248,7 @@ class Scripts {
      * @since   3.4.1
      * @since   3.7.0   Added @param $function_name - Reworked logic to use MutationObserver
      * @since   3.7.4   Added @param $content
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
     public static function hide_element_after_time( string $id, string $function_name = 'hide_element', int $time = 1200, string $content = '' ): void {
@@ -279,7 +275,7 @@ class Scripts {
      * 
      * @access  public
      * @since   3.6.0
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
     
     public static function insert_keyboard_shortcuts( string $desired_function ): void {
@@ -299,7 +295,7 @@ class Scripts {
      * 
      * @access  public
      * @since   3.6.4
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
     public static function insert_shift_multiselect(): void {
