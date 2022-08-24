@@ -1,11 +1,11 @@
 <?php
 
-namespace Framework\Auth;
+namespace LBS\Auth;
 
 /**
  * This class handles a number of tasks related to the API.
  * 
- * use Framework\Auth\Api;
+ * use LBS\Auth\Api;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

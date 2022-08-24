@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Tools\PDF;
+namespace LBS\Tools\PDF;
 
 use TCPDF;
 use Exception;
@@ -335,7 +335,7 @@ class PDFTools {
      */
 
     public function __construct() {
-        throw new Exception( "You may not invoke this class directly. It is extented to Framework\Tools\PDF\PDFCreator" );
+        throw new Exception( "You may not invoke this class directly. It is extented to LBS\Tools\PDF\PDFCreator" );
     }
 
 

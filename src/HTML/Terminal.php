@@ -1,13 +1,13 @@
 <?php
 
-namespace Framework\HTML;
+namespace LBS\HTML;
 
-use Framework\HTML\HTML;
+use LBS\HTML\HTML;
 
 /**
  * Tool for drawing a terminal window onto the screen.
  * 
- * use Framework\HTML\Terminal;
+ * use LBS\HTML\Terminal;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

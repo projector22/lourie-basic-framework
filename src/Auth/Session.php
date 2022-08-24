@@ -1,11 +1,11 @@
 <?php
 
-namespace Framework\Auth;
+namespace LBS\Auth;
 
 /**
  * This class handles a number of tasks related to sessions and the $_SESSION variable.
  * 
- * use Framework\Auth\Session;
+ * use LBS\Auth\Session;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

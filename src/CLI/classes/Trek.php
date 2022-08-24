@@ -77,8 +77,8 @@ class Trek {
 
 namespace App\Treks;
 
-use Framework\Trek\Oxen;
-use Framework\Trek\Wagon;
+use LBS\Trek\Oxen;
+use LBS\Trek\Wagon;
 
 /**
  * This is the post update changes for version {$version}

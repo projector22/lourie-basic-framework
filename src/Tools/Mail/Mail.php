@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Tools\Mail;
+namespace LBS\Tools\Mail;
 
 use App\Db\Data\GeneralConfigData;
 use PHPMailer\PHPMailer\Exception;
@@ -9,7 +9,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 /**
  * Handle sending email content.
  * 
- * use Framework\Tools\Mail\Mail;
+ * use LBS\Tools\Mail\Mail;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

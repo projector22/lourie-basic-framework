@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Tools\LDAP;
+namespace LBS\Tools\LDAP;
 
 use \Exception;
 use App\Db\Data\GeneralConfigData;
@@ -8,12 +8,12 @@ use App\Db\Data\GeneralConfigData;
 /**
  * Various methods for performing and executing LDAP queries
  * 
- * use Framework\Tools\LDAP\LDAPHandler;
+ * use LBS\Tools\LDAP\LDAPHandler;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.1.0
- * @since   3.11.0  Moved to Framework\Tools\LDAPHandler and class renamed DownloadHandler from LDAP
+ * @since   3.11.0  Moved to LBS\Tools\LDAPHandler and class renamed DownloadHandler from LDAP
  */
 
 class LDAPHandler {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Install;
+namespace LBS\Install;
 
 use \PDO;
 use App\Actions\PostUpdateActions;
@@ -8,12 +8,12 @@ use App\Config\JSON;
 use App\Db\DatabaseDefaults;
 use App\Structure\Footer;
 use App\Structure\HTMLHeader as Header;
-use Framework\HTML\Draw;
+use LBS\HTML\Draw;
 
 /**
  * This class is called at the end of pages to show the footer section and to close off the body and html tags properly
  * 
- * use Framework\Install\Installer;
+ * use LBS\Install\Installer;
  * 
  * @property    string      $environment
  * 
@@ -84,7 +84,7 @@ class Installer {
          * @return  string  A string the length defined by $len
          * 
          * @since   3.1.0
-         * @since   3.12.1  Moved to Framework\Install\Installer
+         * @since   3.12.1  Moved to LBS\Install\Installer
          */
 
         function generate_random_prefix( $len = 5 ) {
@@ -106,7 +106,7 @@ class Installer {
          * @param   string  $value  The input default value     Default: ''
          * 
          * @since   3.1.0
-         * @since   3.12.1  Moved to Framework\Install\Installer
+         * @since   3.12.1  Moved to LBS\Install\Installer
          */
 
         function install_cell( $title, $type, $name, $value = '' ) {

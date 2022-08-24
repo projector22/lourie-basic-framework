@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Auth;
+namespace LBS\Auth;
 
 /**
  * This class allows the site to check for any prerequisites and to either die immediately if the problem cannot be fixed or ignored
@@ -8,7 +8,7 @@ namespace Framework\Auth;
  * 
  * This class simply needs to be called to a variable to run all of it's checks.
  * 
- * use Framework\Auth\SiteChecks;
+ * use LBS\Auth\SiteChecks;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

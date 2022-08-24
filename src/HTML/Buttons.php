@@ -1,16 +1,16 @@
 <?php
 
-namespace Framework\HTML;
+namespace LBS\HTML;
 
 use App\Enums\SVGImages;
 use Exception;
-use Framework\HTML\JS;
-use Framework\HTML\HTML;
+use LBS\HTML\JS;
+use LBS\HTML\HTML;
 
 /**
  * This class is to draw out various buttons on the page.
  * 
- * use Framework\HTML\Buttons;
+ * use LBS\HTML\Buttons;
  * 
  * @author  Gareth Palmer   [Github & Gitlab /projector22]
  * 
@@ -25,7 +25,7 @@ class Buttons {
      * @var boolean $echo   Default: true
      * 
      * @since   3.6.0
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php
      */
 
     public static bool $echo = true;
@@ -135,7 +135,7 @@ class Buttons {
      * 
      * @access  public
      * @since   3.6.0
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php. Renamed to general() from custom_button()
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php. Renamed to general() from custom_button()
      * @since   3.16.1  Revamped completely, now the base of almost all buttons. Removed params $content, $overwrite_class
      */
 
@@ -294,7 +294,7 @@ class Buttons {
      * 
      * @access  public
      * @since   3.6.0
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php. Renamed to apply() from apply_button()
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php. Renamed to apply() from apply_button()
      * @since   3.16.1  Removed param $overwrite_class
      */
 
@@ -344,7 +344,7 @@ class Buttons {
      * @access  public
      * @since   3.4.0
      * @since   3.6.0     Added param $id
-     * @since   3.11.0    Moved to Framework\HTML\Buttons.php from PageElements.php. Renamed to save() from save_button()
+     * @since   3.11.0    Moved to LBS\HTML\Buttons.php from PageElements.php. Renamed to save() from save_button()
      * @since   3.13.0    Removed params $onclick, $id, added param $params - largely rewritten
      */
 
@@ -422,7 +422,7 @@ class Buttons {
      * 
      * @access  public
      * @since   3.3.2
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php. Renamed to print() from print_button()
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php. Renamed to print() from print_button()
      * @since   3.13.0  Revamped and removed param $onClick, added $print_dailogue & $params
      * @since   3.16.1  Revamped and turned into a simple button.
      */
@@ -454,7 +454,7 @@ class Buttons {
      * 
      * @access  public
      * @since   3.6.0
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php. Renamed to reset() from reset_button()
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php. Renamed to reset() from reset_button()
      * @since   3.16.1  Completely reworked to use new button methods.
      */
 
@@ -530,7 +530,7 @@ class Buttons {
      * 
      * @since   3.1.0
      * @since   3.6.0   Removed @param $class as this is moved to self::$button_class
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php. Renamed to back() from back_button()
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php. Renamed to back() from back_button()
      * @since   3.16.1  Rewritten to use the new button method.
      */
 
@@ -554,7 +554,7 @@ class Buttons {
      * @return  string|void
      * 
      * @since   3.7.6
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php. Renamed to cancel() from cancel_button()
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php. Renamed to cancel() from cancel_button()
      * @since   3.16.1  Rewritten to use the new button method.
      */
     
@@ -581,7 +581,7 @@ class Buttons {
      * 
      * @since   3.4.12
      * @since   3.9.0   Added @params $button_type & $onClick
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php. Renamed to floating_submit() from floating_submit_button()
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php. Renamed to floating_submit() from floating_submit_button()
      * @since   3.13.0  Reworked. Changed params to $button_type_submit, $params & $overwrite_class
      * @since   3.16.1  Reworked again, moved to new button standard - removed params $button_type_submit, $overwrite_class
      */
@@ -627,7 +627,7 @@ class Buttons {
      * Draw the floating top and bottom buttons
      * 
      * @since   3.6.0
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php.
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php.
      */
 
     public static function floating_top_bottom_buttons(): void {
@@ -678,7 +678,7 @@ class Buttons {
      * @var string  $interface_bttn_class   Default: 'bttn'
      * 
      * @since   3.9.0
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php.
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php.
      */
 
     public static string $interface_bttn_class = 'bttn';
@@ -694,7 +694,7 @@ class Buttons {
      * @return  string|void
      * 
      * @since   3.9.0
-     * @since   3.11.0  Moved to Framework\HTML\Buttons.php from PageElements.php. Renamed to interface() from interface_button()
+     * @since   3.11.0  Moved to LBS\HTML\Buttons.php from PageElements.php. Renamed to interface() from interface_button()
      * @since   3.13.0  Revamped and removed params, $onclick, $extra_class, $id, added $params
      */
 

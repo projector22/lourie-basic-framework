@@ -10,7 +10,7 @@
 
 use App\Structure\Footer;
 use App\Structure\TopBar;
-use Framework\Auth\SitePermissions;
+use LBS\Auth\SitePermissions;
 use App\Structure\HTMLHeader as Header;
 use App\Structure\NavSideBar as SideBar;
 

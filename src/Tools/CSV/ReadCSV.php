@@ -1,11 +1,11 @@
 <?php
 
-namespace Framework\Tools\CSV;
+namespace LBS\Tools\CSV;
 
 /**
  * Read and extract the data of a Comma Seperated Value (.csv) Spreadsheet.
  * 
- * use Framework\Tools\CSV\ReadCSV;
+ * use LBS\Tools\CSV\ReadCSV;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

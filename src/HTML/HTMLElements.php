@@ -1,13 +1,13 @@
 <?php
 
-namespace Framework\HTML;
+namespace LBS\HTML;
 
 use Exception;
 
 /**
  * This class is to draw out basic HTML elements
  * 
- * use Framework\HTML\HTMLElements as HTML;
+ * use LBS\HTML\HTMLElements as HTML;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

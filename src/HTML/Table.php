@@ -1,16 +1,16 @@
 <?php
 
-namespace Framework\HTML;
+namespace LBS\HTML;
 
 use \Exception;
-use Framework\HTML\JS;
-use Framework\HTML\Form;
-use Framework\HTML\HTML;
+use LBS\HTML\JS;
+use LBS\HTML\Form;
+use LBS\HTML\HTML;
 
 /**
  * New class for generating tables within the app.
  * 
- * use Framework\HTML\Table;
+ * use LBS\HTML\Table;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

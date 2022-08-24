@@ -2,7 +2,7 @@
 
 use App\Db\DatabaseDefaults;
 use App\Db\DatabaseStructure;
-use Framework\Db\ConnectMySQL;
+use LBS\Db\ConnectMySQL;
 
 /**
  * Tools for executing various Development tools

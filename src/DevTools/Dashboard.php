@@ -1,19 +1,19 @@
 <?php
 
-namespace Framework\DevTools;
+namespace LBS\DevTools;
 
 use App\Auth\Sessions;
-use Framework\HTML\Draw;
-use Framework\HTML\Form;
-use Framework\HTML\HTML;
-use Framework\HTML\Button;
-use Framework\Auth\Session;
-use Framework\Db\ConnectMySQL;
+use LBS\HTML\Draw;
+use LBS\HTML\Form;
+use LBS\HTML\HTML;
+use LBS\HTML\Button;
+use LBS\Auth\Session;
+use LBS\Db\ConnectMySQL;
 
 /**
  * This class handles the dev tools mode dashboard.
  * 
- * use Framework\DevTools\Dashboard;
+ * use LBS\DevTools\Dashboard;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

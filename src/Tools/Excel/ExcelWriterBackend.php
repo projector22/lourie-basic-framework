@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Tools\Excel;
+namespace LBS\Tools\Excel;
 
 use Exception;
 use ZipArchive;
@@ -10,7 +10,7 @@ use RecursiveDirectoryIterator;
 /**
  * Backend actions to create an excel file.
  * 
- * use Framework\Tools\Excel\ExcelWriterBackend;
+ * use LBS\Tools\Excel\ExcelWriterBackend;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

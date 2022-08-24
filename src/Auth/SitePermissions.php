@@ -1,13 +1,13 @@
 <?php
 
-namespace Framework\Auth;
+namespace LBS\Auth;
 
 use App\Auth\Login;
 use App\Auth\Cookies;
 use App\Auth\Sessions;
 use App\Structure\Footer;
 use App\Db\Data\UserAccountsData;
-use Framework\Tools\JSON\JSONTools;
+use LBS\Tools\JSON\JSONTools;
 
 /**
  * This class gets the $_SESSION permissions variable and sets a public function for each permission level.
@@ -20,7 +20,7 @@ use Framework\Tools\JSON\JSONTools;
  * 
  * Functions only for the logged in user
  * 
- * use Framework\Auth\SitePermissions;
+ * use LBS\Auth\SitePermissions;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

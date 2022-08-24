@@ -1,23 +1,23 @@
 <?php
 
-namespace Framework\HTML;
+namespace LBS\HTML;
 
 use App\Enums\SVGImages;
-use Framework\HTML\JS;
-use Framework\HTML\HTML;
+use LBS\HTML\JS;
+use LBS\HTML\HTML;
 use SVGTools\SVG;
 
 /**
  * This class is to draw out various commonly used UI elements
  * 
- * use Framework\HTML\Draw;
+ * use LBS\HTML\Draw;
  * 
  * @composer-requires    SVGTools\SVG
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.1.0
- * @since   3.12.5      Moved to Framework\HTML\Draw from PageElements
+ * @since   3.12.5      Moved to LBS\HTML\Draw from PageElements
  */
 
 class Draw {
