@@ -83,14 +83,18 @@ class LDAPHandler {
      * @param   string  $dn_password    The specified domain dn_password        Default: null
      * @param   string  $ldap_server    The specified domain ldap_server        Default: null
      * @param   string  $port           The specified domain port               Default: null
-     * @param   string  $search_ou      A custom search ou in which to look     Default: null
      * 
      * @access  public
      * @since   3.1.0
      * @since   3.11.0  Removed param $search_ou
      */
 
-    public function __construct( ?string $dn = null, ?string $dn_password = null, ?string $ldap_server = null, ?string $port = null ) {
+    public function __construct( 
+        ?string $dn = null,
+        ?string $dn_password = null,
+        ?string $ldap_server = null,
+        ?string $port = null
+    ) {
         // Check if PHP_LDAP exists on the system
         $this->check_ldap();
 
