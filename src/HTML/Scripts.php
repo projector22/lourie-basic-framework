@@ -1,15 +1,11 @@
 <?php
 
-namespace LBS\HTML;
-
-use App\Db\Data\ScheduleData;
-use App\Db\Data\GeneralConfigData;
-use LBS\HTML\HTML;
+namespace Framework\HTML;
 
 /**
  * This class is to draw out various inline Javascript elements withing <script> tags.
  * 
- * use LBS\HTML\Scripts;
+ * use Framework\HTML\Scripts;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
@@ -39,7 +35,7 @@ class Scripts {
      * @return  string  The formed script element
      * 
      * @since   3.7.6
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts. Added return & param $src
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts. Added return & param $src
      */
 
     public static function script( string $script, ?string $src = null ) {
@@ -138,46 +134,12 @@ class Scripts {
      * 
      * @access  public
      * @since   3.1.0
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
     public static function clipboardButton( string $id = '.btn' ) {
         self::script_loader( 'src/js/thirdparty/clipboard.min.js' );
         self::script( "const clipboard = new ClipboardJS('{$id}');" );
-    }
-
-
-    /**
-     * This draws out the daily routine time, by pulling in data from dailyroutine.json and generates the Javascript
-     * 
-     * Originally built by Kalden Swart
-     * @link    https://github.com/InterferenceObject/
-     * 
-     * @access  public
-     * @since   3.1.0
-     * @since   3.8.0   Reworked to work with it's own JS file (src/js/routine.js)
-     * @since   3.12.0  Reworked to pull data from the database rather than bin/json/routine.json
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
-     */
-
-    public static function daily_routine() {
-        $config = new GeneralConfigData;
-        $config->set_index_data_by( 'config_key' );
-        $config->select_all( ['config_group' => 'routine'] );
-        $num_of_periods  = $config->data['number_of_periods']->config_value;
-        $weeks_per_cycle = $config->data['weeks_per_cycle']->config_value;
-        $am_register = isset( $config->data['am_registration'] ) ? ', ' . $config->data['am_registration']->config_value : null;
-        $pm_register = isset( $config->data['pm_registration'] ) ? ', ' . $config->data['pm_registration']->config_value : null;
-
-        $schedule_data = new ScheduleData( true );
-        $schedule = $schedule_data->sort_data_week_day_period();
-        $json = json_encode( $schedule );
-        HTML::div_container( ['class' => 'routine_timer', 'id' => 'routine_container'] );
-        self::script_module( "import Routine from './src/js/lib/routine.js';
-        const daily_routine = new Routine($json, {$num_of_periods}{$am_register}{$pm_register});
-        window.setInterval(function refresh() {
-            daily_routine.timer_element();
-        }, 0o500);" ); // the number is 0500 but the o is required in strict mode
     }
 
 
@@ -192,7 +154,7 @@ class Scripts {
      * @access  public
      * @since   3.2.2
      * @since   3.4.5   $do_nothing added
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
     public static function change_button_behaviour( string $input, string $button, int $keycode = 13, bool $do_nothing = false ): void {
@@ -223,7 +185,7 @@ class Scripts {
      * 
      * @access  public
      * @since   3.2.2
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
     public static function block_default_button_press( int $keycode = 13 ): void {
@@ -251,7 +213,7 @@ class Scripts {
      * @since   3.4.1
      * @since   3.7.0   Added @param $function_name - Reworked logic to use MutationObserver
      * @since   3.7.4   Added @param $content
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
     public static function hide_element_after_time( string $id, string $function_name = 'hide_element', int $time = 1200, string $content = '' ): void {
@@ -278,7 +240,7 @@ class Scripts {
      * 
      * @access  public
      * @since   3.6.0
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
     
     public static function insert_keyboard_shortcuts( string $desired_function ): void {
@@ -298,7 +260,7 @@ class Scripts {
      * 
      * @access  public
      * @since   3.6.4
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
+     * @since   3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
     public static function insert_shift_multiselect(): void {
