@@ -1,0 +1,21 @@
+{
+    "name": "projector22/php-debuggin-tool",
+    "type": "library",
+    "description": "Various php debugging tools",
+    "license": "mit",
+    "require": {
+        "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Debugger\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gareth Palmer",
+            "email": "bravdthepally@gmail.com",
+            "role": "lead"
+        }
+    ]
+}
