@@ -2,6 +2,10 @@
 
 This project will function as a basic framework and template for future webapps.
 
+## NOTE
+
+This app is in a ALPHA state. Please do not use on anything anywhere near production.
+
 ## Features
 
 | **Feature** | **Alpha** | **Beta** | **Production** |
