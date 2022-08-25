@@ -82,9 +82,49 @@ class Hash {
     }
 
 
+    /**
+     * Generate a cookie hash used by the system.
+     * 
+     * @param   string  $part1  A random string to be a part of the hash. In LRS this should be parsed as `TBL_PFX`.
+     * @param   string  $part2  A random string to be a part of the hash. In LRS this should be parsed as `DB_NAME`.
+     * @param   string  $part3  A random string to be a part of the hash. In LRS this should be parsed as `SCHOOL_NAME`.
+     * 
+     * @return  string
+     * 
+     * @access  public
+     * @since   3.28.0
+     */
+
+    public static function generate_cookie_hash( string $part1, string $part2, string $part3 ): string {
+        return md5( 
+            date( 'Y-m-d G:i:s' ) . 
+            time() . 
+            $part1 . 
+            $part2 . 
+            $part3 
+        );
+    }
 
 
+    /**
+     * Generate a cookie hash used by the system.
+     * 
+     * @param   string  $part1  A random string to be a part of the hash. In LRS this should be parsed as `TBL_PFX`.
+     * @param   string  $part2  A random string to be a part of the hash. In LRS this should be parsed as `DB_NAME`.
+     * 
+     * @return  string
+     * 
+     * @access  public
+     * @since   3.28.0
+     */
 
-
+    public static function generate_session_hash( string $part1, string $part2 ): string {
+        return md5( 
+            date( 'Y-m-d G:i:s' ) . 
+            time() . 
+            $part1 . 
+            $part2 
+        );
+    }
 
 }
