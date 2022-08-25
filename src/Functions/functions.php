@@ -3,7 +3,9 @@
 use LBF\HTML\HTML;
 
 /**
- * Load general functions which are used all over the script 
+ * Load general functions which are used all over the script
+ * 
+ * @todo    Find a more elegant way of autoloading the functions, ideally converting most of them to static methods.
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
