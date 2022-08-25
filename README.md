@@ -1,6 +1,6 @@
 # Lourie Basic Framework
 
-This project will function as a basic framework and template for future webapps.
+This project will function as a basic framework and template for future webapps. All versions refer to the release version on [Lourie Registration System](https://gitlab.com/projector22/lourie-registration-system), for which they were developed.
 
 ## NOTE
 
