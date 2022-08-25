@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Router;
+namespace LBS\Router;
 
 use LBS\Auth\Api;
 use App\Auth\Permissions;
@@ -9,7 +9,7 @@ use LBS\Auth\Api;
 /**
  * Handle the routing of requests throughout the app.
  * 
- * use Framework\Router\Router;
+ * use LBS\Router\Router;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

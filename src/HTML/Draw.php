@@ -3,6 +3,7 @@
 namespace LBS\HTML;
 
 use App\Enums\SVGImages;
+use LBS\Auth\Hash;
 use LBS\HTML\JS;
 use LBS\HTML\HTML;
 use SVGTools\SVG;
@@ -661,7 +662,7 @@ class Draw {
     public static function draggable_list( array $data ): void {
         $hold = HTML::$echo;
         HTML::$echo = true;
-        $id = random_id_string( 5 );
+        $id = Hash::random_id_string( 5 );
 
         HTML::div( [
             'class' => 'draggable_container',
@@ -773,7 +774,7 @@ class Draw {
 
         HTML::div( ['class' => 'main_page_maxmin__container'] );
         if( $params['maxmin'] ) {
-            $id = random_id_string();
+            $id = Hash::random_id_string();
             HTML::div( [
                 'class'     => 'main_page_maxmin',
                 'name'      => 'minmax_bttn',

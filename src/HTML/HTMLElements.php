@@ -3,6 +3,7 @@
 namespace LBS\HTML;
 
 use Exception;
+use LBS\Auth\Hash;
 
 /**
  * This class is to draw out basic HTML elements
@@ -426,7 +427,7 @@ class HTMLElements {
         }
 
         if ( !isset( $params['id'] ) ) {
-            $params['id'] = random_id_string();
+            $params['id'] = Hash::random_id_string();
         }
         if ( !isset( $params['loading'] ) ) {
             $params['loading'] = 'lazy';
