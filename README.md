@@ -22,3 +22,7 @@ This app is in a ALPHA state. Please do not use on anything anywhere near produc
 | Admin Functions | ✓ | ✓ | |
 | Help page | ✓ | | |
 | Backup & Restore | | | |
+
+## Things to add
+
+- A more generic and complete routing class.
