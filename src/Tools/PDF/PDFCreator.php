@@ -29,7 +29,7 @@ class PDFCreator extends PDFTools {
         /**
          * The author of the document, can be set as the account name
          * 
-         * @var string  $author     Default: PROGRAM_NAME
+         * @var string  $author     Default: APP_NAME
          * 
          * @access  public
          * @since   3.6.0
@@ -62,7 +62,7 @@ class PDFCreator extends PDFTools {
         /**
          * The name of the file that is generated
          * 
-         * @var string|null  $file_name  Default: PROGRAM_NAME Report
+         * @var string|null  $file_name  Default: APP_NAME Report
          * 
          * @access  public
          * @since   3.6.0
@@ -73,7 +73,7 @@ class PDFCreator extends PDFTools {
         /**
          * Keywords attached to the document
          * 
-         * @var string|null  $keywords   Default: PROGRAM_NAME
+         * @var string|null  $keywords   Default: APP_NAME
          * 
          * @access  public
          * @since   3.6.0

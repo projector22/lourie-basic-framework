@@ -24,7 +24,7 @@ class Mail {
     /**
      * The default name which will be used when sending mail
      * 
-     * The default name to be used, derived from the constants PROGRAM_NAME and SCHOOL_NAME
+     * The default name to be used, derived from the constants APP_NAME and SCHOOL_NAME
      * 
      * @var string  $default_from_name
      * @see         src/includes/meta.php
@@ -34,7 +34,7 @@ class Mail {
      * @since   3.4.0
      */
 
-    private string $default_from_name = PROGRAM_NAME . ' - ' . SCHOOL_NAME;
+    private string $default_from_name = APP_NAME . ' - ' . SCHOOL_NAME;
 
     /**
      * Default from address defined in the database. Value is defined in __construct and are taken from the database

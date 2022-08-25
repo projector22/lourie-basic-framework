@@ -487,7 +487,7 @@ class CronHandler {
             $this->php_file_content .= "\n    \$cron->subject,";
             $this->php_file_content .= "\n    \$cron->body,";
             $this->php_file_content .= "\n    \$cron->attachment ?? null,";
-            $this->php_file_content .= "\n    PROGRAM_NAME,";
+            $this->php_file_content .= "\n    APP_NAME,";
             $this->php_file_content .= "\n    true";
             $this->php_file_content .= "\n);";
             $this->php_file_content .= "\nif ( isset( \$cron->attachment[0] ) && is_file( \$cron->attachment[0] ) ) {";
