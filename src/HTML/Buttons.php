@@ -3,10 +3,10 @@
 namespace LBF\HTML;
 
 use Exception;
+use Feather\Icons;
 use LBF\Auth\Hash;
 use LBF\HTML\JS;
 use LBF\HTML\HTML;
-use App\Enums\SVGImages;
 
 /**
  * This class is to draw out various buttons on the page.
@@ -402,7 +402,8 @@ class Buttons {
      */
 
     public static function search( array $params ) {
-        $button = self::do_button( $params, SVGImages::search->image() );
+        $icon = new Icons;
+        $button = self::do_button( $params, $icon->get( 'search', echo: false ) );
 
         if ( self::$echo ) {
             echo $button;
@@ -436,7 +437,8 @@ class Buttons {
                 $params['onclick'] = 'window.print()';
             }
         }
-        $button = self::do_button( $params, SVGImages::printer->image() );
+        $icon = new Icons;
+        $button = self::do_button( $params, $icon->get( 'printer', echo: false ) );
 
         if ( self::$echo ) {
             echo $button;
@@ -656,14 +658,16 @@ class Buttons {
             });";
         };
 
+        $icon = new Icons;
+
         HTML::div_container(
             ['class' => 'ftb_button', 'id' => 'ftb_up'], 
-            JS::script_module( $js( 'ftb_up' ) ) . SVGImages::double_chevrons_up->image()
+            JS::script_module( $js( 'ftb_up' ) ) . $icon->get( 'chevrons-up', echo: false )
         );
 
         HTML::div_container(
             ['class' => 'ftb_button', 'id' => 'ftb_down'], 
-            JS::script_module( $js( 'ftb_down' ) ) . SVGImages::double_chevrons_down->image()
+            JS::script_module( $js( 'ftb_down' ) ) . $icon->get( 'chevrons-down', echo: false )
         );
 
         JS::$echo = $hold;
@@ -736,7 +740,8 @@ class Buttons {
         foreach ( $params as $index => $value ) {
             $button .= " {$index}='{$value}'";
         }
-        $button .= '>' . SVGImages::eye_off->image() . '</button>';
+        $icon = new Icons;
+        $button .= '>' . $icon->get( 'eye-off', echo: false ) . '</button>';
         if ( self::$echo ) {
             echo $button;
         } else {
