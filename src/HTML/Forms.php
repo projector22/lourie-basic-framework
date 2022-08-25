@@ -4,6 +4,7 @@ namespace LBS\HTML;
 
 use Exception;
 use App\Enums\SVGImages;
+use LBS\Auth\Hash;
 use LBS\HTML\JS;
 use LBS\HTML\HTML;
 use SVGTools\SVG;
@@ -206,7 +207,7 @@ class Forms {
                 }
             }
             $validate  = json_encode( $validate );
-            $validator = 'validator' . random_id_string( 5 );
+            $validator = 'validator' . Hash::random_id_string( 5 );
             $item .= JS::script_module( "
 import Input_Validation from './src/js/lib/input_validation.js';
 const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__validation_feedback', '{$nil_value}');
@@ -663,8 +664,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         $item .= ">{$params['value']}</textarea>";
 
         if ( $params['counter'] && $params['id'] != '' ) {
-            $div_id = random_id_string( 7 );
-            $input = 'counter' . random_id_string( 5 );
+            $div_id = Hash::random_id_string( 7 );
+            $input = 'counter' . Hash::random_id_string( 5 );
             $item .= "<div id='{$div_id}' class='text_area_counter'></div>";
             $js_echo_hold = JS::$echo;
             JS::$echo = false;
@@ -815,7 +816,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         }
 
         if ( !isset( $params['id'] ) ) {
-            $params['id'] = random_id_string( 7 );
+            $params['id'] = Hash::random_id_string( 7 );
         }
 
         if ( isset ( $param['label'] ) && !isset ( $param['id'] ) ) {
@@ -1024,7 +1025,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         if ( !isset( $params['data'] ) ) {
             throw new Exception( "\$params['data'] has not been set. This parameter must be set for a combo box." );
         }
-        $data_id = random_id_string( 7 );
+        $data_id = Hash::random_id_string( 7 );
         $item = "<datalist id='{$data_id}'>{$params['data']}</datalist>";
         unset( $params['data'] );
         $params['list'] = $data_id;
@@ -1258,7 +1259,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         }
 
         if ( !isset( $params['id'] ) ) {
-            $params['id'] = 'upl_' . random_id_string();
+            $params['id'] = 'upl_' . Hash::random_id_string();
         }
 
         $container_class = 'standard_button__margin upload_button_container';

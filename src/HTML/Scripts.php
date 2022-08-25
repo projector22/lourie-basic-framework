@@ -1,11 +1,13 @@
 <?php
 
-namespace Framework\HTML;
+namespace LBS\HTML;
+
+use LBS\Auth\Hash;
 
 /**
  * This class is to draw out various inline Javascript elements withing <script> tags.
  * 
- * use Framework\HTML\Scripts;
+ * use LBS\HTML\Scripts;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
@@ -264,7 +266,7 @@ class Scripts {
      */
 
     public static function insert_shift_multiselect(): void {
-        $id = 'sm' . random_id_string();
+        $id = 'sm' . Hash::random_id_string();
         self::script_module( "
 import Table_Filter from './src/js/lib/table_filters.js';
 const $id = new Table_Filter;

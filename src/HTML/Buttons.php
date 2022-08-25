@@ -2,10 +2,11 @@
 
 namespace LBS\HTML;
 
-use App\Enums\SVGImages;
 use Exception;
+use LBS\Auth\Hash;
 use LBS\HTML\JS;
 use LBS\HTML\HTML;
+use App\Enums\SVGImages;
 
 /**
  * This class is to draw out various buttons on the page.
@@ -157,7 +158,7 @@ class Buttons {
         $item = '';
 
         if ( !isset( $params['id'] ) ) {
-            $params['id'] = random_id_string();
+            $params['id'] = Hash::random_id_string();
         }
         if ( isset( $params['linebreak'] ) && $params['linebreak'] == 'before' ) {
             $item .= "<div class='btn_lb'></div>";
