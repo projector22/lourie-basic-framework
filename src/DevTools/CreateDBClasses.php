@@ -2,6 +2,7 @@
 
 namespace LBF\DevTools;
 
+use Exception;
 use LBF\Db\ConnectMySQL;
 use LBF\Tools\Files\FileSystem;
 
@@ -26,7 +27,7 @@ class CreateDBClasses extends ConnectMySQL {
      * @since   3.19.0
      */
 
-    const TABLE_TEMPLATE = FRAMEWORK_PATH . 'DevTools/TableTemplate.txt';
+    const TABLE_TEMPLATE = __DIR__ . '/TableTemplate.txt';
 
     /**
      * The path to the template for the 'table' file.
@@ -37,7 +38,7 @@ class CreateDBClasses extends ConnectMySQL {
      * @since   3.19.0
      */
 
-    const DATA_TEMPLATE = FRAMEWORK_PATH . 'DevTools/DataTemplate.txt';
+    const DATA_TEMPLATE = __DIR__ . '/DataTemplate.txt';
 
 
     /**
@@ -49,7 +50,7 @@ class CreateDBClasses extends ConnectMySQL {
      * @since   3.19.0
      */
 
-    private string $version;
+    private string $version = '';
 
 
     /**
@@ -59,10 +60,20 @@ class CreateDBClasses extends ConnectMySQL {
      * @since   3.19.0
      */
 
-    public function __construct() {
-        $this->version = PROJ_VERSION;
-        if ( PROJ_STATUS !== '' ) {
-            $this->version .= ' ' . PROJ_STATUS;
+    public function __construct(
+        /**
+         * The path of the app. In LRS this is parsed as APP_PATH
+         * 
+         * @var string  $app_path
+         * 
+         * @readonly
+         * @access  private
+         * @since   3.28.0
+         */
+        private readonly string $app_path
+    ) {
+        if ( defined( 'APP_VERSION' ) ) {
+            $this->version = APP_VERSION;
         }
         $this->conn = $this->connect_db();
     }
@@ -81,6 +92,10 @@ class CreateDBClasses extends ConnectMySQL {
      */
 
     public function prepare_table_php_class_creation( bool $return = false ): bool|array {
+        if ( !defined( 'TBL_PFX' ) ) {
+            define( 'TBL_PFX', '' ); // Hide the error.
+            throw new Exception( "Table Prefex TBL_PFX not defined" );
+        }
         /**
          * String cleaning of the table name as required.
          * 
@@ -105,8 +120,8 @@ class CreateDBClasses extends ConnectMySQL {
             $table_name = $clean_up_file_name( $table_name, '_' );
         }
 
-        $tables_file = normalize_path_string( APP_PATH . 'Db\\Tables\\' . $table_name . '.php' );
-        $data_file   = normalize_path_string( APP_PATH . 'Db\\Data\\'   . $table_name . 'Data.php' );
+        $tables_file = normalize_path_string( $this->app_path . 'Db\\Tables\\' . $table_name . '.php' );
+        $data_file   = normalize_path_string( $this->app_path . 'Db\\Data\\'   . $table_name . 'Data.php' );
         $namespace   = 'App\\Db\\Tables\\' . $table_name;
         if ( file_exists( $tables_file ) || file_exists( $data_file ) ) {
             echo "You cannot continue!<br>";
