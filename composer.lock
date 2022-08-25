@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "14cb15fe313e27be59228eda58e63490",
+    "content-hash": "174f7377b4e43acea5a11822515c5f64",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -55,6 +55,55 @@
                 "source": "https://github.com/erusev/parsedown/tree/1.7.x"
             },
             "time": "2019-12-30T22:54:17+00:00"
+        },
+        {
+            "name": "pixelrobin/php-feather",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Pixelrobin/php-feather.git",
+                "reference": "0c1a4a06d078891ac4f1b9b7091158c27bd02d0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Pixelrobin/php-feather/zipball/0c1a4a06d078891ac4f1b9b7091158c27bd02d0b",
+                "reference": "0c1a4a06d078891ac4f1b9b7091158c27bd02d0b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Feather\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Savchuk",
+                    "email": "pixelrobin@hotmail.com"
+                }
+            ],
+            "description": "PHP library for feather icons",
+            "keywords": [
+                "feather",
+                "icons",
+                "pixelrobin",
+                "svg"
+            ],
+            "support": {
+                "issues": "https://github.com/Pixelrobin/php-feather/issues",
+                "source": "https://github.com/Pixelrobin/php-feather/tree/master"
+            },
+            "time": "2020-03-19T06:05:02+00:00"
         },
         {
             "name": "tecnickcom/tcpdf",
