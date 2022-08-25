@@ -1,4 +1,7 @@
 <?php
+
+use LBF\Img\SVGImages;
+
 /**
  * Draw out the page that will display when there is a 403 error.
  * 
@@ -7,7 +10,7 @@
  * @since   3.9.1   Reworked and remade
  */
 
-$image = BASE_URL . 'src/img/403.svg';
+$image = html_path( SVGImages::error403->path() );
 echo "<div class='container__403'>";
 echo "<h3>You shall not pass!</h3>";
 echo "<img class='error_img' src='{$image}'>";

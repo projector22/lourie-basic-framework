@@ -17,7 +17,18 @@ enum SVGImages {
      * @since   3.28.0
      */
     case maintenance;
-
+    /**
+     * @since   3.28.0
+     */
+    case error401;
+    /**
+     * @since   3.28.0
+     */
+    case error403;
+    /**
+     * @since   3.28.0
+     */
+    case error404;
 
     /**
      * Return the full path of the selected SVG file.
@@ -31,6 +42,9 @@ enum SVGImages {
     public function path(): string {
         return match( $this ) {
             self::maintenance => __DIR__ . '/maintenance.svg',
+            self::error401    => __DIR__ . '/401.svg',
+            self::error403    => __DIR__ . '/403.svg',
+            self::error404    => __DIR__ . '/404.svg',
         };
     }
 
@@ -44,8 +58,6 @@ enum SVGImages {
      */
 
     public function image(): string {
-        return match( $this ) {
-            self::maintenance => file_get_contents( self::maintenance->path() ),
-        };
+        return file_get_contents( $this->path() );
     }
 }
