@@ -1,5 +1,32 @@
 <?php
 
+/**
+ * @todo    A much more elegant solution is needed here.
+ * 
+ * Look at .env files, and a revamp of LRS.
+ * The problem is, the way this class is mostly extended to,
+ * there is no oportunity to parse these constants, therefore
+ * a better way is needed in LRS.
+ * 
+ * @since   3.28.0
+ */
+
+if ( !defined( "DB_LOC" ) ) {
+    define( "DB_LOC", '' );
+}
+if ( !defined( "DB_USER" ) ) {
+    define( "DB_USER", '' );
+}
+if ( !defined( "DB_PASS" ) ) {
+    define( "DB_PASS", '' );
+}
+if ( !defined( "DB_NAME" ) ) {
+    define( "DB_NAME", '' );
+}
+if ( !defined( "DB_YEAR" ) ) {
+    define( "DB_YEAR", '' );
+}
+
 namespace LBS\Db;
 
 use \PDO;
@@ -1425,7 +1452,7 @@ class ConnectMySQL {
 
     private function log_sql( mixed $data ): void {
         $timestamp = date( 'Y-m-d G:i:s' );
-        $path = BIN_PATH . "logs/sql.log";
+        $path = realpath( "./bin/logs/sql.log" );
 
         if ( is_array( $data ) || is_object( $data ) ) {
             $text = json_encode( $data, JSON_PRETTY_PRINT );
