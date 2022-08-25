@@ -1,6 +1,6 @@
 <?php
 
-use LBS\HTML\HTML;
+use LBF\HTML\HTML;
 
 /**
  * Load general functions which are used all over the script 

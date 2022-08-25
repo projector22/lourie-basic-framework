@@ -1,13 +1,13 @@
 <?php
 
-namespace LBS\Tools\CSV;
+namespace LBF\Tools\CSV;
 
-use LBS\Tools\Downloads\DownloadHandler;
+use LBF\Tools\Downloads\DownloadHandler;
 
 /**
  * Write data of to a Comma Seperated Value (.csv) Spreadsheet.
  * 
- * use LBS\Tools\CSV\WriteCSV;
+ * use LBF\Tools\CSV\WriteCSV;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

@@ -1,11 +1,11 @@
 <?php
 
-namespace LBS\Auth;
+namespace LBF\Auth;
 
 /**
  * This class is used to generate a number of keys and random strings used in the system.
  * 
- * use LBS\Auth\Hash;
+ * use LBF\Auth\Hash;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

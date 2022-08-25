@@ -1,21 +1,21 @@
 <?php
 
-namespace LBS\Tools\Downloads;
+namespace LBF\Tools\Downloads;
 
 use \Exception;
-use LBS\HTML\Draw;
+use LBF\HTML\Draw;
 
 /**
  * Class for controlling downloads through the app, rejecting non logged in downloads.
  * 
- * use LBS\Tools\Downloads\DownloadHandler;
+ * use LBF\Tools\Downloads\DownloadHandler;
  * 
  * @see     https://wordpress.stackexchange.com/questions/281500/protecting-direct-access-to-pdf-and-zip-unless-user-logged-in-without-plugin
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.6.3
- * @since   3.11.0  Moved to LBS\Tools\Downloads and class renamed DownloadHandler from Downloads
+ * @since   3.11.0  Moved to LBF\Tools\Downloads and class renamed DownloadHandler from Downloads
  */
 
 class DownloadHandler {

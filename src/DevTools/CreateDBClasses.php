@@ -1,14 +1,14 @@
 <?php
 
-namespace LBS\DevTools;
+namespace LBF\DevTools;
 
-use LBS\Db\ConnectMySQL;
-use LBS\Tools\Files\FileSystem;
+use LBF\Db\ConnectMySQL;
+use LBF\Tools\Files\FileSystem;
 
 /**
  * This class handles the creation of php class files.
  * 
- * use LBS\DevTools\CreateDBClasses;
+ * use LBF\DevTools\CreateDBClasses;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

@@ -1,6 +1,6 @@
 <?php
 
-namespace LBS\Db;
+namespace LBF\Db;
 
 use \PDO;
 use Exception;
@@ -9,7 +9,7 @@ use \PDOException;
 /**
  * General methods of interacting with the database
  * 
- * use LBS\Db\DatabaseControl;
+ * use LBF\Db\DatabaseControl;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

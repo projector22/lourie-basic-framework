@@ -1,16 +1,16 @@
 <?php
 
-namespace LBS\Tools\Upload;
+namespace LBF\Tools\Upload;
 
 /**
  * This class handles any file upload requests
  * 
- * use LBS\Tools\Upload\UploadHandler;
+ * use LBF\Tools\Upload\UploadHandler;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.6.0
- * @since   3.12.0  Moved to LBS\Tools\Upload
+ * @since   3.12.0  Moved to LBF\Tools\Upload
  */
 
 class UploadHandler {

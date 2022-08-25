@@ -1,6 +1,6 @@
 <?php
 
-namespace LBS\Tools\Files;
+namespace LBF\Tools\Files;
 
 use \Exception;
 use RecursiveIteratorIterator;
@@ -9,14 +9,14 @@ use RecursiveDirectoryIterator;
 /**
  * Various methods for performing and executing LDAP queries
  * 
- * use LBS\Tools\Files\FileSystem as Files;
+ * use LBF\Tools\Files\FileSystem as Files;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @see     https://stackoverflow.com/questions/927564/how-to-find-a-reason-when-mkdir-fails-from-php
  * 
  * @since   3.4.0
- * @since   3.11.0  Moved to LBS\Tools\FileSystem.
+ * @since   3.11.0  Moved to LBF\Tools\FileSystem.
  */
 
 class FileSystem {

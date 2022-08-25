@@ -1,15 +1,15 @@
 <?php
 
-namespace LBS\Tools\Cron;
+namespace LBF\Tools\Cron;
 
 use App\Db\Data\CronEntriesData;
-use LBS\HTML\Draw;
-use LBS\Tools\Files\FileSystem;
+use LBF\HTML\Draw;
+use LBF\Tools\Files\FileSystem;
 
 /**
  * Handle various cron instructions.
  * 
- * use LBS\Tools\Cron\CronHandler;
+ * use LBF\Tools\Cron\CronHandler;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
@@ -481,7 +481,7 @@ class CronHandler {
         }
         $this->php_file_content .= "\n\$cron->execute();";
         if ( $this->send_email && isset( $this->send_to_email ) ) {
-            $this->php_file_content .= "\n\$mail = new LBS\Tools\Mail\Mail;";
+            $this->php_file_content .= "\n\$mail = new LBF\Tools\Mail\Mail;";
             $this->php_file_content .= "\n\$mail->send_mail( ";
             $this->php_file_content .= "\n    '{$this->send_to_email}',";
             $this->php_file_content .= "\n    \$cron->subject,";

@@ -1,13 +1,13 @@
 <?php
 
-namespace LBS\HTML;
+namespace LBF\HTML;
 
-use LBS\HTML\Scripts;
+use LBF\HTML\Scripts;
 
 /**
  * This class is to draw out various inline Javascript elements withing <script> tags.
  * 
- * use LBS\HTML\JS;
+ * use LBF\HTML\JS;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

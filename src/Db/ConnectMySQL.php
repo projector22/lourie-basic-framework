@@ -1,6 +1,6 @@
 <?php
 
-namespace LBS\Db;
+namespace LBF\Db;
 
 use \PDO;
 use Exception;
@@ -37,7 +37,7 @@ if ( !defined( "DB_YEAR" ) ) {
 /**
  * New fully revamped MySQL interface class, making use of PDO prepared statements.
  * 
- * use LBS\Db\ConnectMySQL;
+ * use LBF\Db\ConnectMySQL;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
