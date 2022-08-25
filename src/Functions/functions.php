@@ -20,6 +20,15 @@ use LBF\HTML\HTML;
  */
 
 function load_class( string $class ) {
+    /**
+     * @todo find a way of moving this hard coded file path out of the framework, or
+     * to define it by definition elsewhere.
+     * 
+     * @since   3.28.0
+     */
+    if ( !defined( "SRC_PATH" ) ) {
+        define( "SRC_PATH", realpath( './src' ) );
+    }
     $class_name = $class;
     $path = SRC_PATH . normalize_path_string( $class ) . '.php';
     if ( !file_exists ( $path ) ) {
@@ -393,6 +402,20 @@ function week_select( ?string $selected_week = null, ?int $year = null, bool $ad
  */
 
 function month_select( ?string $selected_month = null, ?int $year = null ): string {
+    $months = [
+        1  => 'January',
+        2  => 'February',
+        3  => 'March',
+        4  => 'April',
+        5  => 'May',
+        6  => 'June',
+        7  => 'July',
+        8  => 'August',
+        9  => 'September',
+        10 => 'October',
+        11 => 'November',
+        12 => 'December'
+    ];
     if ( is_null( $year ) ) {
         $year  = date( 'Y' );
     }        
@@ -401,7 +424,7 @@ function month_select( ?string $selected_month = null, ?int $year = null ): stri
         $selected_month = date( 'n' );
     }
 
-    return build_item_droplist( MONTHS_OF_YEAR, array_keys( MONTHS_OF_YEAR ), $selected_month );
+    return build_item_droplist( $months, array_keys( $months ), $selected_month );
 }
 
 
@@ -566,6 +589,13 @@ function order_by( array &$data, string $field, bool $is_object = false ): array
  */
 
 function site_logo(): string|bool {
+    /**
+     * @todo Figure out how this should be used.
+     */
+    if ( !defined( "SITE_LOGO" ) ) {
+        define( "SITE_LOGO", "" );
+        return false;
+    }
     if ( file_exists ( SITE_LOGO . '.png' ) ) {
         return SITE_LOGO . '.png';
     } else if ( file_exists ( SITE_LOGO . '.jpg' ) ) {
