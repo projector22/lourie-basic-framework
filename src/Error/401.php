@@ -7,7 +7,9 @@
  * @since   3.9.1   Reworked and remade
  */
 
-$image = BASE_URL . 'src/img/401.svg';
+use LBF\Img\SVGImages;
+
+$image = html_path( SVGImages::error401->path() );
 echo "<div class='container__401'>";
 echo "<h3>Can't find your creds here mate...</h3>";
 echo "<img class='error_img' src='{$image}'>";

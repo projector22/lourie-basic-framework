@@ -1,4 +1,7 @@
 <?php
+
+use LBF\Img\SVGImages;
+
 /**
  * Draw out the page that will display when there is a 404 error.
  * 
@@ -8,7 +11,7 @@
  * @since   3.9.1   Reworked and remade, new image & text
  */
 
-$image = BASE_URL . 'src/img/404.svg';
+$image = html_path( SVGImages::error404->path() );
 echo "<div class='container__404'>";
 echo "<h3>Um... yeah</h3>";
 echo "<img class='error_img' src='{$image}'>";
