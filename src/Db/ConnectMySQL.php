@@ -1,5 +1,12 @@
 <?php
 
+namespace LBS\Db;
+
+use \PDO;
+use Exception;
+use Throwable;
+use \PDOException;
+
 /**
  * @todo    A much more elegant solution is needed here.
  * 
@@ -26,13 +33,6 @@ if ( !defined( "DB_NAME" ) ) {
 if ( !defined( "DB_YEAR" ) ) {
     define( "DB_YEAR", '' );
 }
-
-namespace LBS\Db;
-
-use \PDO;
-use Exception;
-use Throwable;
-use \PDOException;
 
 /**
  * New fully revamped MySQL interface class, making use of PDO prepared statements.

@@ -263,7 +263,7 @@ class DatabaseControl {
 
     private function log_sql( mixed $data ): void {
         $timestamp = date( 'Y-m-d G:i:s' );
-        $path = BIN_PATH . "logs/sql.log";
+        $path = realpath( "./bin/logs/sql.log" );
 
         if ( is_array( $data ) || is_object( $data ) ) {
             $text = json_encode( $data, JSON_PRETTY_PRINT );
