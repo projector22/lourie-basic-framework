@@ -1,11 +1,11 @@
 <?php
 
-namespace LBS\Auth;
+namespace LBF\Auth;
 
 /**
  * This class handles a number of tasks related to sessions and the $_SESSION variable.
  * 
- * use LBS\Auth\Session;
+ * use LBF\Auth\Session;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

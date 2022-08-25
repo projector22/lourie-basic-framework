@@ -1,13 +1,13 @@
 <?php
 
-namespace LBS\Auth;
+namespace LBF\Auth;
 
-use LBS\Auth\Hash;
+use LBF\Auth\Hash;
 
 /**
  * This class handles a number of tasks related to the API.
  * 
- * use LBS\Auth\Api;
+ * use LBF\Auth\Api;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

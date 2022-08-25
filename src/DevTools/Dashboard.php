@@ -1,17 +1,17 @@
 <?php
 
-namespace LBS\DevTools;
+namespace LBF\DevTools;
 
-use LBS\HTML\Draw;
-use LBS\HTML\Form;
-use LBS\HTML\HTML;
-use LBS\HTML\Button;
-use LBS\Db\ConnectMySQL;
+use LBF\HTML\Draw;
+use LBF\HTML\Form;
+use LBF\HTML\HTML;
+use LBF\HTML\Button;
+use LBF\Db\ConnectMySQL;
 
 /**
  * This class handles the dev tools mode dashboard.
  * 
- * use LBS\DevTools\Dashboard;
+ * use LBF\DevTools\Dashboard;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

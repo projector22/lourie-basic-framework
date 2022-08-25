@@ -1,11 +1,11 @@
 <?php
 
-namespace LBS\Trek;
+namespace LBF\Trek;
 
 /**
  * A template class for any treks that are created
  * 
- * use LBS\Trek\Wagon;
+ * use LBF\Trek\Wagon;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

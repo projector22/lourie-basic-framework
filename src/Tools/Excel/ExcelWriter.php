@@ -1,13 +1,13 @@
 <?php
 
-namespace LBS\Tools\Excel;
+namespace LBF\Tools\Excel;
 
 use Exception;
 
 /**
  * Basic methods for creating an excel file.
  * 
- * use LBS\Tools\Excel\ExcelWriter;
+ * use LBF\Tools\Excel\ExcelWriter;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

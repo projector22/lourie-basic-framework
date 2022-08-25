@@ -3,7 +3,7 @@
 namespace App\Db\Data;
 
 use App\Db\DbTemplate;
-use LBS\Db\ConnectMySQL;
+use LBF\Db\ConnectMySQL;
 
 /**
  * Interface with class <<ORIGONAL_TABLE_NAME>>, and perform SQL commands on it as required.

@@ -1,13 +1,13 @@
 <?php
 
-namespace LBS\Tools\Spreadsheet;
+namespace LBF\Tools\Spreadsheet;
 
 use Exception;
 
 /**
  * This class handles the backend of spreadsheet tools.
  * 
- * use LBS\Tools\Spreadsheet\SpreadsheetEngine;
+ * use LBF\Tools\Spreadsheet\SpreadsheetEngine;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

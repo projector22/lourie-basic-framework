@@ -1,13 +1,13 @@
 <?php
 
-namespace LBS\HTML;
+namespace LBF\HTML;
 
-use LBS\HTML\Buttons;
+use LBF\HTML\Buttons;
 
 /**
  * This class is to draw out various buttons on the page.
  * 
- * use LBS\HTML\Button;
+ * use LBF\HTML\Button;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

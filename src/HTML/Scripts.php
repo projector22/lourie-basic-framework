@@ -1,13 +1,13 @@
 <?php
 
-namespace LBS\HTML;
+namespace LBF\HTML;
 
-use LBS\Auth\Hash;
+use LBF\Auth\Hash;
 
 /**
  * This class is to draw out various inline Javascript elements withing <script> tags.
  * 
- * use LBS\HTML\Scripts;
+ * use LBF\HTML\Scripts;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

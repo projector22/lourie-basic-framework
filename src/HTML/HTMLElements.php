@@ -1,14 +1,14 @@
 <?php
 
-namespace LBS\HTML;
+namespace LBF\HTML;
 
 use Exception;
-use LBS\Auth\Hash;
+use LBF\Auth\Hash;
 
 /**
  * This class is to draw out basic HTML elements
  * 
- * use LBS\HTML\HTMLElements as HTML;
+ * use LBF\HTML\HTMLElements as HTML;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

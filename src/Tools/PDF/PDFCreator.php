@@ -1,10 +1,10 @@
 <?php
 
-namespace LBS\Tools\PDF;
+namespace LBF\Tools\PDF;
 
 use Exception;
 use TCPDF_STATIC;
-use LBS\Tools\PDF\PDFTools;
+use LBF\Tools\PDF\PDFTools;
 
 /**
  * Generate a PDF document, by leavering into TCPDF.
@@ -12,7 +12,7 @@ use LBS\Tools\PDF\PDFTools;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.6.0
- * @since   3.11.0  Moved to LBS\Tools\PDF.
+ * @since   3.11.0  Moved to LBF\Tools\PDF.
  * @since   3.20.0  Completely revamped and renamed PDFCreator.
  */
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace LBS\Docs;
+namespace LBF\Docs;
 
 use Parsedown;
-use LBS\HTML\Draw;
-use LBS\HTML\HTML;
+use LBF\HTML\Draw;
+use LBF\HTML\HTML;
 
 /**
  * This class is to autoload markdown files from the /docs folder.
  * 
- * use LBS\Docs\DocLoader;
+ * use LBF\Docs\DocLoader;
  * 
  * @author  Gareth Palmer   [Github & Gitlab /projector22]
  * 

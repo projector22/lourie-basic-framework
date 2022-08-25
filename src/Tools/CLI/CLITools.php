@@ -1,13 +1,13 @@
 <?php
 
-namespace LBS\Tools\CLI;
+namespace LBF\Tools\CLI;
 
 use Exception;
 
 /**
  * Handle various Command Line Interface tools.
  * 
- * use LBS\Tools\CLI\CLITools;
+ * use LBF\Tools\CLI\CLITools;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 

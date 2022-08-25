@@ -1,13 +1,13 @@
 <?php
 
-namespace LBS\Trek;
+namespace LBF\Trek;
 
-use LBS\Db\ConnectMySQL;
+use LBF\Db\ConnectMySQL;
 
 /**
  * Tools to be used in normal post update `trek` class
  * 
- * use LBS\Trek\Oxen;
+ * use LBF\Trek\Oxen;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
