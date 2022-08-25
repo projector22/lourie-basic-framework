@@ -2,11 +2,12 @@
 
 namespace LBF\DevTools;
 
+use LBF\Db\ConnectMySQL;
 use LBF\HTML\Draw;
 use LBF\HTML\Form;
 use LBF\HTML\HTML;
 use LBF\HTML\Button;
-use LBF\Db\ConnectMySQL;
+use LBF\Img\SVGImages;
 
 /**
  * This class handles the dev tools mode dashboard.
@@ -91,7 +92,7 @@ class Dashboard extends ConnectMySQL {
 
     private function page_closed(): void {
         HTML::img( [
-            'src'   => BASE_URL . 'src/img/maintenance.svg',
+            'src'   => html_path( SVGImages::maintenance->path() ),
             'class' => 'error_img',
         ] );
         HTML::div_container( [
