@@ -2,10 +2,11 @@
 
 namespace LBF\HTML;
 
-use App\Enums\SVGImages;
-use LBF\Auth\Hash;
+use Feather\Icons;
 use LBF\HTML\JS;
+use LBF\Auth\Hash;
 use LBF\HTML\HTML;
+use LBF\Img\SVGImages;
 use SVGTools\SVG;
 
 /**
@@ -36,34 +37,6 @@ class Draw {
 
 
     /**
-     * Place the site logo anywhere on the site as required
-     * 
-     * @param   int $width  Define width of logo. Default: 200px
-     * 
-     * @return  string|void
-     * 
-     * @access  public
-     * @since   3.1.0
-     */
-
-    public static function site_logo( int $width = 30 ) {
-        $logo = site_logo();
-
-        if ( $logo !== false ) {
-            $img = "<img src='" . BASE_URL . "{$logo}' alt='School Logo' width='{$width}px'>";
-        } else {
-            return;
-        }
-
-        if ( self::$echo ) {
-            echo $img;
-        } else {
-            return $img;
-        }
-    }
-
-
-    /**
      * Providing a spacing element as required
      * 
      * @access  public
@@ -88,6 +61,18 @@ class Draw {
 
 
     /**
+     * A property for holding the value of whether the app is running in the CLI or Web interface.
+     * 
+     * @var boolean $cli
+     * 
+     * @access  private
+     * @since   3.28.0
+     */
+
+    private bool $cli;
+
+
+    /**
      * Draws a dot on the screen as required
      * 
      * @param   int     $k  The number to draw  Default: 1
@@ -97,7 +82,10 @@ class Draw {
      */
 
     public static function dot( int $k = 1 ): void {
-        $dot = CLI_INTERFACE ? '.' : '<b>.</b> ';
+        if ( !isset( self::$cli ) ) {
+            self::$cli = php_sapi_name() == 'cli';
+        }
+        $dot = self::$cli ? '.' : '<b>.</b> ';
         for ( $i = 0; $i < $k; $i++) {
             echo $dot;
         }
@@ -119,7 +107,10 @@ class Draw {
      */
 
     public static function lines( int $k ) {
-        $lb = CLI_INTERFACE ? "\n" : "<br>";
+        if ( !isset( self::$cli ) ) {
+            self::$cli = php_sapi_name() == 'cli';
+        }
+        $lb = self::$cli ? "\n" : "<br>";
         $line = '';
         for ( $i = 0; $i < $k; $i++ ) {
             $line .= $lb;
@@ -210,10 +201,10 @@ class Draw {
     public static function item_description( string $input, int $lines = 0 ) {
         if ( self::$echo ) {
             self::lines( $lines );
-            echo "<span>$input</span>";
+            echo "<span>{$input}</span>";
         } else {
             $element = self::lines( $lines );
-            $element .= "<span>$input</span>";
+            $element .= "<span>{$input}</span>";
             return $element;    
         }
     }
@@ -230,7 +221,7 @@ class Draw {
      */
 
     public static function response_text( string $id, string $content = '' ): void  {
-        echo "<span id='$id'>$content</span>"; 
+        echo "<span id='{$id}'>{$content}</span>"; 
     }
 
 
@@ -287,27 +278,6 @@ class Draw {
     public static function ajax_response_bottom_left( string $id ): void {
         echo "<div class='ajax_response_bottom_left'>";
         self::response_text( $id );
-        echo "</div>";
-    }
-
-
-    /**
-     * Draw out a reports header on printed reports
-     * 
-     * @param   string  $report_title   A title to be placed on the top of the report. Default: "Report"
-     * 
-     * @access  public
-     * @since   3.4.5
-     */
-
-    public static function printing_report_header( string $report_title = "Report" ): void {
-        echo "<div class='print_report_header_contain'>";
-        echo "<div class='prh_sch_name'>";
-        echo "<i>" . SCHOOL_NAME . "</i>";
-        echo "</div>";
-        echo "<div class='prh_rpt_title'>";
-        echo "<b>$report_title</b>";
-        echo "</div>";
         echo "</div>";
     }
 
@@ -785,7 +755,8 @@ class Draw {
                 'id'   => "{$id}_max",
                 'name' => 'minmax_max',
             ] );
-            $svg_max = new SVG( SVGImages::maximize->image() );
+            $icon = new Icons;
+            $svg_max = new SVG( $icon->get( 'maximize', echo: false ) );
             $svg_max->set_size( 18, 18 );
             $svg_max->echo();
             HTML::close_span();
@@ -794,7 +765,7 @@ class Draw {
                 'id'    => "{$id}_min",
                 'name'  => 'minmax_min',
             ] );
-            $svg_min = new SVG( SVGImages::minimize->image() );
+            $svg_min = new SVG( $icon->get( 'minimize', echo: false ) );
             $svg_min->set_size( 18, 18 );
             $svg_min->echo();
             HTML::close_span();
