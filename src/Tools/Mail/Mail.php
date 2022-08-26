@@ -24,17 +24,15 @@ class Mail {
     /**
      * The default name which will be used when sending mail
      * 
-     * The default name to be used, derived from the constants APP_NAME and SCHOOL_NAME
+     * The default name to be used when sending an email.
      * 
      * @var string  $default_from_name
-     * @see         src/includes/meta.php
-     * @see         bin/config.php
      * 
      * @access  private
      * @since   3.4.0
      */
 
-    private string $default_from_name = APP_NAME . ' - ' . SCHOOL_NAME;
+    private string $default_from_name;
 
     /**
      * Default from address defined in the database. Value is defined in __construct and are taken from the database
@@ -162,14 +160,23 @@ class Mail {
 
 
     /**
-     * Constructor method, things to do when the class is loaded
+     * Constructor method, things to do when the class is loaded.
+     * 
+     * @param   object      $config_object      The object containing the various SMTP properties.
+     * @param   string|null $default_from_name  The name which is used as a "From Name".
+     *                                          In LRS this is `APP_NAME . ' - ' . SCHOOL_NAME`.
+     *                                          Default: null
      * 
      * @access  public
      * @since   3.4.0
+     * @since   3.28.0  Added params `$config_object` & `$default_from_name`.
      */
 
-    public function __construct() {
-        $config = new GeneralConfigData;
+    public function __construct(
+        object $config_object,
+        ?string $default_from_name = null,
+    ) {
+        $config = $config_object;
         $mail_config = $config->get_email_config();
         $this->smtp_address  = $mail_config->smtp_address;
         $this->username      = $mail_config->username;
@@ -178,6 +185,8 @@ class Mail {
         $this->encrypt_type  = $mail_config->encrypt_type;
         $this->port          = $mail_config->port;
         $this->default_from  = $mail_config->default_send_addr;
+
+        $this->default_from_name = $default_from_name ?? $this->default_from;
     } //__construct
 
 
