@@ -37,6 +37,10 @@ enum SVGImages {
      * @since   3.15.0
      */
     case grabber;
+    /**
+     * @since   3.9.1
+     */
+    case content_draw_arrow;
 
     /**
      * Return the full path of the selected SVG file.
@@ -49,12 +53,13 @@ enum SVGImages {
 
     public function path(): string {
         return match( $this ) {
-            self::maintenance => __DIR__ . '/maintenance.svg',
-            self::error401    => __DIR__ . '/401.svg',
-            self::error403    => __DIR__ . '/403.svg',
-            self::error404    => __DIR__ . '/404.svg',
-            self::clippy      => __DIR__ . '/clippy.svg',
-            self::grabber     => __DIR__ . '/grabber.svg',
+            self::maintenance        => __DIR__ . '/maintenance.svg',
+            self::error401           => __DIR__ . '/401.svg',
+            self::error403           => __DIR__ . '/403.svg',
+            self::error404           => __DIR__ . '/404.svg',
+            self::clippy             => __DIR__ . '/clippy.svg',
+            self::grabber            => __DIR__ . '/grabber.svg',
+            self::content_draw_arrow => __DIR__ . '/triangle-arrow-right.svg',
         };
     }
 

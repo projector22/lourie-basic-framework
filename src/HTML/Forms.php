@@ -3,10 +3,11 @@
 namespace LBF\HTML;
 
 use Exception;
-use App\Enums\SVGImages;
+use Feather\Icons;
 use LBF\Auth\Hash;
 use LBF\HTML\JS;
 use LBF\HTML\HTML;
+use LBF\Img\SVGImages;
 use SVGTools\SVG;
 
 /**
@@ -1129,8 +1130,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
                     $item .= " {$field}='{$value}'";
             }
         }
+        $icon = new Icons;
         $item .= ">";
-        $item .= SVGImages::search->image();
+        $item .= $icon->get( 'search', echo: false );
         $item .= "</span>";
 
         /**
@@ -1269,7 +1271,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         $item .= "<div class='{$container_class}' id='{$params['id']}__container'>";
         $item .= "<label class='upload_button_wrapper' id='{$params['id']}__wrapper'>";
         $item .= "<span class='upload_button_padding upload_button_text' id='{$params['id']}__button'>";
-        $item .= SVGImages::upload->image();
+        $icon = new Icons;
+        $item .= $icon->get( 'upload', echo: false );
         $item .= "<span class='upload_btn_inner_txt'>{$params['content']}</span>";
         $item .= "</span>";
 
@@ -1400,7 +1403,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         HTML::div( ['class' => 'center_horizontal multicolumn_buttons_vertical_inline'] );
 
-        $right = new SVG( SVGImages::circle_arrow_right->image() );
+        $icon = new Icons;
+
+        $right = new SVG( $icon->get( 'arrow-left-circle', echo: false ) );
         /**
          * @see src/js/app/admin/registrationClasses.js
          * -> move_reg_class_out()
@@ -1413,7 +1418,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $right->set_size( 36, 36 )->return(),
         );
 
-        $left = new SVG( SVGImages::circle_arrow_left->image() );
+        $left = new SVG( $icon->get( 'arrow-right-circle', echo: false ) );
         /**
          * @see src/js/app/admin/registrationClasses.js
          * -> move_reg_class_in()
