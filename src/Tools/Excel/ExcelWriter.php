@@ -3,6 +3,7 @@
 namespace LBF\Tools\Excel;
 
 use Exception;
+use LBF\Tools\Excel\ExcelWriterBackend;
 
 /**
  * Basic methods for creating an excel file.
