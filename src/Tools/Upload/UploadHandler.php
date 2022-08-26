@@ -123,17 +123,6 @@ class UploadHandler {
     public array $indexes = [];
 
     /**
-     * The location to save files once uploaded
-     * 
-     * @var string  $save_path
-     * 
-     * @access  public
-     * @since   3.6.0
-     */
-
-    public string $save_path = UPLOADS_PATH;
-
-    /**
      * The number of files that could not be uploaded
      * 
      * @var integer $error_count
@@ -208,7 +197,7 @@ class UploadHandler {
      * @since   3.6.0
      */
 
-    public int|float $max_upload_size = MAX_UPLOAD_SIZE;
+    public int|float $max_upload_size;
 
     /**
      * If file uploading has failed
@@ -233,13 +222,29 @@ class UploadHandler {
     public ?string $upload_failed_reason = null;
 
     /**
-     * Constructor method, things to do when the class is loaded
+     * Constructor method, things to do when the class is loaded.
+     * 
+     * @param   string  $save_path  The full path where the file should be uploaded to.
      * 
      * @access  public
      * @since   3.6.0
+     * @since   3.28.0  Added param $save_path.
      */
 
-    public function __construct() {
+    public function __construct(
+        /**
+         * The location to save files once uploaded.
+         * 
+         * @var string  $save_path  Default in LRS UPLOADS_PATH
+         * 
+         * @readonly
+         * @access  private
+         * @since   3.6.0
+         */
+
+        public readonly string $save_path
+    ) {
+        $this->max_upload_size = file_upload_max_size();
         if ( isset( $_FILES ) ) {
             $this->num_of_files = count( $_FILES );
             foreach ( $_FILES as $index => $file ) {
@@ -353,7 +358,7 @@ class UploadHandler {
                     if ( file_exists( $this->save_path . $name ) ) {
                         $this->error_count++;
                         $this->upload_failed = true;
-                        $this->upload_failed_reason = "File $this->save_path$name already exists and may not be overwritten";
+                        $this->upload_failed_reason = "File {$this->save_path}{$name} already exists and may not be overwritten";
                         return;
                     }
                 }
@@ -361,7 +366,7 @@ class UploadHandler {
                 if ( file_exists( $this->save_path . $this->file_name ) ) {
                     $this->error_count++;
                     $this->upload_failed = true;
-                    $this->upload_failed_reason = "File $this->save_path$this->file_name already exists and may not be overwritten";
+                    $this->upload_failed_reason = "File {$this->save_path}{$this->file_name} already exists and may not be overwritten";
                     return;
                 }
             }        
