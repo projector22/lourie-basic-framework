@@ -1,6 +1,6 @@
 # Lourie Basic Framework
 
-![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/projector22/lourie-basic-framework?style=plastic)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/projector22/lourie-basic-framework)
 
 This project will function as a basic framework and template for future webapps. Versions in the code generally refer to the release version on [Lourie Registration System](https://gitlab.com/projector22/lourie-registration-system), for which they were developed. Framework versions are marked `LBF`. For example:
 
