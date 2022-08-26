@@ -69,7 +69,7 @@ class Draw {
      * @since   3.28.0
      */
 
-    private bool $cli;
+    private static bool $cli;
 
 
     /**
