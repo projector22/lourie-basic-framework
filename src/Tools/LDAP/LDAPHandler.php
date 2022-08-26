@@ -79,49 +79,62 @@ class LDAPHandler {
      * Constructor method, things to do when the class is loaded.
      * If data is not specified, it will pull from the database
      * 
-     * @param   string  $dn             The specified domain name               Default: null
-     * @param   string  $dn_password    The specified domain dn_password        Default: null
-     * @param   string  $ldap_server    The specified domain ldap_server        Default: null
-     * @param   string  $port           The specified domain port               Default: null
+     * @param   string|null dn              The specified domain name.
+     *                                      Default: null
+     * @param   string|null dn_password     The specified domain dn_password.
+     *                                      Default: null
+     * @param   string|null ldap_server     The specified domain ldap_server.
+     *                                      Default: null
+     * @param   string|null port            The specified domain port.
+     *                                      Default: null
+     * @param   object|null $config_object  The object from which config data can be drawn.
+     *                                      In LRS this is `new GeneralConfigData`.
+     *                                      Default: null
      * 
      * @access  public
      * @since   3.1.0
      * @since   3.11.0  Removed param $search_ou
+     * @since   3.28.0  Added param `$config_object`.
      */
 
     public function __construct( 
         ?string $dn = null,
         ?string $dn_password = null,
         ?string $ldap_server = null,
-        ?string $port = null
+        ?string $port = null,
+        ?object $config_object = null,
     ) {
         // Check if PHP_LDAP exists on the system
         $this->check_ldap();
 
-        $this->ldap_config = new GeneralConfigData;
-        $this->ldap_config->get_ldap_config();
-
-        $fields = [ 
-            'ldap_enabled', 'ldap_server', 'dn', 'dn_password', 'port', 'sync_teachers_by_ou', 'sync_teachers_by_group', 'sync_teachers_ou', 
-            'sync_teachers_group', 'delete_accounts_not_present_on_server', 'sync_students_by_ou', 'sync_students_by_group', 'sync_students_ou', 
-            'sync_students_group', 
-        ];
-
-        foreach ( $fields as $field ) {
-            $this->$field = $this->ldap_config->$field;
+        if ( 
+            is_null( $dn ) &&
+            is_null( $dn_password ) &&
+            is_null( $ldap_server ) &&
+            is_null( $port ) &&
+            is_null( $config_object )
+        ) {
+            throw new Exception( "You must parse either LDAP details, or an object allowing for the searching of config data." );
         }
 
-        if ( !is_null( $dn ) ) {
+        if ( is_null( $config_object ) ) {
             $this->dn = $dn;
-        }
-        if ( !is_null( $dn_password ) ) {
             $this->dn_password = $dn_password;
-        }
-        if ( !is_null( $ldap_server) ) {
             $this->ldap_server = $ldap_server;
-        }
-        if ( !is_null( $port ) ) {
             $this->port = $port;
+        } else {
+            $this->ldap_config = $config_object;
+            $this->ldap_config->get_ldap_config();
+    
+            $fields = [ 
+                'ldap_enabled', 'ldap_server', 'dn', 'dn_password', 'port', 'sync_teachers_by_ou', 'sync_teachers_by_group', 'sync_teachers_ou', 
+                'sync_teachers_group', 'delete_accounts_not_present_on_server', 'sync_students_by_ou', 'sync_students_by_group', 'sync_students_ou', 
+                'sync_students_group', 
+            ];
+    
+            foreach ( $fields as $field ) {
+                $this->$field = $this->ldap_config->$field;
+            }
         }
 
         $this->ldap_con = ldap_connect( $this->ldap_server, $this->port );
