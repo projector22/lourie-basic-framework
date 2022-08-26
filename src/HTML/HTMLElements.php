@@ -4,6 +4,7 @@ namespace LBF\HTML;
 
 use Exception;
 use LBF\Auth\Hash;
+use LBF\HTML\Draw;
 
 /**
  * This class is to draw out basic HTML elements
