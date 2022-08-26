@@ -2,6 +2,7 @@
 
 namespace LBF\Trek;
 
+use Exception;
 use LBF\Db\ConnectMySQL;
 
 /**
@@ -53,7 +54,15 @@ class Oxen extends ConnectMySQL {
      */
 
     protected function add_element_to_config( string $search_str, string $new_config_paste ): void {
-        $new_config  = "$search_str\n$new_config_paste";
+        if ( !defined( 'CONFIG_FILE' ) ) {
+            define( 'CONFIG_FILE', '' ); // hide the error.
+            throw new Exception( "No config file found. Please define 'CONFIG_FILE'", 404 );
+        }
+        if ( !file_exists( CONFIG_FILE ) ) {
+            throw new Exception( "App configuration file " . CONFIG_FILE . " missing.", 404 );
+        }
+        
+        $new_config  = "{$search_str}\n{$new_config_paste}";
         $file  = file_get_contents( CONFIG_FILE );
         $paste = str_replace( $search_str, $new_config, $file );
         file_put_contents( CONFIG_FILE, $paste );
@@ -71,6 +80,13 @@ class Oxen extends ConnectMySQL {
      */
 
     protected function replace_config_element( string $search_str, string $new_config ): void {
+        if ( !defined( 'CONFIG_FILE' ) ) {
+            define( 'CONFIG_FILE', '' ); // hide the error.
+            throw new Exception( "No config file found. Please define 'CONFIG_FILE'", 404 );
+        }
+        if ( !file_exists( CONFIG_FILE ) ) {
+            throw new Exception( "App configuration file " . CONFIG_FILE . " missing.", 404 );
+        }
         $file  = file_get_contents( CONFIG_FILE );
         $paste = str_replace( $search_str, $new_config, $file );
         file_put_contents( CONFIG_FILE, $paste );
