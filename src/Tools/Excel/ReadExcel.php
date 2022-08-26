@@ -2,7 +2,6 @@
 
 namespace LBF\Tools\Excel;
 
-use Debugger\Debug;
 use \ZipArchive;
 use \SimpleXMLElement;
 
@@ -17,28 +16,6 @@ use \SimpleXMLElement;
  */
 
 class ReadExcel {
-
-    /**
-     * The path to the .xlsx file to be read. This can be set as a property or assigned as a parameter when this object is created
-     * 
-     * @var string $excel_file_path
-     * 
-     * @access  public
-     * @since   3.11.1
-     */
-
-    public string $excel_file_path;
-
-    /**
-     * The path to the folder which is extracted and decompressed from the .xlsx and .zip files
-     * 
-     * @var string  $folder_path
-     * 
-     * @access  public
-     * @since   3.11.1
-     */
-
-    public string $folder_path;
 
     /**
      * The public constant of the relative path to the default sheet xml
@@ -159,24 +136,49 @@ class ReadExcel {
 
     public bool $keep_xlsx = false;
 
+
     /**
      * Constructor method, things to do when the class is loaded
      * 
-     * @param   integer|null    $path   The path of the file.
+     * @param   string      $excel_file_path    The full path to the excel file to be read.
+     * @param   string|null $folder_path        The full path to the working directory for this tool.
+     *                                          Default: null (cwd).
      * 
      * @access  public
      * @since   3.11.1
      */
 
-    public function __construct( ?string $path = null ) {
-        if ( !is_null( $path ) ) {
-            $this->excel_file_path = $path;
-            if ( !is_file( $this->excel_file_path ) ) {
-                echo "File not found";
-                die;
-            }
+    public function __construct( 
+        /**
+         * The path to the .xlsx file to be read. This can be set as a property or assigned as a parameter when this object is created
+         * 
+         * @var string $excel_file_path
+         * 
+         * @access  public
+         * @since   3.11.1
+         */
+
+        public string $excel_file_path,
+
+        /**
+         * The path to the folder which is extracted and decompressed from the .xlsx and .zip files
+         * 
+         * @var string|null $folder_path
+         * 
+         * @access  public
+         * @since   3.11.1
+         */
+
+        public ?string $folder_path = null,
+     ) {
+        if ( !is_file( $this->excel_file_path ) ) {
+            echo "File not found";
+            die;
         }
-    } //__construct
+        if ( is_null( $this->folder_path ) ) {
+            $this->folder_path = getcwd();
+        }
+    }
 
 
     /**
@@ -203,13 +205,13 @@ class ReadExcel {
     public function unzip_excel(): void {
         $this->excel_file_path = normalize_path_string( $this->excel_file_path );
         $folder_name = explode( '.', explode( '/', $this->excel_file_path )[count( explode( '/', $this->excel_file_path ) ) - 1] )[0];
-        $this->folder_path = UPLOADS_PATH . $folder_name;
+        $this->folder_path .= $folder_name;
         $rename_file = $this->folder_path . '.zip';
         copy( $this->excel_file_path, $rename_file );
         $zip = new ZipArchive;
         $res = $zip->open( "$rename_file" );
         if ( $res === TRUE ) {
-            $zip->extractTo( UPLOADS_PATH . $folder_name );
+            $zip->extractTo( $this->folder_path );
             $zip->close();
         }
 
@@ -360,7 +362,7 @@ class ReadExcel {
      * 
      * @access  private
      * @since   3.1.0
-     * @since   3.11.1  Moved from App\Admin\ImportHandler to LBF\Tools\Excel\ReadExcel
+     * @since   3.11.1  Moved from App\Admin\ImportHandler to Framework\Tools\Excel\ReadExcel
      */
 
     private function delete_files( string $target ): void {
