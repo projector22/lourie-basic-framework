@@ -4,7 +4,7 @@ namespace LBF\Tools\PDF;
 
 use Exception;
 use TCPDF_STATIC;
-use LBF\Tools\PDF\PDFTools;
+use LBF\Tools\PDF\PDFCreatorBackend;
 
 /**
  * Generate a PDF document, by leavering into TCPDF.
@@ -16,7 +16,7 @@ use LBF\Tools\PDF\PDFTools;
  * @since   3.20.0  Completely revamped and renamed PDFCreator.
  */
 
-class PDFCreator extends PDFTools {
+class PDFCreator extends PDFCreatorBackend {
 
     /**
      * Constructor method, things to do when the class is loaded
