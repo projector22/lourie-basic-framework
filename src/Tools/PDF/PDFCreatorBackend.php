@@ -15,9 +15,11 @@ use App\Templates\PDF\CustomHeaderFooter;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.20.0
+ * 
+ * @todo    Figure out a way of allowing better custom headers and footers integeration without calling from the `App` namespace here.
  */
 
-class PDFTools {
+class PDFCreatorBackend {
 
     /**
      * The variable assigned to the new TCPDF object
