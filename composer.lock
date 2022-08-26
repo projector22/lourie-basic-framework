@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "174f7377b4e43acea5a11822515c5f64",
+    "content-hash": "3f861a74390ec5f9dc21d0b88a494a4c",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -104,6 +104,47 @@
                 "source": "https://github.com/Pixelrobin/php-feather/tree/master"
             },
             "time": "2020-03-19T06:05:02+00:00"
+        },
+        {
+            "name": "projector22/php-svg-tool",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/projector22/php-svg-tool.git",
+                "reference": "17e6c9e75624a233ded0cd0b49beff8af7402523"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/projector22/php-svg-tool/zipball/17e6c9e75624a233ded0cd0b49beff8af7402523",
+                "reference": "17e6c9e75624a233ded0cd0b49beff8af7402523",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SVGTools\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "mit"
+            ],
+            "authors": [
+                {
+                    "name": "Gareth Palmer",
+                    "email": "bravdthepally@gmail.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "A tool for handling SVG files with PHP",
+            "support": {
+                "issues": "https://github.com/projector22/php-svg-tool/issues",
+                "source": "https://github.com/projector22/php-svg-tool/tree/1.0.0"
+            },
+            "time": "2022-06-10T08:44:15+00:00"
         },
         {
             "name": "tecnickcom/tcpdf",

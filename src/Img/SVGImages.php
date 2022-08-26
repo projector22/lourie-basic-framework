@@ -29,6 +29,14 @@ enum SVGImages {
      * @since   3.28.0
      */
     case error404;
+    /**
+     * @since   3.6.5
+     */
+    case clippy;
+    /**
+     * @since   3.15.0
+     */
+    case grabber;
 
     /**
      * Return the full path of the selected SVG file.
@@ -45,6 +53,8 @@ enum SVGImages {
             self::error401    => __DIR__ . '/401.svg',
             self::error403    => __DIR__ . '/403.svg',
             self::error404    => __DIR__ . '/404.svg',
+            self::clippy      => __DIR__ . '/clippy.svg',
+            self::grabber     => __DIR__ . '/grabber.svg',
         };
     }
 
