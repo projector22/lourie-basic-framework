@@ -2,7 +2,6 @@
 
 namespace LBF\Tools\Mail;
 
-use App\Db\Data\GeneralConfigData;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
