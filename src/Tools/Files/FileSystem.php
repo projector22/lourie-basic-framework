@@ -16,7 +16,9 @@ use RecursiveDirectoryIterator;
  * @see     https://stackoverflow.com/questions/927564/how-to-find-a-reason-when-mkdir-fails-from-php
  * 
  * @since   3.4.0
- * @since   3.11.0  Moved to LBF\Tools\FileSystem.
+ * @since   3.11.0  Moved to `Framework\Tools\FileSystem`.
+ * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                  Namespace changed from `Framework` to `LBF`.
  */
 
 class FileSystem {

@@ -16,6 +16,8 @@ use PHPMailer\PHPMailer\PHPMailer;
  * @link    https://alexwebdevelop.com/phpmailer-tutorial/
  * 
  * @since   3.4.0
+ * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                  Namespace changed from `Framework` to `LBF`.
  */
 
 class Mail {

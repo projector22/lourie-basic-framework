@@ -42,9 +42,11 @@ if ( !defined( "DB_YEAR" ) ) {
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.0.1
- * @since   3.12.0  Split off MySQL search queries into DatabaseMeta.
- * @since   3.17.0  Split off from DatabaseControl.
+ * @since   3.12.0  Split off MySQL search queries into `DatabaseMeta`.
+ * @since   3.17.0  Split off from `DatabaseControl`.
  * @since   3.27.0  Merge back all methods for interfacing with the database into this class.
+ * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                  Namespace changed from `Framework` to `LBF`.
  */
 
 class ConnectMySQL {

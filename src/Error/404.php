@@ -9,6 +9,8 @@ use LBF\Img\SVGImages;
  * 
  * @since   3.1.0
  * @since   3.9.1   Reworked and remade, new image & text
+ * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                  Namespace changed from `Framework` to `LBF`.
  */
 
 $image = html_path( SVGImages::error404->path() );
