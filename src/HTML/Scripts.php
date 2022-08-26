@@ -148,41 +148,6 @@ class Scripts {
 
 
     /**
-     * This draws out the daily routine time, by pulling in data from dailyroutine.json and generates the Javascript
-     * 
-     * Originally built by Kalden Swart
-     * @link    https://github.com/InterferenceObject/
-     * 
-     * @access  public
-     * @since   3.1.0
-     * @since   3.8.0   Reworked to work with it's own JS file (src/js/routine.js)
-     * @since   3.12.0  Reworked to pull data from the database rather than bin/json/routine.json
-     * @since   3.12.5  Moved from PageElements to LBS\HTML\Scripts
-     */
-
-    public static function daily_routine() {
-        $config = new GeneralConfigData;
-        $config->set_index_data_by( 'config_key' );
-        $config->select_all( ['config_group' => 'routine'] );
-        $num_of_periods  = $config->data['number_of_periods']->config_value;
-        $weeks_per_cycle = $config->data['weeks_per_cycle']->config_value;
-        $am_register = isset( $config->data['am_registration'] ) ? ', ' . $config->data['am_registration']->config_value : null;
-        $pm_register = isset( $config->data['pm_registration'] ) ? ', ' . $config->data['pm_registration']->config_value : null;
-
-        $schedule_data = new ScheduleData( true );
-        $schedule = $schedule_data->sort_data_week_day_period();
-        $json = json_encode( $schedule );
-        HTML::div_container( ['class' => 'routine_timer', 'id' => 'routine_container'] );
-        self::script_module( "import Routine from './src/js/lib/routine.js';
-        const daily_routine = new Routine($json, {$num_of_periods}{$am_register}{$pm_register});
-        window.setInterval(function refresh() {
-            daily_routine.timer_element();
-        }, 0o500);" ); // the number is 0500 but the o is required in strict mode
-    }
-
-
-    /**
->>>>>>> 363b49f (Fixed namespace)
      * Draw out the JS to change default behaviour of a button press
      * 
      * @param   string  $input      The id of the item to be monitored
