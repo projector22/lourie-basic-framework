@@ -19,6 +19,17 @@ use LBF\HTML\Draw;
 class JSONTools {
 
     /**
+     * Define the correct slash seperator.
+     * 
+     * @var string DIR_SEP  Either `\` or `/`, depending on the server OS.
+     * 
+     * @access  public
+     * @since   3.28.0
+     */
+
+    const DIR_SEP = PHP_OS === 'WINNT' ? '\\' : '/';
+
+    /**
      * Write a JSON file
      * 
      * @param   string  $file   The file path of the JSON file to write
@@ -165,7 +176,7 @@ class JSONTools {
         foreach ( $json as $file => $data ) {
             $set_data = self::read_json_file_to_array( $file );
             $hold_data = self::check_values( $data, $set_data );
-            $file_name = explode( DIR_SEP, $file );
+            $file_name = explode( self::DIR_SEP, $file );
             echo "Checking {$file_name[array_key_last($file_name)]} ...";
             Draw::lines( 1 );
             self::write_json_file( $file, $hold_data );
