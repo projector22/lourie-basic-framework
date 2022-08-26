@@ -14,6 +14,8 @@ use LBF\HTML\Draw;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.12.5
+ * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                  Namespace changed from `Framework` to `LBF`.
  */
 
 class HTMLElements {

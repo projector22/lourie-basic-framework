@@ -15,6 +15,8 @@ use App\Templates\PDF\CustomHeaderFooter;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.20.0
+ * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                  Namespace changed from `Framework` to `LBF`.
  * 
  * @todo    Figure out a way of allowing better custom headers and footers integeration without calling from the `App` namespace here.
  */

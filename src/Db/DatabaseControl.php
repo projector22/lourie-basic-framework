@@ -14,7 +14,10 @@ use \PDOException;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.0.1
- * @since   3.17.0  Split out specific functions for connecting to a MySQL, to make this class more general
+ * @since   3.17.0  Split out specific functions for connecting to a MySQL DB,
+ *                  to make this class more general.
+ * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                  Namespace changed from `Framework` to `LBF`.
  */
 
 class DatabaseControl {

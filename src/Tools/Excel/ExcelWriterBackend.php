@@ -17,6 +17,8 @@ use RecursiveDirectoryIterator;
  * @requires PHP 8.0 or greater
  * 
  * @since   3.19.6
+ * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                  Namespace changed from `Framework` to `LBF`.
  */
 
 class ExcelWriterBackend {
