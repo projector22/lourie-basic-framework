@@ -9,7 +9,7 @@ use RecursiveDirectoryIterator;
 /**
  * Various methods for performing and executing LDAP queries
  * 
- * use LBF\Tools\Files\FileSystem as Files;
+ * use LBF\Tools\Files\FileSystem;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
