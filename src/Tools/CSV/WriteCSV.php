@@ -28,17 +28,6 @@ class WriteCSV {
     public string $file_name = 'temporary_file.csv';
 
     /**
-     * The path (without file name) to which the file is to be saved.
-     * 
-     * @var string  $save_path  Default: TEMPLATES_PATH
-     * 
-     * @access  public
-     * @since   3.12.0
-     */
-
-    public string $save_path = TEMPLATES_PATH;
-
-    /**
      * An array of entries to be used as the heading row
      * 
      * @var array   $headings   Default: []
@@ -70,6 +59,31 @@ class WriteCSV {
      */
 
     public bool $keep_file = false;
+
+
+    /**
+     * Class constructor.
+     * 
+     * @param   string  $save_path  The path to which CSV files should be written.
+     * 
+     * @access  public
+     * @since   3.28.0
+     */
+
+    public function __construct(
+        /**
+         * The path (without file name) to which the file is to be saved.
+         * 
+         * @var string  $save_path  In LRS, should be set to TEMPLATES_PATH
+         * 
+         * @access  public
+         * @since   3.12.0
+         */
+
+        public string $save_path
+    ) {
+        // Nothing more to be done.        
+    }
 
 
     /**
