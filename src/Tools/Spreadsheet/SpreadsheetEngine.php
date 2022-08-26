@@ -133,7 +133,7 @@ class SpreadsheetEngine {
      */
 
     protected function spreadsheet_styles(): string {
-        $style = file_get_contents( __DIR__ . '\styles\spreadsheet.css' );
+        $style = file_get_contents( realpath( __DIR__ . '/styles/spreadsheet.css' ) );
         $style = str_replace( 'TABLE_ID', $this->table_id, $style );
         $style = str_replace( 'DEFAULT_COL_WIDTH', $this->default_column_width, $style );
         $style = str_replace( "/* CALC_WIDTH; */", $this->calculate_widths(), $style );
