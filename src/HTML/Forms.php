@@ -1309,7 +1309,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         $item .= self::element_hint( $params );
         $item .= "</div>";
 
-        JS::script_module( "import UploaderElement from './src/js/lib/uploader_element.js';\nconst upload = new UploaderElement('{$params['id']}');" );
+        JS::script_module( "import UploaderElement from './vendor/projector22/lourie-basic-framework/src/js/uploader_element.js';\nconst upload = new UploaderElement('{$params['id']}');" );
 
         if ( self::$echo ) {
             echo $item;
