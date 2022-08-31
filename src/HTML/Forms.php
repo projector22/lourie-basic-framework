@@ -417,9 +417,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $name = 'color';
         }
         $text_types = [
-            'email', 'color', 'date', 'email', 'month', 'number',
-            'password', 'range', 'search', 'tel', 'time', 'url',
-            'week',
+            'email', 'color', 'date', 'month', 'number', 'password',
+            'range', 'search', 'tel', 'time', 'url', 'week',
         ];
         if ( !in_array ( $name, $text_types ) ) {
             throw new \Exception( "Method '{$name}' does not exist." );
