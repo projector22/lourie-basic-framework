@@ -6,6 +6,7 @@
  * @requires    ES6
  * 
  * @since   3.13.0
+ * @since   LBF 0.1.1-beta
  */
 
 
@@ -17,6 +18,7 @@
  * @return {boolean} Whether the string is an email address or not
  * 
  * @since   2.28.0
+ * @since   LBF 0.1.1-beta
  */
 
 export function check_valid_email(addr) {
@@ -44,6 +46,7 @@ export function check_valid_email(addr) {
  * @returns {boolean}
  * 
  * @since   3.6.3
+ * @since   LBF 0.1.1-beta
  */
 
 export function validate_time_input(time_test) {
@@ -61,6 +64,7 @@ export function validate_time_input(time_test) {
  * @see https://answers.acrobatusers.com/validate-south-african-id-q214753.aspx
  * 
  * @since   3.16.0
+ * @since   LBF 0.1.1-beta
  */
 
 export function validate_ZA_ID_number(id) {
@@ -134,6 +138,7 @@ export function validate_ZA_ID_number(id) {
  * @returns {boolean}
  * 
  * @since   3.26.2
+ * @since   LBF 0.1.1-beta
  */
 
 export function validate_date_input(date_test) {
