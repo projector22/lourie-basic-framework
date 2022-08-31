@@ -270,7 +270,7 @@ class Scripts {
     public static function insert_shift_multiselect(): void {
         $id = 'sm' . Hash::random_id_string();
         self::script_module( "
-import Table_Filter from './src/js/lib/table_filters.js';
+import Table_Filter from './vendor/projector22/lourie-basic-framework/src/js/table_filters.js';
 const $id = new Table_Filter;
 $id.shift_multiselect();" );
     }
