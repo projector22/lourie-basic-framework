@@ -61,7 +61,7 @@ class SpreadsheetEngine {
      * @since   3.19.0
      */
 
-    protected string $js_path = './src/js/lib/spreadsheetTool.js';
+    protected string $js_path = './vendor/projector22/lourie-basic-framework/src/js/spreadsheetTool.js';
 
     /**
      * A column counter to indicate where we are in the spreadsheet
