@@ -653,7 +653,7 @@ class Buttons {
          * @since   3.21.0
          */
         $js = function ( $id ) {
-            return "import { zoom_updown } from './src/js/lib/ui.js';
+            return "import { zoom_updown } from './vendor/projector22/lourie-basic-framework/src/js/lib/ui.js';
             const btn = document.getElementById('{$id}');
             btn.addEventListener('click', function () {
                 zoom_updown(this.id);
