@@ -243,7 +243,7 @@ class Table {
         JS::insert_shift_multiselect();
         if ( $this->select_all_checkbox ) {
             JS::script_module( "
-                import { select_all_checkboxes } from './src/js/lib/table_filters.js';
+                import { select_all_checkboxes } from './vendor/projector22/lourie-basic-framework/src/js/table_filters.js';
                 document.getElementById('{$this->table_id}_select_all').onchange = function () {
                     select_all_checkboxes(this, `{$this->table_id}_unfiltered_body`);
                 };
