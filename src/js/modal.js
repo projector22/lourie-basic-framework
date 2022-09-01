@@ -4,7 +4,7 @@
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   3.12.8
- * LBF 0.1.1-beta
+ * @since   LBF 0.1.1-beta
  */
 
 /**
@@ -13,7 +13,7 @@
  * @property {string} body_id
  * 
  * @since   3.13.0
- * LBF 0.1.1-beta
+ * @since   LBF 0.1.1-beta
  */
 
 export default class Modal {
