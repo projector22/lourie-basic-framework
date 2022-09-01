@@ -221,4 +221,12 @@
         margin-left: 5px;
     }
 
+    .topbar_general_response {
+        padding: 0 20px;
+        font-size: 15px;
+        flex: 150;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
 }
