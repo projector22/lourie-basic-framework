@@ -2,6 +2,10 @@
 
 ## Version 0.1.2-beta - UNRELEASED
 
+### Added
+
+- Added css file `sizes.css` for root sizes variables.
+
 ### Fixed
 
 - Fixed an incorrect import in the `floating_top_bottom_buttons` Button.
