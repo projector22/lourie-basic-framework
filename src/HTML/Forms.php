@@ -212,7 +212,7 @@ class Forms {
             $validate  = json_encode( $validate );
             $validator = 'validator' . Hash::random_id_string( 5 );
             $item .= JS::script_module( "
-import Input_Validation from './src/js/lib/input_validation.js';
+import Input_Validation from './vendor/projector22/lourie-basic-framework/src/js/input_validation.js';
 const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__validation_feedback', '{$nil_value}');
 {$validator}.general_validator({$validate});"
             );
@@ -672,7 +672,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $js_echo_hold = JS::$echo;
             JS::$echo = false;
             $item .= JS::script_module( "
-                import { text_area_text_counter } from './src/js/lib/forms.js';
+                import { text_area_text_counter } from './vendor/projector22/lourie-basic-framework/src/js/forms.js';
                 const $input = document.getElementById('{$params['id']}');
                 $input.addEventListener('keyup', function(event) {
                     text_area_text_counter('{$params['id']}', '{$div_id}')
@@ -1221,7 +1221,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         $element .= $svg->return();
         $element .= HTML::close_span();
         JS::script_module( "
-        import { show_hide } from './src/js/lib/ui.js';
+        import { show_hide } from './vendor/projector22/lourie-basic-framework/src/js/ui.js';
         document.getElementById('$element_id').onclick = function () {
             show_hide('$show_hide_id');
         };" );
@@ -1452,7 +1452,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         HTML::close_div();
 
         Scripts::script_module( "
-        import {handle_column_changes} from './src/js/lib/forms.js';
+        import {handle_column_changes} from './vendor/projector22/lourie-basic-framework/src/js/forms.js';
         handle_column_changes('{$id}');
         " );
  

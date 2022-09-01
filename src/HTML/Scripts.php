@@ -251,6 +251,8 @@ class Scripts {
         /**
          * @see src\js\lib\keyboard_shortcuts.js
          * -> Keyboard shortcut functions should all be in this library
+         * 
+         * @todo    Make this universal for library & LRS.
          */
         self::script_module( "import { $desired_function } from './src/js/lib/keyboard_shortcuts.js';
         document.addEventListener('keydown', function(event) {
