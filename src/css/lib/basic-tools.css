@@ -1,0 +1,167 @@
+/**
+ * This file is used for styling modal tools.
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   LBF 0.1.1-beta
+ */
+
+@import url("/src/styles/fonts/roboto.css");
+@import url("/src/styles/fonts/NunitoEB.css");
+@import url("/src/styles/fonts/UbuntuMono.css");
+
+:root {
+
+    /* Fonts */
+    --default-font: "Roboto", sans-serif;
+    --logo-font: 'Nunito', sans-serif;
+
+    /* Font Sizes*/
+    --menu-font-size: 15px;
+    --menu-selected-font-size: 16px;
+    --default-font-size: 16.5px;
+    --header-font-size: 16.5px;
+    --header-font-size-large: 21px;
+    --header-font-size-small: 28px;
+    --button-large-size: 40px;
+    --button-small-size: 25px;
+
+    /* Element Sizes */
+    --sidebar-width: 200px;
+    --edit-grid-width: 1.8em;
+    --check-table-width: 2em;
+    --header-height: 50px;
+    --footer-height: 40px;
+    --terminal_feedback_window: calc(100% - var(--sidebar-width) - 25px);
+
+    /* Input Padding */
+    --input-padding__vertical: 6px;
+    --input-padding__horizontal: 2px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.zero_opacity {
+    opacity: 0;
+}
+
+.center_vertical {
+    display: flex;
+    align-items: center;
+}
+
+.center_horizontal {
+    display: flex;
+    justify-content: center;
+}
+
+.center_xy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.align_bottom {
+    align-items: flex-end;
+}
+
+.center_text {
+    text-align: center;
+}
+
+.flashing_highlight {
+    border: 2px dotted #ffc251;
+    animation: blink .8s step-end infinite alternate;
+}
+
+.text_align_left {
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.text_align_right {
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.text_align_center {
+    text-align: center;
+    justify-content: center;
+}
+
+.font_mono {
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+.white_font {
+    color: #fff;
+}
+
+.red_font {
+    color: #ff0000;
+}
+
+.full_width {
+    width: 100%;
+}
+
+.text_not_selectable {
+    user-select: none
+}
+
+/**
+ * Resize
+ */
+
+.resize_none {
+    resize: none;
+}
+
+.resize_both {
+    resize: both;
+}
+
+.resize_vertical {
+    resize: vertical;
+}
+
+.resize_horizontal {
+    resize: horizontal;
+}
+
+/**
+ * Display
+ */
+
+.inline_block {
+    display: flex;
+}
+
+.flex_aligned_left {
+    display: inline-flex;
+}
+
+.flex_aligned_left div,
+.flex_aligned_left span {
+    margin-left: 10px;
+}
+
+.flex_aligned_left div:nth-child(1),
+.flex_aligned_left span:nth-child(1) {
+    margin-left: 0;
+}
+
+.display_grid__auto_rows {
+    display: grid;
+    grid-template-rows: auto;
+}
+
+.text_green {
+    color: var(--text_green);
+}
+
+.text_red {
+    color: var(--text_red);
+}
