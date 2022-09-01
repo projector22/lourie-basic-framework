@@ -1406,7 +1406,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         $icon = new Icons;
 
-        $right = new SVG( $icon->get( 'arrow-left-circle', echo: false ) );
+        $right = new SVG( $icon->get( 'arrow-right-circle', echo: false ) );
         /**
          * @see src/js/app/admin/registrationClasses.js
          * -> move_reg_class_out()
@@ -1419,7 +1419,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $right->set_size( 36, 36 )->return(),
         );
 
-        $left = new SVG( $icon->get( 'arrow-right-circle', echo: false ) );
+        $left = new SVG( $icon->get( 'arrow-left-circle', echo: false ) );
         /**
          * @see src/js/app/admin/registrationClasses.js
          * -> move_reg_class_in()

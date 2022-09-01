@@ -8,7 +8,8 @@
 
 ### Fixed
 
-Fixed a bug in `HTML\Forms` callStatic method, where a text type was being called multiple times.
+- Fixed a bug in `HTML\Forms` callStatic method, where a text type was being called multiple times.
+- Fixed a bug with left / right arrow columns. Arrows pointing the wrong way.
 
 ---
 
