@@ -6,10 +6,6 @@
  * @since   LBF 0.1.1-beta
  */
 
-@import url("/vendor/projector22/lourie-basic-framework/src/css/fonts/roboto.css");
-@import url("/vendor/projector22/lourie-basic-framework/src/css/fonts/NunitoEB.css");
-@import url("/vendor/projector22/lourie-basic-framework/src/css/fonts/UbuntuMono.css");
-
 :root {
 
     /* Fonts */
