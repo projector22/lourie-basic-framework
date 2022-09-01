@@ -1,0 +1,77 @@
+:root {
+
+    /**
+     * PAGE BACKGROUND
+     */
+
+    --page-background-colour: #f7f7f7;
+
+
+    /**
+     * TEXT
+     */
+
+    --default-text-colour: #000;
+
+
+    /**
+     * FOOTER
+     */
+
+    --footer-border: #e5e4e9;
+
+
+    /**
+     * SIDEBAR MENU
+     */
+
+    --menu-hover-colour: #4169e1;
+    --menu-hover-text: #fff;
+    --sidebar-colour: #363b3f;
+    --submenu-colour: #5b6472;
+
+
+    /**
+     * SETTINGS MENU
+     */
+
+    --menu-item-selected-background: #242424;
+    --menu-text-colour: #fff;
+    --menu-text-selected-colour: #777;
+    --settings-menu-colour: #fff;
+    --settings-menu-text-colour: #000;
+    --settings-menu-hover-colour: #cbcbcb;
+
+
+    /**
+     * INPUT ELEMENTS
+     */
+
+    --input-basic-colour: #5b6472;
+    --input-outline-hover: #4169e1;
+    --input-selected-hover: #0060ce;
+    --input-hover-background: #eeeeee;
+
+
+    /**
+     * BACKEND ADMIN
+     */
+
+    --element-borders: #e5e4e9;
+
+
+    /**
+     * NOTIFICATION COLOURS
+     */
+
+    --notification_unviewed: #2623d2;
+    --notification_viewed: #637fda;
+    --notification_viewed_no_link: #868685;
+
+    /**
+     * TEXT COLOURS
+     */
+
+    --text_green: #228b22;
+    --text_red: #b22222;
+}
