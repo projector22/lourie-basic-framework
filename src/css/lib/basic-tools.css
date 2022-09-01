@@ -6,35 +6,6 @@
  * @since   LBF 0.1.1-beta
  */
 
-:root {
-
-    /* Fonts */
-    --default-font: "Roboto", sans-serif;
-    --logo-font: 'Nunito', sans-serif;
-
-    /* Font Sizes*/
-    --menu-font-size: 15px;
-    --menu-selected-font-size: 16px;
-    --default-font-size: 16.5px;
-    --header-font-size: 16.5px;
-    --header-font-size-large: 21px;
-    --header-font-size-small: 28px;
-    --button-large-size: 40px;
-    --button-small-size: 25px;
-
-    /* Element Sizes */
-    --sidebar-width: 200px;
-    --edit-grid-width: 1.8em;
-    --check-table-width: 2em;
-    --header-height: 50px;
-    --footer-height: 40px;
-    --terminal_feedback_window: calc(100% - var(--sidebar-width) - 25px);
-
-    /* Input Padding */
-    --input-padding__vertical: 6px;
-    --input-padding__horizontal: 2px;
-}
-
 .hidden {
     display: none !important;
 }
@@ -129,7 +100,7 @@
 
 /**
  * Display
- */
+ */@import url('/vendor/projector22/lourie-basic-framework/src/css/lib/sizes.css');
 
 .inline_block {
     display: flex;
