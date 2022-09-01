@@ -1,0 +1,224 @@
+/**
+ * This file is used for styling various html elements
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   3.15.3
+ */
+
+.spacer_one {
+    padding-top: 20px;
+}
+
+.spacer_two {
+    padding-top: 50px;
+}
+
+.admin_structure_header_divider {
+    text-align: center;
+    border-top: 1px solid black;
+    padding: 15px 0;
+}
+
+.ajax_response_bottom_left {
+    position: fixed;
+    bottom: 55px;
+    left: 0;
+    width: 300px;
+    text-align: left;
+}
+
+.print_report_header_contain {
+    display: none;
+}
+
+.group_container {
+    display: flex;
+    padding: 10px 5px;
+    margin: 4px 0;
+    background-color: #efefef;
+}
+
+.group_container span {
+    flex: 1;
+    font-size: 18px
+}
+
+
+/**
+ * COPY TEXT TEXTBOX
+ */
+
+.ctt_contain {
+    display: flex;
+    justify-content: flex-start;
+    background-color: #eeeedd;
+    border: 1px dashed grey;
+    border-radius: 7px;
+    width: 80%;
+}
+
+.ctt_text_box {
+    border: 0;
+    width: 100%;
+    background-color: #eeeedd;
+    padding-left: 5px;
+    font-size: 16px;
+    font-family: "Lucida Console", Monaco, monospace;
+    letter-spacing: -1px;
+}
+
+.ctt_img:hover {
+    opacity: .3;
+}
+
+.ctt_img {
+    width: 25px;
+    margin-top: -3px;
+    position: relative;
+    top: 3px;
+}
+
+.item_input_inline {
+    display: flex;
+}
+
+
+/**
+ * CODE FEEDBACK BOX
+ */
+
+.code_feedback_box {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+    background-color: #f0f0e8;
+    border: 1px solid black;
+    margin: 15px 25px 10px 35px;
+    padding: 5px 0 10px 5px;
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 300px;
+}
+
+
+/**
+ * IFRAME
+ */
+
+.settings_frame {
+    width: 100%;
+    height: 300px;
+}
+
+
+/**
+ * TABS
+ */
+
+.general_page_tab {
+    border-left: 1px solid var(--element-borders);
+    border-right: 1px solid var(--element-borders);
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.general_page_tab a:link,
+.general_page_tab a:visited {
+    text-decoration: none;
+    color: var(--default-text-colour);
+    font-size: 14px;
+}
+
+.tab {
+    padding: 5px 10px;
+    border-right: 1px solid var(--element-borders);
+}
+
+.tab:hover {
+    color: var(--default-text-colour);
+}
+
+.tab a {
+    width: 100%;
+    height: 100%;
+}
+
+.tab_not_selected {
+    border-bottom: 1px solid var(--element-borders);
+    box-shadow:
+        0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+        0 12.5px 10px rgba(0, 0, 0, 0.035),
+        0 100px 80px rgba(0, 0, 0, 0.07);
+    color: gray;
+}
+
+.tab_last_element {
+    border-bottom: 1px solid var(--element-borders);
+    flex-grow: 1;
+}
+
+
+/**
+ * DRAGABLE CONTAINER
+ */
+
+.draggable_container {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.draggable_entry {
+    padding: 10px 2px;
+    margin: 2px 0;
+    border: 1px solid #cfcfcf;
+    display: grid;
+    grid-template-columns: 1fr 24px;
+}
+
+.draggable_entry:hover {
+    border: 1px solid black;
+}
+
+.de_item {
+    display: flex;
+    align-items: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.de_grabber {
+    display: flex;
+    justify-content: center;
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.de_grabber:hover {
+    transform: scale(1.3);
+}
+
+.de_grabber:active {
+    transform: scale(1.35);
+}
+
+.draggable_ghost {
+    background-color: #C8EBFB;
+    border: 2px dashed black;
+}
+
+
+@media only screen and (min-width: 769px) {
+
+    .item_input,
+    .item_text,
+    .item_input form {
+        margin-left: 5px;
+    }
+
+}
