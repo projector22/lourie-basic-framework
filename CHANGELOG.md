@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.1.2-beta - UNRELEASED
+
+### Fixed
+
+- Fixed an incorrect import in the `floating_top_bottom_buttons` Button.
+
+---
+
 ## Version 0.1.1-beta - 2022-09-01
 
 ## Added
