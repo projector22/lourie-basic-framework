@@ -15,9 +15,9 @@ use RecursiveDirectoryIterator;
  * 
  * @see     https://stackoverflow.com/questions/927564/how-to-find-a-reason-when-mkdir-fails-from-php
  * 
- * @since   3.4.0
- * @since   3.11.0  Moved to `Framework\Tools\FileSystem`.
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.4.0
+ * @since   LRS 3.11.0  Moved to `Framework\Tools\FileSystem`.
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -29,7 +29,7 @@ class FileSystem {
      * @var string  $last_error
      * 
      * @access  public
-     * @since   3.15.4
+     * @since   LRS 3.15.4
      */
 
     public static string $last_error;
@@ -41,7 +41,7 @@ class FileSystem {
      * @var array   $all_errors     Default: []
      * 
      * @access  public
-     * @since   3.15.4
+     * @since   LRS 3.15.4
      */
 
     public static array $all_errors = [];
@@ -54,7 +54,7 @@ class FileSystem {
      * @return  string  Octal file permissions, eg. 0775
      * 
      * @access  public
-     * @since   3.7.0
+     * @since   LRS 3.7.0
      */
 
     public static function get_permissions( string $file ): string {
@@ -70,7 +70,7 @@ class FileSystem {
      * @return  string  string with slashes corrected
      * 
      * @access  public
-     * @since   3.7.0
+     * @since   LRS 3.7.0
      */
 
     public static function correct_slashes( string $file ): string {
@@ -96,7 +96,7 @@ class FileSystem {
      * @return  boolean     Success or failure.
      * 
      * @access  public
-     * @since   3.15.4
+     * @since   LRS 3.15.4
      */
 
     public static function create_folder( string $path, string $permissions = '0755', ?string $owner = null ): bool {
@@ -116,7 +116,7 @@ class FileSystem {
          * If not in the Windows environment, i.e. in a Linux like environment
          * Set permissions and, if desired, the owner.
          * 
-         * @since   3.15.4
+         * @since   LRS 3.15.4
          */
         if ( PHP_OS !== 'WINNT' ) {
             exec( "find {$path} -type d -exec chmod {$permissions} {} +" );
@@ -166,7 +166,7 @@ class FileSystem {
      * @return  boolean
      * 
      * @access  public
-     * @since   3.17.3
+     * @since   LRS 3.17.3
      */
 
     public static function write_file( 
@@ -197,7 +197,7 @@ class FileSystem {
      * @return  boolean
      * 
      * @access  public
-     * @since   3.17.3
+     * @since   LRS 3.17.3
      */
 
     public static function create_blank_file( string $file_path ): bool {
@@ -219,7 +219,7 @@ class FileSystem {
      * @return  boolean
      * 
      * @access  public
-     * @since   3.17.3
+     * @since   LRS 3.17.3
      */
 
     public static function append_to_file( string $file_path, string $contents ): bool {
@@ -235,7 +235,7 @@ class FileSystem {
      * @return  boolean
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public static function delete_folder( string $folder_path ): bool {
@@ -269,7 +269,7 @@ class FileSystem {
      * @return  boolean
      * 
      * @access  public
-     * @since   3.26.4
+     * @since   LRS 3.26.4
      */
 
     public static function delete_files( string|array ...$files ): bool {
@@ -296,7 +296,7 @@ class FileSystem {
      * @return  array
      * 
      * @access  public
-     * @since   3.21.1
+     * @since   LRS 3.21.1
      */
 
     public static function get_all_files_in_folder( string $path ): array {

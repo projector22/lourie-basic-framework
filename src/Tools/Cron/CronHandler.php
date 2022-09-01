@@ -13,8 +13,8 @@ use LBF\Tools\Files\FileSystem;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.17.4
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.17.4
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  * 
  * @todo    REVAMP, Needs a complete overhall, but not just at the moment. Do not use outside of LRS for the moment.
@@ -28,8 +28,8 @@ class CronHandler {
      * @var integer WINDOWS
      * 
      * @access  public
-     * @since   3.4.0
-     * @since   3.17.4  Revamped and seperated out the App aspects.
+     * @since   LRS 3.4.0
+     * @since   LRS 3.17.4  Revamped and seperated out the App aspects.
      */
 
     const WINDOWS = 0;
@@ -40,7 +40,7 @@ class CronHandler {
      * @var integer UNIX
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     const UNIX = 1;
@@ -51,7 +51,7 @@ class CronHandler {
      * @var int $environment    Choice of self::WINDOWS or self::UNIX
      * 
      * @access  protected
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     protected int $environment;
@@ -62,7 +62,7 @@ class CronHandler {
      * @var array   WEEK_DAYS
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     const WEEK_DAYS = [
@@ -81,7 +81,7 @@ class CronHandler {
      * @var array   MONTH_DAYS
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     const MONTH_DAYS = [
@@ -126,7 +126,7 @@ class CronHandler {
      * @var string  WINDOWS_TASK_TEMPLATE
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     const WINDOWS_TASK_TEMPLATE = "schtasks /create /tn %event_name% /tr %bat_file% /f /sc %interval%";
@@ -137,7 +137,7 @@ class CronHandler {
      * @var array   WINDOWS_SCHEDULE_OPTIONS
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     const WINDOWS_SCHEDULE_OPTIONS = [
@@ -152,7 +152,7 @@ class CronHandler {
      * The Unix scheduled task template for shell execution
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     const UNIX_TASK_TEMPLATE = '(crontab -l ; echo "%interval% bash %sh_file%") | sort - | uniq - | crontab - 2>&1';
@@ -163,7 +163,7 @@ class CronHandler {
      * @var array   UNIX_SCHEDULE_OPTIONS
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     const UNIX_SCHEDULE_OPTIONS = [
@@ -180,7 +180,7 @@ class CronHandler {
      * @var string  $cron_name
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
     
     public string $cron_name;
@@ -191,7 +191,7 @@ class CronHandler {
      * @var string  $template
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     public string $template;
@@ -202,7 +202,7 @@ class CronHandler {
      * @var string  $send_to_email
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     public string $send_to_email;
@@ -213,7 +213,7 @@ class CronHandler {
      * @var string  $start_time
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     public string $start_time;
@@ -224,7 +224,7 @@ class CronHandler {
      * @var string  $php_file_content;
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     protected string $php_file_content;
@@ -235,7 +235,7 @@ class CronHandler {
      * @var string  $scheduled_success
      * 
      * @access  protected
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     protected string $scheduled_success = "The scheduled task has successfully been created";
@@ -246,7 +246,7 @@ class CronHandler {
      * @var string  $scheduled_failed
      * 
      * @access  protected
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     protected string $scheduled_failed = "Scheduled task creation failed, please run the following into CMD on <b>THE SERVER</b>";
@@ -257,7 +257,7 @@ class CronHandler {
      * @var string  $scheduled_delete_failed
      * 
      * @access  protected
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     protected string $scheduled_delete_failed = "Schedule deletion failed, please run the following into CMD on <b>THE SERVER</b>";
@@ -269,7 +269,7 @@ class CronHandler {
      * @var boolean $send_email Default: false
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     public bool $send_email = true;
@@ -282,7 +282,7 @@ class CronHandler {
      * - Tests the PHP CLI interface.
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     public function __construct() {
@@ -302,7 +302,7 @@ class CronHandler {
      * @todo    TEST ON LINUX!!
      * 
      * @access  private
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     private function fill_in_template( string $interval, string $schedule ): string {
@@ -325,7 +325,7 @@ class CronHandler {
      * @return  string
      * 
      * @access  protected
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     protected function contruct_minutely(
@@ -347,7 +347,7 @@ class CronHandler {
      * @return  string
      * 
      * @access  protected
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     protected function contruct_hourly(
@@ -371,7 +371,7 @@ class CronHandler {
      * @return  string
      * 
      * @access  protected
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     protected function construct_daily(
@@ -404,7 +404,7 @@ class CronHandler {
      * @return  string
      * 
      * @access  protected
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     protected function construct_weekly(
@@ -439,7 +439,7 @@ class CronHandler {
      * @return  string
      * 
      * @access  protected
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     protected function construct_monthly(
@@ -466,7 +466,7 @@ class CronHandler {
      * Create the text of the cron php file.
      * 
      * @access  protected
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     protected function create_php_template(): void {
@@ -517,7 +517,7 @@ class CronHandler {
      * @param   string|int  $condition  The basic modifier, every x days or every x hours etc.
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     public function add_to_database( string $schedule, string $condition ): void {
@@ -550,7 +550,7 @@ class CronHandler {
      * @return  boolean
      * 
      * @access  public
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     public function delete_cron( string $cron_name ): bool {
@@ -575,7 +575,7 @@ class CronHandler {
                     /**
                      * @todo    Check on 'run as' user and whether it should run without someone logged on, NB
                      * 
-                     * @since   3.10.1
+                     * @since   LRS 3.10.1
                      */
                     echo $this->scheduled_delete_failed . "<br>";
                     Draw::copy_text_textbox( $cmd, 'sc_d' );
@@ -617,7 +617,7 @@ class CronHandler {
      * Test php CLI capabilities
      * 
      * @access  private
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     protected function test_php_cli() {
@@ -647,7 +647,7 @@ class CronHandler {
      * @return  string          The fixed string with spaces replaced with underscores
      * 
      * @access  private
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     protected function event_name_convention( $name ) {

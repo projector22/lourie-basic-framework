@@ -12,9 +12,9 @@ use App\Db\Data\GeneralConfigData;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.1.0
- * @since   3.11.0  Moved to `Framework\Tools\LDAPHandler` and class renamed `LDAPHandler` from `LDAP`.
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.1.0
+ * @since   LRS 3.11.0  Moved to `Framework\Tools\LDAPHandler` and class renamed `LDAPHandler` from `LDAP`.
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -28,7 +28,7 @@ class LDAPHandler {
      * Technically a 'Resource'
      * 
      * @access  private
-     * @since   3.11.0
+     * @since   LRS 3.11.0
      */
 
     private $ldap_con;
@@ -39,7 +39,7 @@ class LDAPHandler {
      * @var string  $dn
      * 
      * @access  private
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
 
     private string $dn;
@@ -50,7 +50,7 @@ class LDAPHandler {
      * @var string  $dn_password
      * 
      * @access  private
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
 
     private string $dn_password;
@@ -61,7 +61,7 @@ class LDAPHandler {
      * @var string  $ldap_server
      * 
      * @access  private
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
 
     private string $ldap_server;
@@ -72,7 +72,7 @@ class LDAPHandler {
      * @var string  $port
      * 
      * @access  private
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
 
     private string $port;
@@ -94,9 +94,9 @@ class LDAPHandler {
      *                                      Default: null
      * 
      * @access  public
-     * @since   3.1.0
-     * @since   3.11.0  Removed param $search_ou
-     * @since   3.28.0  Added param `$config_object`.
+     * @since   LRS 3.1.0
+     * @since   LRS 3.11.0  Removed param $search_ou
+     * @since   LRS 3.28.0  Added param `$config_object`.
      */
 
     public function __construct( 
@@ -156,7 +156,7 @@ class LDAPHandler {
      * @return  boolean false   If the sync fails
      * 
      * @access  public
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
 
     public function ldap_login(): bool {
@@ -179,7 +179,7 @@ class LDAPHandler {
      * @return  boolean false   If the search fails
      * 
      * @access  public
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
 
     public function ldap_search( string $object_category = 'user', string $sam_account_name = '*', ?string $search_ou = null ): array|bool {
@@ -202,7 +202,7 @@ class LDAPHandler {
      * Check that LDAP is enabled and exists
      * 
      * @access  public
-     * @since   3.6.1
+     * @since   LRS 3.6.1
      */
 
     private function check_ldap(): void {
@@ -222,7 +222,7 @@ class LDAPHandler {
      * @var string  $context    Default: 'teachers'
      * 
      * @access  public
-     * @since   3.11.0
+     * @since   LRS 3.11.0
      */
 
     public string $context = 'teachers';
@@ -235,8 +235,8 @@ class LDAPHandler {
      * @return array|bool  False if failed
      * 
      * @access  public
-     * @since   3.11.0
-     * @since   3.12.1  Added recursiveness to get members of groups within the defined group
+     * @since   LRS 3.11.0
+     * @since   LRS 3.12.1  Added recursiveness to get members of groups within the defined group
      */
 
     public function get_group_members( ?string $group_dn = null ): array|bool {
@@ -305,7 +305,7 @@ class LDAPHandler {
      * @return  array|bool  False if failed
      * 
      * @access  public
-     * @since   3.11.0
+     * @since   LRS 3.11.0
      */
 
     public function get_ou_user_members( ?string $ou_dn = null ): array|bool {
@@ -342,7 +342,7 @@ class LDAPHandler {
      * @return  boolean
      * 
      * @access  public
-     * @since   3.11.0
+     * @since   LRS 3.11.0
      */
 
     public function test_group_exists( string $group ): bool {

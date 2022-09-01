@@ -16,8 +16,8 @@ use LBF\Img\SVGImages;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.19.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.19.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -27,7 +27,7 @@ class Dashboard extends ConnectMySQL {
      * Class constructor, connect the database
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     public function __construct() {
@@ -39,7 +39,7 @@ class Dashboard extends ConnectMySQL {
      * Draw various maintenance mode pages
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     public function construct_page(): void {
@@ -65,7 +65,7 @@ class Dashboard extends ConnectMySQL {
      * Draw out the dashboard
      * 
      * @access  private
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     private function draw_dashboard(): void {
@@ -89,7 +89,7 @@ class Dashboard extends ConnectMySQL {
      * Draw out the standard page given to users
      * 
      * @access  private
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     private function page_closed(): void {
@@ -107,7 +107,7 @@ class Dashboard extends ConnectMySQL {
      * Draw out the various dashboard entries
      * 
      * @access  private
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     private function dashboad_entries(): void {
@@ -124,7 +124,7 @@ class Dashboard extends ConnectMySQL {
      * The database tables creation tool.
      * 
      * @access  private
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     private function table_tool_creator(): void {

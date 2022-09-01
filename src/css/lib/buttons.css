@@ -1,0 +1,334 @@
+/**
+ * This file is used for styling buttons
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   LRS 3.15.3
+ * @since   0.1.0-beta
+ */
+
+:root {
+    --button-loading-animation: #000;
+    --todobttn: darkblue;
+    --todobttn-disabled: #757588;
+    --green_button: #4CAF50;
+    --blue_button: #008CBA;
+    --red_button: #f44336;
+    --orange_button: #ffc251;
+
+    /**
+     * PORTAL / HOME INTERFACE
+     */
+
+    --home-button-colour: #4169e1;
+    --subject-button: #1e90ff;
+    --home-button-text: #fff;
+}
+
+.backbutton {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.bttn {
+    background-color: var(--home-button-colour);
+    width: 75%;
+}
+
+.button--loading {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 8px;
+    height: 8px;
+    margin: 0;
+    margin-right: 5px;
+    border: 3px solid transparent;
+    border-top-color: var(--button-loading-animation);
+    border-radius: 50%;
+    animation: button-loading-spinner 1s ease infinite;
+}
+
+.button--loading::before {
+    content: "";
+}
+
+@keyframes button-loading-spinner {
+    from {
+        transform: rotate(0turn);
+    }
+
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+.floating_tb_buttons_contain {
+    display: none;
+}
+
+.general_button {
+    margin-bottom: 25px;
+}
+
+.interface_button {
+    -webkit-appearance: none;
+    color: var(--home-button-text);
+    border: none;
+    padding: 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: var(--button-small-size);
+    border: 4px solid var(--home-button-colour);
+    word-wrap: normal;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.interface_button:hover {
+    border: 4px solid var(--home-button-colour);
+    background-color: var(--page-background-colour);
+    color: var(--default-text-colour)
+}
+
+.login_button {
+    font-size: 18px;
+    border-radius: 4px;
+    margin: 25px 0;
+}
+
+.log_cont_butt {
+    background-color: transparent;
+    border-color: transparent;
+    margin-right: 1px;
+    outline: none;
+}
+
+.log_cont_butt svg {
+    padding-top: 2px;
+}
+
+.reg_submit_bttn {
+    -webkit-appearance: none;
+    background-color: var(--home-button-colour);
+    border: none;
+    color: #fff;
+    width: 68%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: var(--button-large-size);
+    border-radius: 8px;
+}
+
+.std_bttn {
+    position: relative;
+}
+
+.std_button {
+    font-size: 13px;
+}
+
+.subjectbttn {
+    background-color: var(--subject-button);
+    border: 3px solid var(--subject-button);
+    width: 60%;
+}
+
+.subjectbttn:hover {
+    border: 3px solid var(--subject-button);
+}
+
+.todobttns {
+    background-color: var(--todobttn);
+    border: 2px solid var(--todobttn);
+    -webkit-appearance: none;
+    padding: 25px 45px 25px 45px !important;
+    border-radius: 8px;
+    font-size: 25px !important;
+    color: #fff;
+}
+
+.todobttns:hover {
+    background-color: var(--page-background-colour);
+    color: var(--default-text-colour);
+}
+
+.todobttns:disabled {
+    background-color: var(--todobttn-disabled);
+}
+
+.button_link {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: inherit;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+
+
+/**
+ * NEW STUFF
+ */
+
+.standard_button__container {
+    margin-right: 5px;
+}
+
+.standard_button {
+    border-radius: 5px;
+    border: 2px solid var(--input-basic-colour);
+    outline: none;
+    cursor: pointer;
+}
+
+.standard_button__margin {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.standard_button:hover {
+    border: 2px solid var(--input-outline-hover);
+}
+
+.standard_button:disabled:hover {
+    border: 2px solid var(--input-basic-colour);
+}
+
+.standard_button__padding {
+    padding: 15px 20px;
+}
+
+.button_colour__green {
+    border: 2px solid var(--green_button);
+    background-color: var(--green_button);
+    color: #fff;
+}
+
+.button_colour__blue {
+    border: 2px solid var(--blue_button);
+    background-color: var(--blue_button);
+    color: #fff;
+}
+
+.button_colour__red {
+    border: 2px solid var(--red_button);
+    background-color: var(--red_button);
+    color: #fff;
+}
+
+.button_colour__orange {
+    border: 2px solid var(--orange_button);
+    background-color: var(--orange_button);
+    color: #fff;
+}
+
+.button_colour__green:hover {
+    border: 2px solid var(--green_button);
+}
+
+.button_colour__blue:hover {
+    border: 2px solid var(--blue_button);
+}
+
+.button_colour__red:hover {
+    border: 2px solid var(--red_button);
+}
+
+.button_colour__orange:hover {
+    border: 2px solid var(--orange_button);
+}
+
+.coloured_button {
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.coloured_button:hover {
+    background-color: var(--page-background-colour);
+    color: var(--default-text-colour)
+}
+
+.coloured_button:disabled,
+.coloured_button:disabled:hover {
+    opacity: 60%;
+    color: #fff;
+}
+
+.button_colour__green:disabled:hover {
+    background-color: var(--green_button);
+}
+
+.button_colour__blue:disabled:hover {
+    background-color: var(--blue_button);
+}
+
+.button_colour__red:disabled:hover {
+    background-color: var(--red_button);
+}
+
+.button_colour__orange:disabled:hover {
+    background-color: var(--orange_button);
+}
+
+@media only screen and (min-width: 769px) {
+
+    .backbutton {
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    .bttn {
+        width: 68%;
+    }
+
+    .floaty_submit {
+        margin-bottom: 25px;
+        padding-top: 5px;
+        background-color: var(--page-background-colour);
+        position: sticky;
+        bottom: 0;
+        transition: 0.1s ease-in-out;
+    }
+
+    .floating_tb_buttons_contain {
+        display: block;
+        position: fixed;
+        bottom: 75px;
+        right: 10px;
+    }
+
+    .ftb_button {
+        padding: 0 8px;
+    }
+
+    .ftb_button:hover {
+        border: 0.5px solid lightgray;
+    }
+
+    .ftb_button img {
+        vertical-align: middle;
+    }
+
+    .login_button {
+        font-size: 25px;
+    }
+
+    .interface_button {
+        font-size: var(--button-large-size);
+    }
+
+    .reg_submit_bttn {
+        transition: padding 0.2s ease-in-out;
+        padding: 25px;
+    }
+
+}

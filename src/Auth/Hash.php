@@ -9,8 +9,8 @@ namespace LBF\Auth;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.28.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.28.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -27,8 +27,8 @@ class Hash {
      * @return  string      Random string of characters
      * 
      * @access  public
-     * @since   3.9.0
-     * @since   3.28.0  Moved from Functions to `Framework\Auth\Hash`.
+     * @since   LRS 3.9.0
+     * @since   LRS 3.28.0  Moved from Functions to `Framework\Auth\Hash`.
      */
 
     public static function random_id_string( int $number_of_chars = 7, string $input = '' ): string {
@@ -46,8 +46,8 @@ class Hash {
      * @return string
      * 
      * @access  public
-     * @since   3.21.0
-     * @since   3.28.0  Moved from Functions to `Framework\Auth\Hash`.
+     * @since   LRS 3.21.0
+     * @since   LRS 3.28.0  Moved from Functions to `Framework\Auth\Hash`.
      */
 
     public static function generate_guid( bool $trim = true ): string {
@@ -94,7 +94,7 @@ class Hash {
      * @return  string
      * 
      * @access  public
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
 
     public static function generate_cookie_hash( string $part1, string $part2, string $part3 ): string {
@@ -117,7 +117,7 @@ class Hash {
      * @return  string
      * 
      * @access  public
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
 
     public static function generate_session_hash( string $part1, string $part2 ): string {

@@ -11,10 +11,10 @@ use LBF\HTML\Draw;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.8.0
- * @since	3.11.0	Moved to `Framework\Tools\JSONData` from `Tools\JSONData`.
- * @since   3.14.4  Renamed `JSONTools`.
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.8.0
+ * @since   LRS 3.11.0	Moved to `Framework\Tools\JSONData` from `Tools\JSONData`.
+ * @since   LRS 3.14.4  Renamed `JSONTools`.
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -26,7 +26,7 @@ class JSONTools {
      * @var string DIR_SEP  Either `\` or `/`, depending on the server OS.
      * 
      * @access  public
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
 
     const DIR_SEP = PHP_OS === 'WINNT' ? '\\' : '/';
@@ -38,7 +38,7 @@ class JSONTools {
      * @param   array   $data   The data to be converted to be encoded and written to file
      * 
      * @access  public
-     * @since   3.8.0
+     * @since   LRS 3.8.0
      */
 
     public static function write_json_file( string $file, array $data ): void {
@@ -64,7 +64,7 @@ class JSONTools {
      * @return  array   Array of the data read from the JSON
      * 
      * @access  public
-     * @since   3.8.0
+     * @since   LRS 3.8.0
      */
 
     public static function read_json_file_to_array( string $file ): array {
@@ -80,7 +80,7 @@ class JSONTools {
      * @return  array   Array of the data read from the JSON
      * 
      * @access  public
-     * @since   3.15.2
+     * @since   LRS 3.15.2
      */
 
     public static function read_json_from_post_to_array( string $field ): array {
@@ -96,7 +96,7 @@ class JSONTools {
      * @return  object   Object of the data read from the JSON
      * 
      * @access  public
-     * @since   3.8.0
+     * @since   LRS 3.8.0
      */
 
     public static function read_json_file_to_object( string $file ): object|array {
@@ -110,7 +110,7 @@ class JSONTools {
      * @return  array   Array of the data read from the JSON
      * 
      * @access  public
-     * @since   3.15.2
+     * @since   LRS 3.15.2
      */
 
     public static function read_json_from_post_to_object( string $field ): object|array {
@@ -126,7 +126,7 @@ class JSONTools {
      * @return  boolean     Whether or not file exists and isn't empty
      * 
      * @access  public
-     * @since   3.8.0
+     * @since   LRS 3.8.0
      */
 
     public static function check_json_file( string $file ): bool {
@@ -144,7 +144,7 @@ class JSONTools {
      * @param   boolean $draw_text_feedback Default: false
      * 
      * @access  public
-     * @since   3.14.4
+     * @since   LRS 3.14.4
      */
 
     public static function create_listed_json_files( array $json, bool $draw_text_feedback = false ): void {
@@ -171,7 +171,7 @@ class JSONTools {
      *                          | json file path | json string |
      * 
      * @access  public
-     * @since   3.14.4
+     * @since   LRS 3.14.4
      */
 
     public static function check_listed_json_content( array $json ): void {
@@ -196,7 +196,7 @@ class JSONTools {
      * @return  array
      * 
      * @access  private
-     * @since   3.14.4
+     * @since   LRS 3.14.4
      */
 
     private static function check_values( array $master_data, array $live_data ): array {

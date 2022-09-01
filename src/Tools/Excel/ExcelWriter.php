@@ -12,8 +12,8 @@ use LBF\Tools\Excel\ExcelWriterBackend;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.19.6
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.19.6
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -23,7 +23,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * Constructor method, overwrites the constructor in the backend
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function __construct() {
@@ -37,7 +37,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @param   string  $name
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function add_new_sheet( string $name ): void {
@@ -60,7 +60,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @param   integer $sheet_id
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function set_active_sheet( int $sheet_id ): void {
@@ -75,7 +75,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * Create and write an excel file from the provided data.
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function write(): void {
@@ -129,7 +129,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * Note: doesn't work through AJAX.
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function write_and_download(): void {
@@ -158,7 +158,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @param   string  $path   The path & file name required
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function set_file_path( string $path ): void {
@@ -172,7 +172,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @param   array   $data   The data to set.
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function set_data( array $data ): void {
@@ -186,7 +186,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @param   array   $data   The row to append.
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function append_to_data( array $data ): void {
@@ -200,7 +200,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @param   boolean $is_header  Whether or not the 1st row is a header.
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function set_header_row( bool $is_header ): void {
@@ -214,7 +214,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @param   boolean $set_feedback   Whether or not to return feedback.
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function set_basic_feedback( bool $set_feedback ): void {
@@ -230,7 +230,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @param   boolean $set_feedback   Whether or not to return feedback.
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function set_verbose_feedback( bool $set_feedback ): void {
@@ -244,7 +244,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @return string
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function get_basic_feedback(): string {
@@ -266,7 +266,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @return string|array
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function get_verbose_feedback( ?string $param = null ): string|array {

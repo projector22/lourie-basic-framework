@@ -15,7 +15,7 @@ use \PDOException;
  * there is no oportunity to parse these constants, therefore
  * a better way is needed in LRS.
  * 
- * @since   3.28.0
+ * @since   LRS 3.28.0
  */
 
 if ( !defined( "DB_LOC" ) ) {
@@ -41,11 +41,11 @@ if ( !defined( "DB_YEAR" ) ) {
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.0.1
- * @since   3.12.0  Split off MySQL search queries into `DatabaseMeta`.
- * @since   3.17.0  Split off from `DatabaseControl`.
- * @since   3.27.0  Merge back all methods for interfacing with the database into this class.
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.0.1
+ * @since   LRS 3.12.0  Split off MySQL search queries into `DatabaseMeta`.
+ * @since   LRS 3.17.0  Split off from `DatabaseControl`.
+ * @since   LRS 3.27.0  Merge back all methods for interfacing with the database into this class.
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -57,7 +57,7 @@ class ConnectMySQL {
      * @var object  $conn
      * 
      * @access  private
-     * @since   3.0.1
+     * @since   LRS 3.0.1
      */
 
     private ?object $conn;
@@ -68,7 +68,7 @@ class ConnectMySQL {
      * @var boolean     $display_error. Default: false
      * 
      * @access  private
-     * @since   3.6.1
+     * @since   LRS 3.6.1
      */
 
     private bool $display_error = false;
@@ -79,7 +79,7 @@ class ConnectMySQL {
      * @var boolean $echo_sql   Default: false
      * 
      * @access  private
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     private bool $echo_sql = false;
@@ -90,7 +90,7 @@ class ConnectMySQL {
      * @var boolean     $log_sql    Default: false
      * 
      * @access  private
-     * @since   3.21.0
+     * @since   LRS 3.21.0
      */
 
     private bool $log_sql = false;
@@ -101,7 +101,7 @@ class ConnectMySQL {
      * @var boolean     $return_last_inserted_id    Default: false
      * 
      * @access  public
-     * @since   3.8.0
+     * @since   LRS 3.8.0
      * 
      * @deprecated  3.27.0  Move in favour of setting this data automatically.
      */
@@ -115,7 +115,7 @@ class ConnectMySQL {
      * @var boolean $get_number_of_rows_affected    Default: false
      * 
      * @access  public
-     * @since   3.15.8
+     * @since   LRS 3.15.8
      * 
      * @deprecated  3.27.0  Move in favour of setting this data automatically.
      */
@@ -128,8 +128,8 @@ class ConnectMySQL {
      * @var string      $last_inserted_id   
      * 
      * @access  private
-     * @since   3.8.0
-     * @since   3.27.0  Moved private, access through get_ method
+     * @since   LRS 3.8.0
+     * @since   LRS 3.27.0  Moved private, access through get_ method
      */
 
     private string $last_inserted_id;
@@ -140,8 +140,8 @@ class ConnectMySQL {
      * @var integer $number_of_rows     Default: 0
      * 
      * @access  private
-     * @since   3.15.8
-     * @since   3.27.0  Moved private, access through get_ method
+     * @since   LRS 3.15.8
+     * @since   LRS 3.27.0  Moved private, access through get_ method
      */
 
     private int $number_of_rows = 0;
@@ -152,7 +152,7 @@ class ConnectMySQL {
      * @var PDOException    $last_error
      * 
      * @access  private
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     private PDOException $last_error;
@@ -163,7 +163,7 @@ class ConnectMySQL {
      * @var boolean $set_primary_key_index
      * 
      * @access  private
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
     
     private bool $set_primary_key_index = false;
@@ -174,7 +174,7 @@ class ConnectMySQL {
      * @var string  $table
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     protected string $table;
@@ -187,7 +187,7 @@ class ConnectMySQL {
      * Object if single result, otherwise array
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public array|object $data = [];
@@ -198,7 +198,7 @@ class ConnectMySQL {
      * @var integer $number_of_records
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public int $number_of_records;
@@ -210,7 +210,7 @@ class ConnectMySQL {
      * @var boolean $append_to_data     Default: false
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public bool $append_to_data = false;
@@ -221,7 +221,7 @@ class ConnectMySQL {
      * @var array|null  $bind
      * 
      * @access  protected
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     protected ?array $bind = null;
@@ -232,7 +232,7 @@ class ConnectMySQL {
      * @var boolean $can_be_hidden
      * 
      * @access  protected
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     protected bool $can_be_hidden = false;
@@ -243,7 +243,7 @@ class ConnectMySQL {
      * @var boolean $can_be_deleted
      * 
      * @access  protected
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     protected bool $can_be_deleted = false;
@@ -254,7 +254,7 @@ class ConnectMySQL {
      * @var boolean $can_be_archived
      * 
      * @access  protected
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     protected bool $can_be_archived = false;
@@ -265,7 +265,7 @@ class ConnectMySQL {
      * @var boolean $include_inactive   Default: false
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public bool $include_inactive = false;
@@ -276,7 +276,7 @@ class ConnectMySQL {
      * @var boolean $include_deleted   Default: false
      * 
      * @access  public
-     * @since   3.18.0
+     * @since   LRS 3.18.0
      */
 
     public bool $include_deleted = false;
@@ -287,7 +287,7 @@ class ConnectMySQL {
      * @var boolean $include_hidden   Default: false
      * 
      * @access  public
-     * @since   3.18.0
+     * @since   LRS 3.18.0
      */
 
     public bool $include_hidden = false;
@@ -298,7 +298,7 @@ class ConnectMySQL {
      * @var boolean $single_result
      * 
      * @access  protected
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     protected bool $single_result;
@@ -314,7 +314,7 @@ class ConnectMySQL {
      * @var array   DEFAULT_SEARCH_PARAMS
      * 
      * @access  public
-     * @since   3.15.9
+     * @since   LRS 3.15.9
      */
 
     const DEFAULT_SEARCH_PARAMS = [
@@ -332,7 +332,7 @@ class ConnectMySQL {
      * @var boolean $rollover   Default: false
      * 
      * @access  public
-     * @since   3.14.0
+     * @since   LRS 3.14.0
      */
 
     public bool $rollover = false;
@@ -344,7 +344,7 @@ class ConnectMySQL {
      * @var string|null $template_class Default: null
      * 
      * @access  protected
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     protected ?string $template_class = null;
@@ -356,7 +356,7 @@ class ConnectMySQL {
      * @var string|null $index_data_by  Default: null
      * 
      * @access  protected
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     protected ?string $index_data_by = null;
@@ -368,7 +368,7 @@ class ConnectMySQL {
      * @var boolean $debug_mode
      * 
      * @access  protected
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     protected bool $debug_mode = false;
@@ -380,7 +380,7 @@ class ConnectMySQL {
      * @var array   $unique_values
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public array $unique_values = [];
@@ -392,7 +392,7 @@ class ConnectMySQL {
      * @param   boolean $rollover   Whether or not we are rolling over. Default: false
      * 
      * @access  public
-     * @since   3.0.1
+     * @since   LRS 3.0.1
      */
 
     public function __construct( bool $rollover = false ) {
@@ -407,7 +407,7 @@ class ConnectMySQL {
      * Closes the open database connection
      * 
      * @access  public
-     * @since   3.0.1
+     * @since   LRS 3.0.1
      */
 
     public function __destruct() {
@@ -425,7 +425,7 @@ class ConnectMySQL {
      * @return  $conn   The connection variable
      * 
      * @access  protected
-     * @since   3.0.1
+     * @since   LRS 3.0.1
      */
 
     protected function connect_db( ?int $year = null ): object|bool {
@@ -457,7 +457,7 @@ class ConnectMySQL {
      * Check if the database connection has been established, and if not, create it
      * 
      * @access  protected
-     * @since   3.8.5
+     * @since   LRS 3.8.5
      */
 
     protected function check_db_connection(): void {
@@ -471,7 +471,7 @@ class ConnectMySQL {
      * Close the connection when called. Usually used within __destruct()
      * 
      * @access  protected
-     * @since   3.8.5
+     * @since   LRS 3.8.5
      */
 
     protected function close_connection(): void {
@@ -488,7 +488,7 @@ class ConnectMySQL {
      * @return  array
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected function get_tables(): array {
@@ -513,7 +513,7 @@ class ConnectMySQL {
      * @return  array
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected function get_table_columns( ?string $table = null ): array {
@@ -549,7 +549,7 @@ class ConnectMySQL {
      * @return  array
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected function get_table_columns_schemas( ?string $table = null ): array {
@@ -604,8 +604,8 @@ class ConnectMySQL {
      * @return  object|array   $results    The results of the query. Object if $expect_one is true.
      * 
      * @access  public
-     * @since   3.0.1
-     * @since   3.27.0  Added params `$bind`, `$index_by`, `$call_class` & `$expect_one`.
+     * @since   LRS 3.0.1
+     * @since   LRS 3.27.0  Added params `$bind`, `$index_by`, `$call_class` & `$expect_one`.
      *                  Largely rewritten with prepared statements, and the returned data
      *                  now comes as an object or array of objects, rather than this having
      *                  to be done manually later.
@@ -708,8 +708,8 @@ class ConnectMySQL {
      * ```
      * 
      * @access  public
-     * @since   3.1.0
-     * @since   3.27.0  Added param `$bind` and largly rewritten to better handle feedback, exceptions and prepared statements.
+     * @since   LRS 3.1.0
+     * @since   LRS 3.27.0  Added param `$bind` and largly rewritten to better handle feedback, exceptions and prepared statements.
      */
 
     public function sql_execute(
@@ -740,7 +740,7 @@ class ConnectMySQL {
                      * If you need to get the last id or number of rows for each interaction,
                      * rather call sql_execute seperately for each entry.
                      * 
-                     * @since   3.27.0
+                     * @since   LRS 3.27.0
                      */
                     foreach ( $bind as $b ) {
                         $exec->execute( $b );
@@ -770,7 +770,7 @@ class ConnectMySQL {
      * @param   string  $sql    The SQL being processed.
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     private function post_sql_execute( object $exec, string $sql ): void {
@@ -805,8 +805,8 @@ class ConnectMySQL {
      * @return  boolean     Whether or not the SQL successfully executed.
      * 
      * @access  public
-     * @since   3.12.0
-     * @since   3.27.0  Rewritten to handle multi entries in the array $data.
+     * @since   LRS 3.12.0
+     * @since   LRS 3.27.0  Rewritten to handle multi entries in the array $data.
      */
 
     public function insert( array $data, bool $insert_ignore = false ): bool {
@@ -837,8 +837,8 @@ class ConnectMySQL {
      * @return  boolean
      * 
      * @access  public
-     * @since   3.12.0
-     * @since   3.27.0  Updated to parse prepared statements.
+     * @since   LRS 3.12.0
+     * @since   LRS 3.27.0  Updated to parse prepared statements.
      */
 
     public function update( array|string $values, array|string $where = '' ): bool {
@@ -881,8 +881,8 @@ class ConnectMySQL {
      * @return  boolean     Whether or not the SQL successfully executed
      * 
      * @access  public
-     * @since   3.12.0
-     * @since   3.27.0  Updated to handle parsed prepared statements.
+     * @since   LRS 3.12.0
+     * @since   LRS 3.27.0  Updated to handle parsed prepared statements.
      */
 
     public function delete( array|string $where = '' ): bool {
@@ -917,9 +917,9 @@ class ConnectMySQL {
      *                              Default: ''
      * 
      * @access  public
-     * @since   3.12.0
-     * @since   3.12.5  Consolidated into DataMeta
-     * @since   3.27.0  Consolidated into ConnectMySQL, updated for prepared statements.
+     * @since   LRS 3.12.0
+     * @since   LRS 3.12.5  Consolidated into DataMeta
+     * @since   LRS 3.27.0  Consolidated into ConnectMySQL, updated for prepared statements.
      */
 
     public function select_all(
@@ -947,9 +947,9 @@ class ConnectMySQL {
      *                              Expected "example='example'" or ['example' => 'example'].
      * 
      * @access  public
-     * @since   3.12.2
-     * @since   3.12.5  Consolidated into DataMeta
-     * @since   3.27.0  Consolidated into ConnectMySQL, updated for prepared statements.
+     * @since   LRS 3.12.2
+     * @since   LRS 3.12.5  Consolidated into DataMeta
+     * @since   LRS 3.27.0  Consolidated into ConnectMySQL, updated for prepared statements.
      */
 
     public function select_one( array|string $where ): void {
@@ -981,9 +981,9 @@ class ConnectMySQL {
      *                                      Default: ''
      * 
      * @access  protected
-     * @since   3.12.0
-     * @since   3.21.0  Added array support
-     * @since   3.27.0  Consolidated a number of steps into this method.
+     * @since   LRS 3.12.0
+     * @since   LRS 3.21.0  Added array support
+     * @since   LRS 3.27.0  Consolidated a number of steps into this method.
      */
 
     protected function prepare_select_sql( 
@@ -1038,7 +1038,7 @@ class ConnectMySQL {
     /**
      * Clear the data in in $this->get_class_list_data
      * 
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public function clear_data(): void {
@@ -1057,8 +1057,8 @@ class ConnectMySQL {
      * @return  string
      * 
      * @access  private
-     * @since   3.21.0
-     * @since   3.27.0  Rewritten, renamed from `prep_general_where` to 
+     * @since   LRS 3.21.0
+     * @since   LRS 3.27.0  Rewritten, renamed from `prep_general_where` to 
      *                  `prepare_where` and updated for using 
      *                  prepared statements.
      */
@@ -1074,7 +1074,7 @@ class ConnectMySQL {
              * @note    The conditional, is because some situations doesn't require a reset (UPDATE, DELETE)
              *          whereas some do (SELECT_ALL).
              * 
-             * @since   3.27.0
+             * @since   LRS 3.27.0
              */
             $this->bind = [];
         }
@@ -1090,7 +1090,7 @@ class ConnectMySQL {
                  * 
                  * @todo    Fix the above.
                  * 
-                 * @since   3.27.0
+                 * @since   LRS 3.27.0
                  */
                 if ( isset( $where[0] ) ) {
                     $uses_or = true;
@@ -1175,8 +1175,8 @@ class ConnectMySQL {
      * @todo    Add BETWEEN
      * 
      * @access  private
-     * @since   3.21.0
-     * @since   3.27.0  Renamed from `select_prep_key_val` to `handle_prep_key_val`
+     * @since   LRS 3.21.0
+     * @since   LRS 3.27.0  Renamed from `select_prep_key_val` to `handle_prep_key_val`
      *                  and rewritten to parse prepared statements.
      */
 
@@ -1288,7 +1288,7 @@ class ConnectMySQL {
      * @return  string
      * 
      * @access  private
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     private function strip( string $s_key ): string {
@@ -1307,7 +1307,7 @@ class ConnectMySQL {
      * @return  string
      * 
      * @access  private
-     * @since   3.21.0
+     * @since   LRS 3.21.0
      */
 
     private function prepare_select_where_sql_by_string( string $where ): string {
@@ -1376,7 +1376,7 @@ class ConnectMySQL {
      * @return  boolean     Whether the connection was successful
      * 
      * @access  public
-     * @since   3.14.2
+     * @since   LRS 3.14.2
      */
 
     public function set_db_year( string|int $year ): bool {
@@ -1392,7 +1392,7 @@ class ConnectMySQL {
      * Reset the database connection
      * 
      * @access  public
-     * @since   3.14.2
+     * @since   LRS 3.14.2
      */
 
     public function reset_db_connection(): void {
@@ -1404,7 +1404,7 @@ class ConnectMySQL {
      * Perform a truncate table command to empty the table
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     public function empty_table(): void {
@@ -1419,8 +1419,8 @@ class ConnectMySQL {
      * @param   string  $sql    The sql statement being executed
      * 
      * @access  private
-     * @since   3.6.1
-     * @since   3.7.0   Added @param $sql
+     * @since   LRS 3.6.1
+     * @since   LRS 3.7.0   Added @param $sql
      */
 
     private function display_the_error( object $error, string $sql, ?array $bind = null ): void {
@@ -1449,7 +1449,7 @@ class ConnectMySQL {
      * @param   mixed   $data
      * 
      * @access  private
-     * @since   3.23.3
+     * @since   LRS 3.23.3
      */
 
     private function log_sql( mixed $data ): void {
@@ -1485,8 +1485,8 @@ class ConnectMySQL {
      * @return  object
      * 
      * @access  protected
-     * @since   3.15.0
-     * @since   3.27.0  Moved to ConnectMySQL, added param $class, return.
+     * @since   LRS 3.15.0
+     * @since   LRS 3.27.0  Moved to ConnectMySQL, added param $class, return.
      */
 
     protected function assign_data_to_properties( string $class, object|array $data ): object {
@@ -1504,7 +1504,7 @@ class ConnectMySQL {
      * @param   string  $table.
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function set_table( string $table ): void {
@@ -1518,7 +1518,7 @@ class ConnectMySQL {
      * @param   string  $template_class.
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function set_template_class( string $template_class ): void {
@@ -1532,7 +1532,7 @@ class ConnectMySQL {
      * @param   string  $index_data_by.
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function set_index_data_by( string $index_data_by ): void {
@@ -1549,7 +1549,7 @@ class ConnectMySQL {
      * @return  string
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function get_data_index(): string {
@@ -1564,7 +1564,7 @@ class ConnectMySQL {
      * @return  string
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function get_last_inserted_id(): string {
@@ -1578,7 +1578,7 @@ class ConnectMySQL {
      * @return  integer
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function get_number_of_row_affected(): int {
@@ -1592,7 +1592,7 @@ class ConnectMySQL {
      * @return  integer
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function get_number_of_row_selected(): int {
@@ -1606,7 +1606,7 @@ class ConnectMySQL {
      * @return  PDOException
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function get_last_error(): PDOException {
@@ -1620,7 +1620,7 @@ class ConnectMySQL {
      * @param   boolean $set    The value to set $this->set_primary_key_index
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function set_primary_key_as_index( bool $set ): void {
@@ -1634,7 +1634,7 @@ class ConnectMySQL {
      * @param   boolean $set    The value to set $this->display_error
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function set_display_error( bool $set ): void {
@@ -1648,7 +1648,7 @@ class ConnectMySQL {
      * @param   boolean $set    The value to set $this->echo_sql
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function set_echo_sql( bool $set ): void {
@@ -1662,7 +1662,7 @@ class ConnectMySQL {
      * @param   boolean $set    The value to set $this->log_sql
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function set_log_sql( bool $set ): void {
@@ -1676,7 +1676,7 @@ class ConnectMySQL {
      * @param   boolean $set    The value to set $this->append_to_data
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function set_append_to_data( bool $set ): void {
@@ -1690,7 +1690,7 @@ class ConnectMySQL {
      * @param   boolean $set    The value to set $this->debug_mode
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function set_debug_mode( bool $set ): void {

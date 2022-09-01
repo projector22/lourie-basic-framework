@@ -15,8 +15,8 @@ use PHPMailer\PHPMailer\PHPMailer;
  * @link    https://github.com/PHPMailer/PHPMailer/
  * @link    https://alexwebdevelop.com/phpmailer-tutorial/
  * 
- * @since   3.4.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.4.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -30,7 +30,7 @@ class Mail {
      * @var string  $default_from_name
      * 
      * @access  private
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     private string $default_from_name;
@@ -41,7 +41,7 @@ class Mail {
      * @var string  $default_from
      * 
      * @access public
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     public string $default_from;
@@ -52,7 +52,7 @@ class Mail {
      * @var string  $smtp_address
      * 
      * @access private
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     private string $smtp_address;
@@ -63,7 +63,7 @@ class Mail {
      * @var string  $username
      * 
      * @access private
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     private string $username;
@@ -74,7 +74,7 @@ class Mail {
      * @var string  $password
      * 
      * @access private
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     private string $password;
@@ -85,7 +85,7 @@ class Mail {
      * @var string  $requires_auth
      * 
      * @access private
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     private string $requires_auth;
@@ -96,7 +96,7 @@ class Mail {
      * @var string  $encrypt_type
      * 
      * @access private
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     private string $encrypt_type;
@@ -107,7 +107,7 @@ class Mail {
      * @var string  $port
      * 
      * @access private
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     private string $port;
@@ -118,7 +118,7 @@ class Mail {
      * @var string  $echo_error
      * 
      * @access  public
-     * @since   3.12.2
+     * @since   LRS 3.12.2
      */
     
     public bool $echo_error = true;
@@ -132,7 +132,7 @@ class Mail {
      * @var string  $attachment_type    Default: 'std'
      * 
      * @access  public
-     * @since   3.12.2
+     * @since   LRS 3.12.2
      */
 
     public string $attachment_type = 'std';
@@ -143,7 +143,7 @@ class Mail {
      * @var string  $encoding   Default: 'base64'
      * 
      * @access  public
-     * @since   3.12.2
+     * @since   LRS 3.12.2
      */
 
     public string $encoding = 'base64';
@@ -154,7 +154,7 @@ class Mail {
      * @var string  $type       Default: 'application/pdf'
      * 
      * @access  public
-     * @since   3.12.2
+     * @since   LRS 3.12.2
      */
 
     public string $type = 'application/pdf';
@@ -169,8 +169,8 @@ class Mail {
      *                                          Default: null
      * 
      * @access  public
-     * @since   3.4.0
-     * @since   3.28.0  Added params `$config_object` & `$default_from_name`.
+     * @since   LRS 3.4.0
+     * @since   LRS 3.28.0  Added params `$config_object` & `$default_from_name`.
      */
 
     public function __construct(
@@ -215,7 +215,7 @@ class Mail {
      * @return  boolean                 Whether or not the mail sending was successful or not
      * 
      * @access  public
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     public function send_mail( 
@@ -236,7 +236,7 @@ class Mail {
             /**
              * Set From address
              * 
-             * @since   3.4.0
+             * @since   LRS 3.4.0
              */
 
             if ( is_null( $from ) ) {
@@ -246,7 +246,7 @@ class Mail {
             /**
              * Set the From name
              * 
-             * @since   3.4.0
+             * @since   LRS 3.4.0
              */
 
             if ( is_null( $from_name ) ) {
@@ -259,7 +259,7 @@ class Mail {
             /**
              * Set the To address
              * 
-             * @since   3.4.0
+             * @since   LRS 3.4.0
              */
 
             $send_to = $this->split_multi_send_addresses( $to );
@@ -276,7 +276,7 @@ class Mail {
             /**
              * Set the Attachemnt
              * 
-             * @since   3.4.0
+             * @since   LRS 3.4.0
              */
 
             if ( !is_null( $attachment ) ) {
@@ -298,7 +298,7 @@ class Mail {
             /**
              * Set a CC address
              * 
-             * @since   3.4.0
+             * @since   LRS 3.4.0
              */
 
             if ( !is_null( $cc ) ) {
@@ -315,7 +315,7 @@ class Mail {
             /**
              * Set a BCC address
              * 
-             * @since   3.4.0
+             * @since   LRS 3.4.0
              */
 
             if ( !is_null( $bcc ) ) {
@@ -332,7 +332,7 @@ class Mail {
             /**
              * Set the Subject
              * 
-             * @since   3.4.0
+             * @since   LRS 3.4.0
              */
 
             $mail->Subject = $subject;
@@ -340,7 +340,7 @@ class Mail {
             /**
              * Handle if the body of the email has HTML content
              * 
-             * @since   3.4.0
+             * @since   LRS 3.4.0
              */
 
             if ( $body_is_html ) {
@@ -351,7 +351,7 @@ class Mail {
             /**
              * Prepare and send
              * 
-             * @since   3.4.0
+             * @since   LRS 3.4.0
              */
 
             $mail->isSMTP();
@@ -394,8 +394,8 @@ class Mail {
      * @return  array   $addresses  The addresses array (even if there is only one) to be used
      * 
      * @access  private
-     * @since   3.4.0
-     * @since   3.12.2  Added handling for split by semicolon
+     * @since   LRS 3.4.0
+     * @since   LRS 3.12.2  Added handling for split by semicolon
      */
 
     private function split_multi_send_addresses( string $address ): array {

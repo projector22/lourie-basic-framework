@@ -1,0 +1,130 @@
+/**
+ * This file is used for styling various app table elements
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   LRS 3.15.3
+ */
+
+:root {
+    --table-line-hover-colour: #263d81;
+    --table-text-hover-colour: #fff;
+    --table-link-colour: #0000dd;
+    --table-link-visited-colour: #0000dd;
+    --even-row: var(--page-background-colour);
+    --odd-row: #e5e5e5;
+    --highlight-empty: #ee9c87;
+}
+
+
+.table_container {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.standard_table {
+    border-collapse: collapse;
+}
+
+.table_width--full {
+    width: 100%;
+}
+
+.standard_table tr:nth-child(even) {
+    background-color: var(--even-row);
+}
+
+.standard_table tr:nth-child(odd) {
+    background-color: var(--odd-row);
+}
+
+.standard_row td {
+    padding: 4px 3px;
+}
+
+.table_border {
+    outline: 1px solid var(--element-borders);
+}
+
+.table_horizontal_border {
+    border-bottom: 1px solid var(--element-borders);
+}
+
+.table_vertical_border {
+    border-left: 1px solid var(--element-borders);
+    border-right: 1px solid var(--element-borders);
+}
+
+.body_row a {
+    color: var(--table-link-colour);
+}
+
+.body_row a:visited {
+    color: var(--table-link-visited-colour);
+}
+
+.body_row:hover,
+.body_row:hover a,
+.body_row:focus,
+.body_row:focus a {
+    background: var(--table-line-hover-colour) !important;
+    color: var(--table-text-hover-colour);
+}
+
+.table_header {
+    margin: 5px 0;
+    position: sticky;
+    top: 0;
+    background-color: var(--page-background-colour) !important;
+}
+
+.table_header th {
+    padding: 1.8em 3px;
+}
+
+.selectable_checkbox_width {
+    width: var(--check-table-width);
+}
+
+.edit_link_width {
+    width: var(--edit-grid-width);
+}
+
+.highlight_empty {
+    background-color: var(--highlight-empty) !important;
+}
+
+.feedback_tbl {
+    border-collapse: collapse;
+}
+
+.feedback_tbl tr:hover {
+    background-color: #d3d3d3;
+}
+
+.feedback_tbl tr td {
+    border: 1px dotted black;
+    padding: 1px;
+}
+
+
+/**
+ * TABLE FILTERS
+ */
+
+@media only screen and (min-width: 769px) {
+
+    .table_filter_container {
+        display: inline-flex;
+        flex-wrap: wrap;
+    }
+
+    .table_filter_container div,
+    .table_header_button {
+        flex: 1;
+        margin-left: 12px;
+    }
+
+}

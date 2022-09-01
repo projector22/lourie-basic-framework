@@ -1,0 +1,19 @@
+/**
+ * This file is used for styling various input validation elements
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   LRS 3.15.10
+ */
+
+.hide_focus:focus {
+    outline: none;
+}
+
+.border--invalid {
+    border: 2px solid red!important;
+}
+
+.border--valid {
+    border: 2px solid green!important;
+}

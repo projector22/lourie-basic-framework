@@ -13,10 +13,10 @@ use \PDOException;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.0.1
- * @since   3.17.0  Split out specific functions for connecting to a MySQL DB,
+ * @since   LRS 3.0.1
+ * @since   LRS 3.17.0  Split out specific functions for connecting to a MySQL DB,
  *                  to make this class more general.
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -28,7 +28,7 @@ class DatabaseControl {
      * @var object  $conn
      * 
      * @access  protected
-     * @since   3.0.1
+     * @since   LRS 3.0.1
      */
 
     protected ?object $conn;
@@ -39,7 +39,7 @@ class DatabaseControl {
      * @var boolean     $display_error. Default: false
      * 
      * @access  protected
-     * @since   3.6.1
+     * @since   LRS 3.6.1
      */
 
     protected bool $display_error = false;
@@ -50,7 +50,7 @@ class DatabaseControl {
      * @var boolean     $log_sql    Default: false
      * 
      * @access  protected
-     * @since   3.21.0
+     * @since   LRS 3.21.0
      */
 
     protected bool $log_sql = false;
@@ -61,7 +61,7 @@ class DatabaseControl {
      * @var boolean     $return_last_inserted_id    Default: false
      * 
      * @access  public
-     * @since   3.8.0
+     * @since   LRS 3.8.0
      */
 
     public bool $return_last_inserted_id = false;
@@ -72,7 +72,7 @@ class DatabaseControl {
      * @var string      $last_inserted_id   
      * 
      * @access  public
-     * @since   3.8.0
+     * @since   LRS 3.8.0
      */
 
     public string $last_inserted_id;
@@ -83,7 +83,7 @@ class DatabaseControl {
      * @var boolean $rollover   Default: false
      * 
      * @access  public
-     * @since   3.14.0
+     * @since   LRS 3.14.0
      */
 
     public bool $rollover = false;
@@ -94,7 +94,7 @@ class DatabaseControl {
      * @var boolean $get_number_of_rows_affected    Default: false
      * 
      * @access  public
-     * @since   3.15.8
+     * @since   LRS 3.15.8
      */
 
     public bool $get_number_of_rows_affected = false;
@@ -105,7 +105,7 @@ class DatabaseControl {
      * @var integer $number_of_rows     Default: 0
      * 
      * @access  public
-     * @since   3.15.8
+     * @since   LRS 3.15.8
      */
 
     public int $number_of_rows = 0;
@@ -115,8 +115,8 @@ class DatabaseControl {
      * Placeholder method. This class should be extended to and this method should be overwritten
      * 
      * @access  protected
-     * @since   3.0.1
-     * @since   3.17.0  Converted to placeholder class.
+     * @since   LRS 3.0.1
+     * @since   LRS 3.17.0  Converted to placeholder class.
      */
 
     protected function connect_db() {
@@ -132,7 +132,7 @@ class DatabaseControl {
      * @return  array   $results    The results of the query
      * 
      * @access  public
-     * @since   3.0.1
+     * @since   LRS 3.0.1
      */    
 
     public function sql_select( string $sql ): array {
@@ -165,7 +165,7 @@ class DatabaseControl {
      * @return  false   If the query has an error in it.
      * 
      * @access  public
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
 
     public function sql_execute( string $sql ): bool {
@@ -201,7 +201,7 @@ class DatabaseControl {
      * @return  object  If the query has an error in it, return the error object
      * 
      * @access  public
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      * 
      * @deprecated  3.27.0
      */
@@ -228,8 +228,8 @@ class DatabaseControl {
      * @param   string  $sql    The sql statement being executed
      * 
      * @access  private
-     * @since   3.6.1
-     * @since   3.7.0   Added @param $sql
+     * @since   LRS 3.6.1
+     * @since   LRS 3.7.0   Added @param $sql
      */
 
     private function display_the_error( object $error, string $sql ): void {
@@ -245,7 +245,7 @@ class DatabaseControl {
      * Check if the database connection has been established, and if not, create it
      * 
      * @access  protected
-     * @since   3.8.5
+     * @since   LRS 3.8.5
      */
 
     protected function check_db_connection(): void {
@@ -261,7 +261,7 @@ class DatabaseControl {
      * @param   mixed   $data
      * 
      * @access  private
-     * @since   3.23.3
+     * @since   LRS 3.23.3
      */
 
     private function log_sql( mixed $data ): void {
@@ -291,7 +291,7 @@ class DatabaseControl {
      * Close the connection when called. Usually used within __destruct()
      * 
      * @access  protected
-     * @since   3.8.5
+     * @since   LRS 3.8.5
      */
 
     protected function close_connection(): void {

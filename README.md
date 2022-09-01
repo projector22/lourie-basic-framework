@@ -6,7 +6,7 @@ This project will function as a basic framework and template for future webapps.
 
 ```php
 /**
- * @since   3.25.0      <- LRS version
+ * @since   LRS 3.25.0  <- LRS version
  * @since   LBF 0.1.0   <- LBF version
  */
 ```

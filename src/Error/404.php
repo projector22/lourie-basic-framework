@@ -7,9 +7,9 @@ use LBF\Img\SVGImages;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.1.0
- * @since   3.9.1   Reworked and remade, new image & text
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.1.0
+ * @since   LRS 3.9.1   Reworked and remade, new image & text
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 

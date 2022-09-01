@@ -1,0 +1,236 @@
+/**
+ * This file is used for styling the basic templates of the app
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   LRS 3.15.3
+ * @since   LBF 0.1.1-beta
+ */
+
+.wrapper {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-areas:
+        "header"
+        "body"
+        "footer";
+    height: 100vh;
+    width: 100vw;
+}
+
+aside {
+    grid-area: sidebar;
+    z-index: 1500;
+    background-color: var(--sidebar-colour);
+    position: absolute;
+    top: var(--header-height);
+    transform-origin: 0% 0%;
+    transform: translate(-100%, 0);
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    overflow-y: auto;
+    /* Internet Explorer 10+ */
+    -ms-overflow-style: none;
+    /* Firefox */
+    scrollbar-width: none;
+}
+
+aside::-webkit-scrollbar {
+    display: none;
+}
+
+header {
+    grid-area: header;
+    height: 50px;
+    max-height: 50px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    box-shadow: 6px 4px 18px -2px rgba(41, 41, 46, 0.14);
+    margin-bottom: 5px;
+    max-width: 100vw;
+}
+
+header a:link,
+header a:visited {
+    text-decoration: none;
+    color: var(--default-text-colour);
+}
+
+main {
+    grid-area: body;
+    overflow: auto;
+    position: relative;
+}
+
+.main_area {
+    border-top: 1px solid var(--element-borders);
+}
+
+.page_element_description {
+    padding: 0 10px 10px 10px;
+    border-bottom: 1px solid var(--element-borders);
+    transition-timing-function: ease-in-out;
+}
+
+.page_element_main {
+    border-left: 1px solid var(--element-borders);
+    border-bottom: 1px solid var(--element-borders);
+    padding: 5px 10px 32px 10px;
+    /* This was to fix overflow issues, but it seems ok now without it */
+    /* display: flex; */
+    /* flex-direction: column; */
+    overflow-x: auto;
+}
+
+/**
+ * TERMINAL
+ */
+.terminal_window_bttn {
+    border-top: 1px solid #727272;
+    border-right: 1px solid #727272;
+    width: 70px;
+    border-top-right-radius: 3px;
+    position: fixed;
+    bottom: calc(var(--footer-height) - 1px);
+    z-index: 205;
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 1px 3px;
+    background-color: var(--element-borders);
+    transition: width 0.5s ease-in-out, bottom 0.5s ease-in-out;
+}
+
+.terminal_window_bttn:hover {
+    width: 100%;
+}
+
+.terminal_window_bttn_open {
+    bottom: calc(50% + (var(--footer-height) - 1px));
+    width: var(--terminal_feedback_window);
+    opacity: 90%;
+}
+
+.terminal_window_container {
+    border-right: 1px solid #727272;
+    background-color: var(--element-borders);
+    position: fixed;
+    bottom: calc(var(--footer-height) - 1px);
+    height: 0;
+    width: 100%;
+    z-index: 200;
+    transition: height 0.5s ease-in-out;
+}
+
+.term_container_open {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    opacity: 90%;
+}
+
+.feedback_console {
+    position: relative;
+    background-color: black;
+    color: #fff;
+    width: 96%;
+    margin: 0 auto;
+    height: 0;
+    transition: all 0.3s ease-in-out;
+    font-family: "Ubuntu Mono";
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.feedback_console_height {
+    flex: 1;
+    padding: 5px 0 10px 5px;
+    margin-top: 10px;
+    border-radius: 2px;
+}
+
+.console_drawer_resize_element {
+    width: 60%;
+    height: 3px;
+    margin: 0 auto;
+    margin-top: 3px;
+    background-color: #727272;
+    border: 3px solid #727272;
+    border-radius: 4px;
+    z-index: 300;
+    cursor: grab;
+    transition: transform 200ms ease-out;
+    box-shadow:
+        0.6px 3px 2.2px rgba(0, 0, 0, 0.07),
+        1.5px 7.3px 5.3px rgba(0, 0, 0, 0.066),
+        2.8px 13.8px 10px rgba(0, 0, 0, 0.061),
+        4.9px 24.6px 17.9px rgba(0, 0, 0, 0.055),
+        9.2px 46px 33.4px rgba(0, 0, 0, 0.046),
+        22px 110px 80px rgba(0, 0, 0, 0.033);
+}
+
+.console_drawer_resize_element:hover {
+    box-shadow: none;
+}
+
+.console_drawer_resize_element:active {
+    transform: scale(0.95);
+    cursor: grabbing;
+}
+
+@media only screen and (min-width: 769px) {
+    header {
+        margin: 0;
+    }
+
+    .wrapper {
+        padding: 0;
+        margin: 0px 0px;
+        grid-template-columns: var(--sidebar-width) 1fr;
+        grid-template-rows: var(--header-height) 1fr var(--footer-height);
+        grid-template-areas:
+            "header header"
+            "sidebar body"
+            "sidebar footer";
+    }
+
+    aside {
+        display: block;
+        position: initial;
+        transform: none;
+    }
+
+    .main_area {
+        margin: 20px;
+    }
+
+    .page_element {
+        border-left: 1px solid var(--element-borders);
+        border-right: 1px solid var(--element-borders);
+        font-size: 12px;
+        display: grid;
+        grid-template-columns: 35% 1fr;
+    }
+
+    .page_element_full_width {
+        border-right: 1px solid var(--element-borders);
+        font-size: 12px;
+    }
+
+    /**
+     * TERMINAL
+     */
+    .terminal_window_bttn {
+        left: var(--sidebar-width);
+    }
+
+    .terminal_window_bttn:hover {
+        width: var(--terminal_feedback_window);
+    }
+
+    .terminal_window_container {
+        left: var(--sidebar-width);
+        width: calc(var(--terminal_feedback_window) + 6px);
+    }
+
+}

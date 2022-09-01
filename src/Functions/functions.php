@@ -9,8 +9,8 @@ use LBF\HTML\HTML;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.1.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.1.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -20,7 +20,7 @@ use LBF\HTML\HTML;
  * 
  * @param   string  $class  Name of the class being called
  * 
- * @since   3.1.0
+ * @since   LRS 3.1.0
  */
 
 function load_class( string $class ) {
@@ -28,7 +28,7 @@ function load_class( string $class ) {
      * @todo find a way of moving this hard coded file path out of the framework, or
      * to define it by definition elsewhere.
      * 
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
     if ( !defined( "SRC_PATH" ) ) {
         define( "SRC_PATH", realpath( './src' ) );
@@ -52,7 +52,7 @@ function load_class( string $class ) {
  * 
  * This normalizes paths for the app. Particularly useful in class autoloading.
  * 
- * @since   3.15.4
+ * @since   LRS 3.15.4
  */
 
 function normalize_path_string( string $path ): string {
@@ -67,8 +67,8 @@ function normalize_path_string( string $path ): string {
  * 
  * @return  mixed  $data   The cleaned up data
  * 
- * @since   3.1.0
- * @since   3.17.0  Added array support
+ * @since   LRS 3.1.0
+ * @since   LRS 3.17.0  Added array support
  */
 
 function protect( mixed $data ): mixed {
@@ -126,8 +126,8 @@ function protect( mixed $data ): mixed {
  * 
  * @return  string  Token string
  * 
- * @since   3.1.0
- * @since   3.15.0  Renamed from setToken() to get_token()
+ * @since   LRS 3.1.0
+ * @since   LRS 3.15.0  Renamed from setToken() to get_token()
  */
 
 function get_token() {
@@ -142,8 +142,8 @@ function get_token() {
  * 
  * Generally interpreted by get_token()
  * 
- * @since   3.1.0
- * @since   3.15.0  Renamed from token() to set_token()
+ * @since   LRS 3.1.0
+ * @since   LRS 3.15.0  Renamed from token() to set_token()
  */
 
 function set_token( string $token ):void {
@@ -161,9 +161,9 @@ function set_token( string $token ):void {
  * 
  * @return  string
  * 
- * @since   3.8.0
- * @since   3.14.1  Added param $load_pdf
- * @since   3.15.4  Added param $return
+ * @since   LRS 3.8.0
+ * @since   LRS 3.14.1  Added param $load_pdf
+ * @since   LRS 3.15.4  Added param $return
  */
 
 function page( string $page, bool $load_pdf = false, bool $return = false ): string {
@@ -189,7 +189,7 @@ function page( string $page, bool $load_pdf = false, bool $return = false ): str
  * 
  * @return  string
  * 
- * @since   3.15.4
+ * @since   LRS 3.15.4
  */
 
 function tab( string $tab, bool $return = false ): string {
@@ -209,7 +209,7 @@ function tab( string $tab, bool $return = false ): string {
  * 
  * @return  string  Page id string
  * 
- * @since   3.8.5
+ * @since   LRS 3.8.5
  */
 
 function load_page( string $default ): string {
@@ -236,8 +236,8 @@ function load_page( string $default ): string {
  * 
  * @return  string
  * 
- * @since   3.4.1
- * @since   3.16.1  Entirely reworked, added param $num_of_zeros.
+ * @since   LRS 3.4.1
+ * @since   LRS 3.16.1  Entirely reworked, added param $num_of_zeros.
  */
 
 function add_leading_zero( mixed $input, int $num_of_zeros = 1 ): string {
@@ -267,7 +267,7 @@ function add_leading_zero( mixed $input, int $num_of_zeros = 1 ): string {
  * 
  * @return  string  $data   Cleaned up string
  * 
- * @since   3.0.0
+ * @since   LRS 3.0.0
  */
 
 function remove_trailing_chars( string $data, string $test ): string {
@@ -292,9 +292,9 @@ function remove_trailing_chars( string $data, string $test ): string {
  * 
  * @return  string  $option     The complete HTML of <option> elements which can be placed in a <select> or similar
  * 
- * @since   3.0.0
- * @since   3.14.3  Added param $hidden, streamlined the logic.
- * @since   3.17.3  Added the ability to create the based on object properties.
+ * @since   LRS 3.0.0
+ * @since   LRS 3.14.3  Added param $hidden, streamlined the logic.
+ * @since   LRS 3.17.3  Added the ability to create the based on object properties.
  */
 
 function build_item_droplist( array|object $list, ?array $value = null, string|int|null $selected_option = '', array $hidden_entries = [] ): string {
@@ -338,7 +338,7 @@ function build_item_droplist( array|object $list, ?array $value = null, string|i
  * Credit:
  * @link    https://stackoverflow.com/questions/5696412/how-to-get-a-substring-between-two-strings-in-php
  * 
- * @since   3.1.0
+ * @since   LRS 3.1.0
  */
 
 function get_string_between( string $string, string $start, string $end ): string {
@@ -363,8 +363,8 @@ function get_string_between( string $string, string $start, string $end ): strin
  * 
  * @return  string  $options        The html <options> containing the weeks of the year
  * 
- * @since   3.3.2
- * @since   3.23.0  Added param $add_all
+ * @since   LRS 3.3.2
+ * @since   LRS 3.23.0  Added param $add_all
  */
 
 function week_select( ?string $selected_week = null, ?int $year = null, bool $add_all = false ): string {
@@ -402,7 +402,7 @@ function week_select( ?string $selected_week = null, ?int $year = null, bool $ad
  * 
  * @return  string  $options        The html <options> containing the weeks of the year
  * 
- * @since   3.3.2
+ * @since   LRS 3.3.2
  */
 
 function month_select( ?string $selected_month = null, ?int $year = null ): string {
@@ -441,7 +441,7 @@ function month_select( ?string $selected_month = null, ?int $year = null ): stri
  * 
  * @return  string  Path to php executable. Returns false if no path detected
  * 
- * @since   3.4.0
+ * @since   LRS 3.4.0
  */
 
 function php_executable_path(): string|bool {
@@ -487,7 +487,7 @@ function php_executable_path(): string|bool {
  * 
  * @return  string          The fixed string with slashes correctly oriented
  * 
- * @since   3.4.0
+ * @since   LRS 3.4.0
  */
 
 function correct_win_slashes( string $path ): string {
@@ -504,7 +504,7 @@ function correct_win_slashes( string $path ): string {
  * 
  * @return  string
  * 
- * @since   3.17.0
+ * @since   LRS 3.17.0
  */
 
 function correct_path_for_windows( string $path ): string {
@@ -536,7 +536,7 @@ function correct_path_for_windows( string $path ): string {
  * 
  * @link    https://ourcodeworld.com/articles/read/207/how-to-execute-a-shell-command-using-php-without-await-for-the-result-asynchronous-in-linux-and-windows-environments
  * 
- * @since   3.4.0
+ * @since   LRS 3.4.0
  */
 
 function async_execute( ?string $command = null ): void {
@@ -566,8 +566,8 @@ function async_execute( ?string $command = null ): void {
  * 
  * @link    https://www.the-art-of-web.com/php/sortarray/
  * 
- * @since   3.4.9
- * @since   3.6.0   Added param $is_object
+ * @since   LRS 3.4.9
+ * @since   LRS 3.6.0   Added param $is_object
  */
 
 function order_by( array &$data, string $field, bool $is_object = false ): array|object {
@@ -589,7 +589,7 @@ function order_by( array &$data, string $field, bool $is_object = false ): array
  * 
  * @return  string|boolean
  * 
- * @since   3.6.0
+ * @since   LRS 3.6.0
  */
 
 function site_logo(): string|bool {
@@ -621,8 +621,8 @@ function site_logo(): string|bool {
  * 
  * @return  string   The relative path as calculated
  * 
- * @since   3.6.0
- * @since   3.9.1   Added consideration for windows type paths
+ * @since   LRS 3.6.0
+ * @since   LRS 3.9.1   Added consideration for windows type paths
  */
 
 function html_path( string $relative_path ): string {
@@ -641,7 +641,7 @@ function html_path( string $relative_path ): string {
  * 
  * @return  boolean     Whether the device is an Apple Mobile device
  * 
- * @since   3.7.3
+ * @since   LRS 3.7.3
  */
 
 function is_apple_mobile(): bool {
@@ -660,7 +660,7 @@ function is_apple_mobile(): bool {
  * 
  * @return  array   data with the split time, indexed by 'hour' and 'minute'
  * 
- * @since   3.9.0
+ * @since   LRS 3.9.0
  */
 
 function minute_to_hour_minute( int $time_in_minutes ): array {
@@ -679,7 +679,7 @@ function minute_to_hour_minute( int $time_in_minutes ): array {
  * 
  * @return  string  The formatted string
  * 
- * @since   3.9.0
+ * @since   LRS 3.9.0
  */
 
 function hour_string( int $length, string $format = 'hour' ): string {
@@ -700,7 +700,7 @@ function hour_string( int $length, string $format = 'hour' ): string {
  * 
  * @return  string  The formatted string
  * 
- * @since   3.9.0
+ * @since   LRS 3.9.0
  */
 
 function minutes_string ( int $length, string $format = 'minute' ): string {
@@ -723,7 +723,7 @@ function minutes_string ( int $length, string $format = 'minute' ): string {
  * 
  * @return  boolean Whether or not the date is valid
  * 
- * @since   3.9.0
+ * @since   LRS 3.9.0
  */
 
 function validate_date( string $date, string $format = 'Y-m-d H:i:s' ): bool {
@@ -739,7 +739,7 @@ function validate_date( string $date, string $format = 'Y-m-d H:i:s' ): bool {
  * 
  * @return  string  The formulated string
  * 
- * @since   3.9.0
+ * @since   LRS 3.9.0
  */
 
 function add_number_suffix( int $number ): string {
@@ -767,8 +767,8 @@ function add_number_suffix( int $number ): string {
  * 
  * @return  integer|float   $max_size The max size allowed to be uploaded
  * 
- * @since   3.6.0
- * @since   3.11.1  Moved to functions.php
+ * @since   LRS 3.6.0
+ * @since   LRS 3.11.1  Moved to functions.php
  */
 
 function file_upload_max_size(): int|float {
@@ -810,8 +810,8 @@ function file_upload_max_size(): int|float {
  * 
  * @return  integer The max size allowed to be uploaded
  * 
- * @since   3.6.0
- * @since   3.11.1  Moved to functions.php
+ * @since   LRS 3.6.0
+ * @since   LRS 3.11.1  Moved to functions.php
  */
   
 function parse_size( string $size ): int {
@@ -832,7 +832,7 @@ function parse_size( string $size ): int {
  * 
  * @return  boolean
  * 
- * @since   3.12.1
+ * @since   LRS 3.12.1
  */
 
 function url_file_exists( string $url ): bool {
@@ -848,7 +848,7 @@ function url_file_exists( string $url ): bool {
  * 
  * @return  string  The tab
  * 
- * @since   3.14.3
+ * @since   LRS 3.14.3
  */
 
 function get_tab( string $default = '' ): string {
@@ -863,7 +863,7 @@ function get_tab( string $default = '' ): string {
  * 
  * @return  string
  * 
- * @since   3.15.0
+ * @since   LRS 3.15.0
  */
 
 function prepare_method_name( string $method_name ): string {
@@ -879,8 +879,8 @@ function prepare_method_name( string $method_name ): string {
  * 
  * @return  string
  * 
- * @since   3.22.1
- * @since   3.24.0  Revamped to function in one line.
+ * @since   LRS 3.22.1
+ * @since   LRS 3.24.0  Revamped to function in one line.
  */
 
 function prepare_routed_filename( string $name ): string {
@@ -899,7 +899,7 @@ function prepare_routed_filename( string $name ): string {
  * 
  * @return  string
  * 
- * @since   3.17.2
+ * @since   LRS 3.17.2
  */
 
 function get_offences_text( object $entry, object $config, int $line_breaks = 1 ): string {
@@ -928,7 +928,7 @@ function get_offences_text( object $entry, object $config, int $line_breaks = 1 
  * 
  * @return  string
  * 
- * @since   3.17.2
+ * @since   LRS 3.17.2
  */
 
 function get_sanctions_text( object $entry, object $config, int $line_breaks = 1 ): string {
@@ -954,7 +954,7 @@ function get_sanctions_text( object $entry, object $config, int $line_breaks = 1
  * 
  * @return  boolean
  * 
- * @since   3.19.3
+ * @since   LRS 3.19.3
  */
 
 function validate_year( string|int $year ): bool {
@@ -973,7 +973,7 @@ function validate_year( string|int $year ): bool {
  * 
  * @return  string
  * 
- * @since   3.20.0
+ * @since   LRS 3.20.0
  */
 
 function number_ordinal_suffix( int $num ): string {
@@ -1005,7 +1005,7 @@ function number_ordinal_suffix( int $num ): string {
  * @return  string
  * 
  * @access  private
- * @since   3.20.0
+ * @since   LRS 3.20.0
  */
 
 function abreviate_outcome( string $outcome, int $aprox_max_length = 100 ): string {
@@ -1035,7 +1035,7 @@ function abreviate_outcome( string $outcome, int $aprox_max_length = 100 ): stri
  * 
  * @return  string
  * 
- * @since   3.27.1
+ * @since   LRS 3.27.1
  */
 
 function uri_compose( array $fields ): string {

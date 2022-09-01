@@ -11,10 +11,10 @@ use LBF\Tools\PDF\PDFCreatorBackend;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.6.0
- * @since   3.11.0  Moved to `Framework\Tools\PDF`.
- * @since   3.20.0  Completely revamped and renamed `PDFCreator`.
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.6.0
+ * @since   LRS 3.11.0  Moved to `Framework\Tools\PDF`.
+ * @since   LRS 3.20.0  Completely revamped and renamed `PDFCreator`.
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -24,7 +24,7 @@ class PDFCreator extends PDFCreatorBackend {
      * Constructor method, things to do when the class is loaded
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public function __construct(
@@ -34,7 +34,7 @@ class PDFCreator extends PDFCreatorBackend {
          * @var string  $author     Default: APP_NAME
          * 
          * @access  public
-         * @since   3.6.0
+         * @since   LRS 3.6.0
          */
 
         public string $author,
@@ -45,7 +45,7 @@ class PDFCreator extends PDFCreatorBackend {
          * @var string  $title
          * 
          * @access  public
-         * @since   3.6.0
+         * @since   LRS 3.6.0
          */
 
         public string $title,
@@ -56,7 +56,7 @@ class PDFCreator extends PDFCreatorBackend {
          * @var string|null  $subject    Default: Document
          * 
          * @access  public 
-         * @since   3.6.0
+         * @since   LRS 3.6.0
          */
 
         public ?string $subject = null,
@@ -67,7 +67,7 @@ class PDFCreator extends PDFCreatorBackend {
          * @var string|null  $file_name  Default: APP_NAME Report
          * 
          * @access  public
-         * @since   3.6.0
+         * @since   LRS 3.6.0
          */
 
         public ?string $file_name = null,
@@ -78,7 +78,7 @@ class PDFCreator extends PDFCreatorBackend {
          * @var string|null  $keywords   Default: APP_NAME
          * 
          * @access  public
-         * @since   3.6.0
+         * @since   LRS 3.6.0
          */
 
         public ?string $keywords = null,
@@ -93,7 +93,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function start_pdf(): static {
@@ -108,7 +108,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function end_pdf(): static {
@@ -123,7 +123,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function new_page(): static {
@@ -140,7 +140,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function add_content( string $text ): static {
@@ -157,7 +157,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function insert_block(
@@ -206,7 +206,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function set_style( string $style ): static {
@@ -223,7 +223,7 @@ class PDFCreator extends PDFCreatorBackend {
      * Reset font details to default values
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public function reset_font(): void {
@@ -238,7 +238,7 @@ class PDFCreator extends PDFCreatorBackend {
      * Reset page details to default values
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public function reset_page(): void {
@@ -257,7 +257,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function set_custom_header_footer( bool $use_custom, ?int $header_id = null, ?string $footer_id = null ): static {
@@ -278,7 +278,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function hide_header( bool $hide ): static {
@@ -295,7 +295,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function hide_footer( bool $hide ): static {
@@ -312,7 +312,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function set_font_size( int $size ): static {
@@ -331,7 +331,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @param   string  $orientation    The orientation of the page
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function set_page_orientation( string $orientation ): static {
@@ -359,7 +359,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function set_page_size( string $size ): static {
@@ -390,7 +390,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function set_font_style( string $style ): static {
@@ -407,7 +407,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function set_font( string $font ): static {
@@ -424,7 +424,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function set_text_shadow( bool $shadow ): static {
@@ -441,7 +441,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function set_output_method( int $method ): static {
@@ -467,7 +467,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function set_save_path( string $path ): static {
@@ -482,7 +482,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     public function empty_content_styles(): static {
@@ -500,7 +500,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.21.0
+     * @since   LRS 3.21.0
      */
 
     public function add_custom_footer_text( string $text): static {
@@ -519,7 +519,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.26.0
+     * @since   LRS 3.26.0
      */
 
     public function set_multi_columns( bool $use_multi_columns, int $number_of_columns = 2, int $width = 57 ): static {
@@ -540,7 +540,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.26.0
+     * @since   LRS 3.26.0
      */
 
     public function select_column( ?int $column ): static {
@@ -557,7 +557,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @return  static
      * 
      * @access  public
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
 
     public function set_line_height( float $height ): static {
