@@ -6,6 +6,7 @@
  * @requires    ES6
  * 
  * @since   3.13.0
+ * @since   LBF 0.1.1-beta
  */
 
 import URITools from './uri.js';
