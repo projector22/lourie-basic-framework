@@ -9,9 +9,9 @@ namespace LBF\Tools\Upload;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.6.0
- * @since   3.12.0  Moved to `Framework\Tools\Upload`.
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.6.0
+ * @since   LRS 3.12.0  Moved to `Framework\Tools\Upload`.
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -25,7 +25,7 @@ class UploadHandler {
      * @var string  $file_name
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public array|string $file_name;
@@ -38,7 +38,7 @@ class UploadHandler {
      * @var string  $name
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public array|string $name;
@@ -51,7 +51,7 @@ class UploadHandler {
      * @var string  $extension
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public array|string $extension;
@@ -64,7 +64,7 @@ class UploadHandler {
      * @var string  $type
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public array|string $type;
@@ -75,7 +75,7 @@ class UploadHandler {
      * @var string  $tmp_name
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public array|string $tmp_name;
@@ -86,7 +86,7 @@ class UploadHandler {
      * @var string  $error
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public array|string $error;
@@ -97,7 +97,7 @@ class UploadHandler {
      * @var string  $size
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public array|string $size;
@@ -108,7 +108,7 @@ class UploadHandler {
      * @var integer $num_of_files
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public int $num_of_files = 0;
@@ -119,7 +119,7 @@ class UploadHandler {
      * @var array   $indexes
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public array $indexes = [];
@@ -130,7 +130,7 @@ class UploadHandler {
      * @var integer $error_count
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public int $error_count = 0;
@@ -141,7 +141,7 @@ class UploadHandler {
      * @var string  $new_name
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public array|string $new_name;
@@ -152,7 +152,7 @@ class UploadHandler {
      * @var boolean $check_file_type
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public bool $check_file_type = false;
@@ -163,7 +163,7 @@ class UploadHandler {
      * @var boolean $check_file_exists
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public bool $check_file_exists = false;
@@ -174,7 +174,7 @@ class UploadHandler {
      * @var boolean $check_size_limit
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public bool $check_size_limit = false;
@@ -185,7 +185,7 @@ class UploadHandler {
      * @var array   $allowed_file_types
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public string|array $allowed_file_types;
@@ -196,7 +196,7 @@ class UploadHandler {
      * @var int|float  $max_upload_size    Default: MAX_UPLOAD_SIZE
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public int|float $max_upload_size;
@@ -207,7 +207,7 @@ class UploadHandler {
      * @var boolean $upload_failed
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public bool $upload_failed = false;
@@ -218,7 +218,7 @@ class UploadHandler {
      * @var string  $upload_failed_reason
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public ?string $upload_failed_reason = null;
@@ -229,8 +229,8 @@ class UploadHandler {
      * @param   string  $save_path  The full path where the file should be uploaded to.
      * 
      * @access  public
-     * @since   3.6.0
-     * @since   3.28.0  Added param $save_path.
+     * @since   LRS 3.6.0
+     * @since   LRS 3.28.0  Added param $save_path.
      */
 
     public function __construct(
@@ -241,7 +241,7 @@ class UploadHandler {
          * 
          * @readonly
          * @access  private
-         * @since   3.6.0
+         * @since   LRS 3.6.0
          */
 
         public readonly string $save_path
@@ -292,7 +292,7 @@ class UploadHandler {
      * @return  boolean     If the number of errors is greater than 0 return true, otherwise return false
      * 
      * @access  private
-     * @since   3.6
+     * @since   LRS 3.6
      */
 
     public function upload_error(): bool {
@@ -313,9 +313,9 @@ class UploadHandler {
      * Check the uploaded file to make sure it doesn't break any policies or requirements
      * 
      * @access  public
-     * @since   3.1.0
-     * @since   3.3.2   Made class public
-     * @since   3.6.0   Removed all @params in favour of a more OOP implimentation
+     * @since   LRS 3.1.0
+     * @since   LRS 3.3.2   Made class public
+     * @since   LRS 3.6.0   Removed all @params in favour of a more OOP implimentation
      */
 
     public function upload_check(): void {
@@ -448,7 +448,7 @@ class UploadHandler {
      * Move the uploaded file from the temporary location to the defined final resting place
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public function place_uploaded_file(): void {

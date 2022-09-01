@@ -5,15 +5,16 @@
  * 
  * @requires    ES6
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
 /**
  * Object class for performing table filtering.
  * 
- * @since   3.13.0
- * @since   3.15.5  Reworked for updated tables.
+ * @since   LRS 3.13.0
+ * @since   LRS 3.15.5  Reworked for updated tables.
+ * @since   LBF 0.1.1-beta
  */
 
 export default class Table_Filter {
@@ -23,7 +24,8 @@ export default class Table_Filter {
      * 
      * @param {string} table_id Parse the table id when the object is constructed
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
+     * @since   LBF 0.1.1-beta
      */
 
     constructor(table_id = null) {
@@ -33,7 +35,7 @@ export default class Table_Filter {
          * 
          * @var {string} search
          * 
-         * @since   3.13.0
+         * @since   LRS 3.13.0
          */
 
         this.search = null;
@@ -44,8 +46,8 @@ export default class Table_Filter {
          * 
          * @var {string} table_id
          * 
-         * @since   3.13.0
-         * @since   3.15.5  Renamed from row_id to table_id
+         * @since   LRS 3.13.0
+         * @since   LRS 3.15.5  Renamed from row_id to table_id
          */
 
         this.table_id = table_id;
@@ -56,7 +58,7 @@ export default class Table_Filter {
          * 
          * @var {array} sorted_list
          * 
-         * @since   3.15.5
+         * @since   LRS 3.15.5
          */
 
         this.sorted_list = [];
@@ -75,7 +77,7 @@ export default class Table_Filter {
      * @property {string}  empty - default: ''
      * @property {boolean} search_not_empty - default: false
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     perform_table_filter(properties = {}) {
@@ -135,7 +137,7 @@ export default class Table_Filter {
      * 
      * @returns {object}
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     filter_not_empty(search_columns = []) {
@@ -171,7 +173,7 @@ export default class Table_Filter {
      * 
      * @returns {object}
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
 
@@ -212,7 +214,7 @@ export default class Table_Filter {
      * 
      * @returns {array}
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     get_filter_data(search_columns) {
@@ -242,7 +244,7 @@ export default class Table_Filter {
     /**
      * Draw the filtered table to the screen.
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     draw_filtered_list() {
@@ -266,7 +268,7 @@ export default class Table_Filter {
     /**
      * Clear the filter if the filter has been removed or is empty.
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     clear_filter() {
@@ -282,7 +284,7 @@ export default class Table_Filter {
     /**
      * If there is a selectall checkbox, swap it with the filtered selectall checkbox
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     show_filtered_checkbox() {
@@ -296,7 +298,7 @@ export default class Table_Filter {
     /**
      * Select multiple checkboxes using the shift key
      * 
-     * @since 3.6.4
+     * @since   LRS 3.6.4
      */
 
     shift_multiselect() {
@@ -334,7 +336,7 @@ export default class Table_Filter {
      *                                Can be parsed as an array - the row and column.
      * @param {boolean} filtered      Whether the entry being changed is in the fildered list.
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     change_entry_status(action, id, filtered = false) {
@@ -379,7 +381,7 @@ export default class Table_Filter {
      * 
      * @returns {boolean}
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     table_is_filtered() {
@@ -395,7 +397,7 @@ export default class Table_Filter {
      * 
      * @returns {boolean}
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     is_row(index, filtered = false) {
@@ -415,7 +417,7 @@ export default class Table_Filter {
      * 
      * @returns {boolean}
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     checkbox_is_checked(row, filtered = false) {
@@ -432,7 +434,7 @@ export default class Table_Filter {
      * 
      * @returns {string}
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     cell_id(cell, filtered = false) {
@@ -455,7 +457,7 @@ export default class Table_Filter {
      * 
      * @returns {string}
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     cell_value(cell, filtered = false) {
@@ -472,7 +474,7 @@ export default class Table_Filter {
      * 
      * @returns {object}
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     row_dataset(row, filtered = false) {
@@ -488,7 +490,7 @@ export default class Table_Filter {
      * @param {string}  content     The contents of the newly created cell.
      * @param {boolean} filtered    Whether the table is filtered or not.
      * 
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     create_cell(cell, content, filtered = false) {
@@ -507,8 +509,9 @@ export default class Table_Filter {
  * @param {object}  checkbox        Details of the checkbox, derived from parsing 'this'
  * @param {string}  table_id        The id of the table being controlled.
  * 
- * @since   3.6.4
- * @since   3.15.5  Entirely rewritten
+ * @since   LRS 3.6.4
+ * @since   LRS 3.15.5  Entirely rewritten
+ * @since   LBF 0.1.1-beta
  */
 
 export function select_all_checkboxes(checkbox, table_id) {

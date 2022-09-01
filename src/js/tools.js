@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.17.0
+ * @since   LRS 3.17.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -15,7 +15,7 @@
  * 
  * @param {integer} delay Measured in ms. 1000 = 1 second.
  * 
- * @since   3.17.0
+ * @since   LRS 3.17.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -29,7 +29,7 @@ export const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, del
  * @param {char} needle The character to look for.
  * @returns integer
  * 
- * @since   3.17.0
+ * @since   LRS 3.17.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -50,7 +50,7 @@ export function character_count(haystack, needle) {
  * @param {object} element The DOM element from document.getElementById('a_select_box');
  * @returns {string}
  * 
- * @since   3.25.0
+ * @since   LRS 3.25.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -69,7 +69,7 @@ export function get_selectbox_selected_innerText(element) {
  * 
  * @returns {string}
  * 
- * @since   3.25.1
+ * @since   LRS 3.25.1
  * @since   LBF 0.1.1-beta
  */
 

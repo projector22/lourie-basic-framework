@@ -13,8 +13,8 @@ use LBF\HTML\Draw;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.12.5
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.12.5
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -26,7 +26,7 @@ class HTMLElements {
      * @var    boolean     $echo   Default: true
      * 
      * @access  public
-     * @since   3.12.5
+     * @since   LRS 3.12.5
      */
 
     public static bool $echo = true;
@@ -42,7 +42,7 @@ class HTMLElements {
      * @return  string
      * 
      * @access  public
-     * @since   3.12.5
+     * @since   LRS 3.12.5
      */
 
     public static function div( array $params = [] ) {
@@ -82,7 +82,7 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.5
+     * @since   LRS 3.12.5
      */
 
     public static function close_div( ?string $comment = null, int $count = 1, bool $draw_comment = false ) {
@@ -116,7 +116,7 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.7
+     * @since   LRS 3.12.7
      */
 
     public static function div_container( array $params = [], string $content = '' ) {
@@ -142,7 +142,7 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.5
+     * @since   LRS 3.12.5
      */
 
     public static function span( array $params = [] ) {
@@ -182,7 +182,7 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.5
+     * @since   LRS 3.12.5
      */
 
     public static function close_span( ?string $comment = null, int $count = 1, bool $draw_comment = false ) {
@@ -216,7 +216,7 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.7
+     * @since   LRS 3.12.7
      */
 
     public static function span_container( array $params = [], string $content = '' ) {
@@ -242,7 +242,7 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.7
+     * @since   LRS 3.12.7
      */
 
     public static function heading( int $size, string $content, array $params = [] ) {
@@ -269,7 +269,7 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.7
+     * @since   LRS 3.12.7
      */    
 
     public static function form( array $params = [], bool $new_tab = false ) {
@@ -301,7 +301,7 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.7
+     * @since   LRS 3.12.7
      */
 
     public static function close_form() {
@@ -326,7 +326,7 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.8
+     * @since   LRS 3.12.8
      */
 
     public static function link ( string $href, ?string $text, array $params = [] ) {
@@ -357,7 +357,7 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.17.1
+     * @since   LRS 3.17.1
      */
 
     public static function img ( array $params = [] ) {
@@ -416,8 +416,8 @@ class HTMLElements {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.11.1
-     * @since   3.27.1  Moved from `src/Framework/HTML/Draw.php` to `src/Framework/HTML/HTMLElements.php`
+     * @since   LRS 3.11.1
+     * @since   LRS 3.27.1  Moved from `src/Framework/HTML/Draw.php` to `src/Framework/HTML/HTMLElements.php`
      */
 
     public static function iframe ( array $params ) {

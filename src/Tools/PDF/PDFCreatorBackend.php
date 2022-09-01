@@ -14,8 +14,8 @@ use App\Templates\PDF\CustomHeaderFooter;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.20.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.20.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  * 
  * @todo    Figure out a way of allowing better custom headers and footers integeration without calling from the `App` namespace here.
@@ -29,7 +29,7 @@ class PDFCreatorBackend {
      * @var object  $pdf
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected object $pdf;
@@ -39,7 +39,7 @@ class PDFCreatorBackend {
      *                          The main body of the PDF
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected string $content = '';
@@ -50,7 +50,7 @@ class PDFCreatorBackend {
      * @var boolean $include_header     Default: true
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected bool $include_header = true;
@@ -61,7 +61,7 @@ class PDFCreatorBackend {
      * @var boolean $include_footer     Default: true
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected bool $include_footer = true;
@@ -72,7 +72,7 @@ class PDFCreatorBackend {
      * @var string  $font_name      Default: helvetica
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected string $font_name = 'helvetica';
@@ -91,7 +91,7 @@ class PDFCreatorBackend {
      * @var string  $font_style     Default: ''
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected string $font_style = '';
@@ -102,7 +102,7 @@ class PDFCreatorBackend {
      * @var integer $font_size      Default: 14
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected int $font_size = 14;
@@ -115,7 +115,7 @@ class PDFCreatorBackend {
      * @var string  $page_size      Default: A4 (PDF_PAGE_FORMAT)
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected string $page_size = 'A4';
@@ -127,7 +127,7 @@ class PDFCreatorBackend {
      * @var string  ORIENTATION_PORTRAIT
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
     
     const ORIENTATION_PORTRAIT = 'P';
@@ -139,7 +139,7 @@ class PDFCreatorBackend {
      * @var string  ORIENTATION_LANDSCAPE
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
     
     const ORIENTATION_LANDSCAPE = 'L';
@@ -154,7 +154,7 @@ class PDFCreatorBackend {
      * @var string  $orientation    Default: P (PDF_PAGE_ORIENTATION)
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected string $orientation = self::ORIENTATION_PORTRAIT;
@@ -165,7 +165,7 @@ class PDFCreatorBackend {
      * @var boolean $use_text_shadow    Default: false
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected bool $use_text_shadow = false;
@@ -176,7 +176,7 @@ class PDFCreatorBackend {
      * @var boolean $use_custom_header_footer   Default: true
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected bool $use_custom_header_footer = true;
@@ -187,7 +187,7 @@ class PDFCreatorBackend {
      * @var int  OUTPUT_TO_SCREEN    Output to the screen.
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     const OUTPUT_TO_SCREEN = 0;
@@ -198,7 +198,7 @@ class PDFCreatorBackend {
      * @var int  OUTPUT_TO_DISK  Output to the screen.
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     const OUTPUT_TO_DISK = 1;
@@ -209,7 +209,7 @@ class PDFCreatorBackend {
      * @var int  OUTPUT_TO_EMAIL Output to the screen.
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     const OUTPUT_TO_EMAIL = 2;
@@ -220,7 +220,7 @@ class PDFCreatorBackend {
      * @var int  OUTPUT_TO_DOWNLOAD  Output to the screen.
      * 
      * @access  public
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     const OUTPUT_TO_DOWNLOAD = 3;
@@ -237,7 +237,7 @@ class PDFCreatorBackend {
      * - self::OUTPUT_TO_DOWNLOAD
      * 
      * @access  protected
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     protected int $output_method = self::OUTPUT_TO_SCREEN;
@@ -248,7 +248,7 @@ class PDFCreatorBackend {
      * @var string  $save_path
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected string $save_path;
@@ -259,7 +259,7 @@ class PDFCreatorBackend {
      * @var integer|null	$set_header_type	Default: null
 	 * 
      * @access  protected
-	 * @since	3.6.0
+	 * @since   LRS 3.6.0
 	 */
 
 	protected ?int $set_header_type = 1;
@@ -270,7 +270,7 @@ class PDFCreatorBackend {
      * @var string|null	$set_footer_type	Default: null
 	 * 
      * @access  protected
-	 * @since	3.6.0
+	 * @since   LRS 3.6.0
 	 */
 
     protected ?string $set_footer_type = null;
@@ -281,7 +281,7 @@ class PDFCreatorBackend {
      * @var string	$set_date	Default: date( 'Y-m-d' )
 	 * 
      * @access  protected
-	 * @since	3.6.0
+	 * @since   LRS 3.6.0
 	 */
 
 	protected string $set_date;
@@ -292,7 +292,7 @@ class PDFCreatorBackend {
      * @var string  $header_custom_text
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public string $header_custom_text = '';
@@ -303,7 +303,7 @@ class PDFCreatorBackend {
      * @var string  $footer_custom_text
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public string $footer_custom_text = '';
@@ -314,7 +314,7 @@ class PDFCreatorBackend {
      * @var string  $style  CSS styles between <style></style> tags
      * 
      * @access  protected
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     protected string $style = '';
@@ -325,7 +325,7 @@ class PDFCreatorBackend {
      * @var float   $line_height    Default: 1.25
      * 
      * @access  protected
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
 
     protected float $line_height = 1.25;
@@ -335,7 +335,7 @@ class PDFCreatorBackend {
      * Constructor method, things to do when the class is loaded
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public function __construct() {
@@ -347,7 +347,7 @@ class PDFCreatorBackend {
      * Construct all the aspects together to generate the PDF
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected function construct_pdf(): void {
@@ -444,7 +444,7 @@ class PDFCreatorBackend {
      * Generate the PDF file and display the file, usually the last method to call.
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected function generate_pdf(): void {
@@ -490,7 +490,7 @@ class PDFCreatorBackend {
      * @return  boolean     Whether or not there are missing parameters set
      * 
      * @access  protected
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     protected function missing_parameters(): bool {
@@ -514,7 +514,7 @@ class PDFCreatorBackend {
      * @return  string
      * 
      * @access  protected
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     protected function detect_style_tag( string $css ): bool {
@@ -529,7 +529,7 @@ class PDFCreatorBackend {
      * @return  string
      * 
      * @access  protected
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     protected function add_style_tags( string $css ): string {
@@ -549,7 +549,7 @@ class PDFCreatorBackend {
      * Echo out the PDF content as a means of debugging the PDF.
      * 
      * @access  public
-     * @since   3.26.0
+     * @since   LRS 3.26.0
      */
 
     public function debug_content(): void {

@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.16.1
+ * @since   LRS 3.16.1
  * @since   LBF 0.1.1-beta
  */
 
@@ -13,7 +13,7 @@
  * Perform the various actions around the <input type='file'> element,
  * to animate and decorate the element and to handle changing events.
  * 
- * @since   3.16.1
+ * @since   LRS 3.16.1
  * @since   LBF 0.1.1-beta
  */
 
@@ -24,7 +24,7 @@ export default class UploaderElement {
      * 
      * @param {string} id The upload element id
      * 
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      * @since   LBF 0.1.1-beta
      */
     constructor(id) {
@@ -34,7 +34,7 @@ export default class UploaderElement {
          * 
          * @var {string} id
          * 
-         * @since   3.16.1
+         * @since   LRS 3.16.1
          * @since   LBF 0.1.1-beta
          */
 
@@ -45,7 +45,7 @@ export default class UploaderElement {
          * 
          * @var {DOM} upload_element
          * 
-         * @since   3.16.1
+         * @since   LRS 3.16.1
          * @since   LBF 0.1.1-beta
          */
 
@@ -56,7 +56,7 @@ export default class UploaderElement {
          * 
          * @var {DOM} wrapper
          * 
-         * @since   3.16.1
+         * @since   LRS 3.16.1
          * @since   LBF 0.1.1-beta
          */
 
@@ -67,7 +67,7 @@ export default class UploaderElement {
          * 
          * @var {DOM} button
          * 
-         * @since   3.16.1
+         * @since   LRS 3.16.1
          * @since   LBF 0.1.1-beta
          */
 
@@ -78,7 +78,7 @@ export default class UploaderElement {
          * 
          * @var {DOM} feedback_text
          * 
-         * @since   3.16.1
+         * @since   LRS 3.16.1
          * @since   LBF 0.1.1-beta
          */
 
@@ -89,7 +89,7 @@ export default class UploaderElement {
          * 
          * @var {DOM} button_container
          * 
-         * @since   3.21.2
+         * @since   LRS 3.21.2
          * @since   LBF 0.1.1-beta
          */
 
@@ -104,7 +104,7 @@ export default class UploaderElement {
          * 
          * It performs actions based on that choice
          * 
-         * @since   3.16.1
+         * @since   LRS 3.16.1
          * @since   LBF 0.1.1-beta
          */
 
@@ -132,7 +132,7 @@ export default class UploaderElement {
          * 
          * Currently disabled till this method can be made to handle drag, drop and wait
          * 
-         * @since   3.16.1
+         * @since   LRS 3.16.1
          * @since   LBF 0.1.1-beta
          */
 
@@ -145,7 +145,7 @@ export default class UploaderElement {
     /**
      * Reset an upload button to an empty vanilla state
      * 
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      * @since   LBF 0.1.1-beta
      */
 
@@ -163,7 +163,7 @@ export default class UploaderElement {
      * @status  WIP - Currently cannot drop on upload without requiring an upload immediately
      *                This needs to be done before it is useful and functional.
      * 
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      * @since   LBF 0.1.1-beta
      */
 
@@ -172,7 +172,7 @@ export default class UploaderElement {
         /**
          * This prevents the wholesale redownloading of files if poorly dropped
          * 
-         * @since   3.16.1
+         * @since   LRS 3.16.1
          * @since   LBF 0.1.1-beta
          */
         const all_elements = document.querySelectorAll('.upload_button_wrapper');
@@ -225,7 +225,7 @@ export default class UploaderElement {
     /**
      * JS to handle the resizing of the element.
      * 
-     * @since   3.21.0
+     * @since   LRS 3.21.0
      * @since   LBF 0.1.1-beta
      */
 

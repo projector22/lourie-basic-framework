@@ -14,8 +14,8 @@ use LBF\HTML\HTML;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.15.5
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.15.5
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -27,7 +27,7 @@ class Table {
      * @var string  $table_id
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public string $table_id;
@@ -38,7 +38,7 @@ class Table {
      * @var integer $row_index
      * 
      * @access  private
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     private int $row_index = 0;
@@ -49,7 +49,7 @@ class Table {
      * @var integer $cell_index
      * 
      * @access  private
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     private int $cell_index;
@@ -60,7 +60,7 @@ class Table {
      * @var boolean $border Default: true
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public bool $border = true;
@@ -71,7 +71,7 @@ class Table {
      * @var boolean $horizontal_lines   Default: false
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public bool $horizontal_lines = false;
@@ -82,7 +82,7 @@ class Table {
      * @var boolean $vertical_lines     Default: false
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public bool $vertical_lines = false;
@@ -93,7 +93,7 @@ class Table {
      * @var boolean $select_checkbox    Default: true
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public bool $select_checkbox;
@@ -104,7 +104,7 @@ class Table {
      * @var boolean $select_all_checkbox    Default: true
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public bool $select_all_checkbox;
@@ -115,7 +115,7 @@ class Table {
      * @var boolean $edit_link  Default: true
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public bool $edit_link;
@@ -126,7 +126,7 @@ class Table {
      * @var boolean $full_width     Default: true
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public bool $full_width = true;
@@ -151,7 +151,7 @@ class Table {
      * @var array   SKIP_KEYS
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     const SKIP_KEYS = [
@@ -168,7 +168,7 @@ class Table {
      * @param   boolean $edit_link              Whether or not to include the edit link.
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public function __construct( string $id, bool $select_checkbox = true, bool $select_all_checkbox = true, bool $edit_link = true ) {
@@ -190,7 +190,7 @@ class Table {
      * @return  self  $this
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public function table_start( array $headings = [], array $params = [] ): self {
@@ -232,7 +232,7 @@ class Table {
      * The closing </table> tag.
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public function table_end(): void {
@@ -264,7 +264,7 @@ class Table {
      * @return  self  $this
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public function row_start( array $params = [] ): self {
@@ -318,7 +318,7 @@ class Table {
      *                                  Default: false
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public function row_end( bool $heading_row = false ): void {
@@ -340,7 +340,7 @@ class Table {
      *                              Default: []
      * 
      * @access  private
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     private function headings( array $headings = [], array $params = [] ): void {
@@ -395,7 +395,7 @@ class Table {
      * @return  self  $this
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public function cell( mixed $content, array $params = [] ): self {
@@ -439,7 +439,7 @@ class Table {
      * @return  self  $this
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public function cell_edit_link( string $href, array $params = [] ): self {
@@ -478,7 +478,7 @@ class Table {
      * @return  self  $this
      * 
      * @access  public
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     public function hidden_data( mixed $value, array $params = [] ): self {
@@ -507,7 +507,7 @@ class Table {
      *                                              Default: false
      * 
      * @access  private
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     private function select_checkbox( bool $select_all_checkbox = false, bool $disabled = false  ): void {
@@ -548,7 +548,7 @@ class Table {
      * @return  string
      * 
      * @access  private
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     private function get_cell_id(): string {
@@ -564,7 +564,7 @@ class Table {
      * @return  array   $params
      * 
      * @access  private
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     private function set_vertical_lines( array $params ): array {
@@ -587,7 +587,7 @@ class Table {
      * @return  array  $params
      * 
      * @access  private
-     * @since   3.15.5
+     * @since   LRS 3.15.5
      */
 
     private function set_text_alignment( array $params ): array {
@@ -624,7 +624,7 @@ class Table {
      * @return int
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public function get_row_index(): int {
@@ -638,7 +638,7 @@ class Table {
      * @return int
      * 
      * @access  public
-     * @since   3.17.1
+     * @since   LRS 3.17.1
      */
 
     public function get_cell_index(): int {
@@ -659,5 +659,5 @@ class Table {
  * 
  * Basically the automation of table filters, as a drop in solution. Should save much effort.
  * 
- * @since   3.15.5
+ * @since   LRS 3.15.5
  */

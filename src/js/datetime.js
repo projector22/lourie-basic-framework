@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -17,7 +17,7 @@
  * 
  * @returns {string} month
  * 
- * @since   3.3.2
+ * @since   LRS 3.3.2
  * @since   LBF 0.1.1-beta
  */
 
@@ -58,7 +58,7 @@ export function return_month(m) {
  * 
  * @returns {string} weekDay
  * 
- * @since   3.3.2
+ * @since   LRS 3.3.2
  * @since   LBF 0.1.1-beta
  */
 

@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -19,7 +19,7 @@
  * 
  * @returns {string}
  * 
- * @since   3.12.0
+ * @since   LRS 3.12.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -261,7 +261,7 @@ export default function MD5(string) {
  * 
  * @returns {string}
  * 
- * @since   3.12.8
+ * @since   LRS 3.12.8
  * @since   LBF 0.1.1-beta
  */
 

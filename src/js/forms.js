@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -16,7 +16,7 @@
  * @param {string} textarea_id  The id of the text area being examined
  * @param {string} text_id      The id of the div being drawn to
  * 
- * @since   3.8.0
+ * @since   LRS 3.8.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -39,7 +39,7 @@ export function text_area_text_counter(textarea_id, text_id) {
  * 
  * @param {string} id The id of the element being handled
  * 
- * @since   3.14.3
+ * @since   LRS 3.14.3
  * @since   LBF 0.1.1-beta
  */
 
@@ -62,7 +62,7 @@ export function handle_column_changes(id) {
  * @param   string  left_id     The id of the left hand column
  * @param   string  right_id    The id of the right hand column
  * 
- * @since   3.14.3
+ * @since   LRS 3.14.3
  * @since   LBF 0.1.1-beta
  */
 
@@ -93,7 +93,7 @@ function move_option_left(left_id, right_id) {
  * @param   string  left_id     The id of the left hand column
  * @param   string  right_id    The id of the right hand column
  * 
- * @since   3.14.3
+ * @since   LRS 3.14.3
  * @since   LBF 0.1.1-beta
  */
 

@@ -7,7 +7,7 @@
  * 
  * @see src\styles\lib\loaders.css
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -19,7 +19,7 @@
  * 
  * @returns {string}
  * 
- * @since   2.27.2
+ * @since   LRS 2.27.2
  * @since   LBF 0.1.1-beta
  */
 
@@ -36,7 +36,7 @@ export default function loading_animation(dark = false) {
  * 
  * @returns {string}
  * 
- * @since   3.21.0
+ * @since   LRS 3.21.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -50,7 +50,7 @@ export function page_loading_animation() {
  * 
  * @returns {string} HTML
  * 
- * @since   3.25.4
+ * @since   LRS 3.25.4
  * @since   LBF 0.1.1-beta
  */
 
@@ -71,7 +71,7 @@ export function loading_placeholder() {
  * @param {string} text 
  * @returns {string} HTML snippet
  * 
- * @since   3.25.4
+ * @since   LRS 3.25.4
  * @since   LBF 0.1.1-beta
  */
 

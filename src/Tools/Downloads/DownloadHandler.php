@@ -14,9 +14,9 @@ use LBF\HTML\Draw;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.6.3
- * @since   3.11.0  Moved to `Framework\Tools\Downloads` and class renamed `DownloadHandler` from `Downloads`.
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.6.3
+ * @since   LRS 3.11.0  Moved to `Framework\Tools\Downloads` and class renamed `DownloadHandler` from `Downloads`.
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -28,7 +28,7 @@ class DownloadHandler {
      * @var string  $file
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
     
     public string $file;
@@ -39,7 +39,7 @@ class DownloadHandler {
      * @var string  $file_name
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public string $file_name;
@@ -50,7 +50,7 @@ class DownloadHandler {
      * @var boolean $require_login  Default: true
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public bool $require_login = true;
@@ -61,7 +61,7 @@ class DownloadHandler {
      * @var string  $token
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public string $token;
@@ -72,7 +72,7 @@ class DownloadHandler {
      * @var string  $mime_type
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public string $mime_type;
@@ -84,7 +84,7 @@ class DownloadHandler {
      *                          Default: null
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public function __construct( ?string $file = null ) {
@@ -103,7 +103,7 @@ class DownloadHandler {
      * @return  string  url string
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public function create_download_url( ?string $file = null ): string {
@@ -137,7 +137,7 @@ class DownloadHandler {
      * It is better to open a new window and execute the download
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public function execute_download(): void {
@@ -164,7 +164,7 @@ class DownloadHandler {
      * Generate a file name from the url file url
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public function set_filename_from_payload(): void {
@@ -180,7 +180,7 @@ class DownloadHandler {
      * @param   integer|null $error  The error code. Default: null
      * 
      * @access  public
-     * @since   3.6.3
+     * @since   LRS 3.6.3
      */
 
     public function download_error( ?int $error = null ): void { // return never when PHP 8.1

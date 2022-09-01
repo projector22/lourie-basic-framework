@@ -3,7 +3,7 @@
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.12.8
+ * @since   LRS 3.12.8
  * @since   LBF 0.1.1-beta
  */
 
@@ -12,7 +12,7 @@
  * 
  * @property {string} body_id
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -24,7 +24,7 @@ export default class Modal {
          * 
          * @var {string} body_id
          * 
-         * @since   3.13.0
+         * @since   LRS 3.13.0
          */
 
         this.body_id = 'modal_content'
@@ -34,7 +34,7 @@ export default class Modal {
     /**
      * Draw a modal box with all the trimmings, including faded background and x to close
      *
-     * @since   3.12.8
+     * @since   LRS 3.12.8
      */
 
     create_modal_box() {
@@ -61,7 +61,7 @@ export default class Modal {
     /**
      * Remove the modal overlay.
      * 
-     * @since   3.12.8
+     * @since   LRS 3.12.8
      */
 
     remove_modal() {
@@ -76,7 +76,7 @@ export default class Modal {
      * 
      * @returns {DocumentFragment} 
      * 
-     * @since   3.12.8
+     * @since   LRS 3.12.8
      */
 
     create_main_area() {
@@ -91,7 +91,7 @@ export default class Modal {
      * 
      * @returns {DocumentFragment}
      * 
-     * @since   3.12.8
+     * @since   LRS 3.12.8
      */
 
     create_overlay() {
@@ -109,7 +109,7 @@ export default class Modal {
      * 
      * @returns {DocumentFragment} 
      * 
-     * @since   3.12.8
+     * @since   LRS 3.12.8
      */
 
     create_header_area() {

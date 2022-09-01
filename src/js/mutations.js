@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.12.8
+ * @since   LRS 3.12.8
  * @since   LBF 0.1.1-beta
  */
 
@@ -15,7 +15,7 @@
  * @param {object} element_to_observe The element to observe. From document.getElementById('id)
  * @param {function} callback_function The function to execute if an observation is made
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -40,7 +40,7 @@ export default function observe(element_to_observe, callback_function) {
  * 
  * @param {function} callback_function The function to apply within the IntersectionObserver
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 

@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -15,8 +15,8 @@
  * @param {string} id_hide      The element to hide
  * @param {string} id_unhide    The element to show
  * 
- * @since   3.7.6
- * @since   3.22.1  Revamped to use css class 'hidden'. Removed param inline.
+ * @since   LRS 3.7.6
+ * @since   LRS 3.22.1  Revamped to use css class 'hidden'. Removed param inline.
  * @since   LBF 0.1.1-beta
  */
 
@@ -31,7 +31,7 @@ export function replace_element(id_hide, id_unhide) {
  * 
  * @param {string}  id Which id to apply to
  * 
- * @since   3.9.0
+ * @since   LRS 3.9.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -52,7 +52,7 @@ export function show_hide(id) {
  * @param {string} show_hide_id     The id of the element to hide or unhide
  * @param {boolean} show_when_on    Whether to hide when ticked or show when ticked
  * 
- * @since   3.8.0
+ * @since   LRS 3.8.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -79,7 +79,7 @@ export function toggle_hidden(element, show_hide_id, show_when_on = true) {
  * 
  * @param {string} direction derived from this.id
  * 
- * @since   3.5.2
+ * @since   LRS 3.5.2
  * @since   LBF 0.1.1-beta
  */
 

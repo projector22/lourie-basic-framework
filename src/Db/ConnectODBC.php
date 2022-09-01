@@ -14,8 +14,8 @@ use LBF\HTML\Draw;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.17.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.17.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -27,7 +27,7 @@ class ConnectODBC extends DatabaseControl {
      * @var string  $database_path
      * 
      * @access  private
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     private string $database_path;
@@ -38,7 +38,7 @@ class ConnectODBC extends DatabaseControl {
      * @var string  $uid
      * 
      * @access  private
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     private string $uid;
@@ -49,7 +49,7 @@ class ConnectODBC extends DatabaseControl {
      * @var string  $pwd
      * 
      * @access  private
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     private string $pwd;
@@ -60,7 +60,7 @@ class ConnectODBC extends DatabaseControl {
      * @var string  $driver_string
      * 
      * @access  private
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     private string $driver_string;
@@ -71,7 +71,7 @@ class ConnectODBC extends DatabaseControl {
      * @var resource  $alt_conn
      * 
      * @access  private
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     protected $alt_conn;
@@ -81,7 +81,7 @@ class ConnectODBC extends DatabaseControl {
      * Contstructor method, things to do when the class is loaded
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public function __construct( $database_path, $params = [] ) {
@@ -125,7 +125,7 @@ class ConnectODBC extends DatabaseControl {
      * Connectsa the App to the Database
      * 
      * @access  protected
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     protected function connect_db() {
@@ -170,7 +170,7 @@ class ConnectODBC extends DatabaseControl {
      * @uses odbc_connect rather than PDO.
      * 
      * @access  private
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public function get_tables(): void {
@@ -189,7 +189,7 @@ class ConnectODBC extends DatabaseControl {
      * @uses odbc_connect rather than PDO.
      * 
      * @access  private
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public function get_table_schema(): void {
@@ -230,7 +230,7 @@ class ConnectODBC extends DatabaseControl {
      * @since   MySQL Version 8.0.27
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     const RESERVED_WORDS = [
@@ -260,7 +260,7 @@ class ConnectODBC extends DatabaseControl {
      * @since   MySQL Version 8.0.27
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     const ILLEGAL_CHARACTERS = [
@@ -277,7 +277,7 @@ class ConnectODBC extends DatabaseControl {
      * @return  string
      * 
      * @access  private
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     private function sanitize_sql_name( string $entry, bool $display_text_feedback = false ): string {
@@ -324,7 +324,7 @@ class ConnectODBC extends DatabaseControl {
      * Closes the open database connection
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public function __destruct() {

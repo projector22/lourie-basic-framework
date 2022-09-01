@@ -11,8 +11,8 @@ use LBF\Auth\Hash;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.16.1
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.16.1
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -34,8 +34,8 @@ class Api {
      * @return  string
      * 
      * @access  public
-     * @since   3.16.1
-     * @since   3.28.0  Added param `$random1`, `$random2`
+     * @since   LRS 3.16.1
+     * @since   LRS 3.28.0  Added param `$random1`, `$random2`
      */
 
     public static function generate_api_key( string $id, ?string $random1 = null, ?string $random2 = null ): string {
@@ -61,7 +61,7 @@ class Api {
      * @return  string|null
      * 
      * @access  public
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      */
 
     public static function get_key(): ?string {

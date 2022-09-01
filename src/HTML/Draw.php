@@ -18,9 +18,9 @@ use SVGTools\SVG;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.1.0
- * @since   3.12.5  Moved to `Framework\HTML\Draw` from `PageElements`
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.1.0
+ * @since   LRS 3.12.5  Moved to `Framework\HTML\Draw` from `PageElements`
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -32,7 +32,7 @@ class Draw {
      * @var boolean $echo
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public static bool $echo = true;
@@ -42,7 +42,7 @@ class Draw {
      * Providing a spacing element as required
      * 
      * @access  public
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
 
     public static function element_spacer_one(): void {
@@ -54,7 +54,7 @@ class Draw {
      * Providing a spacing element as required
      * 
      * @access  public
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
     
     public static function element_spacer_two(): void {
@@ -68,7 +68,7 @@ class Draw {
      * @var boolean $cli
      * 
      * @access  private
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
 
     private static bool $cli;
@@ -80,7 +80,7 @@ class Draw {
      * @param   int     $k  The number to draw  Default: 1
      * 
      * @access  public
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
 
     public static function dot( int $k = 1 ): void {
@@ -102,10 +102,10 @@ class Draw {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.1.0
-     * @since   3.4.0   Added @param $inline
-     * @since   3.6.0   Removed @param $inline to use property self::$echo
-     * @since   3.14.0  Added a catch for CLI_INTERFACE
+     * @since   LRS 3.1.0
+     * @since   LRS 3.4.0   Added @param $inline
+     * @since   LRS 3.6.0   Removed @param $inline to use property self::$echo
+     * @since   LRS 3.14.0  Added a catch for CLI_INTERFACE
      */
 
     public static function lines( int $k ) {
@@ -134,7 +134,7 @@ class Draw {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     public static function line_separator( int $k = 1 ) {
@@ -154,7 +154,7 @@ class Draw {
      * Draws a page break when printing
      * 
      * @access  public
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
     
     public static function page_break(): void {
@@ -170,7 +170,7 @@ class Draw {
      * @return  string
      * 
      * @access  public
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
     
     public static function action_error( string $info = '' ): string {
@@ -196,8 +196,8 @@ class Draw {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.1.0
-     * @since   3.6.0   Changed $lines default to 0
+     * @since   LRS 3.1.0
+     * @since   LRS 3.6.0   Changed $lines default to 0
      */
 
     public static function item_description( string $input, int $lines = 0 ) {
@@ -219,7 +219,7 @@ class Draw {
      * @param   string  $content    Content of the span element
      * 
      * @access  public
-     * @since   3.1.0
+     * @since   LRS 3.1.0
      */
 
     public static function response_text( string $id, string $content = '' ): void  {
@@ -238,7 +238,7 @@ class Draw {
      * @param   string  $id     The id of the input element to be copied
      * 
      * @access  public
-     * @since   3.4.0
+     * @since   LRS 3.4.0
      */
 
     public static function copy_text_textbox( string $text, string $id ): void {
@@ -258,7 +258,7 @@ class Draw {
      * @param   string  $text   The text to be drawn in the header
      * 
      * @access  public
-     * @since   3.4.1
+     * @since   LRS 3.4.1
      */
 
     public static function structure_header_divider( string $text ): void {
@@ -274,7 +274,7 @@ class Draw {
      * @param   string  $id     Desired id of elemenet
      * 
      * @access  public
-     * @since   3.4.1
+     * @since   LRS 3.4.1
      */
 
     public static function ajax_response_bottom_left( string $id ): void {
@@ -288,7 +288,7 @@ class Draw {
      * Add some CSS to force a page print to landscape
      * 
      * @access  public
-     * @since   3.4.9
+     * @since   LRS 3.4.9
      */
 
     public static function print_landscape(): void {
@@ -311,8 +311,8 @@ class Draw {
      * @param   string  $content        The content to load into the box
      * 
      * @access  public
-     * @since   3.6.0
-     * @since   3.14.0  Added param $content
+     * @since   LRS 3.6.0
+     * @since   LRS 3.14.0  Added param $content
      */
 
     public static function code_feedback_box( string $id, ?string $custom_height = null, string $content = '' ) {
@@ -330,7 +330,7 @@ class Draw {
      * @param   string  $header     The text to be displayed
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public static function console_header( $header ): void {
@@ -344,7 +344,7 @@ class Draw {
      * @param   string  $page the page on the help form to go to
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public static function more_info_help( $page ): void {
@@ -361,7 +361,7 @@ class Draw {
      *                                  Default: true
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public static function item_heading( string $text, bool $line_break = true ): void {
@@ -378,7 +378,7 @@ class Draw {
      * @var boolean $display_item_input_inline     
      * 
      * @access  public
-     * @since   3.9.0
+     * @since   LRS 3.9.0
      */
 
     public static bool $display_item_input_inline = false;
@@ -393,7 +393,7 @@ class Draw {
      *                                  Default: null
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public static function item_input( string $input, bool $line_break = true, ?string $id = null ): void {
@@ -422,8 +422,8 @@ class Draw {
      *                                  Default: null
      * 
      * @access  public
-     * @since   3.6.0
-     * @since   3.8.0   Added @param $id
+     * @since   LRS 3.6.0
+     * @since   LRS 3.8.0   Added @param $id
      */
 
     public static function item_text( string $text, bool $line_break = true, ?string $id = null ): void {
@@ -448,7 +448,7 @@ class Draw {
      *                                  Default: true
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public static function item_checkbox( string $checkbox, string $label, bool $line_break = true ): void {
@@ -467,7 +467,7 @@ class Draw {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public static function item_description_header( string $text ) {
@@ -490,7 +490,7 @@ class Draw {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public static function custom_header( string $text, string $size = '12px' ) {
@@ -507,7 +507,7 @@ class Draw {
      * Draw the html elements to open a link in a new tab
      * 
      * @access  public
-     * @since   3.7.1
+     * @since   LRS 3.7.1
      */
 
     const NEW_TAB = "target='_blank' rel='noopener'";
@@ -520,7 +520,7 @@ class Draw {
      * @param   string  $class          The class of the new element
      * 
      * @access  private
-     * @since   3.12.8
+     * @since   LRS 3.12.8
      */
 
     private static function break_template( string $description, string $class ): void {
@@ -539,7 +539,7 @@ class Draw {
      * @param   string  $description    The description to be placed in this section break
      * 
      * @access  public
-     * @since   3.8.0
+     * @since   LRS 3.8.0
      */
 
     public static function section_break( string $description = '' ): void {
@@ -554,7 +554,7 @@ class Draw {
      * @param   string  $toggle         The toggle drawn from Form::toggle()
      * 
      * @access  public
-     * @since   3.9.0
+     * @since   LRS 3.9.0
      */
 
     public static function accounts_toggle( string $group_name, string $toggle ): void {
@@ -574,7 +574,7 @@ class Draw {
      * @param   string  $default    The default tab, in case $_GET is not set
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public static function page_tabs( array $data, string $default ): void {
@@ -598,7 +598,7 @@ class Draw {
      * @return  string
      * 
      * @access  public
-     * @since   3.14.0
+     * @since   LRS 3.14.0
      */
 
     public static function tabs( int $n ): string {
@@ -614,7 +614,7 @@ class Draw {
      * Text to put at the end of all scripts.
      * 
      * @access  public
-     * @since   3.14.0
+     * @since   LRS 3.14.0
      */
 
     public static function end_of_script(): void {
@@ -628,7 +628,7 @@ class Draw {
      * @param   array   $data      The contents of each cell
      * 
      * @access  public
-     * @since   3.15.0
+     * @since   LRS 3.15.0
      */
 
     public static function draggable_list( array $data ): void {
@@ -666,7 +666,7 @@ class Draw {
          * @see https://github.com/SortableJS/Sortable
          * @see https://sortablejs.github.io/Sortable/
          * 
-         * @since   3.15.0
+         * @since   LRS 3.15.0
          */
         JS::script_module( "
             import Sortable from './src/js/thirdparty/sortablejs/sortable.esm.js';
@@ -690,7 +690,7 @@ class Draw {
      *                              Default: []
      * 
      * @access  public
-     * @since   3.15.8
+     * @since   LRS 3.15.8
      */
 
     public static function standard_column_left( array $params = [] ): void {
@@ -721,7 +721,7 @@ class Draw {
      *                                      Default: true
      * 
      * @access  public
-     * @since   3.15.8
+     * @since   LRS 3.15.8
      */
 
     public static function standard_column_right( array $params = [], bool $close_left_column = true ): void {
@@ -786,7 +786,7 @@ class Draw {
      *                              Default: []
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     public static function standard_single_column( array $params = [] ): void {
@@ -808,7 +808,7 @@ class Draw {
      * Close the right / full length column
      * 
      * @access  public
-     * @since   3.15.8
+     * @since   LRS 3.15.8
      */
 
     public static function close_standard_page(): void {
@@ -820,7 +820,7 @@ class Draw {
      * Draw a number of input fields in a single line.
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     public static function set_input_multi_line(): void {
@@ -832,7 +832,7 @@ class Draw {
      * End the line of input fields.
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     public static function close_multi_line_input(): void {
@@ -844,7 +844,7 @@ class Draw {
      * Draw a filter container.
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     public static function table_filters_container(): void {
@@ -856,7 +856,7 @@ class Draw {
      * End the line of table filter container.
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     public static function close_table_filters_container(): void {
@@ -868,7 +868,7 @@ class Draw {
      * Draw an aligned left container.
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     public static function align_entries_left(): void {
@@ -880,7 +880,7 @@ class Draw {
      * End the blocks aligned left
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     public static function close_align_entries_left(): void {

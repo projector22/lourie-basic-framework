@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -15,7 +15,7 @@
  * 
  * @const {string} TOPBAR_STRING_THROWER
  * 
- * @since   3.9.0
+ * @since   LRS 3.9.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -26,7 +26,7 @@ export const TOPBAR_STRING_THROWER = '+>';
  * 
  * @const {string} ALERT_STRING_THROWER
  * 
- * @since   3.9.0
+ * @since   LRS 3.9.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -38,7 +38,7 @@ export const ALERT_STRING_THROWER = '==>';
  * 
  * @const {string} ERROR_STRING_THROWER
  * 
- * @since   3.15.0
+ * @since   LRS 3.15.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -49,7 +49,7 @@ export const ERROR_STRING_THROWER = '<-x->';
  * 
  * @const {string} TOPBAR_RESPONSE
  * 
- * @since   3.9.0
+ * @since   LRS 3.9.0
  * @since   LBF 0.1.1-beta
  */
 

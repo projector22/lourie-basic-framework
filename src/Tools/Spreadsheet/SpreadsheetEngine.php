@@ -11,8 +11,8 @@ use Exception;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.22.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.22.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -24,7 +24,7 @@ class SpreadsheetEngine {
      * @var string  COLUMN_DEFAULT_WIDTH    Default: 150px
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     const COLUMN_DEFAULT_WIDTH = '150px';
@@ -35,7 +35,7 @@ class SpreadsheetEngine {
      * @var integer MAX_DEFAULT_COLUMNS Default: 50
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     const MAX_DEFAULT_COLUMNS = 50;
@@ -46,7 +46,7 @@ class SpreadsheetEngine {
      * @var integer MAX_DEFAULT_ROWS    Default: 200
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     const MAX_DEFAULT_ROWS = 200;
@@ -58,7 +58,7 @@ class SpreadsheetEngine {
      * @var string  $js_path
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected string $js_path = './vendor/projector22/lourie-basic-framework/src/js/spreadsheetTool.js';
@@ -69,7 +69,7 @@ class SpreadsheetEngine {
      * @var int $column
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected int $column;
@@ -80,7 +80,7 @@ class SpreadsheetEngine {
      * @var int $row
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected int $row;
@@ -94,7 +94,7 @@ class SpreadsheetEngine {
      * @var string  $default_unit.  Default: 'px'
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected string $default_unit = 'px';
@@ -106,7 +106,7 @@ class SpreadsheetEngine {
      * @var string  $default_column_width
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected string $default_column_width;
@@ -118,7 +118,7 @@ class SpreadsheetEngine {
      * @var array   $column_width_overwrite
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected array $column_width_overwrite = [];
@@ -130,8 +130,8 @@ class SpreadsheetEngine {
      * @return  string
      * 
      * @access  protected
-     * @since   3.19.0
-     * @since   3.23.2  Moved styles into ./styles/spreadsheet.css
+     * @since   LRS 3.19.0
+     * @since   LRS 3.23.2  Moved styles into ./styles/spreadsheet.css
      */
 
     protected function spreadsheet_styles(): string {
@@ -147,7 +147,7 @@ class SpreadsheetEngine {
      * Calculate and return the css required for calculating widths and grid-template-columns on the sheet.
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected function calculate_widths(): string {
@@ -187,7 +187,7 @@ class SpreadsheetEngine {
      * @return  string
      * 
      * @access  protected
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     protected function set_header_grid_areas( array $cell = [] ): string {
@@ -216,7 +216,7 @@ class SpreadsheetEngine {
      * @return  string
      * 
      * @access  private
-     * @since   3.22.0
+     * @since   LRS 3.22.0
      */
 
     private function format_params( array $params ): string {
@@ -249,7 +249,7 @@ class SpreadsheetEngine {
      * @return  string
      * 
      * @access  protected
-     * @since   3.22.0
+     * @since   LRS 3.22.0
      */
 
     protected function text_cell( array $data, mixed $value ): string {
@@ -294,7 +294,7 @@ class SpreadsheetEngine {
      * @return string
      * 
      * @access  protected
-     * @since   3.22.0
+     * @since   LRS 3.22.0
      */
 
     protected function select_cell( mixed $entry ): string {

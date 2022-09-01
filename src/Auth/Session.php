@@ -9,8 +9,8 @@ namespace LBF\Auth;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.15.11
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.15.11
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -22,7 +22,7 @@ class Session {
      * @param   boolean $hide_session_start_info    Default: true
      * 
      * @access  public
-     * @since   3.15.11
+     * @since   LRS 3.15.11
      */
 
     public static function start( bool $hide_session_start_info = true ): void {
@@ -41,7 +41,7 @@ class Session {
      * @param   mixed   $value  The data to assign to $_SESSION variable.
      * 
      * @access  public
-     * @since   3.15.11
+     * @since   LRS 3.15.11
      */
 
     public static function set_value( string $id, mixed $value ): void {
@@ -56,7 +56,7 @@ class Session {
      * @param   boolean $strick_check   Whether or not to check if the $_SESSION variable preexists
      * 
      * @access  public
-     * @since   3.15.11
+     * @since   LRS 3.15.11
      */
 
     public static function destroy_value( string $id, bool $strict_check = false ): void {
@@ -73,7 +73,7 @@ class Session {
      * Destroy all session variables that exists.
      * 
      * @access  public
-     * @since   3.15.11
+     * @since   LRS 3.15.11
      */
 
     public static function destroy_all_values(): void {
@@ -92,7 +92,7 @@ class Session {
      * @return  boolean
      * 
      * @access  public
-     * @since   3.15.11
+     * @since   LRS 3.15.11
      */
 
     public static function has_started(): bool {
@@ -111,7 +111,7 @@ class Session {
      * @return  boolean
      * 
      * @access  public
-     * @since   3.15.11
+     * @since   LRS 3.15.11
      */
 
     public static function value_exists( string $id ): bool {
@@ -130,7 +130,7 @@ class Session {
      * @return  mixed
      * 
      * @access  public
-     * @since   3.15.11
+     * @since   LRS 3.15.11
      */
 
     public static function value( string $id, ?string $index = null ): mixed {
@@ -165,7 +165,7 @@ class Session {
      * @return  mixed
      * 
      * @access  public
-     * @since   3.15.11
+     * @since   LRS 3.15.11
      */
 
     public static function __callStatic( string $id, array $arguments ): mixed {

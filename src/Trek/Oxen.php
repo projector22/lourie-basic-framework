@@ -12,8 +12,8 @@ use LBF\Db\ConnectMySQL;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.14.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.14.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -29,8 +29,8 @@ class Oxen extends ConnectMySQL {
      * @param   string  $table_name     The table name without it's prefix.
      * 
      * @access  protected
-     * @since   3.8.0
-     * @since   3.14.0  Moved to Oxen
+     * @since   LRS 3.8.0
+     * @since   LRS 3.14.0  Moved to Oxen
      */
 
     protected function define_new_table( string $table_const, string $table_name ): void {
@@ -51,8 +51,8 @@ class Oxen extends ConnectMySQL {
      * @param   string  $new_config_paste   The new content.
      * 
      * @access  protected
-     * @since   3.8.0
-     * @since   3.14.0  Moved to Oxen
+     * @since   LRS 3.8.0
+     * @since   LRS 3.14.0  Moved to Oxen
      */
 
     protected function add_element_to_config( string $search_str, string $new_config_paste ): void {
@@ -78,7 +78,7 @@ class Oxen extends ConnectMySQL {
      * @param   string  $new_config     The replacement string
      * 
      * @access  protected
-     * @since   3.17.4
+     * @since   LRS 3.17.4
      */
 
     protected function replace_config_element( string $search_str, string $new_config ): void {

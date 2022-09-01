@@ -8,7 +8,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -24,7 +24,7 @@ import { character_count } from './tools.js';
 /**
  * Object class for performing an AJAX execution.
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -33,7 +33,7 @@ export default class Ajax {
     /**
      * Class constructor
      * 
-     * @since   3.13.0
+     * @since   LRS 3.13.0
      * @since   LBF 0.1.1-beta
      */
 
@@ -44,7 +44,7 @@ export default class Ajax {
          * 
          * @var {string} post
          * 
-         * @since   3.13.0
+         * @since   LRS 3.13.0
          */
 
         this.post = null;
@@ -55,7 +55,7 @@ export default class Ajax {
          * 
          * @var {string} response
          * 
-         * @since   3.13.0
+         * @since   LRS 3.13.0
          */
 
         this.response = null;
@@ -66,7 +66,7 @@ export default class Ajax {
          * 
          * @var {string} redirect
          * 
-         * @since   3.13.0
+         * @since   LRS 3.13.0
          */
 
         this.redirect = null;
@@ -77,7 +77,7 @@ export default class Ajax {
          * 
          * @var {string} response_message
          * 
-         * @since   3.13.0
+         * @since   LRS 3.13.0
          */
 
         this.response_message = null;
@@ -88,7 +88,7 @@ export default class Ajax {
          * 
          * @var {string} action_page
          * 
-         * @since   3.13.0
+         * @since   LRS 3.13.0
          */
 
         this.action_page = 'src/App/Actions/ActionHandler.php';
@@ -99,7 +99,7 @@ export default class Ajax {
          * 
          * @var {boolean} post_file
          * 
-         * @since   3.13.0
+         * @since   LRS 3.13.0
          */
 
         this.post_file = false;
@@ -123,7 +123,7 @@ export default class Ajax {
          * 
          * @var {array|null} recursive_functions    Array of functions. Default: null
          * 
-         * @since   3.13.4
+         * @since   LRS 3.13.4
          */
 
         this.recursive_functions = null;
@@ -135,7 +135,7 @@ export default class Ajax {
          * 
          * @var {string} text_feedback
          * 
-         * @since   3.13.4
+         * @since   LRS 3.13.4
          */
 
         this.text_feedback = '';
@@ -145,7 +145,7 @@ export default class Ajax {
          * 
          * @var {string} terminate_execution    Default: false
          * 
-         * @since   3.13.4
+         * @since   LRS 3.13.4
          */
 
         this.terminate_execution = false;
@@ -155,7 +155,7 @@ export default class Ajax {
          * 
          * @var {string} termination_text
          * 
-         * @since   3.13.4
+         * @since   LRS 3.13.4
          */
 
         this.termination_text = '';
@@ -174,7 +174,7 @@ export default class Ajax {
          * 
          * @var {string} timeout_duration. Default: 15 seconds.
          * 
-         * @since   3.17.0
+         * @since   LRS 3.17.0
          */
 
         this.timeout_duration = 15000;
@@ -185,7 +185,7 @@ export default class Ajax {
          * 
          * @var {boolean} output_to_terminal Default: false
          * 
-         * @since   3.27.0
+         * @since   LRS 3.27.0
          */
 
         this.output_to_terminal = false;
@@ -196,7 +196,7 @@ export default class Ajax {
          * 
          * @var {string} terminal_id    Default: 'feedback_console'
          * 
-         * @since   3.27.0
+         * @since   LRS 3.27.0
          */
 
         this.terminal_id = 'feedback_console';
@@ -207,9 +207,9 @@ export default class Ajax {
      * Gets constructed post data, performs an AJAX request and displays the responding generated text and
      * if desired, performs a redirect
      * 
-     * @since   2.27.0
-     * @since   2.27.2  Added support for AJAXing file uploading
-     * @since   3.13.0  Amalgamated into a class
+     * @since   LRS 2.27.0
+     * @since   LRS 2.27.2  Added support for AJAXing file uploading
+     * @since   LRS 3.13.0  Amalgamated into a class
      */
 
     execute() {
@@ -273,7 +273,7 @@ export default class Ajax {
      * Perform multiple synchronous recursive AJAX executions. Each execution waits for the
      * previous AJAX call to finish before doing the next one.
      * 
-     * @since   3.13.4
+     * @since   LRS 3.13.4
      */
 
     synchronous_execute() {
@@ -318,7 +318,7 @@ export default class Ajax {
      * 
      * @param {function} resolve The Promise object resolver function
      * 
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
 
@@ -350,7 +350,7 @@ export default class Ajax {
     /**
      * Execute a standard AJAX send request.
      * 
-     * @since   3.13.4
+     * @since   LRS 3.13.4
      */
 
     standard_execute() {
@@ -369,7 +369,7 @@ export default class Ajax {
     /**
      * Execute an AJAX request with a file upload
      * 
-     * @since   3.13.4
+     * @since   LRS 3.13.4
      */
 
     file_execute() {
@@ -386,7 +386,7 @@ export default class Ajax {
     /**
      * Check if any padding (../) is required on this.action_page.
      * 
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     check_padding() {
@@ -407,7 +407,7 @@ export default class Ajax {
      * @param {string} field The field of the param to be added to this.post
      * @param {string} value The value of the param to be added to this.post
      * 
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     add_param(field, value) {
@@ -431,7 +431,7 @@ export default class Ajax {
      * 
      * @param {string} value The token you wish to add
      * 
-     * @since   3.18.0
+     * @since   LRS 3.18.0
      */
 
     add_token(value) {
@@ -442,7 +442,7 @@ export default class Ajax {
     /**
      * Clear all posting params.
      * 
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
 
     clear_params() {
@@ -460,7 +460,7 @@ export default class Ajax {
      * @param {boolean} load_in_topbar  Whether or not to force the loading animation in the topbar.
      *                                  Default: false
      * 
-     * @since   3.13.0
+     * @since   LRS 3.13.0
      */
 
     loading(load_in_topbar = false) {
@@ -484,8 +484,8 @@ export default class Ajax {
      * @param {boolean} append        Whether or not to append the text onto the existing content or overwrite the content.
      * @param {boolean} clear_loading Whether or not to clear the loading animation
      * 
-     * @since   3.13.0
-     * @since   3.25.0  Added handling for sending to alert and sending to topbar.
+     * @since   LRS 3.13.0
+     * @since   LRS 3.25.0  Added handling for sending to alert and sending to topbar.
      * 
      * @todo    See if this can be merged with `handle_ajax_response`.  3.27.0
      */
@@ -524,7 +524,7 @@ export default class Ajax {
      * @param {string} message        The message to draw into the alert box. Default: ''
      * @param {boolean} clear_loading Whether or not to clear the loading animation
      * 
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     set_alert(message = '', clear_loading = false) {
@@ -538,7 +538,7 @@ export default class Ajax {
     /**
      * Empty the response area's content
      * 
-     * @since   3.13.4
+     * @since   LRS 3.13.4
      */
 
     clear_response() {
@@ -553,7 +553,7 @@ export default class Ajax {
     /**
      * Clear the loading animation from response
      * 
-     * @since   3.13.4
+     * @since   LRS 3.13.4
      */
 
     clear_loading() {
@@ -568,7 +568,7 @@ export default class Ajax {
     /**
      * Clear out the terminal window.
      * 
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     clear_terminal() {
@@ -591,7 +591,7 @@ export default class Ajax {
      * 
      * @returns {boolean}
      * 
-     * @since   3.13.4
+     * @since   LRS 3.13.4
      */
 
     search_feedback(search) {
@@ -607,7 +607,7 @@ export default class Ajax {
      * 
      * @param {string} progress_bar_id ID of the progress bar.
      * 
-     * @since   3.25.1
+     * @since   LRS 3.25.1
      */
 
     set_progress_bar(progress_bar_id) {
@@ -618,7 +618,7 @@ export default class Ajax {
          * 
          * @param {object} event The change event.
          * 
-         * @since   3.25.1
+         * @since   LRS 3.25.1
          */
 
         function progress_handler(event) {
@@ -636,7 +636,7 @@ export default class Ajax {
      * @param {boolean} set Parse true to output to the terminal.
      * @param {string} terminal_id  Default: 'feedback_console'
      * 
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     set_output_to_terminal(set, terminal_id = 'feedback_console') {
@@ -656,8 +656,8 @@ export default class Ajax {
  * @param   {string}    response_id         The id of the page in which the AJAX can display responses.
  * @param   {string}    text                The text to draw into the response_id element.
  * 
- * @since   3.9.0
- * @since   3.13.0    Moved to ajax.js, removed param responseMsg and revamped
+ * @since   LRS 3.9.0
+ * @since   LRS 3.13.0    Moved to ajax.js, removed param responseMsg and revamped
  * @since   LBF 0.1.1-beta
  */
 
@@ -686,7 +686,7 @@ function handle_ajax_response(response_id, text) {
  * 
  * @param {string} loc The location to reload to
  * 
- * @since   3.6.0
+ * @since   LRS 3.6.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -716,7 +716,7 @@ function check_redirect(loc) {
  * 
  * @returns {function}
  * 
- * @since   3.13.4
+ * @since   LRS 3.13.4
  * @since   LBF 0.1.1-beta
  */
 

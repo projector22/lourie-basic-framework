@@ -19,9 +19,9 @@ use SVGTools\SVG;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.6.0
- * @since   3.11.0  Moved to `Framework\HTML` namespace from `PageElements`
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.6.0
+ * @since   LRS 3.11.0  Moved to `Framework\HTML` namespace from `PageElements`
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -33,7 +33,7 @@ class Forms {
      * @var boolean $echo  Default: true
      * 
      * @access  public
-     * @since   3.6.0
+     * @since   LRS 3.6.0
      */
 
     public static bool $echo = true;
@@ -47,8 +47,8 @@ class Forms {
      * @return  string
      * 
      * @access  private
-     * @since   3.12.8
-     * @since   3.16.0 Added a built in 'required' element.
+     * @since   LRS 3.12.8
+     * @since   LRS 3.16.0 Added a built in 'required' element.
      */
 
     private static function label( array $params ): string {
@@ -70,7 +70,7 @@ class Forms {
      * @return  string
      * 
      * @access  private
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     private static function element_container( array $params, string $class ): string {
@@ -99,7 +99,7 @@ class Forms {
      * @return  string
      * 
      * @access  private
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     private static function text_input_container( array $params ): string {
@@ -122,7 +122,7 @@ class Forms {
      * @return  string
      * 
      * @access  private
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     private static function checkbox_input_container ( array $params ): string {
@@ -142,7 +142,7 @@ class Forms {
      * @return  string
      * 
      * @access  private
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      */
 
     private static function toggle_container( array $params ): string {
@@ -162,7 +162,7 @@ class Forms {
      * @return  string
      * 
      * @access  private
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     private static function element_hint( array $params ): string {
@@ -182,7 +182,7 @@ class Forms {
      * @return  string
      * 
      * @access  private
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     private static function element_validation( array $params ): string {
@@ -229,7 +229,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @var string  REQUIRED_STAR
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     const REQUIRED_STAR = " <span class='required_star'>*</span>";
@@ -241,7 +241,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @var string  REQUIRED_TEXT
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     const REQUIRED_TEXT = " (Required)";
@@ -256,7 +256,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @var string  $required_default   Default: `Form::REQUIRED_TEXT`
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     public static string $required_default = self::REQUIRED_TEXT;
@@ -273,8 +273,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.8
-     * @since   3.16.0 Revamped with new styling, labels, hints and validation.
+     * @since   LRS 3.12.8
+     * @since   LRS 3.16.0 Revamped with new styling, labels, hints and validation.
      */
 
     public static function text( array $params = [] ) {
@@ -300,7 +300,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
          * 
          * Create a list of 'illegal' inputs, such as 'checkbox'
          * 
-         * @since   3.16.0
+         * @since   LRS 3.16.0
          */
 
         /**
@@ -409,7 +409,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   array   $arguments
      * 
      * @access  public
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     public static function __callStatic( $name, $arguments ) {
@@ -437,10 +437,10 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.8.0
-     * @since   3.13.0  Rewritten and revamped
-     * @since   3.13.3  Added param $is_multiple
-     * @since   3.16.0  Revamped with new styling, labels, hints and validation. Removed params $data, $is_multiple
+     * @since   LRS 3.8.0
+     * @since   LRS 3.13.0  Rewritten and revamped
+     * @since   LRS 3.13.3  Added param $is_multiple
+     * @since   LRS 3.16.0  Revamped with new styling, labels, hints and validation. Removed params $data, $is_multiple
      */
 
     public static function select_box( array $params = [] ) {
@@ -553,9 +553,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.8.0
-     * @since   3.13.0  Revamped and replaced all params
-     * @since   3.16.0  Revamped with new styling, labels, hints and validation. Removed param  $draw_counter
+     * @since   LRS 3.8.0
+     * @since   LRS 3.13.0  Revamped and replaced all params
+     * @since   LRS 3.16.0  Revamped with new styling, labels, hints and validation. Removed param  $draw_counter
      */
 
     public static function textarea( array $params = [] ) {
@@ -712,8 +712,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.8.0
-     * @since   3.16.0  Revamped
+     * @since   LRS 3.8.0
+     * @since   LRS 3.16.0  Revamped
      */
 
     public static function checkbox( array $params = [] ) {
@@ -809,7 +809,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      */
 
     public static function radio( array $params = [] ) {
@@ -903,9 +903,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.7.6
-     * @since   3.13.0    Updated and split the labels into it's own method
-     * @since   3.16.1  Revamped and removed params $id & $checked.
+     * @since   LRS 3.7.6
+     * @since   LRS 3.13.0    Updated and split the labels into it's own method
+     * @since   LRS 3.16.1  Revamped and removed params $id & $checked.
      */
 
     public static function toggle( array $params = [] ) {
@@ -1018,9 +1018,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.8.0
-     * @since   3.13.0    Completely revamped
-     * @since   3.16.1  Merged param $data into $params.
+     * @since   LRS 3.8.0
+     * @since   LRS 3.13.0    Completely revamped
+     * @since   LRS 3.16.1  Merged param $data into $params.
      */
 
     public static function combo_box( array $params = [] ) {
@@ -1053,10 +1053,10 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.6.0
-     * @since   3.11.1  Removed params, $id, $placeholder, $value; added param $params
-     * @since   3.13.0  Revamped and removed param $onKeyUp
-     * @since   3.16.0  Revamped with new styling, labels, hints and validation. Renamed to search_filter from filter_box
+     * @since   LRS 3.6.0
+     * @since   LRS 3.11.1  Removed params, $id, $placeholder, $value; added param $params
+     * @since   LRS 3.13.0  Revamped and removed param $onKeyUp
+     * @since   LRS 3.16.0  Revamped with new styling, labels, hints and validation. Renamed to search_filter from filter_box
      */
 
     public static function filter( array $params = [] ) {
@@ -1162,9 +1162,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.8.0
-     * @since   3.13.0  Rewritten and replaced the params
-     * @since   3.16.1  Merged param $value into $params.
+     * @since   LRS 3.8.0
+     * @since   LRS 3.13.0  Rewritten and replaced the params
+     * @since   LRS 3.16.1  Merged param $value into $params.
      */
 
     public static function hidden_input( array $params = [] ) {
@@ -1200,8 +1200,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.9.1
-     * @since   3.13.0    Renamed $id to $show_hide_id and added $element_id
+     * @since   LRS 3.9.1
+     * @since   LRS 3.13.0    Renamed $id to $show_hide_id and added $element_id
      */
 
     public static function content_drawer_arrow( string $element_id, string $show_hide_id ) {
@@ -1249,8 +1249,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.7
-     * @since   3.16.1  Completely revamped, to use non default decorations and new standards.
+     * @since   LRS 3.12.7
+     * @since   LRS 3.16.1  Completely revamped, to use non default decorations and new standards.
      */
 
     public static function upload_file( array $params = [] ) {
@@ -1327,7 +1327,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.8
+     * @since   LRS 3.12.8
      */
 
     public static function submit( array $params = [] ) {
@@ -1365,7 +1365,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   boolean         $disabled       Whether or not to disable each column
      * 
      * @access  public
-     * @since   3.14.3
+     * @since   LRS 3.14.3
      */
 
     public static function include_exclude_columns (
@@ -1473,7 +1473,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @return  string|void
      * 
      * @access public
-     * @since   3.15.4
+     * @since   LRS 3.15.4
      */
 
     public static function submit_load_page( string $button_text, string $page, ?string $tab = null ) {

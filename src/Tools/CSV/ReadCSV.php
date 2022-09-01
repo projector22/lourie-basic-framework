@@ -9,8 +9,8 @@ namespace LBF\Tools\CSV;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.12.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.12.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -22,7 +22,7 @@ class ReadCSV {
      * @var string $csv_file_path
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public string $csv_file_path;
@@ -33,7 +33,7 @@ class ReadCSV {
      * @var array   $data
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public array $data = [];
@@ -44,7 +44,7 @@ class ReadCSV {
      * @var boolean $header_row
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public bool $header_row = true;
@@ -55,7 +55,7 @@ class ReadCSV {
      * @var array   $headers
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public array $headers = [];
@@ -66,7 +66,7 @@ class ReadCSV {
      * @var boolean keep_csv    Default: false
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public bool $keep_csv = false;
@@ -78,7 +78,7 @@ class ReadCSV {
      * @param   string|null $path   Path to file being handled
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public function __construct( ?string $path = null ) {
@@ -96,7 +96,7 @@ class ReadCSV {
      * Execute the reading of the .csv and assign the extracted data to $this->data.
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public function read_csv_file(): void {
@@ -132,7 +132,7 @@ class ReadCSV {
      * You may wish to call this method if you are going to read and interpret a new .csv file without creating a new instance of the class
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public function clean_up_files(): void {
@@ -149,7 +149,7 @@ class ReadCSV {
      * Closes the open database connection
      * 
      * @access  public
-     * @since   3.12.0
+     * @since   LRS 3.12.0
      */
 
     public function __destruct() {

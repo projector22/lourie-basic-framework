@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -63,7 +63,7 @@
  * @param {string}   textbox        The id of the element being tested
  * @param {boolean}  inputFilter    Whether or not the item matches the regex fed to it
  * 
- * @since   3.6.3
+ * @since   LRS 3.6.3
  * @since   LBF 0.1.1-beta
  */
 

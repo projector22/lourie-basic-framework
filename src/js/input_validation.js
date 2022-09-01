@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.15.10
+ * @since   LRS 3.15.10
  * @since   LBF 0.1.1-beta
  */
 
@@ -21,7 +21,7 @@ import {
  * Perform some basic validation operations on input type fields. Specific logic is worked outside the
  * class and then the class does the standard 'decoration' according to that validation.
  * 
- * @since   3.15.10
+ * @since   LRS 3.15.10
  * @since   LBF 0.1.1-beta
  */
 
@@ -34,7 +34,8 @@ export default class Input_Validation {
      * @param {string} response_id  The id of the feedback response element. Default: null.
      * @param {string} nil_value    The value which with which the required check is compared against. Useful for selectboxes.
      * 
-     * @since   3.15.10
+     * @since   LRS 3.15.10
+     * @since   LBF 0.1.1-beta
      */
 
     constructor(element_id, response_id = null, nil_value = '') {
@@ -44,7 +45,7 @@ export default class Input_Validation {
          * 
          * @var {DOM} input_field
          * 
-         * @since   3.15.10
+         * @since   LRS 3.15.10
          */
 
         this.input_field = document.getElementById(element_id);
@@ -54,7 +55,7 @@ export default class Input_Validation {
          * 
          * @var {string} response_id
          * 
-         * @since   3.15.10
+         * @since   LRS 3.15.10
          */
 
         this.response_id = response_id;
@@ -65,7 +66,7 @@ export default class Input_Validation {
          * 
          * @var {string} nil_value
          * 
-         * @since   3.21.0
+         * @since   LRS 3.21.0
          */
 
         this.nil_value = nil_value;
@@ -75,7 +76,7 @@ export default class Input_Validation {
          * 
          * @var {integer} FLAG_UNSET
          * 
-         * @since   3.15.10
+         * @since   LRS 3.15.10
          */
 
         this.FLAG_UNSET = FLAG_UNSET;
@@ -85,7 +86,7 @@ export default class Input_Validation {
          * 
          * @var {integer} FLAG_PASSED
          * 
-         * @since   3.15.10
+         * @since   LRS 3.15.10
          */
 
         this.FLAG_PASSED = FLAG_PASSED;
@@ -95,7 +96,7 @@ export default class Input_Validation {
          * 
          * @var {integer} FLAG_FAILED
          * 
-         * @since   3.15.10
+         * @since   LRS 3.15.10
          */
 
         this.FLAG_FAILED = FLAG_FAILED;
@@ -105,7 +106,7 @@ export default class Input_Validation {
          * 
          * @var {integer} FLAG_PASSWORD_STRENGTH
          * 
-         * @since   3.16.0
+         * @since   LRS 3.16.0
          */
 
         this.FLAG_PASSWORD_STRENGTH = '3';
@@ -115,7 +116,7 @@ export default class Input_Validation {
          * 
          * @var {boolean} validated
          * 
-         * @since   3.16.0
+         * @since   LRS 3.16.0
          */
 
         this.validated = undefined;
@@ -127,7 +128,7 @@ export default class Input_Validation {
      * 
      * @param {integer} flag The choice of 'decoration'. Unset, Passed, or Failed.
      * 
-     * @since   3.15.10
+     * @since   LRS 3.15.10
      */
 
     set_field_validation_feedback(flag) {
@@ -171,7 +172,7 @@ export default class Input_Validation {
      * 
      * @param {string} $msg The message that feeds back to the user
      * 
-     * @since   3.15.10
+     * @since   LRS 3.15.10
      */
 
     set_response_message($msg) {
@@ -197,7 +198,7 @@ export default class Input_Validation {
      * 
      * @param {object} validations The validations to be parsed
      * 
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     general_validator(validations = {}) {
@@ -360,7 +361,7 @@ export default class Input_Validation {
      * 
      * @returns {boolean|null}
      * 
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     set_async_messages(data) {
@@ -404,7 +405,7 @@ export default class Input_Validation {
      * 
      * @returns {boolean|null} Whether or not the validation has passed. Null => unset
      * 
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     type_validation(type) {
@@ -468,7 +469,7 @@ export default class Input_Validation {
      * 
      * @returns {boolean}
      * 
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     is_required() {
@@ -490,7 +491,7 @@ export default class Input_Validation {
      * 
      * @returns {boolean}
      * 
-     * @since   3.16.0
+     * @since   LRS 3.16.0
      */
 
     zaID_validation() {
@@ -512,8 +513,8 @@ export default class Input_Validation {
      * 
      * @param {function} resolve    The Promise resolve function
      * 
-     * @since   3.7.6
-     * @since   3.16.0 Moved to `input_validation` class and renamed from `check_unique_username` to `username_unique`.
+     * @since   LRS 3.7.6
+     * @since   LRS 3.16.0 Moved to `input_validation` class and renamed from `check_unique_username` to `username_unique`.
      */
 
     username_unique(resolve) {
@@ -534,8 +535,8 @@ export default class Input_Validation {
      * @param {function} resolve    The Promise resolve function.
      * @param {string}   password   The password being tested.
      * 
-     * @since   3.7.6
-     * @since   3.16.0 Moved to `input_validation` class.
+     * @since   LRS 3.7.6
+     * @since   LRS 3.16.0 Moved to `input_validation` class.
      */
 
     check_password_strength(resolve, password) {
@@ -554,8 +555,8 @@ export default class Input_Validation {
      * @param {string}   password   The password being tested.
      * @param {string}   match      The password being compared to the test.
      * 
-     * @since   3.7.6
-     * @since   3.16.0 Moved to `input_validation` class and reworked for the class.
+     * @since   LRS 3.7.6
+     * @since   LRS 3.16.0 Moved to `input_validation` class and reworked for the class.
      */
     check_password_match(resolve, password, match) {
         resolve({
@@ -571,7 +572,7 @@ export default class Input_Validation {
      * @param {string} start_date   The date that should first or older than end_date.
      * @param {string} end_date     The date that should be after, or newer than start_date.
      * 
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     check_date_not_before(resolve, start_date, end_date) {
@@ -590,7 +591,7 @@ export default class Input_Validation {
      * @param {string} start_date   The date that should first or older than end_date.
      * @param {string} end_date     The date that should be after, or newer than start_date.
      * 
-     * @since   3.20.0
+     * @since   LRS 3.20.0
      */
 
     check_date_not_after(resolve, start_date, end_date) {
@@ -618,7 +619,7 @@ export default class Input_Validation {
      * 
      * @static
      * 
-     * @since   3.21.0
+     * @since   LRS 3.21.0
      */
 
     static execute_once_validation_complete(element, condition, execute_function) {
@@ -652,7 +653,8 @@ export default class Input_Validation {
  * 
  * @var {string}    FLAG_UNSET
  * 
- * @since   3.21.0
+ * @since   LRS 3.21.0
+ * @since   LBF 0.1.1-beta
  */
 
 export const FLAG_UNSET = '0';
@@ -662,7 +664,8 @@ export const FLAG_UNSET = '0';
  * 
  * @var {string}    FLAG_PASSED
  * 
- * @since   3.21.0
+ * @since   LRS 3.21.0
+ * @since   LBF 0.1.1-beta
  */
 
 export const FLAG_PASSED = '1';
@@ -672,7 +675,8 @@ export const FLAG_PASSED = '1';
  * 
  * @var {string}    FLAG_FAILED
  * 
- * @since   3.21.0
+ * @since   LRS 3.21.0
+ * @since   LBF 0.1.1-beta
  */
 
 export const FLAG_FAILED = '2';

@@ -5,14 +5,14 @@
  * 
  * @requires    ES6
  * 
- * @since   3.13.0
- * @since   3.21.1  Converted to a class.
+ * @since   LRS 3.13.0
+ * @since   LRS 3.21.1  Converted to a class.
  */
 
 /**
  * Tool for handling various URI operations.
  * 
- * @since   3.21.1
+ * @since   LRS 3.21.1
  * @since   LBF 0.1.1-beta
  */
 
@@ -33,7 +33,7 @@ export default class URITools {
      * 
      * @returns {string}
      * 
-     * @since   3.22.1
+     * @since   LRS 3.22.1
      * @since   LBF 0.1.1-beta
      */
 
@@ -45,9 +45,9 @@ export default class URITools {
     /**
      * Get the URL of the page we're on
      * 
-     * @since   2.27.0
-     * @since   3.13.0  Revamped
-     * @since   3.21.2  Moved into class
+     * @since   LRS 2.27.0
+     * @since   LRS 3.13.0  Revamped
+     * @since   LRS 3.21.2  Moved into class
      * @since   LBF 0.1.1-beta
      */
 
@@ -71,9 +71,9 @@ export default class URITools {
      * @version     1.2     Modified for modern standards, Fixed a bug when handling arrays.
      * @version     1.3     Moved into class and renamed uri_change from uri_handle.
      * 
-     * @since   2.27.0
-     * @since   3.9.0   Updated to the modern standard and a few minor bugs ironed out
-     * @since   3.22.1  Moved into class
+     * @since   LRS 2.27.0
+     * @since   LRS 3.9.0   Updated to the modern standard and a few minor bugs ironed out
+     * @since   LRS 3.22.1  Moved into class
      * @since   LBF 0.1.1-beta
      */
 
@@ -94,7 +94,7 @@ export default class URITools {
                  * Check to see if the query is the first in the URI string
                  * If so, prefex with an '?' otherwise use a '&'
                  * 
-                 * @since   3.9.0
+                 * @since   LRS 3.9.0
                  */
 
                 let sep = '&';
@@ -105,7 +105,7 @@ export default class URITools {
                 /**
                  * The new URI string fragment to be replaced in the URI, if the conditions are met
                  * 
-                 * @since   3.9.0
+                 * @since   LRS 3.9.0
                  */
 
                 let new_value = `${sep}${search_query}=${value[i]}`;
@@ -113,7 +113,7 @@ export default class URITools {
                 /**
                  * The position within the URI of the of the origonal search query
                  * 
-                 * @since   3.9.0
+                 * @since   LRS 3.9.0
                  */
 
                 let query_position = origonal_uri.indexOf(search_query);
@@ -124,7 +124,7 @@ export default class URITools {
                  * 1. Find the origonal value of the query
                  * 2. Replace the full origonal query (&query=value) with the new value
                  * 
-                 * @since   3.9.0
+                 * @since   LRS 3.9.0
                  */
 
                 if (query_position > -1) {
@@ -133,7 +133,7 @@ export default class URITools {
                      * Start position of origonal value
                      * location of search text + length of search text + 1 for the =
                      * 
-                     * @since   3.9.0
+                     * @since   LRS 3.9.0
                      */
 
                     let start = query_position + search_query.length + 1;
@@ -145,7 +145,7 @@ export default class URITools {
                      * if @var end returns -1, this means that the query value is at the end, 
                      * and should then be returned as the length of the origonal search URI
                      * 
-                     * @since   3.9.0
+                     * @since   LRS 3.9.0
                      */
 
                     let end = origonal_uri.indexOf('&', start);
@@ -157,7 +157,7 @@ export default class URITools {
                      * The origonal value to be replaced
                      * in the form of: &query=value
                      * 
-                     * @since   3.9.0
+                     * @since   LRS 3.9.0
                      */
 
                     let old_value = `${sep}${search_query}=${origonal_uri.substring(start, end)}`;
@@ -165,7 +165,7 @@ export default class URITools {
                     /**
                      * If the origonal search query and the newly formed one don't match, make the replacement
                      * 
-                     * @since   3.9.0
+                     * @since   LRS 3.9.0
                      */
 
                     if (old_value !== new_value) {
@@ -176,7 +176,7 @@ export default class URITools {
                     /**
                      * If the query does not already exist on the URI, add it
                      * 
-                     * @since   3.9.0
+                     * @since   LRS 3.9.0
                      */
 
                     new_uri += `${sep}${query[i]}=${value[i]}`;
@@ -190,7 +190,7 @@ export default class URITools {
              * Check to see if the query is the first in the URI string
              * If so, prefex with an '?' otherwise use a '&'
              * 
-             * @since   3.?
+             * @since   LRS 3.?
              */
 
             if (origonal_uri.indexOf(`?${query}=`) > -1) {
@@ -202,7 +202,7 @@ export default class URITools {
             /**
              * The position within the URI of the of the origonal search query
              * 
-             * @since   3.?
+             * @since   LRS 3.?
              */
 
             let query_position = origonal_uri.indexOf(search_query);
@@ -213,7 +213,7 @@ export default class URITools {
              * 1. Find the origonal value of the query
              * 2. Replace the full origonal query (&query=value) with the new value
              * 
-             * @since   3.?
+             * @since   LRS 3.?
              */
 
             if (query_position > -1) {
@@ -221,7 +221,7 @@ export default class URITools {
                 /**
                  * Find where the next '&' appears after the search string
                  * 
-                 * @since   3.?
+                 * @since   LRS 3.?
                  */
 
                 let end = origonal_uri.indexOf('&', query_position + 1); // end is meant to be where the next &
@@ -229,7 +229,7 @@ export default class URITools {
                 /**
                  * The text to be replaced
                  * 
-                 * @since   3.?
+                 * @since   LRS 3.?
                  */
 
                 let del;
@@ -239,7 +239,7 @@ export default class URITools {
                     /**
                      * If the replaced string is at the end of the URI
                      * 
-                     * @since   3.?
+                     * @since   LRS 3.?
                      */
 
                     del = origonal_uri.substr(query_position, origonal_uri.length);
@@ -248,7 +248,7 @@ export default class URITools {
                     /**
                      * If the replaced string is not at the end of the URI
                      * 
-                     * @since   3.?
+                     * @since   LRS 3.?
                      */
 
                     del = origonal_uri.substr(query_position, end - query_position);
@@ -257,7 +257,7 @@ export default class URITools {
                 /**
                  * Perform the subsitution of the old string with the new string
                  * 
-                 * @since   3.9.0
+                 * @since   LRS 3.9.0
                  */
 
                 new_uri = `${new_uri.replace(del, '')}&${query}=${value}`;
@@ -266,7 +266,7 @@ export default class URITools {
                 /**
                  * If the query does not already exist on the URI, add it
                  * 
-                 * @since   3.9
+                 * @since   LRS 3.9
                  */
 
                 new_uri += `&${query}=${value}`;
@@ -285,7 +285,7 @@ export default class URITools {
      * @param {string|array} query    Custom id heading to be used - string or array
      * @param {string|array} value    Custom value to be used - string or array
      * 
-     * @since   3.22.1
+     * @since   LRS 3.22.1
      * @since   LBF 0.1.1-beta
      */
 
@@ -300,7 +300,7 @@ export default class URITools {
      * @param {string|array} query    Custom id heading to be used - string or array
      * @param {string|array} value    Custom value to be used - string or array
      * 
-     * @since   3.22.1
+     * @since   LRS 3.22.1
      * @since   LBF 0.1.1-beta
      */
 
@@ -316,7 +316,7 @@ export default class URITools {
      * 
      * @returns {string} Something like `?page=x&a=y&b=z`
      * 
-     * @since   3.27.1
+     * @since   LRS 3.27.1
      * @since   LBF 0.1.1-beta
      */
 

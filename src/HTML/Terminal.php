@@ -11,8 +11,8 @@ use LBF\HTML\HTML;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.27.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.27.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -24,7 +24,7 @@ class Terminal {
      * @var string  DEFAULT_HEADING
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     const DEFAULT_HEADING = "<h2 class='center_text'>LRS Feedback Console</h2>";
@@ -35,7 +35,7 @@ class Terminal {
      * @var string  $content
      * 
      * @access  private
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     private string $content = '';
@@ -48,7 +48,7 @@ class Terminal {
      *                                  Default: `feedback_console`
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function __construct(
@@ -59,7 +59,7 @@ class Terminal {
          * @var string  $console_id     Default: `feedback_console`.
          * 
          * @access  private
-         * @since   3.27.0
+         * @since   LRS 3.27.0
          */
 
         private string $console_id = 'feedback_console',
@@ -75,7 +75,7 @@ class Terminal {
      * @param   boolean $open                   Default: true
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function draw( bool $use_default_heading = true, bool $open = true ): void {
@@ -105,7 +105,7 @@ class Terminal {
          * 
          * @todo    Impliment on the terminal.
          * 
-         * @since   3.27.0
+         * @since   LRS 3.27.0
          */
         // echo "<input type='range' min='1', max='100' value='90' id='terminal_opacity.{$this->console_id}' name='terminal_opacity'>";
         
@@ -121,7 +121,7 @@ class Terminal {
      *                              Default: false
      * 
      * @access  public
-     * @since   3.27.0
+     * @since   LRS 3.27.0
      */
 
     public function set_default_content( string $content, bool $append = false ): void {

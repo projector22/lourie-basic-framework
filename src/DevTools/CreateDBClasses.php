@@ -13,8 +13,8 @@ use LBF\Tools\Files\FileSystem;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.19.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.19.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -26,7 +26,7 @@ class CreateDBClasses extends ConnectMySQL {
      * @var string  TABLE_TEMPLATE
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     const TABLE_TEMPLATE = __DIR__ . '/TableTemplate.txt';
@@ -37,7 +37,7 @@ class CreateDBClasses extends ConnectMySQL {
      * @var string  DATA_TEMPLATE
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     const DATA_TEMPLATE = __DIR__ . '/DataTemplate.txt';
@@ -49,7 +49,7 @@ class CreateDBClasses extends ConnectMySQL {
      * @var string  $version
      * 
      * @access  private
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     private string $version = '';
@@ -59,7 +59,7 @@ class CreateDBClasses extends ConnectMySQL {
      * Class constructor - sets $this->version.
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     public function __construct(
@@ -70,7 +70,7 @@ class CreateDBClasses extends ConnectMySQL {
          * 
          * @readonly
          * @access  private
-         * @since   3.28.0
+         * @since   LRS 3.28.0
          */
         private readonly string $app_path
     ) {
@@ -90,7 +90,7 @@ class CreateDBClasses extends ConnectMySQL {
      * @return  bool|array
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     public function prepare_table_php_class_creation( bool $return = false ): bool|array {
@@ -101,7 +101,7 @@ class CreateDBClasses extends ConnectMySQL {
         /**
          * String cleaning of the table name as required.
          * 
-         * @since   3.19.0
+         * @since   LRS 3.19.0
          */
         $clean_up_file_name = function ( $text, $replace ) {
             $parts = explode( $replace, $text );
@@ -176,7 +176,7 @@ class CreateDBClasses extends ConnectMySQL {
      * Execute the creation of the desired files.
      * 
      * @access  public
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     public function execute_table_php_class_creation() {
@@ -219,7 +219,7 @@ class CreateDBClasses extends ConnectMySQL {
      * @return  string
      * 
      * @access  private
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     private function get_table_content( array $files ): string {
@@ -279,7 +279,7 @@ class CreateDBClasses extends ConnectMySQL {
      * @return  string
      * 
      * @access  private
-     * @since   3.19.0
+     * @since   LRS 3.19.0
      */
 
     private function get_data_content( array $files ): string {

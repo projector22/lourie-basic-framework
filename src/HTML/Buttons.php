@@ -15,8 +15,8 @@ use LBF\HTML\HTML;
  * 
  * @author  Gareth Palmer   [Github & Gitlab /projector22]
  * 
- * @since   3.11.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.11.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -27,8 +27,8 @@ class Buttons {
      * 
      * @var boolean $echo   Default: true
      * 
-     * @since   3.6.0
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php
+     * @since   LRS 3.6.0
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php
      */
 
     public static bool $echo = true;
@@ -42,7 +42,7 @@ class Buttons {
      * @return  array   $params     The modified params.
      * 
      * @access  private
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      */
 
     private static function set_button_class( array $params ): array {
@@ -91,7 +91,7 @@ class Buttons {
      * @return  string   $params     The container.
      * 
      * @access  private
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      */
 
     private static function set_button_container( array $params, string $tag ): string {
@@ -137,9 +137,9 @@ class Buttons {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.6.0
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to general() from custom_button()
-     * @since   3.16.1  Revamped completely, now the base of almost all buttons. Removed params $content, $overwrite_class
+     * @since   LRS 3.6.0
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to general() from custom_button()
+     * @since   LRS 3.16.1  Revamped completely, now the base of almost all buttons. Removed params $content, $overwrite_class
      */
 
     public static function general( array $params = [] ) {
@@ -263,7 +263,7 @@ class Buttons {
      * @return  string
      * 
      * @access  private
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      */
 
     private static function do_button( array $params, string $content, ?string $colour = null ): string {
@@ -296,9 +296,9 @@ class Buttons {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.6.0
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to apply() from apply_button()
-     * @since   3.16.1  Removed param $overwrite_class
+     * @since   LRS 3.6.0
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to apply() from apply_button()
+     * @since   LRS 3.16.1  Removed param $overwrite_class
      */
 
     public static function apply( array $params ) {
@@ -320,8 +320,8 @@ class Buttons {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.13.0
-     * @since   3.16.1  Removed param $overwrite_class
+     * @since   LRS 3.13.0
+     * @since   LRS 3.16.1  Removed param $overwrite_class
      */
 
     public static function edit( array $params ) {
@@ -345,10 +345,10 @@ class Buttons {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.4.0
-     * @since   3.6.0     Added param $id
-     * @since   3.11.0    Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to save() from save_button()
-     * @since   3.13.0    Removed params $onclick, $id, added param $params - largely rewritten
+     * @since   LRS 3.4.0
+     * @since   LRS 3.6.0     Added param $id
+     * @since   LRS 3.11.0    Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to save() from save_button()
+     * @since   LRS 3.13.0    Removed params $onclick, $id, added param $params - largely rewritten
      */
 
     public static function save( array $params ) {
@@ -370,7 +370,7 @@ class Buttons {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      */
 
     public static function ok( array $params ) {
@@ -400,7 +400,7 @@ class Buttons {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      */
 
     public static function search( array $params ) {
@@ -425,10 +425,10 @@ class Buttons {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.3.2
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to print() from print_button()
-     * @since   3.13.0  Revamped and removed param $onClick, added $print_dailogue & $params
-     * @since   3.16.1  Revamped and turned into a simple button.
+     * @since   LRS 3.3.2
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to print() from print_button()
+     * @since   LRS 3.13.0  Revamped and removed param $onClick, added $print_dailogue & $params
+     * @since   LRS 3.16.1  Revamped and turned into a simple button.
      */
 
     public static function print( array $params, bool $print_dailogue = false ) {
@@ -458,9 +458,9 @@ class Buttons {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.6.0
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to reset() from reset_button()
-     * @since   3.16.1  Completely reworked to use new button methods.
+     * @since   LRS 3.6.0
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to reset() from reset_button()
+     * @since   LRS 3.16.1  Completely reworked to use new button methods.
      */
 
     public static function reset( array $params = [] ) {
@@ -489,7 +489,7 @@ class Buttons {
      * @return  string|void
      * 
      * @access  private
-     * @since   3.16.1
+     * @since   LRS 3.16.1
      */
 
     private static function go_to_button_template( array $params, string $content ) {
@@ -533,10 +533,10 @@ class Buttons {
      * 
      * @return  string|void
      * 
-     * @since   3.1.0
-     * @since   3.6.0   Removed @param $class as this is moved to self::$button_class
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to back() from back_button()
-     * @since   3.16.1  Rewritten to use the new button method.
+     * @since   LRS 3.1.0
+     * @since   LRS 3.6.0   Removed @param $class as this is moved to self::$button_class
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to back() from back_button()
+     * @since   LRS 3.16.1  Rewritten to use the new button method.
      */
 
     public static function back( array $params ) {
@@ -558,9 +558,9 @@ class Buttons {
      * 
      * @return  string|void
      * 
-     * @since   3.7.6
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to cancel() from cancel_button()
-     * @since   3.16.1  Rewritten to use the new button method.
+     * @since   LRS 3.7.6
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to cancel() from cancel_button()
+     * @since   LRS 3.16.1  Rewritten to use the new button method.
      */
     
     public static function cancel( array $params ) {
@@ -584,11 +584,11 @@ class Buttons {
      * 
      * @return  string|void
      * 
-     * @since   3.4.12
-     * @since   3.9.0   Added @params $button_type & $onClick
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to floating_submit() from floating_submit_button()
-     * @since   3.13.0  Reworked. Changed params to $button_type_submit, $params & $overwrite_class
-     * @since   3.16.1  Reworked again, moved to new button standard - removed params $button_type_submit, $overwrite_class
+     * @since   LRS 3.4.12
+     * @since   LRS 3.9.0   Added @params $button_type & $onClick
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to floating_submit() from floating_submit_button()
+     * @since   LRS 3.13.0  Reworked. Changed params to $button_type_submit, $params & $overwrite_class
+     * @since   LRS 3.16.1  Reworked again, moved to new button standard - removed params $button_type_submit, $overwrite_class
      */
 
     public static function floating_submit( array $params = [] ) {
@@ -631,8 +631,8 @@ class Buttons {
     /**
      * Draw the floating top and bottom buttons
      * 
-     * @since   3.6.0
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php.
+     * @since   LRS 3.6.0
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php.
      */
 
     public static function floating_top_bottom_buttons(): void {
@@ -650,7 +650,7 @@ class Buttons {
          * 
          * @return  string
          * 
-         * @since   3.21.0
+         * @since   LRS 3.21.0
          */
         $js = function ( $id ) {
             return "import { zoom_updown } from './vendor/projector22/lourie-basic-framework/vendor/projector22/lourie-basic-framework/src/js/ui.js';
@@ -684,8 +684,8 @@ class Buttons {
      * 
      * @var string  $interface_bttn_class   Default: 'bttn'
      * 
-     * @since   3.9.0
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php.
+     * @since   LRS 3.9.0
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php.
      */
 
     public static string $interface_bttn_class = 'bttn';
@@ -700,9 +700,9 @@ class Buttons {
      * 
      * @return  string|void
      * 
-     * @since   3.9.0
-     * @since   3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to interface() from interface_button()
-     * @since   3.13.0  Revamped and removed params, $onclick, $extra_class, $id, added $params
+     * @since   LRS 3.9.0
+     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to interface() from interface_button()
+     * @since   LRS 3.13.0  Revamped and removed params, $onclick, $extra_class, $id, added $params
      */
 
     public static function interface( string $button_text, string $link, array $params = [] ) {
@@ -734,7 +734,7 @@ class Buttons {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.12.8
+     * @since   LRS 3.12.8
      */
 
     public static function login_eye( array $params = [] ) {
@@ -764,7 +764,7 @@ class Buttons {
      * @return  string|void
      * 
      * @access  public
-     * @since   3.13.0
+     * @since   LRS 3.13.0
      */
 
     public static function link_button ( string $text, array $params = [], string $function = 'void(0)' ) {

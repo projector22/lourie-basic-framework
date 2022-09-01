@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   3.13.0
+ * @since   LRS 3.13.0
  * @since   LBF 0.1.1-beta
  */
 
@@ -17,7 +17,8 @@ import URITools from './uri.js';
  * 
  * @param {string} instruction The value to assign to $_GET['print']
  * 
- * @since   3.6.0
+ * @since   LRS 3.6.0
+ * @since   LBF 0.1.1-beta
  */
 
 export function instruct_to_open_pdf(instruction) {

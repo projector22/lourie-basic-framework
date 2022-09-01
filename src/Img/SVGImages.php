@@ -9,36 +9,36 @@ namespace LBF\Img;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.28.0
+ * @since   LRS 3.28.0
  */
 
 enum SVGImages {
     /**
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
     case maintenance;
     /**
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
     case error401;
     /**
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
     case error403;
     /**
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
     case error404;
     /**
-     * @since   3.6.5
+     * @since   LRS 3.6.5
      */
     case clippy;
     /**
-     * @since   3.15.0
+     * @since   LRS 3.15.0
      */
     case grabber;
     /**
-     * @since   3.9.1
+     * @since   LRS 3.9.1
      */
     case content_draw_arrow;
 
@@ -48,7 +48,7 @@ enum SVGImages {
      * @return  string
      * 
      * @access  public
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
 
     public function path(): string {
@@ -69,7 +69,7 @@ enum SVGImages {
      * @return  string
      * 
      * @access  public
-     * @since   3.28.0
+     * @since   LRS 3.28.0
      */
 
     public function image(): string {

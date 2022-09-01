@@ -11,8 +11,8 @@ use Exception;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.17.0
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.17.0
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -24,7 +24,7 @@ class CLITools {
      * @var boolean $print_command
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public bool $print_command = false;
@@ -35,7 +35,7 @@ class CLITools {
      * @var integer STRING
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     const STRING = 0;
@@ -47,7 +47,7 @@ class CLITools {
      * @var integer ARRAY
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     const ARRAY = 1;
@@ -62,7 +62,7 @@ class CLITools {
      * @var integer $return     Should be set by calling one of the above defined constants.
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public int $return = self::ARRAY;
@@ -73,7 +73,7 @@ class CLITools {
      * @var string  HIDE_OUTPUT
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
     const HIDE_OUTPUT = PHP_OS === 'WINNT' ? '  > NUL' : ' /dev/null 2>&1 &';
 
@@ -83,7 +83,7 @@ class CLITools {
      * @var string|array|null   $last_result    Default: null
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public string|array|null $last_result = null;
@@ -94,7 +94,7 @@ class CLITools {
      * @var integer|null    $result_code    Default: null
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public ?int $result_code = null;
@@ -105,7 +105,7 @@ class CLITools {
      * @var boolean $keep_all_results   Default: false
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public bool $keep_all_results = false;
@@ -116,7 +116,7 @@ class CLITools {
      * @var array   $all_results    Default: []
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public array $all_results = [];
@@ -131,7 +131,7 @@ class CLITools {
      * @var boolean $php_command    Default: false
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public bool $php_command = false;
@@ -143,7 +143,7 @@ class CLITools {
      * @param   string  $command    A line of code or a script you wish to execute.
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public function execute( string $command ): void {
@@ -178,7 +178,7 @@ class CLITools {
      * @param   string  $command    A line of code or a script you wish to execute.
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     public function silent_execute( string $command ): void {
@@ -201,7 +201,7 @@ class CLITools {
      * @return  string  The modified command.
      * 
      * @access  public
-     * @since   3.17.0
+     * @since   LRS 3.17.0
      */
 
     private function check_php_command( string $command ): string {

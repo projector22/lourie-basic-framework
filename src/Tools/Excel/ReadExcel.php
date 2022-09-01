@@ -12,8 +12,8 @@ use \SimpleXMLElement;
  * 
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
- * @since   3.11.1
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.11.1
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -24,7 +24,7 @@ class ReadExcel {
      * 
      * @var string  DEFAULT_SHEET_DATA
      * 
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     const DEFAULT_SHEET_DATA  = '/xl/worksheets/sheet1.xml';
@@ -34,7 +34,7 @@ class ReadExcel {
      * 
      * @var string  SHARED_STRINGS_DATA
      * 
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     const SHARED_STRINGS_DATA = '/xl/sharedStrings.xml';
@@ -45,7 +45,7 @@ class ReadExcel {
      * @var string  $data_xml
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public string $data_xml;
@@ -56,7 +56,7 @@ class ReadExcel {
      * @var string  $shared_strings_xml
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public string $shared_strings_xml;
@@ -67,7 +67,7 @@ class ReadExcel {
      * @var boolean $compressed Default: false
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public bool $compressed = false;
@@ -78,7 +78,7 @@ class ReadExcel {
      * @var object  $extracted_data
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public object $extracted_data;
@@ -89,7 +89,7 @@ class ReadExcel {
      * @var string  $parsed_strings
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public object $parsed_strings;
@@ -100,7 +100,7 @@ class ReadExcel {
      * @var array   $data
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public array $data = [];
@@ -111,7 +111,7 @@ class ReadExcel {
      * @var boolean $header_row
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public bool $header_row = true;
@@ -122,7 +122,7 @@ class ReadExcel {
      * @var array   $headers
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public array $headers = [];
@@ -133,7 +133,7 @@ class ReadExcel {
      * @var boolean $keep_xlsx  Default: false
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public bool $keep_xlsx = false;
@@ -147,7 +147,7 @@ class ReadExcel {
      *                                          Default: null (cwd).
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public function __construct( 
@@ -157,7 +157,7 @@ class ReadExcel {
          * @var string $excel_file_path
          * 
          * @access  public
-         * @since   3.11.1
+         * @since   LRS 3.11.1
          */
 
         public string $excel_file_path,
@@ -168,7 +168,7 @@ class ReadExcel {
          * @var string|null $folder_path
          * 
          * @access  public
-         * @since   3.11.1
+         * @since   LRS 3.11.1
          */
 
         public ?string $folder_path = null,
@@ -187,7 +187,7 @@ class ReadExcel {
      * Execute the reading of the .xlsx and assign the extracted data to $this->data.
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public function read_excel_file(): void {
@@ -201,7 +201,7 @@ class ReadExcel {
      * If no other properties are changed - this is generally step 1 in the process of extracting the data
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public function unzip_excel(): void {
@@ -235,7 +235,7 @@ class ReadExcel {
      * If no other properties are changed - this is generally step 2 in the process of extracting the data
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public function set_all_data(): void {
@@ -290,7 +290,7 @@ class ReadExcel {
      * @return  string          String value of the cell
      * 
      * @access  private
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     private function get_compressed_value( object $cell ): string {
@@ -314,7 +314,7 @@ class ReadExcel {
      * @return  string          String value of the cell
      * 
      * @access  private
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     private function get_uncompressed_value( object $cell ): string {
@@ -334,7 +334,7 @@ class ReadExcel {
      * @return  object          Encoded data
      * 
      * @access  private
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     private function extract_data( string $path ): object {
@@ -344,7 +344,7 @@ class ReadExcel {
          * On even larger sheets, we may have to increase the memory limit, but in the mean time:
          * Drop each variable after they're used to free up memory
          * 
-         * @since   3.12.0
+         * @since   LRS 3.12.0
          */
         $data = json_encode( $container );
         unset( $container );
@@ -363,8 +363,8 @@ class ReadExcel {
      * @link    https://paulund.co.uk/php-delete-directory-and-files-in-directory
      * 
      * @access  private
-     * @since   3.1.0
-     * @since   3.11.1  Moved from App\Admin\ImportHandler to Framework\Tools\Excel\ReadExcel
+     * @since   LRS 3.1.0
+     * @since   LRS 3.11.1  Moved from App\Admin\ImportHandler to Framework\Tools\Excel\ReadExcel
      */
 
     private function delete_files( string $target ): void {
@@ -393,7 +393,7 @@ class ReadExcel {
      * You may wish to call this method if you are going to read and interpret a new .xlsx file without creating a new instance of the class
      * 
      * @access  public
-     * @since   3.11.1
+     * @since   LRS 3.11.1
      */
 
     public function clean_up_files(): void {
@@ -412,7 +412,7 @@ class ReadExcel {
      * Closes the open database connection
      * 
      * @access  public
-     * @since   3.11.0
+     * @since   LRS 3.11.0
      */
 
     public function __destruct() {

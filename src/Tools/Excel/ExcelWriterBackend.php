@@ -16,8 +16,8 @@ use RecursiveDirectoryIterator;
  * 
  * @requires PHP 8.0 or greater
  * 
- * @since   3.19.6
- * @since   3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ * @since   LRS 3.19.6
+ * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                  Namespace changed from `Framework` to `LBF`.
  */
 
@@ -36,7 +36,7 @@ class ExcelWriterBackend {
      * @var array   REQUIRED_FILES
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     const REQUIRED_FILES = [
@@ -508,7 +508,7 @@ class ExcelWriterBackend {
      * @var array   A1NOTATION
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     const A1NOTATION = [
@@ -625,7 +625,7 @@ class ExcelWriterBackend {
      * @var integer $row
      * 
      * @access  private
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     private $row = 1;
@@ -636,7 +636,7 @@ class ExcelWriterBackend {
      * @var integer $column
      * 
      * @access  private
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     private $column = 1;
@@ -647,7 +647,7 @@ class ExcelWriterBackend {
      * @var string   $create_path
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected string $create_path;
@@ -658,7 +658,7 @@ class ExcelWriterBackend {
      * @var string  $file_name
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected string $file_name;
@@ -669,7 +669,7 @@ class ExcelWriterBackend {
      * @var string   $file_path
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected string $file_path;
@@ -680,7 +680,7 @@ class ExcelWriterBackend {
      * @var array   $data
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected array $data = [];
@@ -691,7 +691,7 @@ class ExcelWriterBackend {
      * @var bool    $header_row     Default: false
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected bool $header_row = false;
@@ -702,7 +702,7 @@ class ExcelWriterBackend {
      * @var bool   $generate_basic_feedback   Default: false
      * 
      * @access  protected
-     * @since   3.19.6 
+     * @since   LRS 3.19.6 
      */
 
     protected bool $generate_basic_feedback = false;
@@ -713,7 +713,7 @@ class ExcelWriterBackend {
      * @var string  $basic_feedback
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected string $basic_feedback;
@@ -724,7 +724,7 @@ class ExcelWriterBackend {
      * @var bool   $generate_verbose_feedback    Default: false
      * 
      * @access  protected
-     * @since   3.19.6 
+     * @since   LRS 3.19.6 
      */
 
     protected bool $generate_verbose_feedback = false;
@@ -735,7 +735,7 @@ class ExcelWriterBackend {
      * @var array   $verbose_feedback
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected array $verbose_feedback;
@@ -746,7 +746,7 @@ class ExcelWriterBackend {
      * @var float   $start_time
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected float $start_time;
@@ -757,7 +757,7 @@ class ExcelWriterBackend {
      * @var float   $end_time
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected float $end_time;
@@ -768,7 +768,7 @@ class ExcelWriterBackend {
      * @var integer $selected_sheet Default: 1
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected int $selected_sheet = 1;
@@ -779,7 +779,7 @@ class ExcelWriterBackend {
      * @var integer $number_of_sheets   Default: 1
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected int $number_of_sheets = 0;
@@ -790,7 +790,7 @@ class ExcelWriterBackend {
      * @var array   $sheet_names
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected array $sheet_names = [];
@@ -801,7 +801,7 @@ class ExcelWriterBackend {
      * Designed to be extended to.
      * 
      * @access  public
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     public function __construct() {
@@ -815,7 +815,7 @@ class ExcelWriterBackend {
      * @param   array   $data   The data to be written
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected function generate_files( array $data ): void {
@@ -892,7 +892,7 @@ class ExcelWriterBackend {
      * @param   array|string    $value      The sub folder structure (if array) or file contents (if string).
      * 
      * @access  private
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     private function create_files( string $folder, array|string $value ): void {
@@ -918,7 +918,7 @@ class ExcelWriterBackend {
      * @return  string
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected function worksheet_xml_creator( int $index ): string {
@@ -959,7 +959,7 @@ class ExcelWriterBackend {
      * @return  string
      * 
      * @access  private
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     private function set_row( array $row ): string {
@@ -996,7 +996,7 @@ class ExcelWriterBackend {
      * @return  string
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected function build_workbook(): string {
@@ -1027,7 +1027,7 @@ class ExcelWriterBackend {
      * @return  string
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected function build_rels(): string {
@@ -1050,7 +1050,7 @@ class ExcelWriterBackend {
      * @return  string
      * 
      * @access  protected
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     protected function build_content_types(): string {
@@ -1083,7 +1083,7 @@ class ExcelWriterBackend {
      * @return  integer
      * 
      * @access  private
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     private function get_max_rows( array $data ): int {
@@ -1099,7 +1099,7 @@ class ExcelWriterBackend {
      * @return  integer
      * 
      * @access  private
-     * @since   3.19.6
+     * @since   LRS 3.19.6
      */
 
     private function get_max_columns( array $data ): int {
