@@ -186,6 +186,7 @@ class Cookie {
 
     public static function destroy_value( string $name ): void {
         setcookie( $name, '', 1 );
+        unset( $_COOKIE[$name] );
     }
 
 
