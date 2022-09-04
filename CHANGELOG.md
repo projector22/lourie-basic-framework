@@ -5,10 +5,15 @@
 ### Added
 
 - Added css file `sizes.css` for root sizes variables.
+- Added class `LBF\Auth\Cookie` for standardized handling of cookies. #12
 
 ### Fixed
 
 - Fixed an incorrect import in the `floating_top_bottom_buttons` Button.
+
+### Issues Closed
+
+- #12
 
 ---
 
@@ -59,7 +64,7 @@
 
 ### Issues Closed
 
-- \#7
+- #7
 
 ---
 
