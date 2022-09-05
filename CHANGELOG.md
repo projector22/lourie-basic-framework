@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Version 0.1.2-beta - UNRELEASED
+## Version 0.1.2-beta - 2022-09-05
 
 ### Added
 
