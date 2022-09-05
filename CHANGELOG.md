@@ -10,6 +10,7 @@
 ### Fixed
 
 - Fixed an incorrect import in the `floating_top_bottom_buttons` Button.
+- Fixed a bug with LDAPHandler, causing false authentications.
 
 ### Issues Closed
 

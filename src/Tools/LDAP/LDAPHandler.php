@@ -2,8 +2,7 @@
 
 namespace LBF\Tools\LDAP;
 
-use \Exception;
-use App\Db\Data\GeneralConfigData;
+use Exception;
 
 /**
  * Various methods for performing and executing LDAP queries
@@ -15,7 +14,7 @@ use App\Db\Data\GeneralConfigData;
  * @since   LRS 3.1.0
  * @since   LRS 3.11.0  Moved to `Framework\Tools\LDAPHandler` and class renamed `LDAPHandler` from `LDAP`.
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  */
 
 class LDAPHandler {
@@ -78,6 +77,17 @@ class LDAPHandler {
     private string $port;
 
     /**
+     * Contains the LDAP object data.
+     * 
+     * @var object|null $ldap_config
+     * 
+     * @access  private
+     * @since   LBF 0.1.2-beta
+     */
+
+    private ?object $ldap_config;
+
+    /**
      * Constructor method, things to do when the class is loaded.
      * If data is not specified, it will pull from the database
      * 
@@ -120,11 +130,16 @@ class LDAPHandler {
         }
 
         if ( is_null( $config_object ) ) {
-            $this->dn = $dn;
+            $this->dn          = $dn;
             $this->dn_password = $dn_password;
             $this->ldap_server = $ldap_server;
-            $this->port = $port;
+            $this->port        = $port;
         } else {
+            /**
+             * @todo    This needs to be more general
+             * 
+             * @since   0.1.2-beta
+             */
             $this->ldap_config = $config_object;
             $this->ldap_config->get_ldap_config();
     
@@ -135,6 +150,22 @@ class LDAPHandler {
             ];
     
             foreach ( $fields as $field ) {
+                if ( $field == 'dn' && !is_null( $dn ) ) {
+                    $this->$field = $dn;
+                    continue;
+                }
+                if ( $field == 'dn_password' && !is_null( $dn_password ) ) {
+                    $this->$field = $dn_password;
+                    continue;
+                }
+                if ( $field == 'ldap_server' && !is_null( $ldap_server ) ) {
+                    $this->$field = $ldap_server;
+                    continue;
+                }
+                if ( $field == 'port' && !is_null( $port ) ) {
+                    $this->$field = $port;
+                    continue;
+                }
                 $this->$field = $this->ldap_config->$field;
             }
         }
@@ -157,14 +188,11 @@ class LDAPHandler {
      * 
      * @access  public
      * @since   LRS 3.1.0
+     * @since   LBF 0.1.2-beta  Revamped
      */
 
     public function ldap_login(): bool {
-        if ( @ldap_bind( $this->ldap_con, $this->dn, $this->dn_password ) ) {
-            return true;
-        } else {
-            return false;
-        }
+        return @ldap_bind( $this->ldap_con, $this->dn, $this->dn_password ); 
     }
 
 
