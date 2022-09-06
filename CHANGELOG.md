@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.1.3-beta - 2022-09-06
+
+### Added
+
+- Added function `timestamp_cache_validation` to functions.php.
+
+---
+
 ## Version 0.1.2-beta - 2022-09-05
 
 ### Added

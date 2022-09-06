@@ -1052,3 +1052,31 @@ function uri_compose( array $fields ): string {
     }
     return $uri;
 }
+
+
+/**
+ * Returns the timestamp of the date last modified of the parsed file or
+ * an md5 of the file + current time. The purpose of this is for cache validation
+ * as any time a file is changed, the timestamp is changed, thus forcing a fresh load.
+ * 
+ * Would be used something like this:
+ * 
+ * ```php
+ * echo "<iframe src='myFile.jpg?v=" . timestamp_cache_validation( 'myFile.jpg' ) . "'>";
+ * ```
+ * 
+ * @param   string  $file   The full path to the file being parsed.
+ * 
+ * @return  string  Timestamp or hash
+ * 
+ * @since   LRS 3.12.1
+ * @since   LBF 0.1.3-beta  Removed as a method and generalized here.
+ */
+
+function timestamp_cache_validation( string $file ): string {
+    $timestamp = @filemtime( $file );
+    if ( $timestamp == '' ) {
+        return md5( $file . time() );
+    }
+    return $timestamp;
+}
