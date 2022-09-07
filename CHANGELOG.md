@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Version 0.1.4-beta - UNRELEASED
+## Version 0.1.4-beta - 2022-09-07
 
 ### Added
 
@@ -10,10 +10,12 @@
   - `FileNotFoundError`.
   - `ConstantAlreadyDefinedError`.
 - Added `LBF\Tools\Env\LoadEnvironment` class #18
+- Added `LBF\Tools\Routing\Routing` class #4
 
 ### Issues Closed
 
-- #18 WIP
+- #4
+- #18
 
 ---
 
