@@ -39,7 +39,7 @@ class HTMLElements {
     }
 
 
-    private static function html_open( string $tag, array $params ): string {
+    private static function html_tag_open( string $tag, array $params ): string {
         $skip_params = [
             'maxmin',
         ];
@@ -53,8 +53,16 @@ class HTMLElements {
         $element .= '>';
         return $element;
     }
-    private static function html_close( string $tag, array $params ): string {
 
+    private static function html_tag_close( string $tag, int $count, ?string $comment ): string {
+        $element = '';
+        for ( $i = 0; $i < $count; $i++ ) {
+            $element .= "</{$tag}>";
+        }
+        if ( !is_null ( $comment ) ) {
+            $element .= "<!-- {$comment} -->";
+        }
+        return $element;
     }
 
 
@@ -74,22 +82,7 @@ class HTMLElements {
      */
 
     public static function div( array $params = [] ): string {
-        // $element = '<div';
-
-        // if ( is_string ( $params ) ) {
-        //     $element .= " {$params}>";
-        // } else {
-        //     $skip_params = ['maxmin'];
-        //     foreach ( $params as $item => $value ) {
-        //         if ( in_array( $item, $skip_params ) ) {
-        //             continue;
-        //         }
-        //         $element .= " {$item}='{$value}'";
-        //     }
-        //     $element .= '>';
-        // }
-        $element = self::html_open( 'div', $params );
-
+        $element = self::html_tag_open( 'div', $params );
         self::handle_echo( $element );
         return $element;
     }
@@ -98,34 +91,22 @@ class HTMLElements {
     /**
      * Echo or return a closing div statement.
      * 
-     * @param   string  $comment        A bit of text to insert as a comment.
-     *                                  Default: null
-     * @param   integer $count          The number of </div> elements to insert
-     *                                  Default: 1
-     * @param   boolean $draw_comment   If false, the $comment param is ignored. This is just to make code more readable.
-     *                                  Default: false
+     * @param   integer|null    $count      The number of </div> elements to insert
+     *                                      Default: 1
+     * @param   string          $comment    A bit of text to insert as a comment.
+     *                                      Default: null
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.12.5
      */
 
-    public static function close_div( ?string $comment = null, int $count = 1, bool $draw_comment = false ) {
-        $element = '';
-        for ( $i = 0; $i < $count; $i++ ) {
-            $element .= '</div>';
-        }
-        if ( $draw_comment ) {
-            if ( !is_null ( $comment ) ) {
-                $element .= "<!-- $comment -->";
-            }
-        }
-        if ( self::$echo ) {
-            echo $element;
-        } else {
-            return $element;
-        }
+    public static function close_div( int $count = 1, ?string $comment = null ): string {
+        $element = self::html_tag_close( 'div', $count, $comment );
+        self::handle_echo( $element );
+        return $element;
     }
 
 
