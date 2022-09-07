@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## Version 0.1.5-beta - UNRELEASED
+
+### Added
+
+- Added Meta class `HTMLMeta`.
+
+### Changed
+
+- Revamped various HTML tag drawing to be more simple and consistant.
+
+---
+
 ## Version 0.1.4-beta - 2022-09-07
 
 ### Added
