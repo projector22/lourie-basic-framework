@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## Version 0.1.4-beta - UNRELEASED
+
+### Added
+
+- Error handling classes
+  - `InvalidInputException`.
+  - `MissingRequiredInputException`.
+  - `FileNotFoundError`.
+  - `ConstantAlreadyDefinedError`.
+- Added `LBF\Tools\Env\LoadEnvironment` class #18
+
+### Issues Closed
+
+- #18 WIP
+
+---
+
 ## Version 0.1.3-beta - 2022-09-06
 
 ### Added
