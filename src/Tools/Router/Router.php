@@ -68,6 +68,10 @@ class Router {
         return $this->class;
     }
 
+    public function get_status_code(): string {
+        return $this->class;
+    }
+
 
 
 }
