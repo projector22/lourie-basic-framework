@@ -25,47 +25,73 @@ class HTMLElements {
      * 
      * @var    boolean     $echo   Default: true
      * 
+     * @static
      * @access  public
      * @since   LRS 3.12.5
      */
 
     public static bool $echo = true;
 
+    private static function handle_echo( string $element ): void {
+        if ( self::$echo ) {
+            echo $element;
+        }
+    }
+
+
+    private static function html_open( string $tag, array $params ): string {
+        $skip_params = [
+            'maxmin',
+        ];
+        $element = "<{$tag}";
+        foreach ( $params as $key => $value ) {
+            if ( in_array( $key, $skip_params ) ) {
+                continue;
+            }
+            $element .= " {$key}='{$value}'";
+        }
+        $element .= '>';
+        return $element;
+    }
+    private static function html_close( string $tag, array $params ): string {
+
+    }
+
 
     /**
      * Echo or return a div element.
      * 
-     * @param   array   $params     Any items to insert into the div. For example - class='myClass' should be returned as part of the array as ['class' => 'myClass']
+     * @param   array   $params     Any items to insert into the div. For example - class='myClass' should be returned as part of the 
+     *                              array as ['class' => 'myClass']
      *                              Can also be parsed as a string for manual insertion - but this is discouraged
      *                              Default: []
      * 
      * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.12.5
      */
 
-    public static function div( array $params = [] ) {
-        $element = '<div';
+    public static function div( array $params = [] ): string {
+        // $element = '<div';
 
-        if ( is_string ( $params ) ) {
-            $element .= " $params>";
-        } else {
-            $skip_params = ['maxmin'];
-            foreach ( $params as $item => $value ) {
-                if ( in_array( $item, $skip_params ) ) {
-                    continue;
-                }
-                $element .= " {$item}='{$value}'";
-            }
-            $element .= '>';
-        }
+        // if ( is_string ( $params ) ) {
+        //     $element .= " {$params}>";
+        // } else {
+        //     $skip_params = ['maxmin'];
+        //     foreach ( $params as $item => $value ) {
+        //         if ( in_array( $item, $skip_params ) ) {
+        //             continue;
+        //         }
+        //         $element .= " {$item}='{$value}'";
+        //     }
+        //     $element .= '>';
+        // }
+        $element = self::html_open( 'div', $params );
 
-        if ( self::$echo ) {
-            echo $element;
-        } else {
-            return $element;
-        }
+        self::handle_echo( $element );
+        return $element;
     }
 
 
