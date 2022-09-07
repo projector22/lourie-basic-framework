@@ -11,7 +11,7 @@ use Throwable;
  * use LBF\Errors\InvalidInputException;
  * 
  * @author  Gareth Palmer   [Github & Gitlab /projector22]
- * @since   0.1.4-beta
+ * @since   LBF 0.1.4-beta
  */
 
 class InvalidInputException extends Exception {
