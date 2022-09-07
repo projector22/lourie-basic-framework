@@ -8,7 +8,7 @@ use Throwable;
 /**
  * Error page for handling errors that occure when some kind required input is missing exception is thrown.
  * 
- * use aLBF\Errors\MissingRequiredInputException;
+ * use LBF\Errors\MissingRequiredInputException;
  * 
  * @author  Gareth Palmer   [Github & Gitlab /projector22]
  * @since   0.1.0-alpha

@@ -8,7 +8,7 @@ use Throwable;
 /**
  * Error page for handling errors when a file is not found.
  * 
- * use aLBF\Errors\FileNotFoundError;
+ * use LBF\Errors\FileNotFoundError;
  * 
  * @author  Gareth Palmer   [Github & Gitlab /projector22]
  * @since   0.1.0-alpha
