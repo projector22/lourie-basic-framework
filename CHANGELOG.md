@@ -10,10 +10,12 @@
   - `FileNotFoundError`.
   - `ConstantAlreadyDefinedError`.
 - Added `LBF\Tools\Env\LoadEnvironment` class #18
+- Added `LBF\Tools\Routing\Routing` class #4
 
 ### Issues Closed
 
-- #18 WIP
+- #4 WIP
+- #18
 
 ---
 
