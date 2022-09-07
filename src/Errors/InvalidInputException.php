@@ -26,7 +26,7 @@ class InvalidInputException extends Exception {
      * @return  never
      * 
      * @access  public
-     * @since   0.1.0-alpha
+     * @since   LBF 0.1.4-beta
      */
 
     public function __construct( $message, $code = 0, ?Throwable $previous = null ) {
