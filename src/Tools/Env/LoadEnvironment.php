@@ -55,6 +55,7 @@ class LoadEnvironment {
         private readonly string $path_to_env
     ) {
         if ( !file_exists( $this->path_to_env ) ) {
+            echo "<pre>";
             throw new FileNotFoundError( "Environment variable file not found." );
         }
         $lines = explode( "\n", file_get_contents( $this->path_to_env ) );
@@ -111,6 +112,7 @@ class LoadEnvironment {
             try {
                 $parts = explode( '=', $line );
                 if ( defined( $parts[0] ) ) {
+                    echo "<pre>";
                     throw new ConstantAlreadyDefinedError( "Constant {$parts[0]} already defined in the app." );
                 }
                 define( $parts[0], $parts[1] );
