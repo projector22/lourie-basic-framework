@@ -468,7 +468,7 @@ class HTMLElements extends HTMLMeta {
     }
 
 
-    public function ol( array $params ): string {
+    public static function ol( array $params ): string {
         $item = '';
 
         if ( !isset( $params['data'] ) ) {
