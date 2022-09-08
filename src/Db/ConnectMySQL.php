@@ -430,10 +430,14 @@ class ConnectMySQL {
         $servername = DB_LOC;
         $username   = DB_USER;
         $password   = DB_PASS;
-        if ( is_null ( $year ) ) {
-            $db_name = !$this->rollover ? DB_NAME . DB_YEAR : DB_NAME . ( DB_YEAR + 1 );
+        if ( !defined( "DB_YEAR" ) ) {
+            $db_name = DB_NAME;
         } else {
-            $db_name = DB_NAME . $year;
+            if ( is_null ( $year ) ) {
+                $db_name = !$this->rollover ? DB_NAME . DB_YEAR : DB_NAME . ( DB_YEAR + 1 );
+            } else {
+                $db_name = DB_NAME . $year;
+            }
         }
 
         try {
