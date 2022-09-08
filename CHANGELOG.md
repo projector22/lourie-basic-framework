@@ -9,6 +9,10 @@
 ### Changed
 
 - Revamped various HTML tag drawing to be more simple and consistant.
+- Revamped `ConnectMySQL` in the following ways:
+  - `connect_db()` always returns bool and sets `$this->conn` directly.
+  - `connect_db()` errors now gets placed on `$this->last_error`.
+  - Optimized `set_db_year()` method to only execute `$this->connect_db` once.
 
 ---
 

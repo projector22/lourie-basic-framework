@@ -30,9 +30,6 @@ if ( !defined( "DB_PASS" ) ) {
 if ( !defined( "DB_NAME" ) ) {
     define( "DB_NAME", $_ENV['DB_NAME'] ?? '' );
 }
-if ( !defined( "DB_YEAR" ) ) {
-    define( "DB_YEAR", date( 'Y' ) );
-}
 
 /**
  * New fully revamped MySQL interface class, making use of PDO prepared statements.
@@ -46,7 +43,7 @@ if ( !defined( "DB_YEAR" ) ) {
  * @since   LRS 3.17.0  Split off from `DatabaseControl`.
  * @since   LRS 3.27.0  Merge back all methods for interfacing with the database into this class.
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  */
 
 class ConnectMySQL {
@@ -397,7 +394,7 @@ class ConnectMySQL {
 
     public function __construct( bool $rollover = false ) {
         $this->rollover = $rollover;
-        $this->conn = $this->connect_db();
+        $this->connect_db();
     }
 
 
@@ -422,13 +419,14 @@ class ConnectMySQL {
      *                                  If null, it will bind to DB_YEAR by default or if $rollover is true DB_YEAR + 1
      *                                  Default: null
      * 
-     * @return  $conn   The connection variable
+     * @return  boolean Whether or not the connection was successful.
      * 
      * @access  protected
      * @since   LRS 3.0.1
+     * @since   LBF 0.1.5-beta  Revamped to only return a bool. Set $this->conn directly.
      */
 
-    protected function connect_db( ?int $year = null ): object|bool {
+    protected function connect_db( ?int $year = null ): bool {
         $servername = DB_LOC;
         $username   = DB_USER;
         $password   = DB_PASS;
@@ -439,16 +437,12 @@ class ConnectMySQL {
         }
 
         try {
-            $conn = new PDO( "mysql:host={$servername};dbname={$db_name}", $username, $password );
-            $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-            return $conn;
+            $this->conn = new PDO( "mysql:host={$servername};dbname={$db_name}", $username, $password );
+            $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            return true;
         } catch( PDOException $e ) {
-            if ( is_null ( $year ) ) {
-                die( "Connection failed: {$e->getMessage()}. This means that the server was unable to connect to {$db_name}" );
-            } else {
-                // The database probably doesn't exist or can't be connected to by the app for some reason
-                return false;
-            }
+            $this->last_error = $e;
+            return false;
         }
     }
 
@@ -462,7 +456,7 @@ class ConnectMySQL {
 
     protected function check_db_connection(): void {
         if ( !isset( $this->conn ) ) {
-            $this->conn = $this->connect_db();
+            $this->connect_db();
         }
     }
 
@@ -1377,14 +1371,11 @@ class ConnectMySQL {
      * 
      * @access  public
      * @since   LRS 3.14.2
+     * @since   LBF 0.1.5-beta  Optimized to only execute `$this->connect_db` once.
      */
 
     public function set_db_year( string|int $year ): bool {
-        $success = $this->connect_db( $year ) !== false;
-        if ( $success ) {
-            $this->conn = $this->connect_db( $year );
-        }
-        return $success;
+        return $this->connect_db( $year ) !== false;
     }
 
 
@@ -1396,7 +1387,7 @@ class ConnectMySQL {
      */
 
     public function reset_db_connection(): void {
-        $this->conn = $this->connect_db();
+        $this->connect_db();
     }
 
 
