@@ -6,6 +6,7 @@
 
 - Added Meta class `HTMLMeta`.
 - Added methods `ul` and `ol` for drawing out lists.
+- Added maintenance mode css.
 
 ### Changed
 

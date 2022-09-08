@@ -100,7 +100,7 @@
 
 /**
  * Display
- */@import url('/vendor/projector22/lourie-basic-framework/src/css/lib/sizes.css');
+ */
 
 .inline_block {
     display: flex;
@@ -131,4 +131,31 @@
 
 .text_red {
     color: var(--text_red);
+}
+
+/**
+ * MAINTENANCE
+ */
+
+.maintenance_mode_container {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: auto;
+}
+
+.maintenance_mode_container footer {
+    grid-column: 1;
+    width: 98%;
+    justify-self: center;
+}
+
+.maintenance_mode_content {
+    grid-column: 1;
+}
+
+.maintenance_mode_dashboard_container {
+    border: 2px solid var(--element-borders);
+    margin: 25px;
+    padding: 15px;
 }
