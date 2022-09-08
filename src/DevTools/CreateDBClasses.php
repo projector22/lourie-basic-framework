@@ -95,7 +95,7 @@ class CreateDBClasses extends ConnectMySQL {
 
     public function prepare_table_php_class_creation( bool $return = false ): bool|array {
         if ( !defined( 'TBL_PFX' ) ) {
-            define( 'TBL_PFX', $_ENV['TABLE_PREFIX' ?? '' ); // Hide the error.
+            define( 'TBL_PFX', $_ENV['TABLE_PREFIX'] ?? '' ); // Hide the error.
             // throw new Exception( "Table Prefex TBL_PFX not defined" );
         }
         /**
