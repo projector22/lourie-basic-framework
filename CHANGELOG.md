@@ -13,7 +13,7 @@
   - `connect_db()` always returns bool and sets `$this->conn` directly.
   - `connect_db()` errors now gets placed on `$this->last_error`.
   - Optimized `set_db_year()` method to only execute `$this->connect_db` once.
-  - Added method `get_database_exists`.
+  - Added method `database_exists`.
 
 ---
 

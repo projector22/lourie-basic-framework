@@ -1704,7 +1704,7 @@ class ConnectMySQL {
      * @since   LBF 0.1.5-beta
      */
 
-    public function get_database_exists( ?int $year = null ): bool {
+    public function database_exists( ?int $year = null ): bool {
         return $this->connect_db( $year );
     }
 
