@@ -492,6 +492,9 @@ class HTMLElements extends HTMLMeta {
         $item .= '>';
         foreach ( $params['data'] as $value ) {
             if ( is_array( $value ) ) {
+                if ( !isset( $value['li'] ) ) {
+                    throw new MissingRequiredInputException( "Entry param 'li' missing from data entry." );
+                }
                 $item .= "<li";
                 foreach ( $value as $index => $entry ) {
                     if ( $index == 'li' ) {
