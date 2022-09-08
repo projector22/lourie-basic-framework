@@ -19,7 +19,7 @@
 
 ### Fixed
 
-- Fixed bug with ConnectMySQL `get_tables` searching for date.
+- Fixed bug with ConnectMySQL `get_tables`, `get_table_columns`, `get_table_columns_schemas` searching for date.
 - Fixed CSS import.
 
 ---
