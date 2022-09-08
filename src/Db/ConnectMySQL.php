@@ -1692,4 +1692,20 @@ class ConnectMySQL {
         $this->debug_mode = $set;
     }
 
+
+    /**
+     * Get if the database already exists.
+     * 
+     * @param   int|null    $year   The year for the database, if applicable.
+     * 
+     * @return  boolean
+     * 
+     * @access  public
+     * @since   LBF 0.1.5-beta
+     */
+
+    public function get_database_exists( ?int $year = null ): bool {
+        return $this->connect_db( $year );
+    }
+
 }
