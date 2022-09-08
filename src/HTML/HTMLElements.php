@@ -4,6 +4,8 @@ namespace LBF\HTML;
 
 use Exception;
 use LBF\Auth\Hash;
+use LBF\Errors\InvalidInputException;
+use LBF\Errors\MissingRequiredInputException;
 use LBF\HTML\Draw;
 use LBF\HTML\HTMLMeta;
 
@@ -461,6 +463,48 @@ class HTMLElements extends HTMLMeta {
         $item .= '>Sorry, your browser does not allow previews.';
         $item .= '</iframe>';
 
+        self::handle_echo( $item );
+        return $item;
+    }
+
+
+    public function ol( array $params ): string {
+        $item = '';
+
+        if ( !isset( $params['data'] ) ) {
+            throw new MissingRequiredInputException( '$params[\'data\'] must be set.' );
+        }
+        if ( !is_array( $params['data'] ) ) {
+            throw new InvalidInputException( '$params[\'data\'] must be an array.' );
+        }
+
+        $skip_params = [
+            'data',
+        ];
+
+        $item .= "<ol";
+        foreach ( $params as $key => $value ) {
+            if ( in_array( $key, $skip_params ) ) {
+                continue;
+            }
+            $item .= " {$key}='{$value}'";
+        }
+        $item .= '>';
+        foreach ( $params['data'] as $value ) {
+            if ( is_array( $value ) ) {
+                $item .= "<li";
+                foreach ( $value as $index => $entry ) {
+                    if ( $index == 'li' ) {
+                        continue;
+                    }
+                    $item .= " {$index}='{$entry}'";
+                }
+                $item .= ">{$value['li']}</li>";
+            } else {
+                $item .= "<li>{$value}</li>";
+            }
+        }
+        $item .= "</ol>";
         self::handle_echo( $item );
         return $item;
     }
