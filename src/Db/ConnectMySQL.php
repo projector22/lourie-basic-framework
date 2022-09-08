@@ -28,7 +28,7 @@ if ( !defined( "DB_PASS" ) ) {
     define( "DB_PASS", $_ENV['DB_PASSWORD'] ?? '' );
 }
 if ( !defined( "DB_NAME" ) ) {
-    define( "DB_NAME", $_ENV['DB_NAME'] ?? '' );
+    define( "DB_NAME", $_ENV['TABLE_PREFIX'] . $_ENV['DB_NAME'] ?? '' );
 }
 
 /**
