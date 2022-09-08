@@ -523,7 +523,7 @@ class ConnectMySQL {
         if ( defined( 'DB_YEAR' ) ) {
             $db_name .= DB_YEAR;
         }
-        $sql = function ( $table_name, $db_name ) {
+        $sql = function ( $table_name ) use ( $db_name ) {
             return "SELECT COLUMN_NAME 
             FROM INFORMATION_SCHEMA.COLUMNS
             WHERE TABLE_SCHEMA='{$db_name}' AND TABLE_NAME='{$table_name}';";
@@ -563,7 +563,7 @@ class ConnectMySQL {
         if ( defined( 'DB_YEAR' ) ) {
             $db_name .= DB_YEAR;
         }
-        $sql = function ( $table_name, $db_name ) {
+        $sql = function ( $table_name ) use ( $db_name ) {
             return "SELECT * 
             FROM INFORMATION_SCHEMA.COLUMNS
             WHERE TABLE_SCHEMA='{$db_name}' AND TABLE_NAME='{$table_name}';";
