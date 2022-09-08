@@ -17,6 +17,10 @@
   - Optimized `set_db_year()` method to only execute `$this->connect_db` once.
   - Added method `database_exists`.
 
+### Fixed
+
+- Fixed bug with ConnectMySQL `get_tables` searching for date.
+
 ---
 
 ## Version 0.1.4-beta - 2022-09-07

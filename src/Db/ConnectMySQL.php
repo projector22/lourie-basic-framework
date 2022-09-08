@@ -490,10 +490,14 @@ class ConnectMySQL {
      */
 
     protected function get_tables(): array {
+        $db_name = DB_NAME;
+        if ( defined( 'DB_YEAR' ) ) {
+            $db_name .= DB_YEAR;
+        }
         $raw = $this->sql_select( 
             "SELECT table_name 
              FROM information_schema.tables 
-             WHERE TABLE_SCHEMA='" . DB_NAME . date( 'Y' ) . "';"
+             WHERE TABLE_SCHEMA='{$db_name}';"
         );
         $sorted_data = [];
         foreach ( $raw as $table ) {
