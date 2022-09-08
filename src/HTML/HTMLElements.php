@@ -468,32 +468,140 @@ class HTMLElements extends HTMLMeta {
     }
 
 
-    public static function ol( array $params ): string {
-        $item = '';
+    /**
+     * Draw out an ordered list.
+     * 
+     * ## Possible params
+     * 
+     * Besides the global HTML attributes, `aria` attributes, `data` attributes,
+     * and `event` attributes, the following may be specified in the `$params` array:
+     * 
+     * | Attribute | Value    | Description |
+     * | --------- | -------- | ----------- |
+     * | data      | `array`  | The entries to list out. Set each entry as an array with an entry `li` to set attributes for each entry |
+     * | reversed  | `bool`   | Specifies that the list order should be reversed (9,8,7...) |
+     * | start     | `int`    | Specifies the start value of an ordered list |
+     * | type      | `string` | Specifies the kind of marker to use in the list |
+     * 
+     * ## List types
+     * 
+     * - `1`
+     * - `A`
+     * - `a`
+     * - `I`
+     * - `i`
+     * 
+     * @see https://www.w3schools.com/tags/tag_ol.asp
+     * 
+     * @param   array   $params.    Must include `$params['data']` to draw out the list.
+     * 
+     * @return  string
+     * 
+     * @throws  MissingRequiredInputException if `$params['data']` not set.
+     * @throws  MissingRequiredInputException if `$params['data']` entries do not correctly list entries indexed as 'li'.
+     * @throws  InvalidInputException If `$params['data']` is not an array.
+     * 
+     * @static
+     * @access  public
+     * @since   0.1.5-beta
+     */
 
+    public static function ol( array $params ): string {
+        $item = self::list( 'ol', $params );
+        self::handle_echo( $item );
+        return $item;
+    }
+
+
+    /**
+     * Draw out an unordered list.
+     * 
+     * ## Possible params
+     * 
+     * Besides the global HTML attributes, `aria` attributes, `data` attributes,
+     * and `event` attributes, the following may be specified in the `$params` array:
+     * 
+     * | Attribute | Value    | Description |
+     * | --------- | -------- | ----------- |
+     * | data      | `array`  | The entries to list out. Set each entry as an array with an entry `li` to set attributes for each entry |
+     * 
+     * @see https://www.w3schools.com/tags/tag_ul.asp
+     * 
+     * @param   array   $params.    Must include `$params['data']` to draw out the list.
+     * 
+     * @return  string
+     * 
+     * @throws  MissingRequiredInputException if `$params['data']` not set.
+     * @throws  MissingRequiredInputException if `$params['data']` entries do not correctly list entries indexed as 'li'.
+     * @throws  InvalidInputException If `$params['data']` is not an array.
+     * 
+     * @static
+     * @access  public
+     * @since   0.1.5-beta
+     */
+
+    public static function ul( array $params ): string {
+        $item = self::list( 'ul', $params );
+        self::handle_echo( $item );
+        return $item;
+    }
+
+
+    /**
+     * Draw out a list of items, used by methods `ol` and `ul`.
+     * 
+     * @param   string  $tag    The tag to draw. Either `ol` or `ul`.
+     * @param   array   $params The params to parse onto the tag. Must contain an entry `['data']` which
+     *                          contains the list of entries to list.
+     * 
+     * @return  string
+     * 
+     * @throws  MissingRequiredInputException if $params['data'] not set.
+     * @throws  MissingRequiredInputException if $params['data'] entries do not correctly list entries indexed as 'li'.
+     * @throws  InvalidInputException If $params['data'] is not an array.
+     * 
+     * @static
+     * @access  private
+     * @since   0.1.5-beta
+     */
+
+    private static function list( string $tag, array $params ): string {
+        $item = '';
         if ( !isset( $params['data'] ) ) {
+            echo "<pre>";
             throw new MissingRequiredInputException( '$params[\'data\'] must be set.' );
+            echo "</pre>";
         }
         if ( !is_array( $params['data'] ) ) {
+            echo "<pre>";
             throw new InvalidInputException( '$params[\'data\'] must be an array.' );
+            echo "</pre>";
         }
 
         $skip_params = [
             'data',
         ];
 
-        $item .= "<ol";
+        $item .= "<{$tag}";
         foreach ( $params as $key => $value ) {
             if ( in_array( $key, $skip_params ) ) {
                 continue;
             }
-            $item .= " {$key}='{$value}'";
+            switch ( $key ) {
+                case 'reversed':
+                    $item .= $value ? ' reversed' : '';
+                    break;
+                default:
+                    $item .= " {$key}='{$value}'";
+            }
         }
         $item .= '>';
         foreach ( $params['data'] as $value ) {
             if ( is_array( $value ) ) {
                 if ( !isset( $value['li'] ) ) {
+                    echo "<pre>";
                     throw new MissingRequiredInputException( "Entry param 'li' missing from data entry." );
+                    echo "</pre>";
                 }
                 $item .= "<li";
                 foreach ( $value as $index => $entry ) {
@@ -507,8 +615,7 @@ class HTMLElements extends HTMLMeta {
                 $item .= "<li>{$value}</li>";
             }
         }
-        $item .= "</ol>";
-        self::handle_echo( $item );
+        $item .= "</{$tag}>";
         return $item;
     }
 
