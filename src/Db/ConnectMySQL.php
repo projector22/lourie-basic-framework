@@ -19,19 +19,19 @@ use \PDOException;
  */
 
 if ( !defined( "DB_LOC" ) ) {
-    define( "DB_LOC", '' );
+    define( "DB_LOC", $_ENV['DB_LOCATION'] ?? '' );
 }
 if ( !defined( "DB_USER" ) ) {
-    define( "DB_USER", '' );
+    define( "DB_USER", $_ENV['DB_USERNAME'] ?? '' );
 }
 if ( !defined( "DB_PASS" ) ) {
-    define( "DB_PASS", '' );
+    define( "DB_PASS", $_ENV['DB_PASSWORD'] ?? '' );
 }
 if ( !defined( "DB_NAME" ) ) {
-    define( "DB_NAME", '' );
+    define( "DB_NAME", $_ENV['DB_NAME'] ?? '' );
 }
 if ( !defined( "DB_YEAR" ) ) {
-    define( "DB_YEAR", '' );
+    define( "DB_YEAR", date( 'Y' ) );
 }
 
 /**
