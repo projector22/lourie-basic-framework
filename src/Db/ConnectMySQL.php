@@ -519,10 +519,14 @@ class ConnectMySQL {
      */
 
     protected function get_table_columns( ?string $table = null ): array {
-        $sql = function ( $table_name ) {
+        $db_name = DB_NAME;
+        if ( defined( 'DB_YEAR' ) ) {
+            $db_name .= DB_YEAR;
+        }
+        $sql = function ( $table_name, $db_name ) {
             return "SELECT COLUMN_NAME 
             FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA='" . DB_NAME . date( 'Y' ) . "' AND TABLE_NAME='{$table_name}';";
+            WHERE TABLE_SCHEMA='{$db_name}' AND TABLE_NAME='{$table_name}';";
         };
         $all_data = [];
         if ( is_null ( $table ) ) {
@@ -555,10 +559,14 @@ class ConnectMySQL {
      */
 
     protected function get_table_columns_schemas( ?string $table = null ): array {
-        $sql = function ( $table_name ) {
+        $db_name = DB_NAME;
+        if ( defined( 'DB_YEAR' ) ) {
+            $db_name .= DB_YEAR;
+        }
+        $sql = function ( $table_name, $db_name ) {
             return "SELECT * 
             FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA='" . DB_NAME . date( 'Y' ) . "' AND TABLE_NAME='{$table_name}';";
+            WHERE TABLE_SCHEMA='{$db_name}' AND TABLE_NAME='{$table_name}';";
         };
         $all_data = [];
         if ( is_null ( $table ) ) {
