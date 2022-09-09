@@ -19,19 +19,16 @@ use \PDOException;
  */
 
 if ( !defined( "DB_LOC" ) ) {
-    define( "DB_LOC", '' );
+    define( "DB_LOC", $_ENV['DB_LOCATION'] ?? '' );
 }
 if ( !defined( "DB_USER" ) ) {
-    define( "DB_USER", '' );
+    define( "DB_USER", $_ENV['DB_USERNAME'] ?? '' );
 }
 if ( !defined( "DB_PASS" ) ) {
-    define( "DB_PASS", '' );
+    define( "DB_PASS", $_ENV['DB_PASSWORD'] ?? '' );
 }
 if ( !defined( "DB_NAME" ) ) {
-    define( "DB_NAME", '' );
-}
-if ( !defined( "DB_YEAR" ) ) {
-    define( "DB_YEAR", '' );
+    define( "DB_NAME", $_ENV['TABLE_PREFIX'] . $_ENV['DB_NAME'] ?? '' );
 }
 
 /**
@@ -46,7 +43,7 @@ if ( !defined( "DB_YEAR" ) ) {
  * @since   LRS 3.17.0  Split off from `DatabaseControl`.
  * @since   LRS 3.27.0  Merge back all methods for interfacing with the database into this class.
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  */
 
 class ConnectMySQL {
@@ -397,7 +394,7 @@ class ConnectMySQL {
 
     public function __construct( bool $rollover = false ) {
         $this->rollover = $rollover;
-        $this->conn = $this->connect_db();
+        $this->connect_db();
     }
 
 
@@ -422,33 +419,34 @@ class ConnectMySQL {
      *                                  If null, it will bind to DB_YEAR by default or if $rollover is true DB_YEAR + 1
      *                                  Default: null
      * 
-     * @return  $conn   The connection variable
+     * @return  boolean Whether or not the connection was successful.
      * 
      * @access  protected
      * @since   LRS 3.0.1
+     * @since   LBF 0.1.5-beta  Revamped to only return a bool. Set $this->conn directly.
      */
 
-    protected function connect_db( ?int $year = null ): object|bool {
+    protected function connect_db( ?int $year = null ): bool {
         $servername = DB_LOC;
         $username   = DB_USER;
         $password   = DB_PASS;
-        if ( is_null ( $year ) ) {
-            $db_name = !$this->rollover ? DB_NAME . DB_YEAR : DB_NAME . ( DB_YEAR + 1 );
+        if ( !defined( "DB_YEAR" ) ) {
+            $db_name = DB_NAME;
         } else {
-            $db_name = DB_NAME . $year;
+            if ( is_null ( $year ) ) {
+                $db_name = !$this->rollover ? DB_NAME . DB_YEAR : DB_NAME . ( DB_YEAR + 1 );
+            } else {
+                $db_name = DB_NAME . $year;
+            }
         }
 
         try {
-            $conn = new PDO( "mysql:host={$servername};dbname={$db_name}", $username, $password );
-            $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-            return $conn;
+            $this->conn = new PDO( "mysql:host={$servername};dbname={$db_name}", $username, $password );
+            $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            return true;
         } catch( PDOException $e ) {
-            if ( is_null ( $year ) ) {
-                die( "Connection failed: {$e->getMessage()}. This means that the server was unable to connect to {$db_name}" );
-            } else {
-                // The database probably doesn't exist or can't be connected to by the app for some reason
-                return false;
-            }
+            $this->last_error = $e;
+            return false;
         }
     }
 
@@ -462,7 +460,7 @@ class ConnectMySQL {
 
     protected function check_db_connection(): void {
         if ( !isset( $this->conn ) ) {
-            $this->conn = $this->connect_db();
+            $this->connect_db();
         }
     }
 
@@ -492,10 +490,14 @@ class ConnectMySQL {
      */
 
     protected function get_tables(): array {
+        $db_name = DB_NAME;
+        if ( defined( 'DB_YEAR' ) ) {
+            $db_name .= DB_YEAR;
+        }
         $raw = $this->sql_select( 
             "SELECT table_name 
              FROM information_schema.tables 
-             WHERE TABLE_SCHEMA='" . DB_NAME . date( 'Y' ) . "';"
+             WHERE TABLE_SCHEMA='{$db_name}';"
         );
         $sorted_data = [];
         foreach ( $raw as $table ) {
@@ -517,10 +519,14 @@ class ConnectMySQL {
      */
 
     protected function get_table_columns( ?string $table = null ): array {
-        $sql = function ( $table_name ) {
+        $db_name = DB_NAME;
+        if ( defined( 'DB_YEAR' ) ) {
+            $db_name .= DB_YEAR;
+        }
+        $sql = function ( $table_name ) use ( $db_name ) {
             return "SELECT COLUMN_NAME 
             FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA='" . DB_NAME . date( 'Y' ) . "' AND TABLE_NAME='{$table_name}';";
+            WHERE TABLE_SCHEMA='{$db_name}' AND TABLE_NAME='{$table_name}';";
         };
         $all_data = [];
         if ( is_null ( $table ) ) {
@@ -553,10 +559,14 @@ class ConnectMySQL {
      */
 
     protected function get_table_columns_schemas( ?string $table = null ): array {
-        $sql = function ( $table_name ) {
+        $db_name = DB_NAME;
+        if ( defined( 'DB_YEAR' ) ) {
+            $db_name .= DB_YEAR;
+        }
+        $sql = function ( $table_name ) use ( $db_name ) {
             return "SELECT * 
             FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA='" . DB_NAME . date( 'Y' ) . "' AND TABLE_NAME='{$table_name}';";
+            WHERE TABLE_SCHEMA='{$db_name}' AND TABLE_NAME='{$table_name}';";
         };
         $all_data = [];
         if ( is_null ( $table ) ) {
@@ -1377,14 +1387,11 @@ class ConnectMySQL {
      * 
      * @access  public
      * @since   LRS 3.14.2
+     * @since   LBF 0.1.5-beta  Optimized to only execute `$this->connect_db` once.
      */
 
     public function set_db_year( string|int $year ): bool {
-        $success = $this->connect_db( $year ) !== false;
-        if ( $success ) {
-            $this->conn = $this->connect_db( $year );
-        }
-        return $success;
+        return $this->connect_db( $year ) !== false;
     }
 
 
@@ -1396,7 +1403,7 @@ class ConnectMySQL {
      */
 
     public function reset_db_connection(): void {
-        $this->conn = $this->connect_db();
+        $this->connect_db();
     }
 
 
@@ -1695,6 +1702,22 @@ class ConnectMySQL {
 
     public function set_debug_mode( bool $set ): void {
         $this->debug_mode = $set;
+    }
+
+
+    /**
+     * Get if the database already exists.
+     * 
+     * @param   int|null    $year   The year for the database, if applicable.
+     * 
+     * @return  boolean
+     * 
+     * @access  public
+     * @since   LBF 0.1.5-beta
+     */
+
+    public function database_exists( ?int $year = null ): bool {
+        return $this->connect_db( $year );
     }
 
 }

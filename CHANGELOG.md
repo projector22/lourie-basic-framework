@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## Version 0.1.5-beta - 2022-09-09
+
+### Added
+
+- Added Meta class `HTMLMeta`.
+- Added methods `ul` and `ol` for drawing out lists.
+- Added maintenance mode css.
+
+### Changed
+
+- Revamped various HTML tag drawing to be more simple and consistant.
+- Revamped `ConnectMySQL` in the following ways:
+  - `connect_db()` always returns bool and sets `$this->conn` directly.
+  - `connect_db()` errors now gets placed on `$this->last_error`.
+  - Optimized `set_db_year()` method to only execute `$this->connect_db` once.
+  - Added method `database_exists`.
+
+### Fixed
+
+- Fixed bug with ConnectMySQL `get_tables`, `get_table_columns`, `get_table_columns_schemas` searching for date.
+- Fixed CSS import.
+
+---
+
 ## Version 0.1.4-beta - 2022-09-07
 
 ### Added
