@@ -236,7 +236,7 @@ class LoginHandler {
      */
 
     public function generate_session_id(): string {
-        return $this->account->data->username . '|' . hash( 'sha256', $this->account->data->username . $this->password_fragment . $this->cookie_hash );
+        return $this->account->data->account_name . '|' . hash( 'sha256', $this->account->data->username . $this->password_fragment . $this->cookie_hash );
     }
 
 
