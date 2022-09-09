@@ -139,8 +139,8 @@ class LoginHandler {
         private readonly string $cookie_hash = '',
     ) {
         $this->user_is_ldap = ( isset( $account->ldap_user ) && $account->ldap_user == 1 );
-        if ( isset( $this->account->ldap_password_fragment ) ) {
-            $this->password_fragment = $this->account->ldap_password_fragment;
+        if ( isset( $this->account->data->ldap_password_fragment ) ) {
+            $this->password_fragment = $this->account->data->ldap_password_fragment;
         } else {
             $this->password_fragment = $this->password_substr( $this->password );
         }
@@ -215,7 +215,7 @@ class LoginHandler {
      */
 
     public function generate_session_id(): string {
-        return $this->account->username . '|' . hash( 'sha256', $this->account->username . $this->password_fragment . $this->cookie_hash );
+        return $this->account->data->username . '|' . hash( 'sha256', $this->account->data->username . $this->password_fragment . $this->cookie_hash );
     }
 
 
@@ -292,7 +292,7 @@ class LoginHandler {
      */
 
     private function standard_login( string $password ): bool {
-        return password_verify( $password, $this->account->password );
+        return password_verify( $password, $this->account->data->password );
     }
 
 }
