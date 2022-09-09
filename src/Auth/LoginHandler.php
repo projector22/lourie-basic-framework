@@ -31,14 +31,13 @@ class LoginHandler {
     /**
      * Whether or not to check loggin through LDAP.
      * 
-     * @var boolean $use_ldap
+     * @var boolean $use_ldap   Default: false
      * 
-     * @readonly
      * @access  private
      * @since   LBF 0.1.6-beta
      */
 
-    private readonly bool $use_ldap;
+    private bool $use_ldap = false;
 
     /**
      * Whether or not the user account is a LDAP account.
