@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.1.6-beta - UNRELEASED
+
+### Fixed
+
+- Fixed a bug with `HTML::p_container`.
+
+---
+
 ## Version 0.1.5-beta - 2022-09-09
 
 ### Added
