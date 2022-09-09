@@ -74,6 +74,17 @@ class LoginHandler {
 
     private readonly string $password_fragment;
 
+    /**
+     * The reason a login failed.
+     * 
+     * @var string  $invalid_reason
+     * 
+     * @access  private
+     * @since   LBF 0.1.6-beta
+     */
+
+    private string $invalid_reason;
+
 
     /**
      * Class constructor.
@@ -90,7 +101,7 @@ class LoginHandler {
      */
 
     public function __construct(
-        
+
         /**
          * The user account object.
          * 
@@ -101,7 +112,7 @@ class LoginHandler {
          */
 
         private object $account,
-        
+
         /**
          * The password to be verified.
          * 
@@ -113,7 +124,7 @@ class LoginHandler {
          */
 
         private readonly string $password,
-        
+
         /**
          * Whether or not to check if the account is disabled.
          * 
@@ -125,7 +136,7 @@ class LoginHandler {
          */
 
         private readonly bool $check_account_disabled = true,
-        
+
         /**
          * The cookie hash used by the app. in LRS this is `COOKIE_HASH`.
          * 
@@ -157,10 +168,18 @@ class LoginHandler {
      */
 
     public function perform_login(): bool {
-        if ( $this->use_ldap && $this->user_is_ldap ) {
-            $verified = $this->ldap_login( $this->password );
+        if ( $this->account->number_of_records == 0 ) {
+            $verified = false;
+            $this->invalid_reason = "Username not found";
         } else {
-            $verified = $this->standard_login( $this->password );
+            if ( $this->use_ldap && $this->user_is_ldap ) {
+                $verified = $this->ldap_login( $this->password );
+            } else {
+                $verified = $this->standard_login( $this->password );
+            }
+            if ( !$verified ) {
+                $this->invalid_reason = "Invalid password";
+            }
         }
 
         $this->status_code = $verified ? 200 : 401;
@@ -170,7 +189,9 @@ class LoginHandler {
              * Check if Account is disabled
              * 
              * $this->set_status_code( 403 );
+             * $this->invalid_reason = "Account Disabled";
              */
+
         }
         return $verified;
     }
