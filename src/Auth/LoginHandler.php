@@ -251,6 +251,7 @@ class LoginHandler {
      * @access  public
      * @since   LBF 0.1.6-beta
      */
+
     public function set_ldap( bool $set_ldap, ?LDAPHandler $ldap = null ): bool {
         $this->use_ldap = $set_ldap;
         if ( $set_ldap ) {
@@ -279,6 +280,20 @@ class LoginHandler {
 
     public function password_substr( string $password ): string {
         return substr( $password, 8, 4 );;
+    }
+
+
+    /**
+     * Return the reason why the login failed.
+     * 
+     * @return  string
+     * 
+     * @access  public
+     * @since   LBF 0.1.6-beta
+     */
+
+    public function get_invalid_reason(): string {
+        return $this->invalid_reason ?? '';
     }
 
 
