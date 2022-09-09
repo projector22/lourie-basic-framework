@@ -235,7 +235,7 @@ class HTMLElements extends HTMLMeta {
     public static function p_container( array $params = [], string $content = '' ): string {
         $echo_hold = self::$echo;
         self::$echo = false;
-        $element = self::span( $params ) . $content . self::close_span();
+        $element = self::p( $params ) . $content . self::close_p();
         self::$echo = $echo_hold;
         self::handle_echo( $element );
         return $element;
