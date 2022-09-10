@@ -67,12 +67,11 @@ class LoginHandler {
      * 
      * @var string  $password_fragment
      * 
-     * @readonly
      * @access  private
      * @since   LBF 0.1.6-beta
      */
 
-    private readonly string $password_fragment;
+    private string $password_fragment;
 
     /**
      * The reason a login failed.
@@ -149,11 +148,11 @@ class LoginHandler {
 
         private readonly string $cookie_hash = '',
     ) {
-        $this->user_is_ldap = ( isset( $account->ldap_user ) && $account->ldap_user == 1 );
+        $this->user_is_ldap = ( isset( $this->account->ldap_user ) && $this->account->ldap_user == 1 );
         if ( isset( $this->account->data->ldap_password_fragment ) ) {
             $this->password_fragment = $this->account->data->ldap_password_fragment;
         } else {
-            $this->password_fragment = $this->password_substr( $this->password );
+            $this->password_fragment = $this->password_substr( $this->account->data->password ?? '' );
         }
     }
 
@@ -294,6 +293,29 @@ class LoginHandler {
 
     public function get_invalid_reason(): string {
         return $this->invalid_reason ?? '';
+    }
+
+
+    /**
+     * Check if a user is logged in.
+     * 
+     * @access  public
+     * @since   0.1.6-beta
+     */
+
+    public function check_user_is_logged_in( string $cookie ): bool {
+        $username = explode( '|', $cookie )[0];
+        $this->account->select_one( ['account_name' => $username] );
+        $user = $this->account->data;
+        if ( $this->use_ldap && $this->user_is_ldap ) {
+            // LDAP
+            $this->password_fragment = $user->ldap_password_fragment;
+        } else {
+            // Not LDAP
+            $this->password_fragment = $this->password_substr( $user->password );
+        }
+        $session_test = self::generate_session_id();
+        return $cookie == $session_test;
     }
 
 
