@@ -2,9 +2,17 @@
 
 ## Version 0.1.6-beta - UNRELEASED
 
+### Added
+
+- Added `Auth\LoginHandler`.
+
 ### Fixed
 
 - Fixed a bug with `HTML::p_container`.
+
+### Issues Closed
+
+- #23 WIP
 
 ---
 
