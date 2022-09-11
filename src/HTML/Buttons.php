@@ -7,6 +7,7 @@ use Feather\Icons;
 use LBF\Auth\Hash;
 use LBF\HTML\JS;
 use LBF\HTML\HTML;
+use LBF\HTML\HTMLMeta;
 
 /**
  * This class is to draw out various buttons on the page.
@@ -16,23 +17,12 @@ use LBF\HTML\HTML;
  * @author  Gareth Palmer   [Github & Gitlab /projector22]
  * 
  * @since   LRS 3.11.0
- * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ * @since   LRS 3.28.0      Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                          Namespace changed from `Framework` to `LBF`.
+ * @since   LBF 0.1.6-beta  Added extension `HTMLMeta`.
  */
 
-class Buttons {
-
-    /**
-     * Whether to echo or return the string item
-     * 
-     * @var boolean $echo   Default: true
-     * 
-     * @since   LRS 3.6.0
-     * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php
-     */
-
-    public static bool $echo = true;
-
+class Buttons extends HTMLMeta {
 
     /**
      * Handle the creation of assigned class names to the button element.
@@ -41,6 +31,7 @@ class Buttons {
      * 
      * @return  array   $params     The modified params.
      * 
+     * @static
      * @access  private
      * @since   LRS 3.16.1
      */
@@ -90,6 +81,7 @@ class Buttons {
      * 
      * @return  string   $params     The container.
      * 
+     * @static
      * @access  private
      * @since   LRS 3.16.1
      */
@@ -134,15 +126,16 @@ class Buttons {
      * @param   array   $params     Any elements to be added to the button.
      *                              Default: []
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to general() from custom_button()
      * @since   LRS 3.16.1  Revamped completely, now the base of almost all buttons. Removed params $content, $overwrite_class
      */
 
-    public static function general( array $params = [] ) {
+    public static function general( array $params = [] ): string {
         if ( !isset( $params['content'] ) ) {
             throw new \Exception( "Button \$param attribute 'content' has not been set. \$paramT['content'] must be set." );
         }
@@ -150,12 +143,12 @@ class Buttons {
             'content', 'container', 'inline', 'padding', 'hidden',
             'linebreak', 'colour', 'color', 'new_tab', 'reload',
             'tab',
-            // 'label', 'hint', 
+            // 'label', 'hint',
             /**
-             * @todo    Would like to add above but not sure how to do without 
+             * @todo    Would like to add above but not sure how to do without
              *          breaking inline integrity
              */
-            
+
         ];
         $item = '';
 
@@ -244,11 +237,8 @@ class Buttons {
             $item .= "<div class='btn_lb'></div>";
         }
 
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
@@ -262,6 +252,7 @@ class Buttons {
      * 
      * @return  string
      * 
+     * @static
      * @access  private
      * @since   LRS 3.16.1
      */
@@ -293,22 +284,19 @@ class Buttons {
      * 
      * @param   array   $params     Any elements to be added to the button.
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to apply() from apply_button()
      * @since   LRS 3.16.1  Removed param $overwrite_class
      */
 
-    public static function apply( array $params ) {
+    public static function apply( array $params ): string {
         $button = self::do_button( $params, 'Apply', 'green' );
-
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        }
+        self::handle_echo( $button );
+        return $button;
     }
 
 
@@ -317,21 +305,18 @@ class Buttons {
      * 
      * @param   array   $params     Any elements to be added to the button.
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.13.0
      * @since   LRS 3.16.1  Removed param $overwrite_class
      */
 
-    public static function edit( array $params ) {
+    public static function edit( array $params ): string {
         $button = self::do_button( $params, 'Edit' );
-
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        }
+        self::handle_echo( $button );
+        return $button;
     }
 
 
@@ -342,8 +327,9 @@ class Buttons {
      * 
      * @param   array   $params     Any elements to be added to the button.
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.4.0
      * @since   LRS 3.6.0     Added param $id
@@ -351,14 +337,10 @@ class Buttons {
      * @since   LRS 3.13.0    Removed params $onclick, $id, added param $params - largely rewritten
      */
 
-    public static function save( array $params ) {
+    public static function save( array $params ): string {
         $button = self::do_button( $params, 'Save', 'green' );
-
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        }
+        self::handle_echo( $button );
+        return $button;
     }
 
 
@@ -367,13 +349,14 @@ class Buttons {
      * 
      * @param   array   $params     Any elements to be added to the button.
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.1
      */
 
-    public static function ok( array $params ) {
+    public static function ok( array $params ): string {
         if ( isset( $params['reload'] ) && $params['reload' ] ) {
             if ( !isset( $params['padding'] ) ) {
                 $params['padding'] = false;
@@ -383,12 +366,8 @@ class Buttons {
             }
         }
         $button = self::do_button( $params, 'OK', 'green' );
-
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        } 
+        self::handle_echo( $button );
+        return $button;
     }
 
 
@@ -397,21 +376,18 @@ class Buttons {
      * 
      * @param   array   $params     Any elements to be added to the button.
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.1
      */
 
-    public static function search( array $params ) {
+    public static function search( array $params ): string {
         $icon = new Icons;
         $button = self::do_button( $params, $icon->get( 'search', echo: false ) );
-
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        } 
+        self::handle_echo( $button );
+        return $button;
     }
 
 
@@ -422,8 +398,9 @@ class Buttons {
      * @param   boolean $print_dailogue Whether or not to use window.print().
      *                                  Default: true
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.3.2
      * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to print() from print_button()
@@ -431,7 +408,7 @@ class Buttons {
      * @since   LRS 3.16.1  Revamped and turned into a simple button.
      */
 
-    public static function print( array $params, bool $print_dailogue = false ) {
+    public static function print( array $params, bool $print_dailogue = false ): string {
         if ( $print_dailogue ) {
             if ( isset( $params['onclick'] ) ) {
                 $params['onclick'] .= " window.print()";
@@ -442,11 +419,8 @@ class Buttons {
         $icon = new Icons;
         $button = self::do_button( $params, $icon->get( 'printer', echo: false ) );
 
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        } 
+        self::handle_echo( $button );
+        return $button;
     }
 
 
@@ -455,15 +429,16 @@ class Buttons {
      * 
      * @param   array   $params     Any elements to be added to the button.
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to reset() from reset_button()
      * @since   LRS 3.16.1  Completely reworked to use new button methods.
      */
 
-    public static function reset( array $params = [] ) {
+    public static function reset( array $params = [] ): string {
         $tab = isset ( $params['tab'] ) ? "&t={$params['tab']}" : '';
         if ( isset ( $params['onclick'] ) ) {
             $params['onclick'] .= " window.location.search=`?p={$_GET['p']}{$tab}`";
@@ -472,11 +447,8 @@ class Buttons {
         }
         $button = self::do_button( $params, 'Reset', 'blue' );
 
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        } 
+        self::handle_echo( $button );
+        return $button;
     }
 
 
@@ -486,13 +458,14 @@ class Buttons {
      * @param   array   $params     The params to be added to the button
      * @param   string  $content    The text on the button, if not overwritten.
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  private
      * @since   LRS 3.16.1
      */
 
-    private static function go_to_button_template( array $params, string $content ) {
+    private static function go_to_button_template( array $params, string $content ): string {
         if ( !isset( $params['href'] ) ) {
             throw new \Exception( "Button \$param attribute 'href' has not been set. \$paramT['href'] must be set." );
         }
@@ -531,21 +504,19 @@ class Buttons {
      * 
      * @param   string  $loc    The location to which the button must point
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @since   LRS 3.1.0
      * @since   LRS 3.6.0   Removed @param $class as this is moved to self::$button_class
      * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to back() from back_button()
      * @since   LRS 3.16.1  Rewritten to use the new button method.
      */
 
-    public static function back( array $params ) {
+    public static function back( array $params ): string {
         $button = self::go_to_button_template( $params, 'Back' );
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        }
+        self::handle_echo( $button );
+        return $button;
     }
 
 
@@ -556,34 +527,33 @@ class Buttons {
      * 
      * @param   string  $loc    The location to which the button must point
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @since   LRS 3.7.6
      * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to cancel() from cancel_button()
      * @since   LRS 3.16.1  Rewritten to use the new button method.
      */
-    
-    public static function cancel( array $params ) {
+
+    public static function cancel( array $params ): string {
         if ( !isset( $params['colour'] ) ) {
             $params['colour'] = 'blue';
         }
         $button = self::go_to_button_template( $params, 'Cancel' );
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        }
+        self::handle_echo( $button );
+        return $button;
     }
 
 
     /**
-     * Draw the floating submit button
+     * Draw the floating submit button.
      * 
      * @param   array   $params     Any elements to be added to the button.
      *                              Default: []
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @since   LRS 3.4.12
      * @since   LRS 3.9.0   Added @params $button_type & $onClick
      * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to floating_submit() from floating_submit_button()
@@ -591,7 +561,7 @@ class Buttons {
      * @since   LRS 3.16.1  Reworked again, moved to new button standard - removed params $button_type_submit, $overwrite_class
      */
 
-    public static function floating_submit( array $params = [] ) {
+    public static function floating_submit( array $params = [] ): string {
         $button = '';
         if ( !is_apple_mobile() ) {
             $button .= "<div class='floaty_submit text_align_center' id='floaty_submit'>";
@@ -620,17 +590,15 @@ class Buttons {
 
         $button .= "</div>"; // floaty_submit
 
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        }
+        self::handle_echo( $button );
+        return $button;
     }
 
 
     /**
      * Draw the floating top and bottom buttons
      * 
+     * @static
      * @since   LRS 3.6.0
      * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php.
      */
@@ -663,12 +631,12 @@ class Buttons {
         $icon = new Icons;
 
         HTML::div_container(
-            ['class' => 'ftb_button', 'id' => 'ftb_up'], 
+            ['class' => 'ftb_button', 'id' => 'ftb_up'],
             JS::script_module( $js( 'ftb_up' ) ) . $icon->get( 'chevrons-up', echo: false )
         );
 
         HTML::div_container(
-            ['class' => 'ftb_button', 'id' => 'ftb_down'], 
+            ['class' => 'ftb_button', 'id' => 'ftb_down'],
             JS::script_module( $js( 'ftb_down' ) ) . $icon->get( 'chevrons-down', echo: false )
         );
 
@@ -684,6 +652,7 @@ class Buttons {
      * 
      * @var string  $interface_bttn_class   Default: 'bttn'
      * 
+     * @static
      * @since   LRS 3.9.0
      * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php.
      */
@@ -693,19 +662,20 @@ class Buttons {
     /**
      * Draw a menu button
      * 
-     * @param   string  $button_text    The text which to draw
-     * @param   string  $link           The link to put on the button
-     * @param   array   $params         Any extra parameters to add to the 
+     * @param   string  $button_text    The text which to draw.
+     * @param   string  $link           The link to put on the button.
+     * @param   array   $params         Any extra parameters to add to the button.
      *                                  Default: null
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @since   LRS 3.9.0
      * @since   LRS 3.11.0  Moved to LBF\HTML\Buttons.php from PageElements.php. Renamed to interface() from interface_button()
      * @since   LRS 3.13.0  Revamped and removed params, $onclick, $extra_class, $id, added $params
      */
 
-    public static function interface( string $button_text, string $link, array $params = [] ) {
+    public static function interface( string $button_text, string $link, array $params = [] ): string {
         $button = '';
         $button .= "<div class='general_button'>";
         if ( isset( $params['class'] ) && $params['class'] != '' ) {
@@ -718,11 +688,8 @@ class Buttons {
         $button .= HTML::link( $link, $button_text, $params );
         HTML::$echo = $hold;
         $button .= "</div>";
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        }
+        self::handle_echo( $button );
+        return $button;
     }
 
 
@@ -731,24 +698,22 @@ class Buttons {
      * 
      * @param   array   $params     All the fields to put onto the button
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.12.8
      */
 
-    public static function login_eye( array $params = [] ) {
+    public static function login_eye( array $params = [] ): string {
         $button = '<button';
         foreach ( $params as $index => $value ) {
             $button .= " {$index}='{$value}'";
         }
         $icon = new Icons;
         $button .= '>' . $icon->get( 'eye-off', echo: false ) . '</button>';
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        }
+        self::handle_echo( $button );
+        return $button;
     }
 
 
@@ -763,18 +728,16 @@ class Buttons {
      * 
      * @return  string|void
      * 
+     * @static
      * @access  public
      * @since   LRS 3.13.0
      */
 
-    public static function link_button ( string $text, array $params = [], string $function = 'void(0)' ) {
+    public static function link_button ( string $text, array $params = [], string $function = 'void(0)' ): string {
         $button = HTML::link( "javascript:{$function}", $text, $params );
 
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        }
+        self::handle_echo( $button );
+        return $button;
     }
 
 }

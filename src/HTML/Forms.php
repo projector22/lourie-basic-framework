@@ -7,6 +7,7 @@ use Feather\Icons;
 use LBF\Auth\Hash;
 use LBF\HTML\JS;
 use LBF\HTML\HTML;
+use LBF\HTML\HTMLMeta;
 use LBF\Img\SVGImages;
 use SVGTools\SVG;
 
@@ -20,24 +21,13 @@ use SVGTools\SVG;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   LRS 3.6.0
- * @since   LRS 3.11.0  Moved to `Framework\HTML` namespace from `PageElements`
- * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ * @since   LRS 3.11.0      Moved to `Framework\HTML` namespace from `PageElements`
+ * @since   LRS 3.28.0      Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                          Namespace changed from `Framework` to `LBF`.
+ * @since   LBF 0.1.6-beta  Added extension `HTMLMeta`.
  */
 
-class Forms {
-
-    /**
-     * Whether or not to echo the element. If false the element will be returned instead
-     * 
-     * @var boolean $echo  Default: true
-     * 
-     * @access  public
-     * @since   LRS 3.6.0
-     */
-
-    public static bool $echo = true;
-
+class Forms extends HTMLMeta {
 
     /**
      * Draw and add the a label onto an html element
@@ -46,6 +36,7 @@ class Forms {
      * 
      * @return  string
      * 
+     * @static
      * @access  private
      * @since   LRS 3.12.8
      * @since   LRS 3.16.0 Added a built in 'required' element.
@@ -69,6 +60,7 @@ class Forms {
      * 
      * @return  string
      * 
+     * @static
      * @access  private
      * @since   LRS 3.16.0
      */
@@ -98,6 +90,7 @@ class Forms {
      * 
      * @return  string
      * 
+     * @static
      * @access  private
      * @since   LRS 3.16.0
      */
@@ -121,6 +114,7 @@ class Forms {
      * 
      * @return  string
      * 
+     * @static
      * @access  private
      * @since   LRS 3.16.0
      */
@@ -141,6 +135,7 @@ class Forms {
      * 
      * @return  string
      * 
+     * @static
      * @access  private
      * @since   LRS 3.16.1
      */
@@ -161,6 +156,7 @@ class Forms {
      * 
      * @return  string
      * 
+     * @static
      * @access  private
      * @since   LRS 3.16.0
      */
@@ -181,6 +177,7 @@ class Forms {
      * 
      * @return  string
      * 
+     * @static
      * @access  private
      * @since   LRS 3.16.0
      */
@@ -192,10 +189,10 @@ class Forms {
 
             $hold = JS::$echo;
             JS::$echo = false;
-    
+
             $validate = [];
             $nil_value = '';
-            
+
             if ( isset ( $params['validate'] ) ) {
                 if ( !is_array( $params['validate'] ) ) {
                     throw new \Exception( "Validations must be parsed as an array" );
@@ -235,7 +232,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
     const REQUIRED_STAR = " <span class='required_star'>*</span>";
 
     /**
-     * Draw the text `(Required)` next to a field label to indicate the field 
+     * Draw the text `(Required)` next to a field label to indicate the field
      * is required.
      * 
      * @var string  REQUIRED_TEXT
@@ -255,6 +252,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @var string  $required_default   Default: `Form::REQUIRED_TEXT`
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.0
      */
@@ -270,14 +268,15 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   array   $params     The params to parse into the text field.
      *                              Default: `[]`
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.12.8
      * @since   LRS 3.16.0 Revamped with new styling, labels, hints and validation.
      */
 
-    public static function text( array $params = [] ) {
+    public static function text( array $params = [] ): string {
         if ( !isset( $params['id'] ) ) {
             throw new \Exception( "Text field ID not set" );
         }
@@ -383,7 +382,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         $item .= self::element_hint( $params );
 
-        
+
         /**
          * Validation
          */
@@ -394,25 +393,25 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $item .= "</div>"; // Container
         }
 
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
     /**
      * Call the name of a text field elements
      * 
-     * @param   string  $name   The name of the method called
-     * @param   array   $arguments
+     * @param   string  $name       The name of the method called
+     * @param   array   $arguments  The parsed arguments.
      * 
+     * @return  string
+     * 
+     * @static
      * @access  public
      * @since   LRS 3.16.0
      */
 
-    public static function __callStatic( $name, $arguments ) {
+    public static function __callStatic( string $name, array $arguments ) {
         if ( $name == 'colour' ) {
             $name = 'color';
         }
@@ -424,7 +423,13 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             throw new \Exception( "Method '{$name}' does not exist." );
         }
         $arguments[0]['type'] = $name;
-        self::text( $arguments[0] );
+
+        $hold = self::$echo;
+        self::$echo = false;
+        $form = self::text( $arguments[0] );
+        self::$echo = $hold;
+        self::handle_echo( $form );
+        return $form;
     }
 
 
@@ -434,8 +439,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   string  $params         The parameters to add to the select box.
      *                                  Default: `[]`
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.8.0
      * @since   LRS 3.13.0  Rewritten and revamped
@@ -443,7 +449,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @since   LRS 3.16.0  Revamped with new styling, labels, hints and validation. Removed params $data, $is_multiple
      */
 
-    public static function select_box( array $params = [] ) {
+    public static function select_box( array $params = [] ): string {
         if ( !isset ( $params['id'] ) ) {
             throw new \Exception( "Select box field ID not set" );
         }
@@ -536,11 +542,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $item .= "</div>"; // Container
         }
 
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
@@ -550,19 +553,20 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   string  $params         The parameters to be attached to the text area
      *                                  Default: `[]`
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.8.0
      * @since   LRS 3.13.0  Revamped and replaced all params
      * @since   LRS 3.16.0  Revamped with new styling, labels, hints and validation. Removed param  $draw_counter
      */
 
-    public static function textarea( array $params = [] ) {
+    public static function textarea( array $params = [] ): string {
         if ( !isset ( $params['id'] ) ) {
             throw new \Exception( "Select box field ID not set" );
         }
-        
+
         $skip_fields = [
             'label', 'hint', 'validate', 'flex', 'value', 'counter', 'resize',
             'container', 'hidden',
@@ -623,7 +627,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
                     $standard_class .= ' resize_none';
             }
         }
-        
+
         if ( !isset ( $params['value'] ) ) {
             $params['value'] = '';
         }
@@ -631,7 +635,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         if ( !isset( $params['counter'] ) ) {
             $params['counter'] = true;
         }
-        
+
         if ( isset ( $params['class'] ) ) {
             $params['class'] = $standard_class . ' ' . $params['class'];
         } else {
@@ -695,11 +699,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         $item .= "</div>"; // Container
 
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
@@ -709,14 +710,15 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   string  $params     The fields to be added to the checkbox input.
      *                              Default: []
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.8.0
      * @since   LRS 3.16.0  Revamped
      */
 
-    public static function checkbox( array $params = [] ) {
+    public static function checkbox( array $params = [] ): string {
         if ( !isset( $params['id'] ) ) {
             throw new \Exception( "Checkbox field ID not set" );
         }
@@ -792,11 +794,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $item .= "</div>";
         }
 
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
@@ -806,13 +805,14 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   string  $params     The fields to be added to the radio input.
      *                              Default: []
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.1
      */
 
-    public static function radio( array $params = [] ) {
+    public static function radio( array $params = [] ): string {
         if ( !isset( $params['name'] ) ) {
             throw new Exception( "Missing \$param attribute 'name'. Radio buttons require the 'name' attribute to be set." );
         }
@@ -876,11 +876,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         $item .= "</div>";
 
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
@@ -900,15 +897,16 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   array   $params         The properties to add to the toggle.
      *                                  Default: []
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.7.6
      * @since   LRS 3.13.0    Updated and split the labels into it's own method
      * @since   LRS 3.16.1  Revamped and removed params $id & $checked.
      */
 
-    public static function toggle( array $params = [] ) {
+    public static function toggle( array $params = [] ): string {
         if ( !isset( $params['id'] ) ) {
             throw new \Exception( "Text field ID not set" );
         }
@@ -996,11 +994,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $item .= "</div>"; // Container
         }
 
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
@@ -1015,15 +1010,16 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   string  $params         The parameters to add to the combo box, list and autocomplete will be overwritten if set.
      *                                  Default: []
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.8.0
      * @since   LRS 3.13.0    Completely revamped
      * @since   LRS 3.16.1  Merged param $data into $params.
      */
 
-    public static function combo_box( array $params = [] ) {
+    public static function combo_box( array $params = [] ): string {
         if ( !isset( $params['data'] ) ) {
             throw new Exception( "\$params['data'] has not been set. This parameter must be set for a combo box." );
         }
@@ -1036,11 +1032,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         self::$echo = false;
         $item .= self::text( $params );
         self::$echo = $echo_hold;
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
@@ -1050,8 +1043,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   array   $params     Parameters to attach to the filter.
      *                              Default: []
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      * @since   LRS 3.11.1  Removed params, $id, $placeholder, $value; added param $params
@@ -1059,7 +1053,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @since   LRS 3.16.0  Revamped with new styling, labels, hints and validation. Renamed to search_filter from filter_box
      */
 
-    public static function filter( array $params = [] ) {
+    public static function filter( array $params = [] ): string {
         if ( !isset( $params['id'] ) ) {
             throw new \Exception( "Text field ID not set" );
         }
@@ -1146,11 +1140,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $item .= "</div>"; // Container
         }
 
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
@@ -1159,15 +1150,16 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @param   array   $params     The fields to be added to the hidden input, either id or name must be set.
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.8.0
      * @since   LRS 3.13.0  Rewritten and replaced the params
      * @since   LRS 3.16.1  Merged param $value into $params.
      */
 
-    public static function hidden_input( array $params = [] ) {
+    public static function hidden_input( array $params = [] ): string {
         if ( !isset( $params['id'] ) && !isset( $params['name'] ) ) {
             throw new \Exception( "Identifier not set. There must be either an 'id' or a 'name' parameter set" );
         }
@@ -1183,11 +1175,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         $item .= ">";
 
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
@@ -1197,14 +1186,15 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   string  $element_id     The id of the the span which contains the arrow
      * @param   string  $show_hide_id   The id of the element you wish to show or hide
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.9.1
      * @since   LRS 3.13.0    Renamed $id to $show_hide_id and added $element_id
      */
 
-    public static function content_drawer_arrow( string $element_id, string $show_hide_id ) {
+    public static function content_drawer_arrow( string $element_id, string $show_hide_id ): string {
         $hold = HTML::$echo;
         HTML::$echo = false;
         $svg = new SVG( SVGImages::content_draw_arrow->image() );
@@ -1226,11 +1216,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             show_hide('$show_hide_id');
         };" );
         HTML::$echo = $hold;
-        if ( self::$echo ) {
-            echo $element;
-        } else {
-            return $element;
-        }
+        self::handle_echo( $element );
+        return $element;
     }
 
 
@@ -1246,14 +1233,15 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @param   array   $params     All the elements to include on the input element
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.12.7
      * @since   LRS 3.16.1  Completely revamped, to use non default decorations and new standards.
      */
 
-    public static function upload_file( array $params = [] ) {
+    public static function upload_file( array $params = [] ): string {
         $skip_fields = ['label', 'hint', 'content', 'hidden'];
         $item = self::label( $params );
 
@@ -1311,11 +1299,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         JS::script_module( "import UploaderElement from './vendor/projector22/lourie-basic-framework/src/js/uploader_element.js';\nconst upload = new UploaderElement('{$params['id']}');" );
 
-        if ( self::$echo ) {
-            echo $item;
-        } else {
-            return $item;
-        }
+        self::handle_echo( $item );
+        return $item;
     }
 
 
@@ -1324,23 +1309,21 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @param   array   $params     All the elements to include on the input element
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.12.8
      */
 
-    public static function submit( array $params = [] ) {
+    public static function submit( array $params = [] ): string {
         $element = "<input type='submit'";
         foreach ( $params as $index => $value ) {
             $element .= " {$index}='{$value}'";
         }
         $element .= '>';
-        if ( self::$echo ) {
-            echo $element;
-        } else {
-            return $element;
-        }
+        self::handle_echo( $element );
+        return $element;
     }
 
 
@@ -1364,6 +1347,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      *                                          Default: null
      * @param   boolean         $disabled       Whether or not to disable each column
      * 
+     * @static
      * @access  public
      * @since   LRS 3.14.3
      */
@@ -1455,14 +1439,14 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         import {handle_column_changes} from './vendor/projector22/lourie-basic-framework/src/js/forms.js';
         handle_column_changes('{$id}');
         " );
- 
+
         HTML::close_div(); // multi_class_selector_container $id
         self::$echo = $hold;
     }
 
 
     /**
-     * A simple form with a submit button to load a page based on the button click as 
+     * A simple form with a submit button to load a page based on the button click as
      * a means of navigation.
      * 
      * @param   string  $button_text    The text of the button.
@@ -1470,13 +1454,14 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   string  $tab            The &t= tab to load.
      *                                  Default: null
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access public
      * @since   LRS 3.15.4
      */
 
-    public static function submit_load_page( string $button_text, string $page, ?string $tab = null ) {
+    public static function submit_load_page( string $button_text, string $page, ?string $tab = null ): string {
         $button = "<form method='get'>";
         $hold = self::$echo;
         $button .= self::submit( ['value' => $button_text, 'class' => 'std_button'] );
@@ -1487,11 +1472,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         }
         $button .= "</form>";
 
-        if ( self::$echo ) {
-            echo $button;
-        } else {
-            return $button;
-        }   
+        self::handle_echo( $button );
+        return $button;
     }
 
 }
