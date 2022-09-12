@@ -73,11 +73,11 @@ class HTMLMeta {
      * @return  string  The id of the change, used in restoring the origonal value.
      * 
      * @static
-     * @access  protected
+     * @access  public
      * @since   0.1.6-beta
      */
 
-    protected static function temporary_change_echo( bool $temp_echo ): string {
+    public static function temporary_change_echo( bool $temp_echo ): string {
         $id = Hash::random_id_string();
         self::$temporary_echo[$id] = self::$echo;
         self::$echo = $temp_echo;
@@ -93,10 +93,10 @@ class HTMLMeta {
      * @param   string  $id The id of the echo to restore to.
      * 
      * @static
-     * @access  protected
+     * @access  public
      * @since   0.1.6-beta
      */
-    protected static function restore_origonal_echo( string $id ): void {
+    public static function restore_origonal_echo( string $id ): void {
         self::$echo = self::$temporary_echo[$id];
         unset( self::$temporary_echo[$id] );
     }
