@@ -324,6 +324,8 @@ class HTMLElements extends HTMLMeta {
      * @static
      * @access  public
      * @since   LRS 3.12.8
+     * 
+     * @deprecated  LBF 0.1.6-beta
      */
 
     public static function link( string $href, ?string $text, array $params = [] ): string {
@@ -340,6 +342,59 @@ class HTMLElements extends HTMLMeta {
         $element .= ">{$text}</a>";
         self::handle_echo( $element );
         return $element;
+    }
+
+
+    /**
+     * Rebuild of `link`.
+     * 
+     * @param   array   $params The elements to add to the link
+     * 
+     * @return  string
+     * 
+     * @throws  MissingRequiredInputException   If $params['text'] missing.
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.1.6-beta
+     */
+
+    public static function a( array $params ): string {
+        if ( !isset( $params['href'] ) ) {
+            $params['href'] = 'javascript:void(0)';
+        }
+
+        if ( !isset( $params['text'] ) ) {
+            throw new MissingRequiredInputException( "Param 'text' required" );
+        }
+
+        if ( !isset( $params['id'] ) ) {
+            $params['id'] = Hash::random_id_string();
+        }
+
+        $skip_params = [
+            'echo', 'text',
+        ];
+
+        $item = '<a';
+
+        foreach ( $params as $key => $value ) {
+            if ( !in_array( $key, $skip_params ) ) {
+                continue;
+            }
+            switch( $key ) {
+                case 'new_tab':
+                    $item .= $value ? ( ' ' . Draw::NEW_TAB ) : '';
+                    break;
+                default:
+                    $item .= " {$key}='{$value}'";
+            }
+        }
+
+        $item .= ">{$params['text']}</a>";
+
+        self::handle_echo( $item, $skip_params );
+        return $item;
     }
 
 

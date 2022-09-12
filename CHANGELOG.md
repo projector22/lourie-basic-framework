@@ -5,6 +5,7 @@
 ### Added
 
 - Added `Auth\LoginHandler`.
+- Added new `HTMLElements` method `a` for inserting links.
 
 ### Changed
 
@@ -19,6 +20,10 @@
 
 - Fixed a bug with `HTML::p_container`.
 - Fixed a bug with header styles.
+
+### Deprecated
+
+- `HTMLElements` method `link`.
 
 ### Issues Closed
 
