@@ -379,7 +379,7 @@ class HTMLElements extends HTMLMeta {
         $item = '<a';
 
         foreach ( $params as $key => $value ) {
-            if ( !in_array( $key, $skip_params ) ) {
+            if ( in_array( $key, $skip_params ) ) {
                 continue;
             }
             switch( $key ) {
