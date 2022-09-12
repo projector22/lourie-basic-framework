@@ -18,6 +18,7 @@
 ### Fixed
 
 - Fixed a bug with `HTML::p_container`.
+- Fixed a bug with header styles.
 
 ### Issues Closed
 
