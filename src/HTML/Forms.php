@@ -424,10 +424,15 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         }
         $arguments[0]['type'] = $name;
 
-        $hold = self::$echo;
-        self::$echo = false;
+        // $hold = self::$echo;
+        // self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $form = self::text( $arguments[0] );
-        self::$echo = $hold;
+        self::restore_origonal_echo( $hold );
+        echo "cheese"; die;
+        // self::$echo = $hold;
+        
+        
         self::handle_echo( $form );
         return $form;
     }
