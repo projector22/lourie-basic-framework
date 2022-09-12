@@ -438,6 +438,8 @@ class HTMLElements extends HTMLMeta {
      * 
      * @return  string
      * 
+     * @throws  MissingRequiredInputException   If params src & srcdoc are missing.
+     * 
      * @static
      * @access  public
      * @since   LRS 3.11.1
@@ -445,12 +447,12 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function iframe( array $params ): string {
-        $skip_params = [
-            'default_unit',
-        ];
+        // $skip_params = [
+        //     'default_unit',
+        // ];
 
         if ( !isset( $params['src'] ) && !isset( $params['srcdoc'] ) ) {
-            throw new Exception( "An iframe must have either the parameter 'src' or 'srcdoc'." );
+            throw new MissingRequiredInputException( "An iframe must have either the parameter 'src' or 'srcdoc'." );
         }
 
         if ( !isset( $params['id'] ) ) {
@@ -480,17 +482,21 @@ class HTMLElements extends HTMLMeta {
             }
         }
 
-        $item = '<iframe';
+        $params['text'] = 'Sorry, your browser does not allow iframe previews.';
 
-        foreach ( $params as $key => $value ) {
-            if ( in_array( $key, $skip_params ) ) {
-                continue;
-            }
-            $item .= " {$key}='{$value}'";
-        }
+        $item = self::html_element_container( 'iframe', $params. ['default_unit'] );
 
-        $item .= '>Sorry, your browser does not allow previews.';
-        $item .= '</iframe>';
+        // $item = '<iframe';
+
+        // foreach ( $params as $key => $value ) {
+        //     if ( in_array( $key, $skip_params ) ) {
+        //         continue;
+        //     }
+        //     $item .= " {$key}='{$value}'";
+        // }
+
+        // $item .= '>Sorry, your browser does not allow previews.';
+        // $item .= '</iframe>';
 
         self::handle_echo( $item );
         return $item;
