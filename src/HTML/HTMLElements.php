@@ -393,7 +393,7 @@ class HTMLElements extends HTMLMeta {
 
         $item .= ">{$params['text']}</a>";
 
-        self::handle_echo( $item, $skip_params );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
