@@ -257,13 +257,6 @@ class HTMLElements extends HTMLMeta {
     public static function heading( int $size, string $content, array $params = [] ): string {
         $params['text'] = $content;
         $element = self::html_element_container( "h{$size}", $params );
-
-
-        // $element = "<h{$size}";
-        // foreach ( $params as $index => $value ) {
-        //     $element .= " {$index}='$value'";
-        // }
-        // $element .= ">{$content}</h{$size}>";
         self::handle_echo( $element );
         return $element;
     }
@@ -284,14 +277,8 @@ class HTMLElements extends HTMLMeta {
      */    
 
     public static function form( array $params = [], bool $new_tab = false ): string {
-        $element = '<form';
-        foreach ( $params as $item => $value ) {
-            $element .= " {$item}='{$value}'";
-        }
-        if ( $new_tab ) {
-            $element .= ' ' . Draw::NEW_TAB;
-        }
-        $element .= '>';
+        $params['new_tab'] = $new_tab;
+        $element = self::html_tag_open( 'form', $params );
         self::handle_echo( $element );
         return $element;
     }
