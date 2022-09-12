@@ -255,11 +255,15 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function heading( int $size, string $content, array $params = [] ): string {
-        $element = "<h{$size}";
-        foreach ( $params as $index => $value ) {
-            $element .= " {$index}='$value'";
-        }
-        $element .= ">{$content}</h{$size}>";
+        $params['text'] = $content;
+        $element = self::html_element_container( "h{$size}", $params );
+
+
+        // $element = "<h{$size}";
+        // foreach ( $params as $index => $value ) {
+        //     $element .= " {$index}='$value'";
+        // }
+        // $element .= ">{$content}</h{$size}>";
         self::handle_echo( $element );
         return $element;
     }
@@ -377,23 +381,6 @@ class HTMLElements extends HTMLMeta {
         ];
 
         $item = self::html_element_container( 'a', $params, $skip_params );
-
-        // $item = '<a';
-
-        // foreach ( $params as $key => $value ) {
-        //     if ( in_array( $key, $skip_params ) ) {
-        //         continue;
-        //     }
-        //     switch( $key ) {
-        //         case 'new_tab':
-        //             $item .= $value ? ( ' ' . Draw::NEW_TAB ) : '';
-        //             break;
-        //         default:
-        //             $item .= " {$key}='{$value}'";
-        //     }
-        // }
-
-        // $item .= ">{$params['text']}</a>";
 
         self::handle_echo( $item, $params );
         return $item;

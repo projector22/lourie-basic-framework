@@ -116,7 +116,7 @@ class HTMLMeta {
      * @since   0.1.6-beta
      */
 
-    protected static function html_element_container( string $tag, array $params, array $skip_params_extra ): string {
+    protected static function html_element_container( string $tag, array $params, array $skip_params_extra = [] ): string {
         $skip_params = array_merge( [
             'maxmin',
             'text',
