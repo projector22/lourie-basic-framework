@@ -381,6 +381,8 @@ class HTMLElements extends HTMLMeta {
      * 
      * @return  string
      * 
+     * @throws  MissingRequiredInputException   If param `src` is missing.
+     * 
      * @static
      * @access  public
      * @since   LRS 3.17.1
@@ -388,10 +390,10 @@ class HTMLElements extends HTMLMeta {
 
     public static function img( array $params = [] ): string {
         if ( !isset( $params['src'] ) ) {
-            throw new Exception( "Path to file not set. Please set param 'src" );
+            throw new MissingRequiredInputException( "Path to file not set. Please set param 'src" );
         }
 
-        $skip_params = ['unit'];
+        // $skip_params = ['unit'];
 
         $unit = $params['unit'] ?? 'px';
         $dimensions = ['height', 'width'];
@@ -402,17 +404,19 @@ class HTMLElements extends HTMLMeta {
                 }
             }
         }
+
+        $item = self::html_tag_open( 'img', $params, ['unit'] );
         
-        $item = '<img';
+        // $item = '<img';
 
-        foreach ( $params as $index => $value ) {
-            if ( in_array( $index, $skip_params ) ) {
-                continue;
-            }
-            $item .= " {$index}='{$value}'";
-        }
+        // foreach ( $params as $index => $value ) {
+        //     if ( in_array( $index, $skip_params ) ) {
+        //         continue;
+        //     }
+        //     $item .= " {$index}='{$value}'";
+        // }
 
-        $item .= '>';
+        // $item .= '>';
 
         self::handle_echo( $item );
         return $item;
@@ -447,10 +451,6 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function iframe( array $params ): string {
-        // $skip_params = [
-        //     'default_unit',
-        // ];
-
         if ( !isset( $params['src'] ) && !isset( $params['srcdoc'] ) ) {
             throw new MissingRequiredInputException( "An iframe must have either the parameter 'src' or 'srcdoc'." );
         }
@@ -485,18 +485,6 @@ class HTMLElements extends HTMLMeta {
         $params['text'] = 'Sorry, your browser does not allow iframe previews.';
 
         $item = self::html_element_container( 'iframe', $params, ['default_unit'] );
-
-        // $item = '<iframe';
-
-        // foreach ( $params as $key => $value ) {
-        //     if ( in_array( $key, $skip_params ) ) {
-        //         continue;
-        //     }
-        //     $item .= " {$key}='{$value}'";
-        // }
-
-        // $item .= '>Sorry, your browser does not allow previews.';
-        // $item .= '</iframe>';
 
         self::handle_echo( $item );
         return $item;
