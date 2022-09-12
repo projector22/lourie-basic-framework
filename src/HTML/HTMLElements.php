@@ -484,7 +484,7 @@ class HTMLElements extends HTMLMeta {
 
         $params['text'] = 'Sorry, your browser does not allow iframe previews.';
 
-        $item = self::html_element_container( 'iframe', $params. ['default_unit'] );
+        $item = self::html_element_container( 'iframe', $params, ['default_unit'] );
 
         // $item = '<iframe';
 
