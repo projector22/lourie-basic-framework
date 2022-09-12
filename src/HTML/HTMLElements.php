@@ -393,8 +393,6 @@ class HTMLElements extends HTMLMeta {
             throw new MissingRequiredInputException( "Path to file not set. Please set param 'src" );
         }
 
-        // $skip_params = ['unit'];
-
         $unit = $params['unit'] ?? 'px';
         $dimensions = ['height', 'width'];
         foreach ( $dimensions as $dimension ) {
@@ -406,17 +404,6 @@ class HTMLElements extends HTMLMeta {
         }
 
         $item = self::html_tag_open( 'img', $params, ['unit'] );
-        
-        // $item = '<img';
-
-        // foreach ( $params as $index => $value ) {
-        //     if ( in_array( $index, $skip_params ) ) {
-        //         continue;
-        //     }
-        //     $item .= " {$index}='{$value}'";
-        // }
-
-        // $item .= '>';
 
         self::handle_echo( $item );
         return $item;
