@@ -103,6 +103,46 @@ class HTMLMeta {
 
 
     /**
+     * Create a complete tag container.
+     * 
+     * @param   string  $tag                The tag to create.
+     * @param   array   $params             Any params to add to the tag.
+     * @param   array   $skip_params_extra  Any extra skip params besides the already defined list to apply to the tag.
+     * 
+     * @return  string
+     * 
+     * @static
+     * @access  protected
+     * @since   0.1.6-beta
+     */
+
+    protected static function html_element_container( string $tag, array $params, array $skip_params_extra ): string {
+        $skip_params = array_merge( [
+            'maxmin',
+            'text',
+            'content',
+            'echo',
+        ], $skip_params_extra );
+        $element = "<{$tag}";
+        $inner_text = $params['text'] ?? $params['content'] ?? '';
+        foreach ( $params as $key => $value ) {
+            if ( in_array( $key, $skip_params ) ) {
+                continue;
+            }
+            switch ( $key ) {
+                case 'new_tab':
+                    $element .= $value ? " target='_blank' rel='noopener'" : '';
+                    break;
+                default:
+                    $element .= " {$key}='{$value}'";
+            }
+        }
+        $element .= ">{$inner_text}</{$tag}>";
+        return $element;
+    }
+
+
+    /**
      * Create an opening tag, as defined by the param `$tag`.
      * 
      * @param   string  $tag                The tag to create.
@@ -127,6 +167,9 @@ class HTMLMeta {
                 continue;
             }
             switch ( $key ) {
+                case 'new_tab':
+                    $element .= $value ? " target='_blank' rel='noopener'" : '';
+                    break;
                 default:
                     $element .= " {$key}='{$value}'";
             }

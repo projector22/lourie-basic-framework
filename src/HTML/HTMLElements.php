@@ -376,22 +376,24 @@ class HTMLElements extends HTMLMeta {
             'echo', 'text',
         ];
 
-        $item = '<a';
+        $item = self::html_element_container( 'a', $params, $skip_params );
 
-        foreach ( $params as $key => $value ) {
-            if ( in_array( $key, $skip_params ) ) {
-                continue;
-            }
-            switch( $key ) {
-                case 'new_tab':
-                    $item .= $value ? ( ' ' . Draw::NEW_TAB ) : '';
-                    break;
-                default:
-                    $item .= " {$key}='{$value}'";
-            }
-        }
+        // $item = '<a';
 
-        $item .= ">{$params['text']}</a>";
+        // foreach ( $params as $key => $value ) {
+        //     if ( in_array( $key, $skip_params ) ) {
+        //         continue;
+        //     }
+        //     switch( $key ) {
+        //         case 'new_tab':
+        //             $item .= $value ? ( ' ' . Draw::NEW_TAB ) : '';
+        //             break;
+        //         default:
+        //             $item .= " {$key}='{$value}'";
+        //     }
+        // }
+
+        // $item .= ">{$params['text']}</a>";
 
         self::handle_echo( $item, $params );
         return $item;
