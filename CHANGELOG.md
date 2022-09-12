@@ -6,6 +6,15 @@
 
 - Added `Auth\LoginHandler`.
 
+### Changed
+
+- Extended the following to `HTML\HTMLMeta`: #23
+  - `HTML\Buttons`
+  - `HTML\Draw`
+  - `HTML\Forms`
+  - `HTMLElements`
+  - `HTML\Scripts`
+
 ### Fixed
 
 - Fixed a bug with `HTML::p_container`.

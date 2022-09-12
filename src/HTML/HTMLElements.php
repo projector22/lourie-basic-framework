@@ -17,8 +17,9 @@ use LBF\HTML\HTMLMeta;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   LRS 3.12.5
- * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                      Namespace changed from `Framework` to `LBF`.
+ * @since   LRS 3.28.0      Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                          Namespace changed from `Framework` to `LBF`.
+ * @since   LBF 0.1.5-beta  Added extension `HTMLMeta`.
  */
 
 class HTMLElements extends HTMLMeta {
@@ -87,10 +88,9 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function div_container( array $params = [], string $content = '' ): string {
-        $echo_hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $element = self::div( $params ) . $content . self::close_div();
-        self::$echo = $echo_hold;
+        self::restore_origonal_echo( $hold );
         self::handle_echo( $element );
         return $element;
     }
@@ -160,10 +160,9 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function span_container( array $params = [], string $content = '' ): string {
-        $echo_hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $element = self::span( $params ) . $content . self::close_span();
-        self::$echo = $echo_hold;
+        self::restore_origonal_echo( $hold );
         self::handle_echo( $element );
         return $element;
     }
@@ -233,10 +232,9 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function p_container( array $params = [], string $content = '' ): string {
-        $echo_hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $element = self::p( $params ) . $content . self::close_p();
-        self::$echo = $echo_hold;
+        self::restore_origonal_echo( $hold );
         self::handle_echo( $element );
         return $element;
     }

@@ -196,10 +196,9 @@ class Draw extends HTMLMeta {
      */
 
     public static function item_description( string $input, int $lines = 0 ): string {
-        $hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $element = self::lines( $lines ) . "<span>{$input}</span>";
-        self::$echo = $hold;
+        self::restore_origonal_echo( $hold );
         self::handle_echo( $element );
         return $element;
     }
@@ -528,12 +527,11 @@ class Draw extends HTMLMeta {
      */
 
     private static function break_template( string $description, string $class ): void {
-        $hold = HTML::$echo;
-        HTML::$echo = true;
+        $hold = HTML::temporary_change_echo( true );
         HTML::close_div();
         HTML::div_container( ['class' => 'page_element_description'], $description );
         HTML::div( ['class' => $class] );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
     }
 
 
@@ -642,8 +640,7 @@ class Draw extends HTMLMeta {
      */
 
     public static function draggable_list( array $data ): void {
-        $hold = HTML::$echo;
-        HTML::$echo = true;
+        $hold = HTML::temporary_change_echo( true );
         $id = Hash::random_id_string( 5 );
 
         HTML::div( [
@@ -689,7 +686,7 @@ class Draw extends HTMLMeta {
                 handle: '.de_grabber{$id}',
             });"
         );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
     }
 
 
@@ -705,8 +702,7 @@ class Draw extends HTMLMeta {
      */
 
     public static function standard_column_left( array $params = [] ): void {
-        $hold = HTML::$echo;
-        HTML::$echo = true;
+        $hold = HTML::temporary_change_echo( true );
 
         if ( isset ( $params['class'] ) ) {
             $params['class'] = 'page_element_description ' . $params['class'];
@@ -719,7 +715,7 @@ class Draw extends HTMLMeta {
         }
 
         HTML::div( $params );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
     }
 
 
@@ -737,8 +733,7 @@ class Draw extends HTMLMeta {
      */
 
     public static function standard_column_right( array $params = [], bool $close_left_column = true ): void {
-        $hold = HTML::$echo;
-        HTML::$echo = true;
+        $hold = self::temporary_change_echo( true );
 
         if ( $close_left_column ) {
             HTML::close_div(); // page_element_description
@@ -786,8 +781,7 @@ class Draw extends HTMLMeta {
             HTML::close_div();
         }
         HTML::close_div();
-
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
     }
 
 
@@ -803,8 +797,7 @@ class Draw extends HTMLMeta {
      */
 
     public static function standard_single_column( array $params = [] ): void {
-        $hold = HTML::$echo;
-        HTML::$echo = true;
+        $hold = self::temporary_change_echo( true );
 
         if ( isset ( $params['class'] ) ) {
             $params['class'] = 'page_element_main ' . $params['class'];
@@ -813,7 +806,7 @@ class Draw extends HTMLMeta {
         }
 
         HTML::div( $params );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
     }
 
 

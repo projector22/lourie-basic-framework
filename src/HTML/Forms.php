@@ -187,8 +187,7 @@ class Forms extends HTMLMeta {
         if ( isset ( $params['validate'] ) || isset ( $params['required'] ) && $params['required'] ) {
             $item .= "<div id='{$params['id']}__validation_feedback' class='std_validation_feedback'></div>";
 
-            $hold = JS::$echo;
-            JS::$echo = false;
+            $hold = JS::temporary_change_echo( false );
 
             $validate = [];
             $nil_value = '';
@@ -213,7 +212,7 @@ import Input_Validation from './vendor/projector22/lourie-basic-framework/src/js
 const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__validation_feedback', '{$nil_value}');
 {$validator}.general_validator({$validate});"
             );
-            JS::$echo = $hold;
+            JS::restore_origonal_echo( $hold );
         }
         return $item;
     }
@@ -424,13 +423,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         }
         $arguments[0]['type'] = $name;
 
-        // $hold = self::$echo;
-        // self::$echo = false;
         $hold = self::temporary_change_echo( false );
         $form = self::text( $arguments[0] );
         self::restore_origonal_echo( $hold );
-        echo "cheese"; die;
-        // self::$echo = $hold;
         
         
         self::handle_echo( $form );
@@ -678,8 +673,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $div_id = Hash::random_id_string( 7 );
             $input = 'counter' . Hash::random_id_string( 5 );
             $item .= "<div id='{$div_id}' class='text_area_counter'></div>";
-            $js_echo_hold = JS::$echo;
-            JS::$echo = false;
+            $hold = JS::temporary_change_echo( false );
             $item .= JS::script_module( "
                 import { text_area_text_counter } from './vendor/projector22/lourie-basic-framework/src/js/forms.js';
                 const $input = document.getElementById('{$params['id']}');
@@ -687,7 +681,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
                     text_area_text_counter('{$params['id']}', '{$div_id}')
                 });"
             );
-            JS::$echo = $js_echo_hold;
+            JS::restore_origonal_echo( $hold );
         }
 
         /**
@@ -1033,10 +1027,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         unset( $params['data'] );
         $params['list'] = $data_id;
         $params['autocomplete'] = 'off';
-        $echo_hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $item .= self::text( $params );
-        self::$echo = $echo_hold;
+        self::restore_origonal_echo( $hold );
         self::handle_echo( $item );
         return $item;
     }
@@ -1200,8 +1193,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      */
 
     public static function content_drawer_arrow( string $element_id, string $show_hide_id ): string {
-        $hold = HTML::$echo;
-        HTML::$echo = false;
+        $hold = HTML::temporary_change_echo( false );
         $svg = new SVG( SVGImages::content_draw_arrow->image() );
         $svg->set_size( 16, 16 )->set_viewbox( 0, 0, 16, 16 );
         /**
@@ -1220,7 +1212,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         document.getElementById('$element_id').onclick = function () {
             show_hide('$show_hide_id');
         };" );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
         self::handle_echo( $element );
         return $element;
     }
@@ -1365,8 +1357,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         ?string $title2 = null,
         bool $disabled = false,
     ): void {
-        $hold = self::$echo;
-        self::$echo = true;
+        $hold = self::temporary_change_echo( true );
         HTML::div( [
             'class' => 'multi_class_selector_container',
             'id'    => $id,
@@ -1446,7 +1437,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         " );
 
         HTML::close_div(); // multi_class_selector_container $id
-        self::$echo = $hold;
+        self::restore_origonal_echo( $hold );
     }
 
 
@@ -1468,9 +1459,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function submit_load_page( string $button_text, string $page, ?string $tab = null ): string {
         $button = "<form method='get'>";
-        $hold = self::$echo;
+        $hold = self::temporary_change_echo( false );
         $button .= self::submit( ['value' => $button_text, 'class' => 'std_button'] );
-        self::$echo = $hold;
+        self::restore_origonal_echo( $hold );
         $button .= page( $page, false, true );
         if ( !is_null ( $tab ) ) {
             $button .= tab( $tab, true );

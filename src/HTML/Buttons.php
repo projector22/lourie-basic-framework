@@ -583,10 +583,9 @@ class Buttons extends HTMLMeta {
             $params['class'] = "reg_submit_bttn";
         }
 
-        $hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $button .= self::general( $params );
-        self::$echo = $hold;
+        self::restore_origonal_echo( $hold );
 
         $button .= "</div>"; // floaty_submit
 
@@ -608,8 +607,7 @@ class Buttons extends HTMLMeta {
             return;
         }
         HTML::div( ['class' => 'floating_tb_buttons_contain'] );
-        $hold = JS::$echo;
-        JS::$echo = false;
+        $hold = JS::temporary_change_echo( false );
 
         /**
          * The JS which handles the buttons going up & down.
@@ -640,7 +638,7 @@ class Buttons extends HTMLMeta {
             JS::script_module( $js( 'ftb_down' ) ) . $icon->get( 'chevrons-down', echo: false )
         );
 
-        JS::$echo = $hold;
+        JS::restore_origonal_echo( $hold );
         HTML::close_div(); // floating_tb_buttons_contain
     }
 
@@ -683,10 +681,10 @@ class Buttons extends HTMLMeta {
         } else {
             $params['class'] = 'interface_button ' . self::$interface_bttn_class;
         }
-        $hold = HTML::$echo;
-        HTML::$echo = false;
+
+        $hold = HTML::temporary_change_echo( false );
         $button .= HTML::link( $link, $button_text, $params );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
         $button .= "</div>";
         self::handle_echo( $button );
         return $button;

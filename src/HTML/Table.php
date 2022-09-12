@@ -454,10 +454,9 @@ class Table {
             $params['class'] .= ' edit_link_width';
         }
 
-        $hold = HTML::$echo;
-        HTML::$echo = false;
+        $hold = HTML::temporary_change_echo( false );
         $link = HTML::link( $href, 'Edit', ['new_tab' => true ] );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
         $cell = "<td";
         foreach ( $params as $key => $value ) {
             $cell .= " {$key}='{$value}'";
@@ -511,8 +510,7 @@ class Table {
      */
 
     private function select_checkbox( bool $select_all_checkbox = false, bool $disabled = false  ): void {
-        $hold = Form::$echo;
-        Form::$echo = false;
+        $hold = Form::temporary_change_echo( false );
         if ( $select_all_checkbox ) {
             $checkboxs = Form::checkbox( [
                 'id'        => "{$this->table_id}_select_all",
@@ -538,7 +536,7 @@ class Table {
                 'container' => ['overwrite' => true],
             ] ), ['class' => 'selectable_checkbox_width'] );
         }
-        Form::$echo = $hold;
+        Form::restore_origonal_echo( $hold );
     }
 
 
