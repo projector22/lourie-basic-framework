@@ -1279,6 +1279,10 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
                     break;
                 case 'checked':
                     $item .= $value ? ' checked' : '';
+                    break;
+                case 'disabled':
+                    $item .= $value ? ' disabled' : '';
+                    break;
                 default:
                     $item .= " {$field}='{$value}'";
             }
