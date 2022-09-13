@@ -122,8 +122,9 @@ class HTMLMeta {
             'text',
             'content',
             'echo',
+            'data',
         ], $skip_params_extra );
-        $inner_text = $params['text'] ?? $params['content'] ?? '';
+        $inner_text = $params['text'] ?? $params['content'] ?? $params['data'] ?? '';
         $element = "<{$tag}";
         $element .= self::assign_key_values( $params, $skip_params );
         $element .= ">{$inner_text}</{$tag}>";
@@ -191,6 +192,9 @@ class HTMLMeta {
                     break;
                 case 'required':
                     $element .= $value ? ' required' : '';
+                    break;
+                case 'multiple':
+                    $element .= $value ? ' multiple' : '';
                     break;
                 default:
                     $element .= " {$key}='{$value}'";
