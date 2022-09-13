@@ -5,6 +5,7 @@ namespace LBF\HTML;
 use Exception;
 use Feather\Icons;
 use LBF\Auth\Hash;
+use LBF\Errors\InvalidInputException;
 use LBF\Errors\MissingRequiredInputException;
 use LBF\HTML\JS;
 use LBF\HTML\HTML;
@@ -607,34 +608,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['data-requires-validation'] = 1;
         }
 
-        self::html_element_container( 'textarea', $params, $skip_fields );
+        $item .= self::html_element_container( 'textarea', $params, $skip_fields );
 
-        // $item .= "<textarea";
-        // foreach ( $params as $field => $value ) {
-        //     if ( in_array( $field, $skip_fields ) ) {
-        //         continue;
-        //     }
-        //     switch ( $field ) {
-        //         case 'autofocus':
-        //             $item .= $value ? ' autofocus' : '';
-        //             break;
-        //         case 'disabled':
-        //             $item .= $value ? ' disabled' : '';
-        //             break;
-        //         case 'readonly':
-        //             $item .= $value ? ' readonly' : '';
-        //             break;
-        //         case 'required':
-        //             $item .= $value ? ' required' : '';
-        //             break;
-        //         default:
-        //             $item .= " {$field}='{$value}'";
-        //     }
-        // }
-
-        // $item .= ">{$params['value']}</textarea>";
-
-        if ( $params['counter'] && $params['id'] != '' ) {
+        if ( $params['counter'] ) {
             $div_id = Hash::random_id_string( 7 );
             $input = 'counter' . Hash::random_id_string( 5 );
             $item .= "<div id='{$div_id}' class='text_area_counter'></div>";
@@ -676,6 +652,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
+     * @throws  InvalidInputException   If $params position is not either 'before' or 'after'.
+     * 
      * @static
      * @access  public
      * @since   LRS 3.8.0
@@ -684,7 +662,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function checkbox( array $params = [] ): string {
         if ( !isset( $params['id'] ) ) {
-            throw new \Exception( "Checkbox field ID not set" );
+            $params['id'] = Hash::random_id_string();
         }
 
         $skip_fields = ['label', 'position', 'container'];
@@ -701,7 +679,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['position'] = 'after';
         } else {
             if ( !in_array( $params['position'], ['before', 'after'] ) ) {
-                throw new \Exception( "Parameter 'Position' may be either 'before' or 'after', not '{$params['position']}'" );
+                throw new InvalidInputException( "Parameter 'Position' may be either 'before' or 'after', not '{$params['position']}'" );
             }
         }
 
@@ -722,32 +700,36 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['class'] = 'standard_checkbox ' . $params['class'];
         }
 
-        $item .= "<input type='checkbox'";
-        foreach ( $params as $field => $value ) {
-            if ( in_array( $field, $skip_fields ) ) {
-                continue;
-            }
-            switch ( $field ) {
-                case 'autofocus':
-                    $item .= $value ? ' autofocus' : '';
-                    break;
-                case 'checked':
-                    $item .= $value ? ' checked' : '';
-                    break;
-                case 'disabled':
-                    $item .= $value ? ' disabled' : '';
-                    break;
-                case 'indeterminate':
-                    $item .= $value ? ' indeterminate' : '';
-                    break;
-                case 'required':
-                    $item .= $value ? ' required' : '';
-                    break;
-                default:
-                    $item .= " {$field}='{$value}'";
-            }
-        }
-        $item .= ">";
+        $params['type'] = 'checkbox';
+
+        $item .= self::html_tag_open( 'input', $params, $skip_fields );
+
+        // $item .= "<input type='checkbox'";
+        // foreach ( $params as $field => $value ) {
+        //     if ( in_array( $field, $skip_fields ) ) {
+        //         continue;
+        //     }
+        //     switch ( $field ) {
+        //         case 'autofocus':
+        //             $item .= $value ? ' autofocus' : '';
+        //             break;
+        //         case 'checked':
+        //             $item .= $value ? ' checked' : '';
+        //             break;
+        //         case 'disabled':
+        //             $item .= $value ? ' disabled' : '';
+        //             break;
+        //         case 'indeterminate':
+        //             $item .= $value ? ' indeterminate' : '';
+        //             break;
+        //         case 'required':
+        //             $item .= $value ? ' required' : '';
+        //             break;
+        //         default:
+        //             $item .= " {$field}='{$value}'";
+        //     }
+        // }
+        // $item .= ">";
         if ( $params['position'] == 'after' ) {
             if ( isset( $params['label'] ) ) {
                 $item .= "<label for='{$params['id']}'> {$params['label']}</label>";

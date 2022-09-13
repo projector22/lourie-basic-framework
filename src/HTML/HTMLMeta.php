@@ -119,9 +119,9 @@ class HTMLMeta {
     protected static function html_element_container( string $tag, array $params, array $skip_params_extra = [] ): string {
         $skip_params = array_merge( [
             'maxmin',
+            'echo',
             'text',
             'content',
-            'echo',
             'data',
             'label',
         ], $skip_params_extra );
@@ -157,6 +157,10 @@ class HTMLMeta {
         $skip_params = array_merge( [
             'maxmin',
             'echo',
+            'text',
+            'content',
+            'data',
+            'label',
         ], $skip_params_extra );
         $element = "<{$tag}";
         $element .= self::assign_key_values( $params, $skip_params );
@@ -202,6 +206,12 @@ class HTMLMeta {
                     break;
                 case 'multiple':
                     $element .= $value ? ' multiple' : '';
+                    break;
+                case 'checked':
+                    $element .= $value ? ' checked' : '';
+                    break;
+                case 'indeterminate':
+                    $element .= $value ? ' indeterminate' : '';
                     break;
                 default:
                     $element .= " {$key}='{$value}'";
