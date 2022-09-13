@@ -2,7 +2,6 @@
 
 namespace LBF\HTML;
 
-use Exception;
 use LBF\Auth\Hash;
 use LBF\Errors\InvalidInputException;
 use LBF\Errors\MissingRequiredInputException;
