@@ -6,6 +6,7 @@
 
 - Added `Auth\LoginHandler`.
 - Added new `HTMLElements` method `a` for inserting links.
+- Added method `file_exists` to `FileSystem`.
 
 ### Changed
 
