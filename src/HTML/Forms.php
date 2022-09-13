@@ -5,6 +5,7 @@ namespace LBF\HTML;
 use Exception;
 use Feather\Icons;
 use LBF\Auth\Hash;
+use LBF\Errors\MissingRequiredInputException;
 use LBF\HTML\JS;
 use LBF\HTML\HTML;
 use LBF\HTML\HTMLMeta;
@@ -277,7 +278,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function text( array $params = [] ): string {
         if ( !isset( $params['id'] ) ) {
-            throw new \Exception( "Text field ID not set" );
+            $params['id'] = Hash::random_id_string();
         }
         $skip_fields = ['label', 'hint', 'validate', 'flex', 'container', 'hidden'];
         $item = '';
@@ -352,30 +353,6 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         }
 
         $item .= self::html_tag_open( 'input', $params, $skip_fields );
-        // $item .= "<input";
-        // foreach ( $params as $field => $value ) {
-        //     if ( in_array( $field, $skip_fields ) ) {
-        //         continue;
-        //     }
-        //     switch ( $field ) {
-        //         case 'autofocus':
-        //             $item .= $value ? ' autofocus' : '';
-        //             break;
-        //         case 'disabled':
-        //             $item .= $value ? ' disabled' : '';
-        //             break;
-        //         case 'readonly':
-        //             $item .= $value ? ' readonly' : '';
-        //             break;
-        //         case 'required':
-        //             $item .= $value ? ' required' : '';
-        //             break;
-        //         default:
-        //             $item .= " {$field}='{$value}'";
-        //     }
-        // }
-
-        // $item .= ">";
 
         /**
          * Hint
@@ -443,6 +420,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
+     * @throws  MissingRequiredInputException   If field 'data' is missing.
+     * 
      * @static
      * @access  public
      * @since   LRS 3.8.0
@@ -453,10 +432,10 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function select_box( array $params = [] ): string {
         if ( !isset ( $params['id'] ) ) {
-            throw new \Exception( "Select box field ID not set" );
+            $params['id'] = Hash::random_id_string();
         }
         if ( !isset ( $params['data'] ) ) {
-            throw new \Exception( "Select box field data not set" );
+            throw new MissingRequiredInputException( "Select box field data not set" );
         }
 
         $skip_fields = [
@@ -496,37 +475,44 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         } else {
             $params['class'] = $standard_class;
         }
-        $item .= "<select";
-        foreach ( $params as $field => $value ) {
-            if ( in_array( $field, $skip_fields ) ) {
-                continue;
-            }
-            switch ( $field ) {
-                case 'autofocus':
-                    $item .= $value ? ' autofocus' : '';
-                    break;
-                case 'disabled':
-                    $item .= $value ? ' disabled' : '';
-                    break;
-                case 'multiple':
-                    $item .= $value ? ' multiple' : '';
-                    break;
-                case 'required':
-                    $item .= $value ? ' required' : '';
-                    break;
-                default:
-                    $item .= " {$field}='{$value}'";
-            }
-        }
+
         if ( isset ( $params['validate'] ) || isset( $params['required'] ) && $params['required'] ) {
-            $item .= " data-requires-validation=1";
+            $params['data-requires-validation'] =1;
             if ( isset( $params['validate']['nil_value'] ) ) {
                 if ( !str_contains( $params['data'], "value='{$params['validate']['nil_value']}'" ) ) {
-                    $item .= " data-validated=1";
+                    $params['data-validated'] = 1;
                 }
             }
         }
-        $item .= ">{$params['data']}</select>";
+
+        $item .= self::html_element_container( 'select', $params, $skip_fields );
+
+        // $item .= "<select";
+        // foreach ( $params as $field => $value ) {
+        //     if ( in_array( $field, $skip_fields ) ) {
+        //         continue;
+        //     }
+        //     switch ( $field ) {
+        //         case 'autofocus':
+        //             $item .= $value ? ' autofocus' : '';
+        //             break;
+        //         case 'disabled':
+        //             $item .= $value ? ' disabled' : '';
+        //             break;
+        //         case 'multiple':
+        //             $item .= $value ? ' multiple' : '';
+        //             break;
+        //         case 'required':
+        //             $item .= $value ? ' required' : '';
+        //             break;
+        //         default:
+        //             $item .= " {$field}='{$value}'";
+        //     }
+        // }
+
+
+
+        // $item .= ">{$params['data']}</select>";
 
         /**
          * Hint
