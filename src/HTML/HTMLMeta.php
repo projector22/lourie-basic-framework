@@ -123,7 +123,14 @@ class HTMLMeta {
             'content',
             'echo',
             'data',
+            'label',
         ], $skip_params_extra );
+        if ( $tag == 'textarea' ) {
+            if ( isset( $params['value'] ) ) {
+                $params['text'] = $params['value'];
+                unset( $params['value'] );
+            }
+        }
         $inner_text = $params['text'] ?? $params['content'] ?? $params['data'] ?? '';
         $element = "<{$tag}";
         $element .= self::assign_key_values( $params, $skip_params );
