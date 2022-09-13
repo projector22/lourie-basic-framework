@@ -774,23 +774,6 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         $item .= self::html_tag_open( 'input', $params, $skip_fields );
 
-        // $item .= "<input type='radio'";
-        // foreach ( $params as $field => $value ) {
-        //     if ( in_array( $field, $skip_fields ) ) {
-        //         continue;
-        //     }
-        //     switch ( $field ) {
-        //         case 'checked':
-        //             $item .= $value ? ' checked' : '';
-        //             break;
-        //         case 'disabled':
-        //             $item .= $value ? ' disabled' : '';
-        //             break;
-        //         default:
-        //             $item .= " {$field}='{$value}'";
-        //     }
-        // }
-        // $item .= ">";
         if ( $params['position'] == 'after' ) {
             if ( isset( $params['label'] ) ) {
                 $item .= "<label for='{$params['id']}'> {$params['label']}</label>";
