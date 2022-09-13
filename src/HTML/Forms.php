@@ -863,26 +863,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
          * The toggle, wrapped in a label so the whole thing is clickable.
          */
         $item .= "<label class='selector_switch'>";
-
         $item .= self::html_tag_open( 'input', $params, $skip_fields );
-
-        // $item .= "<input type='checkbox'";
-        // foreach ( $params as $field => $value ) {
-        //     if ( in_array( $field, $skip_fields ) ) {
-        //         continue;
-        //     }
-        //     switch ( $field ) {
-        //         case 'disabled':
-        //             $item .= $value ? ' disabled' : '';
-        //             break;
-        //         case 'checked':
-        //             $item .= $value ? ' checked' : '';
-        //             break;
-        //         default;
-        //             $item .= " {$field}='{$value}'";
-        //     }
-        // }
-
         $item .= "<span class='slider round'></span>";
         $item .= "</label>";
 
@@ -925,6 +906,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
+     * @throws  MissingRequiredInputException   If $params['data'] not set.
+     * 
      * @static
      * @access  public
      * @since   LRS 3.8.0
@@ -934,7 +917,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function combo_box( array $params = [] ): string {
         if ( !isset( $params['data'] ) ) {
-            throw new Exception( "\$params['data'] has not been set. This parameter must be set for a combo box." );
+            throw new MissingRequiredInputException( "\$params['data'] has not been set. This parameter must be set for a combo box." );
         }
         $data_id = Hash::random_id_string( 7 );
         $item = "<datalist id='{$data_id}'>{$params['data']}</datalist>";
@@ -1037,8 +1020,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
                     $item .= " {$field}='{$value}'";
             }
         }
-        $icon = new Icons;
         $item .= ">";
+        $icon = new Icons;
         $item .= $icon->get( 'search', echo: false );
         $item .= "</span>";
 
