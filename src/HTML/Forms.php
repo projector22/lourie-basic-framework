@@ -704,32 +704,6 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         $item .= self::html_tag_open( 'input', $params, $skip_fields );
 
-        // $item .= "<input type='checkbox'";
-        // foreach ( $params as $field => $value ) {
-        //     if ( in_array( $field, $skip_fields ) ) {
-        //         continue;
-        //     }
-        //     switch ( $field ) {
-        //         case 'autofocus':
-        //             $item .= $value ? ' autofocus' : '';
-        //             break;
-        //         case 'checked':
-        //             $item .= $value ? ' checked' : '';
-        //             break;
-        //         case 'disabled':
-        //             $item .= $value ? ' disabled' : '';
-        //             break;
-        //         case 'indeterminate':
-        //             $item .= $value ? ' indeterminate' : '';
-        //             break;
-        //         case 'required':
-        //             $item .= $value ? ' required' : '';
-        //             break;
-        //         default:
-        //             $item .= " {$field}='{$value}'";
-        //     }
-        // }
-        // $item .= ">";
         if ( $params['position'] == 'after' ) {
             if ( isset( $params['label'] ) ) {
                 $item .= "<label for='{$params['id']}'> {$params['label']}</label>";
@@ -753,6 +727,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
+     * @throws  MissingRequiredInputException   If $params['name'] is missing.
+     * @throws  InvalidInputException           If $params position is not either 'before' or 'after'.
+     * 
      * @static
      * @access  public
      * @since   LRS 3.16.1
@@ -760,15 +737,11 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function radio( array $params = [] ): string {
         if ( !isset( $params['name'] ) ) {
-            throw new Exception( "Missing \$param attribute 'name'. Radio buttons require the 'name' attribute to be set." );
+            throw new MissingRequiredInputException( "Missing \$param attribute 'name'. Radio buttons require the 'name' attribute to be set." );
         }
 
         if ( !isset( $params['id'] ) ) {
             $params['id'] = Hash::random_id_string( 7 );
-        }
-
-        if ( isset ( $param['label'] ) && !isset ( $param['id'] ) ) {
-            throw new Exception( "Missing \$param attribute 'id'. A label require the 'id' attribute to be set." );
         }
 
         $skip_fields = ['label', 'position'];
@@ -778,9 +751,11 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['position'] = 'after';
         } else {
             if ( !in_array( $params['position'], ['before', 'after'] ) ) {
-                throw new \Exception( "Parameter 'Position' may be either 'before' or 'after', not '{$params['position']}'" );
+                throw new InvalidInputException( "Parameter 'Position' may be either 'before' or 'after', not '{$params['position']}'" );
             }
         }
+
+        $params['type'] = 'radio';
 
         // Container
         $item .= self::checkbox_input_container( $params );
@@ -797,23 +772,25 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['class'] = 'standard_radiobox ' . $params['class'];
         }
 
-        $item .= "<input type='radio'";
-        foreach ( $params as $field => $value ) {
-            if ( in_array( $field, $skip_fields ) ) {
-                continue;
-            }
-            switch ( $field ) {
-                case 'checked':
-                    $item .= $value ? ' checked' : '';
-                    break;
-                case 'disabled':
-                    $item .= $value ? ' disabled' : '';
-                    break;
-                default:
-                    $item .= " {$field}='{$value}'";
-            }
-        }
-        $item .= ">";
+        $item .= self::html_tag_open( 'input', $params, $skip_fields );
+
+        // $item .= "<input type='radio'";
+        // foreach ( $params as $field => $value ) {
+        //     if ( in_array( $field, $skip_fields ) ) {
+        //         continue;
+        //     }
+        //     switch ( $field ) {
+        //         case 'checked':
+        //             $item .= $value ? ' checked' : '';
+        //             break;
+        //         case 'disabled':
+        //             $item .= $value ? ' disabled' : '';
+        //             break;
+        //         default:
+        //             $item .= " {$field}='{$value}'";
+        //     }
+        // }
+        // $item .= ">";
         if ( $params['position'] == 'after' ) {
             if ( isset( $params['label'] ) ) {
                 $item .= "<label for='{$params['id']}'> {$params['label']}</label>";
