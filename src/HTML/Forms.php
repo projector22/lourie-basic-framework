@@ -805,6 +805,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
+     * @throws  InvalidInputException   If $params checked is not parsed as a bool.
+     * 
      * @static
      * @access  public
      * @since   LRS 3.7.6
@@ -814,13 +816,13 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function toggle( array $params = [] ): string {
         if ( !isset( $params['id'] ) ) {
-            throw new \Exception( "Text field ID not set" );
+            $params['id'] = Hash::random_id_string();
         }
         if ( !isset ( $params['checked'] ) ) {
             $params['checked'] = false;
         }
         if ( $params['checked'] != true && $params['checked'] != false ) {
-            throw new \Exception( "Invalid value for param 'checked' set. It must be either true or false" );
+            throw new InvalidInputException( "Invalid value for param 'checked' set. It must be either true or false" );
         }
 
         $skip_fields = ['label', 'hint', 'container', 'off', 'on'];
@@ -848,35 +850,40 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
          * Off
          */
 
-        if ( isset ( $params['on'] ) || isset( $params['off']) ) {
+        if ( isset ( $params['on'] ) || isset( $params['off'] ) ) {
             $item .= "<div class='selector_contain'>";
             if ( isset( $params['off'] ) ) {
                 $item .= "<span class='selector_text'>{$params['off']}</span>";
             }
         }
 
+        $params['type'] = 'checkbox';
+
         /**
          * The toggle, wrapped in a label so the whole thing is clickable.
          */
         $item .= "<label class='selector_switch'>";
-        $item .= "<input type='checkbox'";
-        foreach ( $params as $field => $value ) {
-            if ( in_array( $field, $skip_fields ) ) {
-                continue;
-            }
-            switch ( $field ) {
-                case 'disabled':
-                    $item .= $value ? ' disabled' : '';
-                    break;
-                case 'checked':
-                    $item .= $value ? ' checked' : '';
-                    break;
-                default;
-                    $item .= " {$field}='{$value}'";
-            }
-        }
 
-        $item .= "><span class='slider round'></span>";
+        $item .= self::html_tag_open( 'input', $params, $skip_fields );
+
+        // $item .= "<input type='checkbox'";
+        // foreach ( $params as $field => $value ) {
+        //     if ( in_array( $field, $skip_fields ) ) {
+        //         continue;
+        //     }
+        //     switch ( $field ) {
+        //         case 'disabled':
+        //             $item .= $value ? ' disabled' : '';
+        //             break;
+        //         case 'checked':
+        //             $item .= $value ? ' checked' : '';
+        //             break;
+        //         default;
+        //             $item .= " {$field}='{$value}'";
+        //     }
+        // }
+
+        $item .= "<span class='slider round'></span>";
         $item .= "</label>";
 
         /**
