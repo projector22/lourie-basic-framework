@@ -487,33 +487,6 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         $item .= self::html_element_container( 'select', $params, $skip_fields );
 
-        // $item .= "<select";
-        // foreach ( $params as $field => $value ) {
-        //     if ( in_array( $field, $skip_fields ) ) {
-        //         continue;
-        //     }
-        //     switch ( $field ) {
-        //         case 'autofocus':
-        //             $item .= $value ? ' autofocus' : '';
-        //             break;
-        //         case 'disabled':
-        //             $item .= $value ? ' disabled' : '';
-        //             break;
-        //         case 'multiple':
-        //             $item .= $value ? ' multiple' : '';
-        //             break;
-        //         case 'required':
-        //             $item .= $value ? ' required' : '';
-        //             break;
-        //         default:
-        //             $item .= " {$field}='{$value}'";
-        //     }
-        // }
-
-
-
-        // $item .= ">{$params['data']}</select>";
-
         /**
          * Hint
          */
@@ -552,11 +525,11 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function textarea( array $params = [] ): string {
         if ( !isset ( $params['id'] ) ) {
-            throw new \Exception( "Select box field ID not set" );
+            $params['id'] = Hash::random_id_string();
         }
 
         $skip_fields = [
-            'label', 'hint', 'validate', 'flex', 'value', 'counter', 'resize',
+            'hint', 'validate', 'flex', 'value', 'counter', 'resize',
             'container', 'hidden',
         ];
         $item = '';
@@ -629,33 +602,37 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         } else {
             $params['class'] = $standard_class;
         }
-        $item .= "<textarea";
-        foreach ( $params as $field => $value ) {
-            if ( in_array( $field, $skip_fields ) ) {
-                continue;
-            }
-            switch ( $field ) {
-                case 'autofocus':
-                    $item .= $value ? ' autofocus' : '';
-                    break;
-                case 'disabled':
-                    $item .= $value ? ' disabled' : '';
-                    break;
-                case 'readonly':
-                    $item .= $value ? ' readonly' : '';
-                    break;
-                case 'required':
-                    $item .= $value ? ' required' : '';
-                    break;
-                default:
-                    $item .= " {$field}='{$value}'";
-            }
-        }
+
         if ( isset ( $params['validate'] ) || isset( $params['required'] ) && $params['required'] ) {
-            $item .= " data-requires-validation=1";
+            $params['data-requires-validation'] = 1;
         }
 
-        $item .= ">{$params['value']}</textarea>";
+        self::html_element_container( 'textarea', $params, $skip_fields );
+
+        // $item .= "<textarea";
+        // foreach ( $params as $field => $value ) {
+        //     if ( in_array( $field, $skip_fields ) ) {
+        //         continue;
+        //     }
+        //     switch ( $field ) {
+        //         case 'autofocus':
+        //             $item .= $value ? ' autofocus' : '';
+        //             break;
+        //         case 'disabled':
+        //             $item .= $value ? ' disabled' : '';
+        //             break;
+        //         case 'readonly':
+        //             $item .= $value ? ' readonly' : '';
+        //             break;
+        //         case 'required':
+        //             $item .= $value ? ' required' : '';
+        //             break;
+        //         default:
+        //             $item .= " {$field}='{$value}'";
+        //     }
+        // }
+
+        // $item .= ">{$params['value']}</textarea>";
 
         if ( $params['counter'] && $params['id'] != '' ) {
             $div_id = Hash::random_id_string( 7 );
