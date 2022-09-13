@@ -341,39 +341,41 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $standard_class .= ' st_input_width_default';
         }
 
+        if ( isset ( $params['validate'] ) || isset( $params['required'] ) && $params['required'] ) {
+            $params['data-requires-validation'] = 1;
+        }
+
         if ( isset ( $params['class'] ) ) {
             $params['class'] = $standard_class . ' ' . $params['class'];
         } else {
             $params['class'] = $standard_class;
         }
-        $item .= "<input";
-        foreach ( $params as $field => $value ) {
-            if ( in_array( $field, $skip_fields ) ) {
-                continue;
-            }
-            switch ( $field ) {
-                case 'autofocus':
-                    $item .= $value ? ' autofocus' : '';
-                    break;
-                case 'disabled':
-                    $item .= $value ? ' disabled' : '';
-                    break;
-                case 'readonly':
-                    $item .= $value ? ' readonly' : '';
-                    break;
-                case 'required':
-                    $item .= $value ? ' required' : '';
-                    break;
-                default:
-                    $item .= " {$field}='{$value}'";
-            }
-        }
 
-        if ( isset ( $params['validate'] ) || isset( $params['required'] ) && $params['required'] ) {
-            $item .= " data-requires-validation=1";
-        }
+        $item .= self::html_tag_open( 'input', $params, $skip_fields );
+        // $item .= "<input";
+        // foreach ( $params as $field => $value ) {
+        //     if ( in_array( $field, $skip_fields ) ) {
+        //         continue;
+        //     }
+        //     switch ( $field ) {
+        //         case 'autofocus':
+        //             $item .= $value ? ' autofocus' : '';
+        //             break;
+        //         case 'disabled':
+        //             $item .= $value ? ' disabled' : '';
+        //             break;
+        //         case 'readonly':
+        //             $item .= $value ? ' readonly' : '';
+        //             break;
+        //         case 'required':
+        //             $item .= $value ? ' required' : '';
+        //             break;
+        //         default:
+        //             $item .= " {$field}='{$value}'";
+        //     }
+        // }
 
-        $item .= ">";
+        // $item .= ">";
 
         /**
          * Hint
