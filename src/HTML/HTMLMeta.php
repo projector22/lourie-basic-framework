@@ -49,7 +49,7 @@ class HTMLMeta {
      * 
      * @static
      * @access  protected
-     * @since   0.1.5-beta
+     * @since   LBF 0.1.5-beta
      */
 
     protected static function handle_echo( string $element, array $params = []  ): void {
@@ -74,7 +74,7 @@ class HTMLMeta {
      * 
      * @static
      * @access  public
-     * @since   0.1.6-beta
+     * @since   LBF 0.1.6-beta
      */
 
     public static function temporary_change_echo( bool $temp_echo ): string {
@@ -94,12 +94,32 @@ class HTMLMeta {
      * 
      * @static
      * @access  public
-     * @since   0.1.6-beta
+     * @since   LBF 0.1.6-beta
      */
     public static function restore_origonal_echo( string $id ): void {
         self::$echo = self::$temporary_echo[$id];
         unset( self::$temporary_echo[$id] );
     }
+
+
+    /**
+     * The default skip params used by this class.
+     * 
+     * @var array   $default_skip_params
+     * 
+     * @static
+     * @access  private
+     * @since   LBF 0.1.6-beta
+     */
+
+    private static array $default_skip_params = [
+        'maxmin',
+        'echo',
+        'text',
+        'content',
+        'data',
+        'label',
+    ];
 
 
     /**
@@ -113,18 +133,11 @@ class HTMLMeta {
      * 
      * @static
      * @access  protected
-     * @since   0.1.6-beta
+     * @since   LBF 0.1.6-beta
      */
 
     protected static function html_element_container( string $tag, array $params, array $skip_params_extra = [] ): string {
-        $skip_params = array_merge( [
-            'maxmin',
-            'echo',
-            'text',
-            'content',
-            'data',
-            'label',
-        ], $skip_params_extra );
+        $skip_params = array_merge( self::$default_skip_params, $skip_params_extra );
         if ( $tag == 'textarea' ) {
             if ( isset( $params['value'] ) ) {
                 $params['text'] = $params['value'];
@@ -150,18 +163,11 @@ class HTMLMeta {
      * 
      * @static
      * @access  protected
-     * @since   0.1.5-beta
+     * @since   LBF 0.1.5-beta
      */
 
     protected static function html_tag_open( string $tag, array $params, array $skip_params_extra = [] ): string {
-        $skip_params = array_merge( [
-            'maxmin',
-            'echo',
-            'text',
-            'content',
-            'data',
-            'label',
-        ], $skip_params_extra );
+        $skip_params = array_merge( self::$default_skip_params, $skip_params_extra );
         $element = "<{$tag}";
         $element .= self::assign_key_values( $params, $skip_params );
         $element .= '>';
@@ -179,7 +185,7 @@ class HTMLMeta {
      * 
      * @static
      * @access  private
-     * @since   0.1.6-beta
+     * @since   LBF 0.1.6-beta
      */
 
     private static function assign_key_values( array $params, array $skip_params ): string {
@@ -233,7 +239,7 @@ class HTMLMeta {
      * 
      * @static
      * @access  protected
-     * @since   0.1.5-beta
+     * @since   LBF 0.1.5-beta
      */
 
     protected static function html_tag_close( string $tag, int $count, ?string $comment ): string {
