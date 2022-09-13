@@ -123,20 +123,9 @@ class HTMLMeta {
             'content',
             'echo',
         ], $skip_params_extra );
-        $element = "<{$tag}";
         $inner_text = $params['text'] ?? $params['content'] ?? '';
-        foreach ( $params as $key => $value ) {
-            if ( in_array( $key, $skip_params ) ) {
-                continue;
-            }
-            switch ( $key ) {
-                case 'new_tab':
-                    $element .= $value ? " target='_blank' rel='noopener'" : '';
-                    break;
-                default:
-                    $element .= " {$key}='{$value}'";
-            }
-        }
+        $element = "<{$tag}";
+        $element .= self::assign_key_values( $params, $skip_params );
         $element .= ">{$inner_text}</{$tag}>";
         return $element;
     }
@@ -162,6 +151,27 @@ class HTMLMeta {
             'echo',
         ], $skip_params_extra );
         $element = "<{$tag}";
+        $element .= self::assign_key_values( $params, $skip_params );
+        $element .= '>';
+        return $element;
+    }
+
+
+    /**
+     * Assign the key value pairs to the element.
+     * 
+     * @param   array   $params         Any params to add to the tag.
+     * @param   array   $skip_params    All the params to skip.
+     * 
+     * @return  string
+     * 
+     * @static
+     * @access  private
+     * @since   0.1.6-beta
+     */
+
+    private static function assign_key_values( array $params, array $skip_params ): string {
+        $element = '';
         foreach ( $params as $key => $value ) {
             if ( in_array( $key, $skip_params ) ) {
                 continue;
@@ -170,11 +180,22 @@ class HTMLMeta {
                 case 'new_tab':
                     $element .= $value ? " target='_blank' rel='noopener'" : '';
                     break;
+                case 'autofocus':
+                    $element .= $value ? ' autofocus' : '';
+                    break;
+                case 'disabled':
+                    $element .= $value ? ' disabled' : '';
+                    break;
+                case 'readonly':
+                    $element .= $value ? ' readonly' : '';
+                    break;
+                case 'required':
+                    $element .= $value ? ' required' : '';
+                    break;
                 default:
                     $element .= " {$key}='{$value}'";
             }
         }
-        $element .= '>';
         return $element;
     }
 
