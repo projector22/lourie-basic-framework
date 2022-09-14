@@ -660,12 +660,13 @@ class Buttons extends HTMLMeta {
         }
         $params['href'] = $link;
         $params['text'] = $button_text;
+        $params['echo'] = false;
 
-        $hold = HTML::temporary_change_echo( false );
+        // $hold = HTML::temporary_change_echo( false );
 
         $button .= HTML::a( $params );
         // $button .= HTML::link( $link, $button_text, $params );
-        HTML::restore_origonal_echo( $hold );
+        // HTML::restore_origonal_echo( $hold );
         $button .= "</div>";
         self::handle_echo( $button );
         return $button;
