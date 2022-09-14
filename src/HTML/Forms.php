@@ -1140,26 +1140,31 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         } else {
             $params['class'] = $standard_class;
         }
-        $item .= "<input type='file'";
-        foreach ( $params as $field => $value ) {
-            if ( in_array( $field, $skip_fields ) ) {
-                continue;
-            }
-            switch ( $field ) {
-                case 'multiple':
-                    $item .= $value ? ' multiple' : '';
-                    break;
-                case 'checked':
-                    $item .= $value ? ' checked' : '';
-                    break;
-                case 'disabled':
-                    $item .= $value ? ' disabled' : '';
-                    break;
-                default:
-                    $item .= " {$field}='{$value}'";
-            }
-        }
-        $item .= '>';
+
+        $params['type'] = 'file';
+
+        $item .= self::html_tag_open( 'input', $params, $skip_fields );
+
+        // $item .= "<input type='file'";
+        // foreach ( $params as $field => $value ) {
+        //     if ( in_array( $field, $skip_fields ) ) {
+        //         continue;
+        //     }
+        //     switch ( $field ) {
+        //         case 'multiple':
+        //             $item .= $value ? ' multiple' : '';
+        //             break;
+        //         case 'checked':
+        //             $item .= $value ? ' checked' : '';
+        //             break;
+        //         case 'disabled':
+        //             $item .= $value ? ' disabled' : '';
+        //             break;
+        //         default:
+        //             $item .= " {$field}='{$value}'";
+        //     }
+        // }
+        // $item .= '>';
         $item .= "<span class='upload_button_padding upload_file_selected_feedback' id='{$params['id']}__text_feedback'>No file selected</span>";
         $item .= "</label>";
 
