@@ -196,7 +196,9 @@ class HTMLMeta {
             }
             switch ( $key ) {
                 case 'new_tab':
-                    $element .= $value ? " target='_blank' rel='noopener'" : '';
+                    if ( !isset( $params['href'] ) ) {
+                        $element .= $value ? " target='_blank' rel='noopener'" : '';
+                    }
                     break;
                 case 'autofocus':
                     $element .= $value ? ' autofocus' : '';
@@ -218,6 +220,13 @@ class HTMLMeta {
                     break;
                 case 'indeterminate':
                     $element .= $value ? ' indeterminate' : '';
+                    break;
+                case 'href':
+                    if ( isset( $params['new_tab'] ) && $params['new_tab'] ) {
+                        $element .= " onClick='javascript:window.open(\"{$value}\", \"_blank\")'";
+                    } else {
+                        $element .= " onClick='window.location.href = \"{$value}\"'";
+                    }
                     break;
                 default:
                     $element .= " {$key}='{$value}'";
