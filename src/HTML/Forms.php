@@ -998,29 +998,36 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['class'] = $standard_class;
         }
 
-        $item .= "<input";
-        foreach ( $params as $field => $value ) {
-            if ( in_array( $field, $skip_fields ) ) {
-                continue;
-            }
-            switch ( $field ) {
-                case 'autofocus':
-                    $item .= $value ? ' autofocus' : '';
-                    break;
-                case 'disabled':
-                    $item .= $value ? ' disabled' : '';
-                    break;
-                case 'readonly':
-                    $item .= $value ? ' readonly' : '';
-                    break;
-                case 'required':
-                    $item .= $value ? ' required' : '';
-                    break;
-                default:
-                    $item .= " {$field}='{$value}'";
-            }
-        }
-        $item .= ">";
+        
+        $item .= self::html_tag_open( 'input', $params, $skip_fields );
+
+
+        // $item .= "<input";
+        // foreach ( $params as $field => $value ) {
+        //     if ( in_array( $field, $skip_fields ) ) {
+        //         continue;
+        //     }
+        //     switch ( $field ) {
+        //         case 'autofocus':
+        //             $item .= $value ? ' autofocus' : '';
+        //             break;
+        //         case 'disabled':
+        //             $item .= $value ? ' disabled' : '';
+        //             break;
+        //         case 'readonly':
+        //             $item .= $value ? ' readonly' : '';
+        //             break;
+        //         case 'required':
+        //             $item .= $value ? ' required' : '';
+        //             break;
+        //         default:
+        //             $item .= " {$field}='{$value}'";
+        //     }
+        // }
+        // $item .= ">";
+
+
+
         $icon = new Icons;
         $item .= $icon->get( 'search', echo: false );
         $item .= "</span>";
