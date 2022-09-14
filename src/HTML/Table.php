@@ -2,7 +2,7 @@
 
 namespace LBF\HTML;
 
-use \Exception;
+use LBF\Errors\InvalidInputException;
 use LBF\HTML\JS;
 use LBF\HTML\Form;
 use LBF\HTML\HTML;
@@ -16,7 +16,7 @@ use LBF\HTML\HTML;
  * 
  * @since   LRS 3.15.5
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  */
 
 class Table {
@@ -119,7 +119,7 @@ class Table {
      */
 
     public bool $edit_link;
-    
+
     /**
      * Draw the table as a full width table
      * 
@@ -189,13 +189,15 @@ class Table {
      * 
      * @return  self  $this
      * 
+     * @throws  InvalidInputException   If trying to set an id of the table.
+     * 
      * @access  public
      * @since   LRS 3.15.5
      */
 
     public function table_start( array $headings = [], array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new Exception( "You cannot set an id for a Table" );
+            throw new InvalidInputException( "You cannot set an id for a Table" );
         }
         $params['id'] = $this->table_id . '_table';
 
@@ -263,17 +265,19 @@ class Table {
      * 
      * @return  self  $this
      * 
+     * @throws  InvalidInputException   If trying to set an id of a table row.
+     * 
      * @access  public
      * @since   LRS 3.15.5
      */
 
     public function row_start( array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new Exception( "You cannot set an id for a Table Row" );
+            throw new InvalidInputException( "You cannot set an id for a Table Row" );
         }
-        
+
         $class = 'standard_row';
-        
+
         if ( !isset( $params['heading'] ) || $params['heading'] == false ) {
             $params['id'] = $this->table_id . '--row_' . $this->row_index;
             $class .= ' body_row';
@@ -286,7 +290,7 @@ class Table {
         if ( isset( $params['highlight'] ) && $params['highlight'] == true ) {
             $class .= ' highlight_empty';
         }
-        
+
         if ( isset( $params['class'] ) ) {
             $params['class'] = "{$class} {$params['class']}";
         } else {
@@ -334,7 +338,7 @@ class Table {
      * 
      * @param   array   $heading    The headings to place on top of the table
      *                              Default: []
-     * @param   array   $params     Params to add to the cell. 
+     * @param   array   $params     Params to add to the cell.
      *                              Can contain standard attributes like class or name as well as the following:
      *                              - 'alignment' ['L', 'C', 'R']
      *                              Default: []
@@ -345,7 +349,7 @@ class Table {
 
     private function headings( array $headings = [], array $params = [] ): void {
         $this->row_start( [
-            'class'   => 'table_header', 
+            'class'   => 'table_header',
             'heading' => true
         ] );
         if ( $this->select_checkbox ) {
@@ -387,12 +391,14 @@ class Table {
      * A table cell <td></td>.
      * 
      * @param   mixed   $content    The content of the cell.
-     * @param   array   $params     Params to add to the cell. 
+     * @param   array   $params     Params to add to the cell.
      *                              Can contain standard attributes like class or name as well as the following:
      *                              - 'alignment' ['L', 'C', 'R']
      *                              Default: []
      * 
      * @return  self  $this
+     * 
+     * @throws  InvalidInputException   If trying to set an id of a table cell.
      * 
      * @access  public
      * @since   LRS 3.15.5
@@ -400,7 +406,7 @@ class Table {
 
     public function cell( mixed $content, array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new Exception( "You cannot set an id for a Table Cell" );
+            throw new InvalidInputException( "You cannot set an id for a Table Cell" );
         }
         if ( !isset ( $params['heading'] ) || $params['heading'] == false ) {
             $params['id'] = $this->get_cell_id();
@@ -411,7 +417,7 @@ class Table {
         $tdh = isset ( $params['heading'] ) && $params['heading'] == true ? 'th' : 'td';
 
         $cell = "<{$tdh}";
-        
+
         foreach ( $params as $key => $value ) {
             if ( in_array ( $key, self::SKIP_KEYS ) ) {
                 continue;
@@ -431,12 +437,14 @@ class Table {
      * Insert a cell edit link.
      * 
      * @param   string  $href   The link to navigate to. Something like '?p=example&x=y'
-     * @param   array   $params     Params to add to the cell. 
+     * @param   array   $params     Params to add to the cell.
      *                              Can contain standard attributes like class or name as well as the following:
      *                              - 'alignment' ['L', 'C', 'R']
      *                              Default: []
      * 
      * @return  self  $this
+     * 
+     * @throws  InvalidInputException   If trying to set an id of a table cell.
      * 
      * @access  public
      * @since   LRS 3.15.5
@@ -444,7 +452,7 @@ class Table {
 
     public function cell_edit_link( string $href, array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new Exception( "You cannot set an id for a Table Cell" );
+            throw new InvalidInputException( "You cannot set an id for a Table Cell" );
         }
         $params['id'] = $this->get_cell_id();
         $params = $this->set_vertical_lines( $params );
@@ -454,10 +462,12 @@ class Table {
             $params['class'] .= ' edit_link_width';
         }
 
-        $hold = HTML::$echo;
-        HTML::$echo = false;
-        $link = HTML::link( $href, 'Edit', ['new_tab' => true ] );
-        HTML::$echo = $hold;
+        $link = HTML::a( [
+            'href'    => $href, 
+            'text'    => 'Edit',
+            'new_tab' => true,
+            'echo'    => false,
+        ] );
         $cell = "<td";
         foreach ( $params as $key => $value ) {
             $cell .= " {$key}='{$value}'";
@@ -477,16 +487,18 @@ class Table {
      * 
      * @return  self  $this
      * 
+     * @throws  InvalidInputException   If trying to set an id of a table cell.
+     * 
      * @access  public
      * @since   LRS 3.15.5
      */
 
     public function hidden_data( mixed $value, array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new Exception( "You cannot set an id for a Table Cell" );
+            throw new InvalidInputException( "You cannot set an id for a Table Cell" );
         }
         $params['id'] = $this->get_cell_id();
-        
+
         $input = "<input type='hidden' value='{$value}'";
         foreach ( $params as $key => $value ) {
             $input .= " {$key}='{$value}'";
@@ -511,8 +523,7 @@ class Table {
      */
 
     private function select_checkbox( bool $select_all_checkbox = false, bool $disabled = false  ): void {
-        $hold = Form::$echo;
-        Form::$echo = false;
+        $hold = Form::temporary_change_echo( false );
         if ( $select_all_checkbox ) {
             $checkboxs = Form::checkbox( [
                 'id'        => "{$this->table_id}_select_all",
@@ -538,7 +549,7 @@ class Table {
                 'container' => ['overwrite' => true],
             ] ), ['class' => 'selectable_checkbox_width'] );
         }
-        Form::$echo = $hold;
+        Form::restore_origonal_echo( $hold );
     }
 
 
@@ -653,7 +664,7 @@ class Table {
  * 
  * As a future idea:
  * 
- * Consolidate all the search methods into this class. Have them as as callable methods with 
+ * Consolidate all the search methods into this class. Have them as as callable methods with
  * automatic JS included, pointing back to a single script in the js
  * class table_filter class.
  * 

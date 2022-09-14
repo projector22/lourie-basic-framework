@@ -2,7 +2,7 @@
 
 namespace LBF\Tools\Files;
 
-use \Exception;
+use Exception;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 
@@ -18,7 +18,7 @@ use RecursiveDirectoryIterator;
  * @since   LRS 3.4.0
  * @since   LRS 3.11.0  Moved to `Framework\Tools\FileSystem`.
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  */
 
 class FileSystem {
@@ -28,6 +28,7 @@ class FileSystem {
      * 
      * @var string  $last_error
      * 
+     * @static
      * @access  public
      * @since   LRS 3.15.4
      */
@@ -40,6 +41,7 @@ class FileSystem {
      * 
      * @var array   $all_errors     Default: []
      * 
+     * @static
      * @access  public
      * @since   LRS 3.15.4
      */
@@ -53,6 +55,7 @@ class FileSystem {
      * 
      * @return  string  Octal file permissions, eg. 0775
      * 
+     * @static
      * @access  public
      * @since   LRS 3.7.0
      */
@@ -69,6 +72,7 @@ class FileSystem {
      * 
      * @return  string  string with slashes corrected
      * 
+     * @static
      * @access  public
      * @since   LRS 3.7.0
      */
@@ -95,6 +99,7 @@ class FileSystem {
      * 
      * @return  boolean     Success or failure.
      * 
+     * @static
      * @access  public
      * @since   LRS 3.15.4
      */
@@ -165,6 +170,7 @@ class FileSystem {
      * 
      * @return  boolean
      * 
+     * @static
      * @access  public
      * @since   LRS 3.17.3
      */
@@ -196,6 +202,7 @@ class FileSystem {
      * 
      * @return  boolean
      * 
+     * @static
      * @access  public
      * @since   LRS 3.17.3
      */
@@ -218,6 +225,7 @@ class FileSystem {
      * 
      * @return  boolean
      * 
+     * @static
      * @access  public
      * @since   LRS 3.17.3
      */
@@ -234,6 +242,7 @@ class FileSystem {
      * 
      * @return  boolean
      * 
+     * @static
      * @access  public
      * @since   LRS 3.19.6
      */
@@ -268,6 +277,7 @@ class FileSystem {
      * 
      * @return  boolean
      * 
+     * @static
      * @access  public
      * @since   LRS 3.26.4
      */
@@ -295,6 +305,7 @@ class FileSystem {
      * 
      * @return  array
      * 
+     * @static
      * @access  public
      * @since   LRS 3.21.1
      */
@@ -311,6 +322,23 @@ class FileSystem {
         }
         sort( $files );
         return $files;
+    }
+
+
+    /**
+     * Returns if the file exists.
+     * 
+     * @param   string  $path   Path to the file to be tested.
+     * 
+     * @return  boolean
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.1.6-beta
+     */
+
+    public static function file_exists( string $path ): bool {
+        return file_exists( $path );
     }
 
 }

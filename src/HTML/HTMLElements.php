@@ -2,7 +2,6 @@
 
 namespace LBF\HTML;
 
-use Exception;
 use LBF\Auth\Hash;
 use LBF\Errors\InvalidInputException;
 use LBF\Errors\MissingRequiredInputException;
@@ -17,8 +16,9 @@ use LBF\HTML\HTMLMeta;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   LRS 3.12.5
- * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                      Namespace changed from `Framework` to `LBF`.
+ * @since   LRS 3.28.0      Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                          Namespace changed from `Framework` to `LBF`.
+ * @since   LBF 0.1.5-beta  Added extension `HTMLMeta`.
  */
 
 class HTMLElements extends HTMLMeta {
@@ -87,10 +87,9 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function div_container( array $params = [], string $content = '' ): string {
-        $echo_hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $element = self::div( $params ) . $content . self::close_div();
-        self::$echo = $echo_hold;
+        self::restore_origonal_echo( $hold );
         self::handle_echo( $element );
         return $element;
     }
@@ -160,10 +159,9 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function span_container( array $params = [], string $content = '' ): string {
-        $echo_hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $element = self::span( $params ) . $content . self::close_span();
-        self::$echo = $echo_hold;
+        self::restore_origonal_echo( $hold );
         self::handle_echo( $element );
         return $element;
     }
@@ -233,10 +231,9 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function p_container( array $params = [], string $content = '' ): string {
-        $echo_hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $element = self::p( $params ) . $content . self::close_p();
-        self::$echo = $echo_hold;
+        self::restore_origonal_echo( $hold );
         self::handle_echo( $element );
         return $element;
     }
@@ -257,11 +254,8 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function heading( int $size, string $content, array $params = [] ): string {
-        $element = "<h{$size}";
-        foreach ( $params as $index => $value ) {
-            $element .= " {$index}='$value'";
-        }
-        $element .= ">{$content}</h{$size}>";
+        $params['text'] = $content;
+        $element = self::html_element_container( "h{$size}", $params );
         self::handle_echo( $element );
         return $element;
     }
@@ -282,14 +276,8 @@ class HTMLElements extends HTMLMeta {
      */    
 
     public static function form( array $params = [], bool $new_tab = false ): string {
-        $element = '<form';
-        foreach ( $params as $item => $value ) {
-            $element .= " {$item}='{$value}'";
-        }
-        if ( $new_tab ) {
-            $element .= ' ' . Draw::NEW_TAB;
-        }
-        $element .= '>';
+        $params['new_tab'] = $new_tab;
+        $element = self::html_tag_open( 'form', $params );
         self::handle_echo( $element );
         return $element;
     }
@@ -326,6 +314,8 @@ class HTMLElements extends HTMLMeta {
      * @static
      * @access  public
      * @since   LRS 3.12.8
+     * 
+     * @deprecated  LBF 0.1.6-beta
      */
 
     public static function link( string $href, ?string $text, array $params = [] ): string {
@@ -346,11 +336,51 @@ class HTMLElements extends HTMLMeta {
 
 
     /**
+     * Rebuild of `link`.
+     * 
+     * @param   array   $params The elements to add to the link
+     * 
+     * @return  string
+     * 
+     * @throws  MissingRequiredInputException   If $params['text'] missing.
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.1.6-beta
+     */
+
+    public static function a( array $params ): string {
+        if ( !isset( $params['href'] ) ) {
+            $params['href'] = 'javascript:void(0)';
+        }
+
+        if ( !isset( $params['text'] ) ) {
+            throw new MissingRequiredInputException( "Param 'text' required" );
+        }
+
+        if ( !isset( $params['id'] ) ) {
+            $params['id'] = Hash::random_id_string();
+        }
+
+        $skip_params = [
+            'echo', 'text',
+        ];
+
+        $item = self::html_element_container( 'a', $params, $skip_params );
+
+        self::handle_echo( $item, $params );
+        return $item;
+    }
+
+
+    /**
      * Draw out an image tag.
      * 
      * @param   array   $params The elements to add to the image
      * 
      * @return  string
+     * 
+     * @throws  MissingRequiredInputException   If param `src` is missing.
      * 
      * @static
      * @access  public
@@ -359,10 +389,8 @@ class HTMLElements extends HTMLMeta {
 
     public static function img( array $params = [] ): string {
         if ( !isset( $params['src'] ) ) {
-            throw new Exception( "Path to file not set. Please set param 'src" );
+            throw new MissingRequiredInputException( "Path to file not set. Please set param 'src" );
         }
-
-        $skip_params = ['unit'];
 
         $unit = $params['unit'] ?? 'px';
         $dimensions = ['height', 'width'];
@@ -373,17 +401,8 @@ class HTMLElements extends HTMLMeta {
                 }
             }
         }
-        
-        $item = '<img';
 
-        foreach ( $params as $index => $value ) {
-            if ( in_array( $index, $skip_params ) ) {
-                continue;
-            }
-            $item .= " {$index}='{$value}'";
-        }
-
-        $item .= '>';
+        $item = self::html_tag_open( 'img', $params, ['unit'] );
 
         self::handle_echo( $item );
         return $item;
@@ -409,6 +428,8 @@ class HTMLElements extends HTMLMeta {
      * 
      * @return  string
      * 
+     * @throws  MissingRequiredInputException   If params src & srcdoc are missing.
+     * 
      * @static
      * @access  public
      * @since   LRS 3.11.1
@@ -416,12 +437,8 @@ class HTMLElements extends HTMLMeta {
      */
 
     public static function iframe( array $params ): string {
-        $skip_params = [
-            'default_unit',
-        ];
-
         if ( !isset( $params['src'] ) && !isset( $params['srcdoc'] ) ) {
-            throw new Exception( "An iframe must have either the parameter 'src' or 'srcdoc'." );
+            throw new MissingRequiredInputException( "An iframe must have either the parameter 'src' or 'srcdoc'." );
         }
 
         if ( !isset( $params['id'] ) ) {
@@ -451,17 +468,9 @@ class HTMLElements extends HTMLMeta {
             }
         }
 
-        $item = '<iframe';
+        $params['text'] = 'Sorry, your browser does not allow iframe previews.';
 
-        foreach ( $params as $key => $value ) {
-            if ( in_array( $key, $skip_params ) ) {
-                continue;
-            }
-            $item .= " {$key}='{$value}'";
-        }
-
-        $item .= '>Sorry, your browser does not allow previews.';
-        $item .= '</iframe>';
+        $item = self::html_element_container( 'iframe', $params, ['default_unit'] );
 
         self::handle_echo( $item );
         return $item;

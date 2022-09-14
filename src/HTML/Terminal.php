@@ -13,7 +13,7 @@ use LBF\HTML\HTML;
  * 
  * @since   LRS 3.27.0
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  */
 
 class Terminal {
@@ -84,7 +84,7 @@ class Terminal {
         if ( $open ) {
             $class .= ' feedback_console_height';
         }
-        
+
         HTML::div( [
             'class'                => $class,
             'id'                   => $this->console_id,
@@ -99,7 +99,7 @@ class Terminal {
 
         HTML::close_div(); // feedback_console
         // HTML::div(); // Options
-        
+
         /**
          * @todo    Create a `src/Framework/HTML/Forms.php` Form for this type of input.
          * 
@@ -108,7 +108,7 @@ class Terminal {
          * @since   LRS 3.27.0
          */
         // echo "<input type='range' min='1', max='100' value='90' id='terminal_opacity.{$this->console_id}' name='terminal_opacity'>";
-        
+
         // HTML::close_div();
     }
 

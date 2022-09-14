@@ -12,67 +12,54 @@ use LBF\Auth\Hash;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   LRS 3.12.5
- * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ * @since   LRS 3.28.0      Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                          Namespace changed from `Framework` to `LBF`.
+ * @since   LBF 0.1.6-beta  Added extension `HTMLMeta`.
  */
 
-class Scripts {
-
-    /**
-     * Whether or not to echo or return the html element
-     * 
-     * @var    boolean     $echo   Default: true
-     * 
-     * @access  public
-     * @since   LRS 3.12.5
-     */
-
-    public static bool $echo = true;
+class Scripts extends HTMLMeta {
 
     /**
      * Draw a script onto the screen
      * 
-     * @param   string  $script Any kind of JavaScript or JS function call
-     * @param   string  $src    An src element on the <script> tag
-     *                          Default: null
+     * @param   string      $script Any kind of JavaScript or JS function call
+     * @param   string|null $src    An src element on the <script> tag
+     *                              Default: null
      * 
-     * @return  string  The formed script element
+     * @return  string
      * 
+     * @static
      * @since   LRS 3.7.6
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts. Added return & param $src
      */
 
-    public static function script( string $script, ?string $src = null ) {
+    public static function script( string $script, ?string $src = null ): string {
         $add_src = is_null( $src ) ? '' : " src='{$src}'";
         $element = "<script{$add_src}>{$script}</script>";
-        if ( self::$echo ) {
-            echo $element;
-        } else {
-            return $element;
-        }
+        self::handle_echo( $element );
+        return $element;
     }
 
 
     /**
      * Draw a script onto the screen, with type = module
      * 
-     * @param   string  $script Any kind of JavaScript or JS function call
-     * @param   string  $src    An src element on the <script> tag
-     *                          Default: null
+     * @param   string      $script Any kind of JavaScript or JS function call
+     * @param   string|null $src    An src element on the <script> tag
+     *                              Default: null
      * 
-     * @return  string  The formed script element
+     * @return  string
      * 
+     * @static
+     * @access  public
      * @since   LRS 3.13.0
      */
 
-    public static function script_module( $script, $src = null ) {
+    public static function script_module( string $script, ?string $src = null ): string {
         $add_src = is_null( $src ) ? '' : " src='{$src}'";
         $element = "<script{$add_src} type='module'>{$script}</script>";
-        if ( self::$echo ) {
-            echo $element;
-        } else {
-            return $element;
-        }
+        self::handle_echo( $element );
+        return $element;
     }
 
 
@@ -81,18 +68,17 @@ class Scripts {
      * 
      * @param   string  $src    Path to the JS file
      * 
-     * @return  string  The  formed script element
+     * @return  string
      * 
+     * @static
+     * @access  public
      * @since   LRS 3.12.5
      */
 
-    public static function script_loader( string $src ) {
+    public static function script_loader( string $src ): string {
         $element = "<script src='{$src}'></script>";
-        if ( self::$echo ) {
-            echo $element;
-        } else {
-            return $element;
-        }
+        self::handle_echo( $element );
+        return $element;
     }
 
 
@@ -101,23 +87,22 @@ class Scripts {
      * 
      * @param   string  $src    Path to the JS file
      * 
-     * @return  string  The  formed script element
+     * @return  string
      * 
+     * @static
+     * @access  public
      * @since   LRS 3.13.0
      */
 
-    public static function script_module_loader( string $src ) {
+    public static function script_module_loader( string $src ): string {
         $element = "<script src='{$src}' type='module'></script>";
-        if ( self::$echo ) {
-            echo $element;
-        } else {
-            return $element;
-        }
+        self::handle_echo( $element );
+        return $element;
     }
 
 
     /**
-     * Draw an inline Javascript Alert
+     * Draw an inline Javascript Alert.
      * 
      * @param   string  $text   The text of the alert
      * 
@@ -136,12 +121,13 @@ class Scripts {
      * Credit to:
      * @link https://clipboardjs.com/
      * 
+     * @static
      * @access  public
      * @since   LRS 3.1.0
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
-    public static function clipboardButton( string $id = '.btn' ) {
+    public static function clipboardButton( string $id = '.btn' ): void {
         self::script_loader( 'src/js/thirdparty/clipboard.min.js' );
         self::script( "const clipboard = new ClipboardJS('{$id}');" );
     }
@@ -155,6 +141,7 @@ class Scripts {
      * @param   int     $keycode    The key to be monitored, Default: 13 (Enter)
      * @param   boolean $do_nothing Instruction to do nothing when the key is pressed
      * 
+     * @static
      * @access  public
      * @since   LRS 3.2.2
      * @since   LRS 3.4.5   $do_nothing added
@@ -169,7 +156,7 @@ class Scripts {
                     event.preventDefault();
                 }
             });" );
-    
+
         } else {
             self::script( "var input = document.getElementById('$input');
             input.addEventListener('keyup', function(event) {
@@ -187,6 +174,7 @@ class Scripts {
      * 
      * @param   int  $keycode    The key to be monitored, Default: 13 (Enter)
      * 
+     * @static
      * @access  public
      * @since   LRS 3.2.2
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts
@@ -213,6 +201,7 @@ class Scripts {
      * @param   string  $content        The content to put in the area being hidden.
      *                                  Default: ''
      * 
+     * @static
      * @access  public
      * @since   LRS 3.4.1
      * @since   LRS 3.7.0   Added @param $function_name - Reworked logic to use MutationObserver
@@ -242,11 +231,12 @@ class Scripts {
      * 
      * @param   string  $desired_function   The name of the desired Javascript function
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
-    
+
     public static function insert_keyboard_shortcuts( string $desired_function ): void {
         /**
          * @see src\js\lib\keyboard_shortcuts.js
@@ -264,6 +254,7 @@ class Scripts {
     /**
      * Draw the shift multiselect onLoad script
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.4
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts

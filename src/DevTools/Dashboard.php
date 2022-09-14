@@ -79,7 +79,7 @@ class Dashboard extends ConnectMySQL {
         }
         Button::general( [
             'content' => 'Exit',
-            'href'    => 'home',
+            'link'    => 'home',
         ] );
         HTML::close_div();
     }
@@ -114,7 +114,7 @@ class Dashboard extends ConnectMySQL {
         Draw::set_input_multi_line();
         Button::general( [
             'content' => 'Create Table Tools from Table',
-            'href'    => '?dev-page=table-tool-creator',
+            'link'    => '?dev-page=table-tool-creator',
         ] );
         Draw::close_multi_line_input();
     }
@@ -188,7 +188,7 @@ class Dashboard extends ConnectMySQL {
 
         Draw::lines( 2 );
         Draw::line_separator();
-        Button::back( ['href' => '@dev-tools'] );
+        Button::back( ['link' => '@dev-tools'] );
     }
 
 }

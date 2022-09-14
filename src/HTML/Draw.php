@@ -6,6 +6,7 @@ use Feather\Icons;
 use LBF\HTML\JS;
 use LBF\Auth\Hash;
 use LBF\HTML\HTML;
+use LBF\HTML\HTMLMeta;
 use LBF\Img\SVGImages;
 use SVGTools\SVG;
 
@@ -19,44 +20,35 @@ use SVGTools\SVG;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   LRS 3.1.0
- * @since   LRS 3.12.5  Moved to `Framework\HTML\Draw` from `PageElements`
- * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ * @since   LRS 3.12.5      Moved to `Framework\HTML\Draw` from `PageElements`
+ * @since   LRS 3.28.0      Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
+ *                          Namespace changed from `Framework` to `LBF`.
+ * @since   LBF 0.1.6-beta  Added extension `HTMLMeta`.
  */
 
-class Draw {
-
-    /**
-     * Whether to echo or return the string item
-     * 
-     * @var boolean $echo
-     * 
-     * @access  public
-     * @since   LRS 3.6.0
-     */
-
-    public static bool $echo = true;
-
+class Draw extends HTMLMeta {
 
     /**
      * Providing a spacing element as required
      * 
+     * @static
      * @access  public
      * @since   LRS 3.1.0
      */
 
     public static function element_spacer_one(): void {
-        echo "<span class='spacer_one'></span><span></span>";    
+        echo "<span class='spacer_one'></span><span></span>";
     }
 
 
     /**
      * Providing a spacing element as required
      * 
+     * @static
      * @access  public
      * @since   LRS 3.1.0
      */
-    
+
     public static function element_spacer_two(): void {
         echo "<span class='spacer_two'></span><span></span>";
     }
@@ -79,6 +71,7 @@ class Draw {
      * 
      * @param   int     $k  The number to draw  Default: 1
      * 
+     * @static
      * @access  public
      * @since   LRS 3.1.0
      */
@@ -99,8 +92,9 @@ class Draw {
      * 
      * @param   integer     $k  The number of lines to draw
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.1.0
      * @since   LRS 3.4.0   Added @param $inline
@@ -108,7 +102,7 @@ class Draw {
      * @since   LRS 3.14.0  Added a catch for CLI_INTERFACE
      */
 
-    public static function lines( int $k ) {
+    public static function lines( int $k ): string {
         if ( !isset( self::$cli ) ) {
             self::$cli = php_sapi_name() == 'cli';
         }
@@ -117,11 +111,9 @@ class Draw {
         for ( $i = 0; $i < $k; $i++ ) {
             $line .= $lb;
         }
-        if ( self::$echo ) {
-            echo $line;
-        } else {
-            return $line;
-        }
+
+        self::handle_echo( $line );
+        return $line;
     }
 
 
@@ -131,32 +123,32 @@ class Draw {
      * @param   integer     $k      Number of lines to draw.
      *                              Default: 1
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.17.4
      */
 
-    public static function line_separator( int $k = 1 ) {
+    public static function line_separator( int $k = 1 ): string {
         $line = '';
         for ( $i = 0; $i < $k; $i++ ) {
             $line .= '<hr>';
         }
-        if ( self::$echo ) {
-            echo $line;
-        } else {
-            return $line;
-        }
+
+        self::handle_echo( $line );
+        return $line;
     }
 
 
     /**
      * Draws a page break when printing
      * 
+     * @static
      * @access  public
      * @since   LRS 3.1.0
      */
-    
+
     public static function page_break(): void {
         echo "<div class='page_break'></div>";
     }
@@ -169,10 +161,11 @@ class Draw {
      * 
      * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.1.0
      */
-    
+
     public static function action_error( string $info = '' ): string {
         if ( $info == '' ) {
             $error = "An error has occured ";
@@ -187,56 +180,57 @@ class Draw {
 
 
     /**
-     * Draw out a <span> which is used in the description in an admin or discipline page element
+     * Draw out a <span> which is used in the description in an admin or discipline page element.
      * 
-     * @param   string  $input  The string to be displayed on the screen
-     * @param   int     $lines  The number of lines to be drawn before the text
+     * @param   string  $input  The string to be displayed on the screen.
+     * @param   int     $lines  The number of lines to be drawn before the text.
      *                          Default: 0
      * 
      * @return  string|void
      * 
+     * @static
      * @access  public
      * @since   LRS 3.1.0
-     * @since   LRS 3.6.0   Changed $lines default to 0
+     * @since   LRS 3.6.0       Changed $lines default to 0.
+     * @since   LBF 0.1.6-beta  Revamped.
      */
 
-    public static function item_description( string $input, int $lines = 0 ) {
-        if ( self::$echo ) {
-            self::lines( $lines );
-            echo "<span>{$input}</span>";
-        } else {
-            $element = self::lines( $lines );
-            $element .= "<span>{$input}</span>";
-            return $element;    
-        }
+    public static function item_description( string $input, int $lines = 0 ): string {
+        $hold = self::temporary_change_echo( false );
+        $element = self::lines( $lines ) . "<span>{$input}</span>";
+        self::restore_origonal_echo( $hold );
+        self::handle_echo( $element );
+        return $element;
     }
 
 
     /**
-     * Draw out a span which will be used to draw the response text from JS AJAX calls 
+     * Draw out a span which will be used to draw the response text from JS AJAX calls.
      * 
-     * @param   string  $id         Desired span id elemenet
-     * @param   string  $content    Content of the span element
+     * @param   string  $id         Desired span id elemenet.
+     * @param   string  $content    Content of the span element.
      * 
+     * @static
      * @access  public
      * @since   LRS 3.1.0
      */
 
     public static function response_text( string $id, string $content = '' ): void  {
-        echo "<span id='{$id}'>{$content}</span>"; 
+        echo "<span id='{$id}'>{$content}</span>";
     }
 
 
     /**
      * The text area containing some text to be copied.
      * 
-     * Note, if this is being loaded via AJAX, you will need to put the 
+     * Note, if this is being loaded via AJAX, you will need to put the
      * line `JS::clipboardButton();` into the host page, as the insert
      * here will not run via AJAX.
      * 
      * @param   string  $test   The text to be copied
      * @param   string  $id     The id of the input element to be copied
      * 
+     * @static
      * @access  public
      * @since   LRS 3.4.0
      */
@@ -257,6 +251,7 @@ class Draw {
      * 
      * @param   string  $text   The text to be drawn in the header
      * 
+     * @static
      * @access  public
      * @since   LRS 3.4.1
      */
@@ -273,6 +268,7 @@ class Draw {
      * 
      * @param   string  $id     Desired id of elemenet
      * 
+     * @static
      * @access  public
      * @since   LRS 3.4.1
      */
@@ -287,6 +283,7 @@ class Draw {
     /**
      * Add some CSS to force a page print to landscape
      * 
+     * @static
      * @access  public
      * @since   LRS 3.4.9
      */
@@ -310,12 +307,13 @@ class Draw {
      *                                  Default: null
      * @param   string  $content        The content to load into the box
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      * @since   LRS 3.14.0  Added param $content
      */
 
-    public static function code_feedback_box( string $id, ?string $custom_height = null, string $content = '' ) {
+    public static function code_feedback_box( string $id, ?string $custom_height = null, string $content = '' ): void {
         $params = ['class' => 'code_feedback_box', 'id' => $id];
         if ( !is_null( $custom_height ) ) {
             $params['style'] = "height: $custom_height";
@@ -329,6 +327,7 @@ class Draw {
      * 
      * @param   string  $header     The text to be displayed
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      */
@@ -343,6 +342,7 @@ class Draw {
      * 
      * @param   string  $page the page on the help form to go to
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      */
@@ -360,12 +360,13 @@ class Draw {
      * @param   boolean $line_break     Where or not to put in a line break
      *                                  Default: true
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      */
 
     public static function item_heading( string $text, bool $line_break = true ): void {
-        echo "<span class='item_heading'><b>$text</b></span>";
+        echo "<span class='item_heading'><b>{$text}</b></span>";
         if ( $line_break ) {
             self::lines( 1 );
         }
@@ -375,7 +376,7 @@ class Draw {
     /**
      * Display the item input inline (using flex)
      * 
-     * @var boolean $display_item_input_inline     
+     * @var boolean $display_item_input_inline
      * 
      * @access  public
      * @since   LRS 3.9.0
@@ -392,6 +393,7 @@ class Draw {
      * @param   string  $id             The id to give the span to be drawn
      *                                  Default: null
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      */
@@ -421,6 +423,7 @@ class Draw {
      * @param   string  $id             The id of the containing span. If you wish to do some Javascript on the element
      *                                  Default: null
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      * @since   LRS 3.8.0   Added @param $id
@@ -447,6 +450,7 @@ class Draw {
      * @param   boolean $line_break     Where or not to put in a line break
      *                                  Default: true
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      */
@@ -464,19 +468,17 @@ class Draw {
      * 
      * @param   string  $text          The text header
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      */
 
-    public static function item_description_header( string $text ) {
+    public static function item_description_header( string $text ): string {
         $h = "<h1>{$text}</h1>";
-        if ( self::$echo ) {
-            echo $h;
-        } else {
-            return $h;
-        }
+        self::handle_echo( $h );
+        return $h;
     }
 
 
@@ -487,24 +489,24 @@ class Draw {
      * @param   string  $size   The font size desired
      *                          Default: 12px
      * 
-     * @return  string|void
+     * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.6.0
      */
 
-    public static function custom_header( string $text, string $size = '12px' ) {
-        $div = "<div style='font-size: $size'>$text</div>";
-        if ( self::$echo ) {
-            echo $div;
-        } else {
-            return $div;
-        }
+    public static function custom_header( string $text, string $size = '12px' ): string {
+        $div = "<div style='font-size: {$size}'>{$text}</div>";
+        self::handle_echo( $div );
+        return $div;
     }
 
 
     /**
      * Draw the html elements to open a link in a new tab
+     * 
+     * @var string  NEW_TAB
      * 
      * @access  public
      * @since   LRS 3.7.1
@@ -514,22 +516,22 @@ class Draw {
 
 
     /**
-     * Draw the section break template
+     * Draw the section break template.
      * 
-     * @param   string  $description    The text to go into the description
-     * @param   string  $class          The class of the new element
+     * @param   string  $description    The text to go into the description.
+     * @param   string  $class          The class of the new element.
      * 
+     * @static
      * @access  private
      * @since   LRS 3.12.8
      */
 
     private static function break_template( string $description, string $class ): void {
-        $hold = HTML::$echo;
-        HTML::$echo = true;
+        $hold = HTML::temporary_change_echo( true );
         HTML::close_div();
         HTML::div_container( ['class' => 'page_element_description'], $description );
         HTML::div( ['class' => $class] );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
     }
 
 
@@ -538,6 +540,7 @@ class Draw {
      * 
      * @param   string  $description    The description to be placed in this section break
      * 
+     * @static
      * @access  public
      * @since   LRS 3.8.0
      */
@@ -553,6 +556,7 @@ class Draw {
      * @param   string  $group_name     The name to draw next to the toggle box
      * @param   string  $toggle         The toggle drawn from Form::toggle()
      * 
+     * @static
      * @access  public
      * @since   LRS 3.9.0
      */
@@ -573,6 +577,7 @@ class Draw {
      *                              $link format: PAGE . ?p=page&t=tab
      * @param   string  $default    The default tab, in case $_GET is not set
      * 
+     * @static
      * @access  public
      * @since   LRS 3.12.0
      */
@@ -597,6 +602,7 @@ class Draw {
      * 
      * @return  string
      * 
+     * @static
      * @access  public
      * @since   LRS 3.14.0
      */
@@ -613,6 +619,7 @@ class Draw {
     /**
      * Text to put at the end of all scripts.
      * 
+     * @static
      * @access  public
      * @since   LRS 3.14.0
      */
@@ -625,15 +632,15 @@ class Draw {
     /**
      * Draw a draggable list
      * 
-     * @param   array   $data      The contents of each cell
+     * @param   array   $data   The contents of each cell
      * 
+     * @static
      * @access  public
      * @since   LRS 3.15.0
      */
 
     public static function draggable_list( array $data ): void {
-        $hold = HTML::$echo;
-        HTML::$echo = true;
+        $hold = HTML::temporary_change_echo( true );
         $id = Hash::random_id_string( 5 );
 
         HTML::div( [
@@ -645,12 +652,12 @@ class Draw {
         $svg = new SVG( SVGImages::grabber->image() );
         $svg->set_viewbox( 0, 0, 16, 16 );
         foreach ( $data as $item ) {
-            $line = HTML::div_container( 
-                ['class' => 'draggable_entry'], 
+            $line = HTML::div_container(
+                ['class' => 'draggable_entry'],
                 HTML::span_container(
-                    ['class' => 'de_item'], 
-                    $item 
-                ) . 
+                    ['class' => 'de_item'],
+                    $item
+                ) .
                 HTML::span_container(
                     ['class' => "de_grabber de_grabber{$id}"],
                     $svg->return(),
@@ -679,7 +686,7 @@ class Draw {
                 handle: '.de_grabber{$id}',
             });"
         );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
     }
 
 
@@ -689,13 +696,13 @@ class Draw {
      * @param   array   $params     The params to add to the div.
      *                              Default: []
      * 
+     * @static
      * @access  public
      * @since   LRS 3.15.8
      */
 
     public static function standard_column_left( array $params = [] ): void {
-        $hold = HTML::$echo;
-        HTML::$echo = true;
+        $hold = HTML::temporary_change_echo( true );
 
         if ( isset ( $params['class'] ) ) {
             $params['class'] = 'page_element_description ' . $params['class'];
@@ -708,7 +715,7 @@ class Draw {
         }
 
         HTML::div( $params );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
     }
 
 
@@ -720,13 +727,13 @@ class Draw {
      * @param   boolean $close_left_column  Whether or not to close the left hand column
      *                                      Default: true
      * 
+     * @static
      * @access  public
      * @since   LRS 3.15.8
      */
 
     public static function standard_column_right( array $params = [], bool $close_left_column = true ): void {
-        $hold = HTML::$echo;
-        HTML::$echo = true;
+        $hold = self::temporary_change_echo( true );
 
         if ( $close_left_column ) {
             HTML::close_div(); // page_element_description
@@ -774,8 +781,7 @@ class Draw {
             HTML::close_div();
         }
         HTML::close_div();
-
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
     }
 
 
@@ -785,13 +791,13 @@ class Draw {
      * @param   array   $params     The params to add to the div.
      *                              Default: []
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.0
      */
 
     public static function standard_single_column( array $params = [] ): void {
-        $hold = HTML::$echo;
-        HTML::$echo = true;
+        $hold = self::temporary_change_echo( true );
 
         if ( isset ( $params['class'] ) ) {
             $params['class'] = 'page_element_main ' . $params['class'];
@@ -800,13 +806,14 @@ class Draw {
         }
 
         HTML::div( $params );
-        HTML::$echo = $hold;
+        HTML::restore_origonal_echo( $hold );
     }
 
 
     /**
      * Close the right / full length column
      * 
+     * @static
      * @access  public
      * @since   LRS 3.15.8
      */
@@ -819,6 +826,7 @@ class Draw {
     /**
      * Draw a number of input fields in a single line.
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.0
      */
@@ -831,6 +839,7 @@ class Draw {
     /**
      * End the line of input fields.
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.0
      */
@@ -843,6 +852,7 @@ class Draw {
     /**
      * Draw a filter container.
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.0
      */
@@ -855,6 +865,7 @@ class Draw {
     /**
      * End the line of table filter container.
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.0
      */
@@ -867,6 +878,7 @@ class Draw {
     /**
      * Draw an aligned left container.
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.0
      */
@@ -877,8 +889,9 @@ class Draw {
 
 
     /**
-     * End the blocks aligned left
+     * End the blocks aligned left.
      * 
+     * @static
      * @access  public
      * @since   LRS 3.16.0
      */
