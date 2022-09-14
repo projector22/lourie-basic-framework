@@ -2,7 +2,6 @@
 
 namespace LBF\HTML;
 
-use \Exception;
 use LBF\Errors\InvalidInputException;
 use LBF\HTML\JS;
 use LBF\HTML\Form;
@@ -463,15 +462,12 @@ class Table {
             $params['class'] .= ' edit_link_width';
         }
 
-        // $hold = HTML::temporary_change_echo( false );
         $link = HTML::a( [
             'href'    => $href, 
             'text'    => 'Edit',
             'new_tab' => true,
             'echo'    => false,
         ] );
-        // // $link = HTML::link( $href, 'Edit', ['new_tab' => true ] );
-        // HTML::restore_origonal_echo( $hold );
         $cell = "<td";
         foreach ( $params as $key => $value ) {
             $cell .= " {$key}='{$value}'";
@@ -491,13 +487,15 @@ class Table {
      * 
      * @return  self  $this
      * 
+     * @throws  InvalidInputException   If trying to set an id of a table cell.
+     * 
      * @access  public
      * @since   LRS 3.15.5
      */
 
     public function hidden_data( mixed $value, array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new Exception( "You cannot set an id for a Table Cell" );
+            throw new InvalidInputException( "You cannot set an id for a Table Cell" );
         }
         $params['id'] = $this->get_cell_id();
 
