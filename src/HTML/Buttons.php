@@ -202,40 +202,7 @@ class Buttons extends HTMLMeta {
 
         $params['content'] = "<span id='{$params['id']}__spinner'></span>" . $params['content'];
 
-
         $item .= self::html_element_container( 'button', $params, $skip_fields );
-
-        // /**
-        //  * BUTTON
-        //  */
-        // $item .= "<button";
-
-        // foreach ( $params as $field => $value ) {
-        //     if ( in_array( $field, $skip_fields ) ) {
-        //         continue;
-        //     }
-        //     switch ( $field ) {
-        //         case 'autofocus':
-        //             $item .= $value ? ' autofocus' : '';
-        //             break;
-        //         case 'disabled':
-        //             $item .= $value ? ' disabled' : '';
-        //             break;
-        //         case 'href':
-        //             if ( isset( $params['new_tab'] ) && $params['new_tab'] ) {
-        //                 $item .= " onClick='javascript:window.open(\"{$value}\", \"_blank\")'";
-        //             } else {
-        //                 $item .= " onClick='window.location.href = \"{$value}\"'";
-        //             }
-        //             break;
-        //         default:
-        //             $item .= " {$field}='{$value}'";
-        //     }
-        // }
-
-        // $item .= ">";
-        // $item .= "<span id='{$params['id']}__spinner'></span>";
-        // $item .= "{$params['content']}</button>";
 
         if ( !$container['overwrite'] ) {
             $item .= "</$container_tag>";
@@ -468,6 +435,8 @@ class Buttons extends HTMLMeta {
      * 
      * @return  string
      * 
+     * @throws  MissingRequiredInputException   When `$params['href']` is missing.
+     * 
      * @static
      * @access  private
      * @since   LRS 3.16.1
@@ -475,7 +444,7 @@ class Buttons extends HTMLMeta {
 
     private static function go_to_button_template( array $params, string $content ): string {
         if ( !isset( $params['href'] ) ) {
-            throw new \Exception( "Button \$param attribute 'href' has not been set. \$paramT['href'] must be set." );
+            throw new MissingRequiredInputException( "Button \$param attribute 'href' has not been set. \$paramT['href'] must be set." );
         }
         $button = '';
 
@@ -689,9 +658,13 @@ class Buttons extends HTMLMeta {
         } else {
             $params['class'] = 'interface_button ' . self::$interface_bttn_class;
         }
+        $params['href'] = $link;
+        $params['text'] = $button_text;
 
         $hold = HTML::temporary_change_echo( false );
-        $button .= HTML::link( $link, $button_text, $params );
+
+        $button .= HTML::a( $params );
+        // $button .= HTML::link( $link, $button_text, $params );
         HTML::restore_origonal_echo( $hold );
         $button .= "</div>";
         self::handle_echo( $button );
