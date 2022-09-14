@@ -2,9 +2,9 @@
 
 namespace LBF\HTML;
 
-use Exception;
 use Feather\Icons;
 use LBF\Auth\Hash;
+use LBF\Errors\InvalidInputException;
 use LBF\Errors\MissingRequiredInputException;
 use LBF\HTML\JS;
 use LBF\HTML\HTML;
@@ -31,6 +31,8 @@ class Buttons extends HTMLMeta {
      * @param   array   $params     The params parsed on the button.
      * 
      * @return  array   $params     The modified params.
+     * 
+     * @throws  InvalidInputException   If a button colour value is invalid.
      * 
      * @static
      * @access  private
@@ -60,7 +62,7 @@ class Buttons extends HTMLMeta {
 
         if ( isset( $params['colour'] ) && $params['colour'] !== 'default' ) {
             if ( !in_array( $params['colour'], $permitted_colours ) ) {
-                throw new Exception( 'Button colour selected is not a permitted colour' );
+                throw new InvalidInputException( 'Button colour selected is not a permitted colour' );
             }
             $default_class .= " button_colour__{$params['colour']} coloured_button" ;
         }
@@ -662,11 +664,7 @@ class Buttons extends HTMLMeta {
         $params['text'] = $button_text;
         $params['echo'] = false;
 
-        // $hold = HTML::temporary_change_echo( false );
-
         $button .= HTML::a( $params );
-        // $button .= HTML::link( $link, $button_text, $params );
-        // HTML::restore_origonal_echo( $hold );
         $button .= "</div>";
         self::handle_echo( $button );
         return $button;
@@ -714,7 +712,9 @@ class Buttons extends HTMLMeta {
      */
 
     public static function link_button ( string $text, array $params = [], string $function = 'void(0)' ): string {
-        $button = HTML::link( "javascript:{$function}", $text, $params );
+        $params['href'] = "javascript:{$function}";
+        $params['text'] = $text;
+        $button = HTML::a( $params );
 
         self::handle_echo( $button );
         return $button;
