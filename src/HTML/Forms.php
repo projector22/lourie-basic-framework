@@ -2,9 +2,9 @@
 
 namespace LBF\HTML;
 
-use Exception;
 use Feather\Icons;
 use LBF\Auth\Hash;
+use LBF\Errors\MethodNotFound;
 use LBF\Errors\InvalidInputException;
 use LBF\Errors\MissingRequiredInputException;
 use LBF\HTML\JS;
@@ -62,6 +62,8 @@ class Forms extends HTMLMeta {
      * 
      * @return  string
      * 
+     * @throws  InvalidInputException   If $params['flex'] value is invalid.
+     * 
      * @static
      * @access  private
      * @since   LRS 3.16.0
@@ -71,7 +73,7 @@ class Forms extends HTMLMeta {
         $set_flex = '';
         if ( isset ( $params['flex'] ) ) {
             if ( !is_numeric( $params['flex'] ) ) {
-                throw new \Exception( "The flex parameter must be a number" );
+                throw new InvalidInputException( "The flex parameter must be a number" );
             }
             $set_flex = " style='flex: {$params['flex']};'";
         }
@@ -179,6 +181,8 @@ class Forms extends HTMLMeta {
      * 
      * @return  string
      * 
+     * @throws  InvalidInputException   If `$params['validate']` is not parsed as an array.
+     * 
      * @static
      * @access  private
      * @since   LRS 3.16.0
@@ -196,7 +200,7 @@ class Forms extends HTMLMeta {
 
             if ( isset ( $params['validate'] ) ) {
                 if ( !is_array( $params['validate'] ) ) {
-                    throw new \Exception( "Validations must be parsed as an array" );
+                    throw new InvalidInputException( "Validations must be parsed as an array" );
                 }
                 $validate += $params['validate'];
             }
@@ -385,6 +389,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
+     * @throws  MethodNotFound If invalid class method called.
+     * 
      * @static
      * @access  public
      * @since   LRS 3.16.0
@@ -399,7 +405,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             'range', 'search', 'tel', 'time', 'url', 'week',
         ];
         if ( !in_array ( $name, $text_types ) ) {
-            throw new \Exception( "Method '{$name}' does not exist." );
+            throw new MethodNotFound( "Method '{$name}' does not exist." );
         }
         $arguments[0]['type'] = $name;
 
