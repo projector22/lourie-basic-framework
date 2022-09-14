@@ -1,12 +1,20 @@
 # CHANGELOG
 
-## Version 0.1.6-beta - UNRELEASED
+## Version 0.1.6-beta - 2022-09-14
 
 ### Added
 
 - Added `Auth\LoginHandler`.
 - Added new `HTMLElements` method `a` for inserting links.
 - Added method `file_exists` to `FileSystem`.
+- Added a tool for inline setting echo for the specific object being drawn. #23
+- Added methods for more easily changing the value of `class::$echo`.
+- Added Exception Class `MethodNotFound`.
+- Added meta methods for rendering HTML elements and consolidated current methods into these methods. These methods are:
+  - `html_element_container`.
+  - `html_tag_open`.
+  - `html_tag_close`.
+  - `assign_key_values`.
 
 ### Changed
 
@@ -28,7 +36,7 @@
 
 ### Issues Closed
 
-- #23 WIP
+- #23
 
 ---
 
