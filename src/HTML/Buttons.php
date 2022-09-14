@@ -5,6 +5,7 @@ namespace LBF\HTML;
 use Exception;
 use Feather\Icons;
 use LBF\Auth\Hash;
+use LBF\Errors\MissingRequiredInputException;
 use LBF\HTML\JS;
 use LBF\HTML\HTML;
 use LBF\HTML\HTMLMeta;
@@ -128,6 +129,8 @@ class Buttons extends HTMLMeta {
      * 
      * @return  string
      * 
+     * @throws  MissingRequiredInputException   Required param 'content' missing.
+     * 
      * @static
      * @access  public
      * @since   LRS 3.6.0
@@ -137,7 +140,7 @@ class Buttons extends HTMLMeta {
 
     public static function general( array $params = [] ): string {
         if ( !isset( $params['content'] ) ) {
-            throw new \Exception( "Button \$param attribute 'content' has not been set. \$paramT['content'] must be set." );
+            throw new MissingRequiredInputException( "Button \$param attribute 'content' has not been set. \$paramT['content'] must be set." );
         }
         $skip_fields = [
             'content', 'container', 'inline', 'padding', 'hidden',
@@ -197,37 +200,42 @@ class Buttons extends HTMLMeta {
          */
         $params = self::set_button_class( $params );
 
-        /**
-         * BUTTON
-         */
-        $item .= "<button";
+        $params['content'] = "<span id='{$params['id']}__spinner'></span>" . $params['content'];
 
-        foreach ( $params as $field => $value ) {
-            if ( in_array( $field, $skip_fields ) ) {
-                continue;
-            }
-            switch ( $field ) {
-                case 'autofocus':
-                    $item .= $value ? ' autofocus' : '';
-                    break;
-                case 'disabled':
-                    $item .= $value ? ' disabled' : '';
-                    break;
-                case 'href':
-                    if ( isset( $params['new_tab'] ) && $params['new_tab'] ) {
-                        $item .= " onClick='javascript:window.open(\"{$value}\", \"_blank\")'";
-                    } else {
-                        $item .= " onClick='window.location.href = \"{$value}\"'";
-                    }
-                    break;
-                default:
-                    $item .= " {$field}='{$value}'";
-            }
-        }
 
-        $item .= ">";
-        $item .= "<span id='{$params['id']}__spinner'></span>";
-        $item .= "{$params['content']}</button>";
+        $item .= self::html_element_container( 'button', $params, $skip_fields );
+
+        // /**
+        //  * BUTTON
+        //  */
+        // $item .= "<button";
+
+        // foreach ( $params as $field => $value ) {
+        //     if ( in_array( $field, $skip_fields ) ) {
+        //         continue;
+        //     }
+        //     switch ( $field ) {
+        //         case 'autofocus':
+        //             $item .= $value ? ' autofocus' : '';
+        //             break;
+        //         case 'disabled':
+        //             $item .= $value ? ' disabled' : '';
+        //             break;
+        //         case 'href':
+        //             if ( isset( $params['new_tab'] ) && $params['new_tab'] ) {
+        //                 $item .= " onClick='javascript:window.open(\"{$value}\", \"_blank\")'";
+        //             } else {
+        //                 $item .= " onClick='window.location.href = \"{$value}\"'";
+        //             }
+        //             break;
+        //         default:
+        //             $item .= " {$field}='{$value}'";
+        //     }
+        // }
+
+        // $item .= ">";
+        // $item .= "<span id='{$params['id']}__spinner'></span>";
+        // $item .= "{$params['content']}</button>";
 
         if ( !$container['overwrite'] ) {
             $item .= "</$container_tag>";
