@@ -950,7 +950,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function filter( array $params = [] ): string {
         if ( !isset( $params['id'] ) ) {
-            throw new \Exception( "Text field ID not set" );
+            $params['id'] = Hash::random_id_string();
         }
         $skip_fields = ['label', 'hint', 'validate', 'flex', 'container'];
         $item = '';
@@ -997,37 +997,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         } else {
             $params['class'] = $standard_class;
         }
-
-        
         $item .= self::html_tag_open( 'input', $params, $skip_fields );
-
-
-        // $item .= "<input";
-        // foreach ( $params as $field => $value ) {
-        //     if ( in_array( $field, $skip_fields ) ) {
-        //         continue;
-        //     }
-        //     switch ( $field ) {
-        //         case 'autofocus':
-        //             $item .= $value ? ' autofocus' : '';
-        //             break;
-        //         case 'disabled':
-        //             $item .= $value ? ' disabled' : '';
-        //             break;
-        //         case 'readonly':
-        //             $item .= $value ? ' readonly' : '';
-        //             break;
-        //         case 'required':
-        //             $item .= $value ? ' required' : '';
-        //             break;
-        //         default:
-        //             $item .= " {$field}='{$value}'";
-        //     }
-        // }
-        // $item .= ">";
-
-
-
         $icon = new Icons;
         $item .= $icon->get( 'search', echo: false );
         $item .= "</span>";
@@ -1050,9 +1020,13 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
     /**
      * Draw out an <input type='hidden'> element
      * 
-     * @param   array   $params     The fields to be added to the hidden input, either id or name must be set.
+     * @param   array   $params     The fields to be added to the hidden input, 
+     *                              either id or name must be set.
      * 
      * @return  string
+     * 
+     * @throws  MissingRequiredInputException   If neither id nor name is set as a param.
+     * @throws  MissingRequiredInputException   If no value is set.
      * 
      * @static
      * @access  public
@@ -1061,21 +1035,15 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @since   LRS 3.16.1  Merged param $value into $params.
      */
 
-    public static function hidden_input( array $params = [] ): string {
+    public static function hidden_input( array $params ): string {
         if ( !isset( $params['id'] ) && !isset( $params['name'] ) ) {
-            throw new \Exception( "Identifier not set. There must be either an 'id' or a 'name' parameter set" );
+            throw new MissingRequiredInputException( "Identifier not set. There must be either an 'id' or a 'name' parameter set" );
         }
         if ( !isset( $params['value'] ) ) {
-            throw new \Exception( "Hidden value not set. \$params['value'] must be set." );
+            throw new MissingRequiredInputException( "Hidden value not set. \$params['value'] must be set." );
         }
-
-        $item = "<input type='hidden'";
-
-        foreach ( $params as $field => $value ) {
-            $item .= " {$field}='{$value}'";
-        }
-
-        $item .= ">";
+        $params['type'] = 'hidden';
+        $item = self::html_tag_open( 'input', $params );
 
         self::handle_echo( $item );
         return $item;
