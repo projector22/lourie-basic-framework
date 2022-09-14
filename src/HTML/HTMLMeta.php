@@ -196,7 +196,7 @@ class HTMLMeta {
             }
             switch ( $key ) {
                 case 'new_tab':
-                    if ( !isset( $params['href'] ) ) {
+                    if ( !isset( $params['link'] ) ) {
                         $element .= $value ? " target='_blank' rel='noopener'" : '';
                     }
                     break;
@@ -221,7 +221,7 @@ class HTMLMeta {
                 case 'indeterminate':
                     $element .= $value ? ' indeterminate' : '';
                     break;
-                case 'href':
+                case 'link':
                     if ( isset( $params['new_tab'] ) && $params['new_tab'] ) {
                         $element .= " onClick='javascript:window.open(\"{$value}\", \"_blank\")'";
                     } else {
