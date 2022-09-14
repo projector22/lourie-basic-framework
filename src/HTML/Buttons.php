@@ -115,8 +115,8 @@ class Buttons extends HTMLMeta {
      * - *linebreak* - Whether to put in a linebreak before or after. Options are **'before'** or **'after'**.
      * - *colour*    - The colour of the button. See below for available colours.
      * - *color*     - Same as *colour*; see above.
-     * - *href*      - Navigate to this URI, if desired.
-     * - *new_tab*   - If an *href* is set, add the option to make the click load a new page. Options are boolean.
+     * - *link*      - Navigate to this URI, if desired.
+     * - *new_tab*   - If a *link* is set, add the option to make the click load a new page. Options are boolean.
      * - *reload*    - Add a JS script to make the button reload the page.
      * 
      * 
@@ -437,7 +437,7 @@ class Buttons extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException   When `$params['href']` is missing.
+     * @throws  MissingRequiredInputException   When `$params['link']` is missing.
      * 
      * @static
      * @access  private
@@ -445,8 +445,8 @@ class Buttons extends HTMLMeta {
      */
 
     private static function go_to_button_template( array $params, string $content ): string {
-        if ( !isset( $params['href'] ) ) {
-            throw new MissingRequiredInputException( "Button \$param attribute 'href' has not been set. \$paramT['href'] must be set." );
+        if ( !isset( $params['link'] ) ) {
+            throw new MissingRequiredInputException( "Button \$param attribute 'link' has not been set. \$paramT['link'] must be set." );
         }
         $button = '';
 
