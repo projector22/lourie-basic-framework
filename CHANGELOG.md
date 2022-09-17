@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Veriosn 0.1.7-beta - UNRELEASED
+## Veriosn 0.1.7-beta - 2022-09-18
 
 ### Added
 
@@ -12,7 +12,7 @@
 
 ### Issues Closed
 
-- #26 WIP
+- #26
 
 ---
 
