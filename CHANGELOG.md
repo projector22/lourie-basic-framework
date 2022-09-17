@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## Veriosn 0.1.7-beta - 2022-09-18
+
+### Added
+
+- Added class for performing autoloading tasks. #26
+
+### Removed
+
+- Removed funtion `load_class`.
+
+### Issues Closed
+
+- #26
+
+---
+
 ## Version 0.1.6-beta - 2022-09-14
 
 ### Added

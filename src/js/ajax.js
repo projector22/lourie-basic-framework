@@ -84,14 +84,14 @@ export default class Ajax {
 
 
         /**
-         * The actions page to direct ajax requests to, by default 'src/App/Actions/ActionHandler.php'.
+         * The actions page to direct ajax requests to, by default 'src/app/actions/ActionHandler.php'.
          * 
          * @var {string} action_page
          * 
          * @since   LRS 3.13.0
          */
 
-        this.action_page = 'src/App/Actions/ActionHandler.php';
+        this.action_page = 'src/app/actions/ActionHandler.php';
 
 
         /**
