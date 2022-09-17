@@ -38,7 +38,7 @@ class Autoloader {
         $file = str_replace( '\\', '/', $class ) . '.php';
 
         $file = implode( '/', array_map( function ( string $item ): string {
-            if ( str_contains( $item, '.php ' ) ) {
+            if ( str_contains( $item, '.php' ) ) {
                 return $item;
             }
             return strtolower( $item );
