@@ -109,7 +109,6 @@ class Autoloader {
             \Debugger\Debug::__constructStatic();
         }
         ob_end_clean();
-        return true;
     }
 
 
