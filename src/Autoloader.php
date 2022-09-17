@@ -63,11 +63,23 @@ class Autoloader {
     }
 
 
+    /**
+     * Draw out the debug feedback table.
+     * 
+     * @param   string  $class      The class name parsed.
+     * @param   string  $file       The modified namespace file path.
+     * @param   string  $full_path  The full path (realpath()) of the of the file that should be called.
+     * 
+     * @access  private
+     * @since   LBF 0.1.7-beta
+     */
+
     private function draw_out_feedback_table( string $class, string $file, string $full_path ): void {
         $data = [
             'Called Class'        => $class,
             'Namespace File Name' => $file,
-            'Full Path of File'   => $full_path,
+            'Relative Full Path'  => $this->src_path . $file,
+            'Realpath Full Path'  => $full_path,
         ];
         
         echo "<table>";
