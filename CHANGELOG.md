@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Veriosn 0.1.7-beta - UNRELEASED
+
+### Issues Closed
+
+- #26 WIP
+
+---
+
 ## Version 0.1.6-beta - 2022-09-14
 
 ### Added
