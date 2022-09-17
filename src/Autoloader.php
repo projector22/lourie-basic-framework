@@ -103,6 +103,15 @@ class Autoloader {
     }
 
 
+    public static function load_debugger(): void {
+        ob_start();
+        if ( is_callable( ['\Debugger\Debug', '__constructStatic'] ) ) {
+            \Debugger\Debug::__constructStatic();
+        }
+        ob_end_clean();
+        return true;
+    }
+
 
 
 }
