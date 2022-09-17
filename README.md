@@ -42,8 +42,8 @@ HTML::close_div();
 - Dev Tools.
 - A simple Markdown interface. Abstraction from [Parsedown](https://github.com/erusev/parsedown)
 - Error handling pages.
+- An autoloader class for performing autoloading tasks.
 - Generic but useful functions including:
-  - load_class (Used for `spl_autoload_register`).
   - various sting handling tools.
   - token parsing tools.
   - etc. There really are quite a lot. Please see `src/Functions/functions.php` for details.

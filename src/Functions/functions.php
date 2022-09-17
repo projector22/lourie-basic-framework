@@ -16,38 +16,6 @@ use LBF\HTML\HTML;
 
 
 /**
- * Dynamically load a class when called. Class name needs to be the same as the file in which it is found
- * 
- * @param   string  $class  Name of the class being called
- * 
- * @since   LRS 3.1.0
- */
-
-function load_class( string $class ) {
-    /**
-     * @todo find a way of moving this hard coded file path out of the framework, or
-     * to define it by definition elsewhere.
-     * 
-     * @since   LRS 3.28.0
-     */
-    if ( !defined( "SRC_PATH" ) ) {
-        define( "SRC_PATH", realpath( './src' ) );
-    }
-    $class_name = $class;
-    $path = SRC_PATH . normalize_path_string( $class ) . '.php';
-    if ( !file_exists ( $path ) ) {
-        echo "Error: Class path <i>{$path}</i> does not exist";
-        return false;
-    }
-    require_once realpath( $path );
-
-    if ( method_exists( $class_name, '__constructStatic' ) ) {
-        $class_name::__constructStatic();
-    }
-}
-
-
-/**
  * Convert backslashes, used in Windows paths to forward slashes, used in UNIX type systems.
  * 
  * This normalizes paths for the app. Particularly useful in class autoloading.
