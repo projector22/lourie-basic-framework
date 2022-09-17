@@ -11,16 +11,24 @@ class Autoloader {
 
     public function __construct(
 
-        private readonly string $src_path,
+        private string $src_path,
 
         private readonly bool $debug_mode = false,
 
-    ) {
-        spl_autoload_register( [$this, 'load_class'] );
+    ) {}
+
+
+    public function load(): bool {
+        return spl_autoload_register( [$this, 'load_class'] );
     }
 
+    public function unload(): bool {
+        return spl_autoload_unregister( [$this, 'load_class'] );;
+    }
 
-
+    public function change_path( string $src_path ): void {
+        $this->src_path = $src_path;
+    }
 
 
 
@@ -31,10 +39,12 @@ class Autoloader {
      * 
      * @param   string  $class  Name of the class being called
      * 
+     * @access  private
      * @since   LRS 3.1.0
+     * @since   LBF 0.1.7-beta  Converted to a class method.
      */
 
-    public function load_class( string $class ) {
+    private function load_class( string $class ) {
         $file = str_replace( '\\', '/', $class ) . '.php';
 
         $file = implode( '/', array_map( function ( string $item ): string {
