@@ -259,7 +259,7 @@ class PDFCreator extends PDFCreatorBackend {
      */
 
     public function set_custom_header( string $id ): static {
-        $this->header_type = '\\' . trim( '\\', $id );
+        $this->header_type = '\\' . trim( $id, '\\' );
         return $this;
     }
 
@@ -277,7 +277,7 @@ class PDFCreator extends PDFCreatorBackend {
      */
 
     public function set_custom_footer( string $id ): static {
-        $this->footer_type = '\\' . trim( '\\', $id );
+        $this->footer_type = '\\' . trim( $id, '\\' );
         return $this;
     }
 
