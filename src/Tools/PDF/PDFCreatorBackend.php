@@ -4,7 +4,7 @@ namespace LBF\Tools\PDF;
 
 use TCPDF;
 use Exception;
-use App\Templates\PDF\CustomHeaderFooter;
+use LBF\Tools\PDF\CustomHeaderFooter;
 
 /**
  * Class to interface with TCPDF and to simplify the generation of PDFs.
@@ -358,10 +358,10 @@ class PDFCreatorBackend {
         if ( $this->header_type !== 'default' || $this->footer_type !== 'default' ) {
             $this->pdf = new CustomHeaderFooter( 
                 orientation: $this->orientation, 
-                unit: PDF_UNIT, 
-                format: $this->page_size, 
-                unicode: true, 
-                encoding: 'UTF-8'
+                unit:        PDF_UNIT, 
+                format:      $this->page_size, 
+                unicode:     true, 
+                encoding:    'UTF-8',
             );
             $this->pdf->header_type = $this->header_type ?? null;
             $this->pdf->footer_type = $this->footer_type ?? null;
@@ -372,10 +372,10 @@ class PDFCreatorBackend {
             // create new PDF document
             $this->pdf = new TCPDF( 
                 orientation: $this->orientation, 
-                unit: PDF_UNIT, 
-                format: $this->page_size, 
-                unicode: true, 
-                encoding: 'UTF-8'
+                unit:        PDF_UNIT, 
+                format:      $this->page_size, 
+                unicode:     true, 
+                encoding:    'UTF-8',
             );
         }
 
