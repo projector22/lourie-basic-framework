@@ -1,6 +1,14 @@
 # CHANGELOG
 
-## Veriosn 0.1.7-beta - 2022-09-18
+## Version 0.1.8-beta - 2022-09-19
+
+### Fixed
+
+- Fixed a bug with `LoadEnvironment` class in the Windows Environment.
+
+---
+
+## Version 0.1.7-beta - 2022-09-18
 
 ### Added
 
