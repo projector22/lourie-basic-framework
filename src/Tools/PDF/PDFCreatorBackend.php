@@ -385,7 +385,7 @@ class PDFCreatorBackend {
         $this->pdf->SetKeywords( $this->keywords ?? '' );
 
         // Header
-        if ( !$this->use_custom_header_footer || is_null ( $this->header_type  ) ) {
+        if ( is_null ( $this->header_type ?? null ) ) {
             if ( $this->include_header ) {
                 $logo = '';
                 if ( is_file ( site_logo() ) ) {
@@ -402,7 +402,7 @@ class PDFCreatorBackend {
         }
 
         // Footer
-        if ( !$this->use_custom_header_footer || is_null ( $this->footer_type  ) || $this->footer_type = 'footer_with_date' ) {
+        if ( is_null ( $this->footer_type ?? null  ) || $this->footer_type = 'footer_with_date' ) {
             if ( $this->include_footer ) {
                 // Set PDF Data, Font & Margin footer
                 $this->pdf->setFooterData( [0,64,0], [0,64,128] );
