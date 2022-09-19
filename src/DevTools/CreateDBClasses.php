@@ -122,8 +122,8 @@ class CreateDBClasses extends ConnectMySQL {
             $table_name = $clean_up_file_name( $table_name, '_' );
         }
 
-        $tables_file = normalize_path_string( $this->app_path . 'Db\\Tables\\' . $table_name . '.php' );
-        $data_file   = normalize_path_string( $this->app_path . 'Db\\Data\\'   . $table_name . 'Data.php' );
+        $tables_file = normalize_path_string( $this->app_path . 'db\\tables\\' . $table_name . '.php' );
+        $data_file   = normalize_path_string( $this->app_path . 'db\\data\\'   . $table_name . 'Data.php' );
         $namespace   = 'App\\Db\\Tables\\' . $table_name;
         if ( file_exists( $tables_file ) || file_exists( $data_file ) ) {
             echo "You cannot continue!<br>";

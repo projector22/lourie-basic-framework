@@ -478,7 +478,7 @@ class CronHandler {
         $this->php_file_content .= "\n    die( 'Permission denied. You may not run this file directly' );";
         $this->php_file_content .= "\n}";
         $this->php_file_content .= "\nrequire '" . INCLUDES_PATH . "general-loader.php';";
-        $this->php_file_content .= "\n\$cron = new App\Actions\CronActions;";
+        $this->php_file_content .= "\n\$cron = new app\actions\CronActions;";
         $this->php_file_content .= "\n\$cron->token = '{$this->template}';";
         if ( isset( $this->send_to_email ) ) {
             $this->php_file_content .= "\n\$cron->email = '{$this->send_to_email}';";
