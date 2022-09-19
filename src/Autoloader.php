@@ -130,11 +130,13 @@ class Autoloader {
 
         $path = realpath( $this->src_path . $file );
         if ( !file_exists ( $path ) ) {
+            echo "<pre>";
             if ( $this->debug_mode ) {
                 $this->draw_out_feedback_table( $class, $file, $path );
             } else {
                 throw new FileNotFoundError( "Called class {$class} not found.", 404 );
             }
+            echo "</pre>";
             return false;
         }
         require $path;

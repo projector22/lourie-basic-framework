@@ -2,6 +2,10 @@
 
 ## Version 0.2.0 - UNRELEASED
 
+### Changed
+
+- Improved user feedback for Autoloader errors.
+
 ### Issues Closed
 
 - #31 WIP
