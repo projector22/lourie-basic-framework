@@ -264,7 +264,7 @@ class PDFCreatorBackend {
 	 * @since   LRS 3.6.0
 	 */
 
-	protected ?string $header_type = null;
+	protected ?string $header_type = 'default';
 
     /**
 	 * ID of the custom footer
@@ -275,7 +275,7 @@ class PDFCreatorBackend {
 	 * @since   LRS 3.6.0
 	 */
 
-    protected ?string $footer_type = null;
+    protected ?string $footer_type = 'default';
 
     /**
 	 * The date on the report
@@ -353,7 +353,7 @@ class PDFCreatorBackend {
      */
 
     protected function construct_pdf(): void {
-        if ( isset( $this->header_type ) || isset( $this->footer_type ) ) {
+        if ( $this->header_type !== 'default' || $this->footer_type !== 'default' ) {
             $this->pdf = new CustomHeaderFooter( 
                 orientation: $this->orientation, 
                 unit: PDF_UNIT, 
@@ -385,33 +385,29 @@ class PDFCreatorBackend {
         $this->pdf->SetKeywords( $this->keywords ?? '' );
 
         // Header
-        if ( is_null ( $this->header_type ?? null ) ) {
-            if ( $this->include_header ) {
-                $logo = '';
-                if ( is_file ( site_logo() ) ) {
-                    $logo = HOME_PATH . site_logo() ;
-                }
-                // Set PDF Data, Font & Margin header
-                $this->pdf->SetHeaderData( $logo, 10, SCHOOL_NAME, $this->title, [0,0,0], [0,64,128] );
-                $this->pdf->setHeaderFont( [PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN] );
-                $this->pdf->SetHeaderMargin( PDF_MARGIN_HEADER );
-            } else {
-                // Disable header
-                $this->pdf->setPrintHeader( false );
+        if ( is_null ( $this->header_type ) ) {
+            // Disable header
+            $this->pdf->setPrintHeader( false );
+        } else {
+            $logo = '';
+            if ( is_file ( site_logo() ) ) {
+                $logo = HOME_PATH . site_logo() ;
             }
+            // Set PDF Data, Font & Margin header
+            $this->pdf->SetHeaderData( $logo, 10, SCHOOL_NAME, $this->title, [0,0,0], [0,64,128] );
+            $this->pdf->setHeaderFont( [PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN] );
+            $this->pdf->SetHeaderMargin( PDF_MARGIN_HEADER );
         }
 
         // Footer
-        if ( is_null ( $this->footer_type ?? null  ) || $this->footer_type = 'footer_with_date' ) {
-            if ( $this->include_footer ) {
-                // Set PDF Data, Font & Margin footer
-                $this->pdf->setFooterData( [0,64,0], [0,64,128] );
-                $this->pdf->setFooterFont( [PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA] );
-                $this->pdf->SetFooterMargin( PDF_MARGIN_FOOTER );
-            } else {
-                // Disable footer
-                $this->pdf->setPrintFooter( false );
-            }
+        if ( $this->footer_type == null ) {
+            // Disable footer
+            $this->pdf->setPrintFooter( false );
+        } else {
+            // Set PDF Data, Font & Margin footer
+            $this->pdf->setFooterData( [0,64,0], [0,64,128] );
+            $this->pdf->setFooterFont( [PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA] );
+            $this->pdf->SetFooterMargin( PDF_MARGIN_FOOTER );
         }
 
         // set default monospaced font

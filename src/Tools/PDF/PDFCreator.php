@@ -272,10 +272,34 @@ class PDFCreator extends PDFCreatorBackend {
     }
 
 
+    /**
+     * Set the id of a desired custom header.
+     * 
+     * @param   string  $id The id of the new header.
+     * 
+     * @return  static
+     * 
+     * @access  public
+     * @since   LBF 0.2.0-beta
+     */
+
     public function set_custom_header( string $id ): static {
         $this->header_type = $id;
         return $this;
     }
+
+
+
+    /**
+     * Set the id of a desired custom footer.
+     * 
+     * @param   string  $id The id of the new footer.
+     * 
+     * @return  static
+     * 
+     * @access  public
+     * @since   LBF 0.2.0-beta
+     */
 
     public function set_custom_footer( string $id ): static {
         $this->footer_type = $id;
