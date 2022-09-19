@@ -177,6 +177,8 @@ class PDFCreatorBackend {
      * 
      * @access  protected
      * @since   LRS 3.6.0
+     * 
+     * @deprecated  LBF 0.2.0-beta
      */
 
     protected bool $use_custom_header_footer = true;
@@ -256,24 +258,24 @@ class PDFCreatorBackend {
     /**
 	 * ID of the custom header
      * 
-     * @var integer|null	$set_header_type	Default: null
+     * @var integer|null	$header_type	Default: null
 	 * 
      * @access  protected
 	 * @since   LRS 3.6.0
 	 */
 
-	protected ?int $set_header_type = 1;
+	protected ?int $header_type;
 
     /**
 	 * ID of the custom footer
      * 
-     * @var string|null	$set_footer_type	Default: null
+     * @var string|null	$footer_type	Default: null
 	 * 
      * @access  protected
 	 * @since   LRS 3.6.0
 	 */
 
-    protected ?string $set_footer_type = null;
+    protected ?string $footer_type;
 
     /**
 	 * The date on the report
@@ -351,7 +353,7 @@ class PDFCreatorBackend {
      */
 
     protected function construct_pdf(): void {
-        if ( $this->use_custom_header_footer ) {
+        if ( isset( $this->header_type ) || isset( $this->footer_type ) ) {
             $this->pdf = new CustomHeaderFooter( 
                 orientation: $this->orientation, 
                 unit: PDF_UNIT, 
@@ -359,8 +361,8 @@ class PDFCreatorBackend {
                 unicode: true, 
                 encoding: 'UTF-8'
             );
-            $this->pdf->set_header_type = $this->set_header_type;
-            $this->pdf->set_footer_type = $this->set_footer_type;
+            $this->pdf->header_type = $this->header_type;
+            $this->pdf->footer_type = $this->footer_type;
             $this->pdf->header_custom_text = $this->header_custom_text;
             $this->pdf->footer_custom_text = $this->footer_custom_text;
             $this->pdf->set_date = $this->set_date;
@@ -383,7 +385,7 @@ class PDFCreatorBackend {
         $this->pdf->SetKeywords( $this->keywords ?? '' );
 
         // Header
-        if ( !$this->use_custom_header_footer || is_null ( $this->set_header_type  ) ) {
+        if ( !$this->use_custom_header_footer || is_null ( $this->header_type  ) ) {
             if ( $this->include_header ) {
                 $logo = '';
                 if ( is_file ( site_logo() ) ) {
@@ -400,7 +402,7 @@ class PDFCreatorBackend {
         }
 
         // Footer
-        if ( !$this->use_custom_header_footer || is_null ( $this->set_footer_type  ) || $this->set_footer_type = 'footer_with_date' ) {
+        if ( !$this->use_custom_header_footer || is_null ( $this->footer_type  ) || $this->footer_type = 'footer_with_date' ) {
             if ( $this->include_footer ) {
                 // Set PDF Data, Font & Margin footer
                 $this->pdf->setFooterData( [0,64,0], [0,64,128] );
@@ -416,7 +418,7 @@ class PDFCreatorBackend {
         $this->pdf->SetDefaultMonospacedFont( PDF_FONT_MONOSPACED );
 
         // set margins
-        if ( $this->set_header_type == 2 || $this->set_header_type == 3 || $this->set_header_type == 4  ) {
+        if ( $this->header_type == 2 || $this->header_type == 3 || $this->header_type == 4  ) {
             $this->pdf->SetHeaderMargin( PDF_MARGIN_HEADER );
             $this->pdf->SetMargins( PDF_MARGIN_LEFT + 10, 60, PDF_MARGIN_RIGHT + 10 ); // Left, Top, Right
         } else {

@@ -258,14 +258,27 @@ class PDFCreator extends PDFCreatorBackend {
      * 
      * @access  public
      * @since   LRS 3.20.0
+     * 
+     * @deprecated  LBF 0.2.0-alpha
      */
 
     public function set_custom_header_footer( bool $use_custom, ?int $header_id = null, ?string $footer_id = null ): static {
         $this->use_custom_header_footer = $use_custom;
         if ( $use_custom ) {
-            $this->set_header_type = is_null( $header_id ) ? 1 : $header_id; // Default 1 if not explicitly called.
-            $this->set_footer_type = $footer_id; // Default null (not custom) if not explicitly called.
+            $this->header_type = is_null( $header_id ) ? 1 : $header_id; // Default 1 if not explicitly called.
+            $this->footer_type = $footer_id; // Default null (not custom) if not explicitly called.
         }
+        return $this;
+    }
+
+
+    public function set_custom_header( string $id ): static {
+        $this->header_type = $id;
+        return $this;
+    }
+
+    public function set_custom_footer( string $id ): static {
+        $this->footer_type = $id;
         return $this;
     }
 
