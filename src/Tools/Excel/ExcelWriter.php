@@ -14,7 +14,7 @@ use LBF\Tools\Excel\ExcelWriterBackend;
  * 
  * @since   LRS 3.19.6
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  */
 
 class ExcelWriter extends ExcelWriterBackend {

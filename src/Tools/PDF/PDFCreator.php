@@ -15,7 +15,7 @@ use LBF\Tools\PDF\PDFCreatorBackend;
  * @since   LRS 3.11.0  Moved to `Framework\Tools\PDF`.
  * @since   LRS 3.20.0  Completely revamped and renamed `PDFCreator`.
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  */
 
 class PDFCreator extends PDFCreatorBackend {
