@@ -84,9 +84,9 @@ class LoadEnvironment {
     public function load_to_env(): bool {
         foreach ( $this->lines as $line ) {
             try {
-                $parts = explode( '=', $line );
+                $parts = array_map( 'trim', explode( '=', $line ) );
                 $_ENV[$parts[0]] = $parts[1];
-                putenv( $line );
+                putenv( trim( $line ) );
             } catch ( Throwable $th ) {
                 return false;
             }
@@ -110,7 +110,7 @@ class LoadEnvironment {
     public function load_to_const(): bool {
         foreach ( $this->lines as $line ) {
             try {
-                $parts = explode( '=', $line );
+                $parts = array_map( 'trim', explode( '=', $line ) );
                 if ( defined( $parts[0] ) ) {
                     echo "<pre>";
                     throw new ConstantAlreadyDefinedError( "Constant {$parts[0]} already defined in the app." );
