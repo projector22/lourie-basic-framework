@@ -51,6 +51,7 @@ class PDFCreatorBackend {
      * 
      * @access  protected
      * @since   LRS 3.6.0
+     * @deprecated  LBF 0.2.0-beta
      */
 
     protected bool $include_header = true;
@@ -62,6 +63,7 @@ class PDFCreatorBackend {
      * 
      * @access  protected
      * @since   LRS 3.6.0
+     * @deprecated  LBF 0.2.0-beta
      */
 
     protected bool $include_footer = true;

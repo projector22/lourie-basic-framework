@@ -319,7 +319,11 @@ class PDFCreator extends PDFCreatorBackend {
      */
 
     public function hide_header( bool $hide ): static {
-        $this->include_header = !$hide;
+        if ( $hide ) {
+            $this->header_type = null;
+        } else {
+            $this->header_type = 'default';
+        }
         return $this;
     }
 
@@ -336,7 +340,11 @@ class PDFCreator extends PDFCreatorBackend {
      */
 
     public function hide_footer( bool $hide ): static {
-        $this->include_footer = !$hide;
+        if ( $hide ) {
+            $this->footer_type = null;
+        } else {
+            $this->footer_type = 'default';
+        }
         return $this;
     }
 
