@@ -17,7 +17,7 @@ use \PDOException;
  * @since   LRS 3.17.0  Split out specific functions for connecting to a MySQL DB,
  *                  to make this class more general.
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  */
 
 class DatabaseControl {

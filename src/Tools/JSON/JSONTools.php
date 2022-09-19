@@ -15,7 +15,7 @@ use LBF\HTML\Draw;
  * @since   LRS 3.11.0	Moved to `Framework\Tools\JSONData` from `Tools\JSONData`.
  * @since   LRS 3.14.4  Renamed `JSONTools`.
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  */
 
 class JSONTools {

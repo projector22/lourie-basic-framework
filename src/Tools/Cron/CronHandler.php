@@ -15,7 +15,7 @@ use LBF\Tools\Files\FileSystem;
  * 
  * @since   LRS 3.17.4
  * @since   LRS 3.28.0  Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
- *                  Namespace changed from `Framework` to `LBF`.
+ *                      Namespace changed from `Framework` to `LBF`.
  * 
  * @todo    REVAMP, Needs a complete overhall, but not just at the moment. Do not use outside of LRS for the moment.
  */
