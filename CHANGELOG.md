@@ -2,6 +2,10 @@
 
 ## Version 0.2.0 - UNRELEASED
 
+### Added
+
+- Added interface for Header and Footer templates.
+
 ### Changed
 
 - Improved user feedback for Autoloader errors.
