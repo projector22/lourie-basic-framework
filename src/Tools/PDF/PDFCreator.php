@@ -503,7 +503,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.21.0
      */
 
-    public function add_custom_footer_text( string $text): static {
+    public function add_custom_footer_text( string $text ): static {
         $this->footer_custom_text .= $text;
         return $this;
     }
