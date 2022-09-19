@@ -248,31 +248,6 @@ class PDFCreator extends PDFCreatorBackend {
 
 
     /**
-     * Enable or disable, and set a custom header and / or footer.
-     * 
-     * @param   boolean         $use_custom Whether or not to use a custom header and footer.
-     * @param   integer|null    $header_id  The id of the header to be used.
-     * @param   string|null     $footer_id  The id of the footer to be used.
-     * 
-     * @return  static
-     * 
-     * @access  public
-     * @since   LRS 3.20.0
-     * 
-     * @deprecated  LBF 0.2.0-alpha
-     */
-
-    public function set_custom_header_footer( bool $use_custom, ?int $header_id = null, ?string $footer_id = null ): static {
-        $this->use_custom_header_footer = $use_custom;
-        if ( $use_custom ) {
-            $this->header_type = is_null( $header_id ) ? 1 : $header_id; // Default 1 if not explicitly called.
-            $this->footer_type = $footer_id; // Default null (not custom) if not explicitly called.
-        }
-        return $this;
-    }
-
-
-    /**
      * Set the id of a desired custom header.
      * 
      * @param   string  $id The id of the new header.
