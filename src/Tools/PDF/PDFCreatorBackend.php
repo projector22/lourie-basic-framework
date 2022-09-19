@@ -361,8 +361,8 @@ class PDFCreatorBackend {
                 unicode: true, 
                 encoding: 'UTF-8'
             );
-            $this->pdf->header_type = $this->header_type;
-            $this->pdf->footer_type = $this->footer_type;
+            $this->pdf->header_type = $this->header_type ?? null;
+            $this->pdf->footer_type = $this->footer_type ?? null;
             $this->pdf->header_custom_text = $this->header_custom_text;
             $this->pdf->footer_custom_text = $this->footer_custom_text;
             $this->pdf->set_date = $this->set_date;

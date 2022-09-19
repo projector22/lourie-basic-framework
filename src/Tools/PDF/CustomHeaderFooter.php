@@ -57,11 +57,16 @@ class CustomHeaderFooter extends TCPDF {
     }
 
     public function Header(): void {
-        if ( !method_exists( $this, $this->header_id ) ) {
-            echo "<pre>";
-            throw new MethodNotFound( "Method {$this->header_id} does not exist.", 404 );
-        }
-        $id = $this->header_id;
-        $this->$id();
+        // if ( !method_exists( $this, $this->header_id ) ) {
+        //     echo "<pre>";
+        //     throw new MethodNotFound( "Method {$this->header_id} does not exist.", 404 );
+        // }
+        // $id = $this->header_id;
+        // $this->$id();
+
+        /**
+         * Template class = new Template class if file exists.
+         * $tc->draw_header
+         */
     }
 }
