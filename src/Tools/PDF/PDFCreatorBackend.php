@@ -264,7 +264,7 @@ class PDFCreatorBackend {
 	 * @since   LRS 3.6.0
 	 */
 
-	protected ?int $header_type;
+	protected ?string $header_type = null;
 
     /**
 	 * ID of the custom footer
@@ -275,7 +275,7 @@ class PDFCreatorBackend {
 	 * @since   LRS 3.6.0
 	 */
 
-    protected ?string $footer_type;
+    protected ?string $footer_type = null;
 
     /**
 	 * The date on the report
