@@ -5,6 +5,7 @@
 ### Added
 
 - Added interface for Header and Footer templates.
+- Added Exception `ClassNotFound`.
 
 ### Changed
 
