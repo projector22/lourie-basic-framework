@@ -421,6 +421,8 @@ class PDFCreatorBackend {
             $this->pdf->SetMargins( PDF_MARGIN_LEFT + 10, 60, PDF_MARGIN_RIGHT + 10 ); // Left, Top, Right
         } else if ( $this->set_header_type == 1 ) {
             $this->pdf->SetMargins( PDF_MARGIN_LEFT + 10, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT + 10 );
+        } else if ( $this->set_header_type == 5 ) {
+            $this->pdf->SetMargins( 0, 45, 0 );
         }
 
         // set auto page breaks
