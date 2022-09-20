@@ -397,6 +397,7 @@ class PDFCreatorBackend {
             }
             // Set PDF Data, Font & Margin header
             $this->pdf->SetHeaderData( $logo, 10, SCHOOL_NAME, $this->title, [0,0,0], [0,64,128] );
+            // Family, Style, 
             $this->pdf->setHeaderFont( [PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN] );
             $this->pdf->SetHeaderMargin( PDF_MARGIN_HEADER );
         }
