@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.1.10-beta - 2022-09-20
+
+### Changed
+
+- Added a default margin 5. _temp fix for LPA_
+
+---
+
 ## Version 0.1.9-beta - 2022-09-20
 
 ### Changed
