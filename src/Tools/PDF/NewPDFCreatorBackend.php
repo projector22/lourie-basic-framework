@@ -22,22 +22,7 @@ class NewPDFCreatorBackend {
 
     protected object $pdf;
 
-    protected array $default_properties = [
-        'header'           => 'default',
-        'footer'           => 'default',
-        'header_margin'    => PDF_MARGIN_HEADER,
-        'footer_margin'    => PDF_MARGIN_FOOTER,
-        'line_height'      => 1.25,
-        'font_name'        => 'helvetica',
-        'font_style'       => '',
-        'font_size'        =>  14,
-        'page_size'        => PaperSize::A4,
-        'page_orientation' => PageOrientation::PORTRAIT,
-        'text_shadow'      => false,
-        'margin_left'      => PDF_MARGIN_LEFT,
-        'margin_right'     => PDF_MARGIN_RIGHT,
-        'margin_top'       => PDF_MARGIN_TOP,
-    ];
+    protected readonly array $default_properties;
 
     protected array $default_values;
 
@@ -57,6 +42,24 @@ class NewPDFCreatorBackend {
     protected int $margin_top;
 
 
+    protected function set_default_values(): void {
+        $this->default_properties = [
+            'header'           => 'default',
+            'footer'           => 'default',
+            'header_margin'    => PDF_MARGIN_HEADER,
+            'footer_margin'    => PDF_MARGIN_FOOTER,
+            'line_height'      => 1.25,
+            'font_name'        => 'helvetica',
+            'font_style'       => '',
+            'font_size'        =>  14,
+            'page_size'        => PaperSize::A4,
+            'page_orientation' => PageOrientation::PORTRAIT,
+            'text_shadow'      => false,
+            'margin_left'      => PDF_MARGIN_LEFT,
+            'margin_right'     => PDF_MARGIN_RIGHT,
+            'margin_top'       => PDF_MARGIN_TOP,
+        ];
+    }
 
 
     /**

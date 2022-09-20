@@ -20,6 +20,7 @@ namespace LBF\Tools\PDF;
  * generate_pdf
  */
 
+use Debugger\Debug;
 use TCPDF;
 use LBF\Tools\PDF\Enums\OutputTo;
 use LBF\Tools\PDF\NewPDFCreatorBackend;
@@ -85,15 +86,15 @@ class NewPDFCreator extends NewPDFCreatorBackend {
 
         array $default_properties = [],
     ) {
-        $this->set_document_default_properties( $default_properties );
-        $this->pdf = new TCPDF(
-            orientation: $this->orientation->value(), 
+        $this->pdf = new CustomHeaderFooter(
+            // orientation: $this->orientation->value(), 
             unit:        PDF_UNIT, 
-            format:      $this->page_size->value(), 
+            // format:      $this->page_size->value(), 
             unicode:     true, 
             encoding:    'UTF-8',
         );
-
+        $this->set_default_values();
+        $this->set_document_default_properties( $default_properties );
 
         // set document information
         $this->pdf->SetCreator( PDF_CREATOR );
@@ -164,8 +165,8 @@ class NewPDFCreator extends NewPDFCreatorBackend {
 
     public function set_document_default_properties( array $properties = [] ): static {
         $this->default_values = [
-            'header'           => '\\' . trim( $properties['header'], '\\' ) ?? $this->default_properties['header'],
-            'footer'           => '\\' . trim( $properties['footer'], '\\' ) ?? $this->default_properties['footer'],
+            'header'           => isset( $properties['header'] ) ? '\\' . trim( $properties['header'], '\\' ) : $this->default_properties['header'],
+            'footer'           => isset( $properties['footer'] ) ? '\\' . trim( $properties['footer'], '\\' ) : $this->default_properties['footer'],
             'header_margin'    => $properties['header_margin']    ?? $this->default_properties['header_margin'],
             'footer_margin'    => $properties['footer_margin']    ?? $this->default_properties['footer_margin'],
             'line_height'      => $properties['line_height']      ?? $this->default_properties['line_height'],
@@ -210,10 +211,14 @@ class NewPDFCreator extends NewPDFCreatorBackend {
                 if ( $value !== 'default' && !is_null( $value ) ) {
                     $this->$key = '\\' . trim( $properties[$key], '\\' );
                 } else {
-                    $this->$key = $properties[$key];
+                    if ( isset( $properties[$key] ) ) {
+                        $this->$key = $properties[$key];
+                    }
                 }
             } else {
-                $this->$key = $properties[$key];
+                if ( isset( $properties[$key] ) ) {
+                    $this->$key = $properties[$key];
+                }
             }
         }
         return $this;
@@ -237,11 +242,12 @@ class NewPDFCreator extends NewPDFCreatorBackend {
          * INSERT HEADER
          */
         $this->pdf->setHeaderTemplateAutoreset();
-        if ( is_null ( $this->header_type ) ) {
+        if ( is_null ( $this->header ) ) {
             // Disable header
             $this->pdf->setPrintHeader( false );
         } else {
             // SET HEADER
+            $this->pdf->header_type = $this->header;
         }
         
 
@@ -249,11 +255,12 @@ class NewPDFCreator extends NewPDFCreatorBackend {
         /**
          * INSERT FOOTER
          */
-        if ( $this->footer_type == null ) {
+        if ( $this->footer == null ) {
             // Disable footer
             $this->pdf->setPrintFooter( false );
         } else {
-            // SET HEADER
+            // SET FOOTER
+            $this->pdf->footer_type = $this->footer;
         }
         
 
@@ -268,7 +275,7 @@ class NewPDFCreator extends NewPDFCreatorBackend {
          */
 
         $this->pdf->AddPage( 
-            $this->orientation->value(), 
+            $this->page_orientation->value(), 
             $this->page_size->value(),
         );
         return $this;
