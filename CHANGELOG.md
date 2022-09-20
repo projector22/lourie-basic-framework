@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.1.9-beta - 2022-09-20
+
+### Changed
+
+- Changed how header margins are set.
+
+---
+
 ## Version 0.1.8-beta - 2022-09-19
 
 ### Fixed
