@@ -419,7 +419,7 @@ class PDFCreatorBackend {
         if ( $this->set_header_type == 2 || $this->set_header_type == 3 || $this->set_header_type == 4  ) {
             $this->pdf->SetHeaderMargin( PDF_MARGIN_HEADER );
             $this->pdf->SetMargins( PDF_MARGIN_LEFT + 10, 60, PDF_MARGIN_RIGHT + 10 ); // Left, Top, Right
-        } else {
+        } else if ( $this->set_header_type == 1 ) {
             $this->pdf->SetMargins( PDF_MARGIN_LEFT + 10, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT + 10 );
         }
 
