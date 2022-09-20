@@ -191,7 +191,7 @@ class CustomHeaderFooter extends TCPDF {
             echo "<pre>";
             throw new ClassNotFound( "Specified Class {$class} does not exist." );
         } else {
-            $header = new $class;
+            $header = new $class( $this );
             $header->set_header();
         }
     }
@@ -212,7 +212,7 @@ class CustomHeaderFooter extends TCPDF {
             echo "<pre>";
             throw new ClassNotFound( "Specified Class {$class} does not exist." );
         } else {
-            $header = new $class;
+            $header = new $class( $this );
             $header->set_header();
         }
     }
