@@ -20,17 +20,70 @@ namespace LBF\Tools\PDF;
  * generate_pdf
  */
 
-use LBF\Tools\PDF\Enums\OutputTo;
 use TCPDF;
+use LBF\Tools\PDF\Enums\OutputTo;
 use LBF\Tools\PDF\NewPDFCreatorBackend;
 
 class NewPDFCreator extends NewPDFCreatorBackend {
 
 
     public function __construct(
+        /**
+         * The author of the document, can be set as the account name
+         * 
+         * @var string  $author     Default: APP_NAME
+         * 
+         * @access  public
+         * @since   LRS 3.6.0
+         */
 
+        public string $author,
 
-        array $default_properties,
+        /**
+         * The title of the page and document
+         * 
+         * @var string  $title
+         * 
+         * @access  public
+         * @since   LRS 3.6.0
+         */
+
+        public string $title,
+
+        /**
+         * The document's subject
+         * 
+         * @var string|null  $subject    Default: Document
+         * 
+         * @access  public 
+         * @since   LRS 3.6.0
+         */
+
+        public ?string $subject = null,
+
+        /**
+         * The name of the file that is generated
+         * 
+         * @var string|null  $file_name  Default: APP_NAME Report
+         * 
+         * @access  public
+         * @since   LRS 3.6.0
+         */
+
+        public ?string $file_name = null,
+
+        /**
+         * Keywords attached to the document
+         * 
+         * @var string|null  $keywords   Default: APP_NAME
+         * 
+         * @access  public
+         * @since   LRS 3.6.0
+         */
+
+        public ?string $keywords = null,
+
+        array $default_properties = [],
     ) {
         $this->set_document_default_properties( $default_properties );
         $this->pdf = new TCPDF(
@@ -71,8 +124,8 @@ class NewPDFCreator extends NewPDFCreatorBackend {
 
         $this->pdf->SetFont(
             family: $this->font_name,
-            style: $this->font_style,
-            size: $this->font_size,
+            style:  $this->font_style,
+            size:   $this->font_size,
             subset: true,
         );
 
