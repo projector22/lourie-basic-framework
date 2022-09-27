@@ -2,10 +2,11 @@
 
 namespace LBF\Db;
 
-use \PDO;
-use Exception;
-use Throwable;
-use \PDOException;
+use PDO;
+use PDOException;
+use LBF\Errors\FileNotWriteableError;
+use LBF\Errors\InvalidInputException;
+use LBF\Errors\UniqueValueDulicateException;
 
 /**
  * @todo    A much more elegant solution is needed here.
@@ -49,15 +50,15 @@ if ( !defined( "DB_NAME" ) ) {
 class ConnectMySQL {
 
     /**
-     * PDO connection object
+     * PDO connection object.
      * 
-     * @var object  $conn
+     * @var PDO  $conn
      * 
      * @access  private
      * @since   LRS 3.0.1
      */
 
-    private ?object $conn;
+    private ?PDO $conn;
 
     /**
      * Whether or not to show the error
@@ -1066,11 +1067,13 @@ class ConnectMySQL {
      * 
      * @return  string
      * 
+     * @throws  InvalidInputException   If $where doesn't contain morning valid data.
+     * 
      * @access  private
      * @since   LRS 3.21.0
      * @since   LRS 3.27.0  Rewritten, renamed from `prep_general_where` to 
-     *                  `prepare_where` and updated for using 
-     *                  prepared statements.
+     *                      `prepare_where` and updated for using 
+     *                      prepared statements.
      */
 
     private function prepare_where( array $where, bool $check_extras = false, bool $reset_bind = false ): string {
@@ -1108,7 +1111,7 @@ class ConnectMySQL {
                     $uses_or = false;
                 }
             } else {
-                throw new Exception( "Invalid data passed to SQL WHERE clause." );
+                throw new InvalidInputException( "Invalid data passed to SQL WHERE clause." );
             }
         }
         if ( $uses_or ) {
@@ -1160,8 +1163,6 @@ class ConnectMySQL {
     /**
      * Handle various possible SQL commands in the WHERE clause,
      * 
-     * @todo    Test all the combos
-     * 
      * ## Handles the following
      * - LIKE
      * - NOT LIKE
@@ -1174,6 +1175,7 @@ class ConnectMySQL {
      * - \<= (Less than or equal)
      * - IN (list)
      * - NOT IN (list)
+     * - BETWEEN (array)
      * 
      * @param   string|integer          $key    The key to be paired.
      * @param   string|integer|array    $value  The value to be paired.
@@ -1182,12 +1184,13 @@ class ConnectMySQL {
      * 
      * @see https://dev.mysql.com/doc/refman/8.0/en/comparison-operators.html
      * 
-     * @todo    Add BETWEEN
+     * @throws  InvalidInputException   When parsing BETWEEN, not parsing value as array.
      * 
      * @access  private
      * @since   LRS 3.21.0
-     * @since   LRS 3.27.0  Renamed from `select_prep_key_val` to `handle_prep_key_val`
-     *                  and rewritten to parse prepared statements.
+     * @since   LRS 3.27.0      Renamed from `select_prep_key_val` to `handle_prep_key_val`
+     *                          and rewritten to parse prepared statements.
+     * @since   LBF 0.1.11-beta Added BETWEEN.
      */
 
     private function handle_prep_key_val(
@@ -1195,38 +1198,41 @@ class ConnectMySQL {
         string|int|array $value,
         string $rand
     ): string {
-        $is_like = function ( $key ) {
+        $is_like = function ( $key ): bool {
             return substr( $key, -5 ) === ' LIKE';
         };
-        $is_not = function ( $key ) {
+        $is_not = function ( $key ): bool {
             return substr( $key, -9 ) === ' NOT LIKE';
         };
-        $is_null = function ( $value ) {
+        $is_null = function ( $value ): bool {
             return $value === 'IS NULL';
         };
-        $is_not_null = function ( $value ) {
+        $is_not_null = function ( $value ): bool {
             return $value === 'IS NOT NULL';
         };
-        $not_equals = function ( $key ) {
+        $not_equals = function ( $key ): bool {
             return substr( $key, -3 ) === ' !=';
         };
-        $greater_than = function ( $key ) {
+        $greater_than = function ( $key ): bool {
             return substr( $key, -2 ) === ' >';
         };
-        $greater_than_equals = function ( $key ) {
+        $greater_than_equals = function ( $key ): bool {
             return substr( $key, -3 ) === ' >=';
         };
-        $less_than = function ( $key ) {
+        $less_than = function ( $key ): bool {
             return substr( $key, -2 ) === ' <';
         };
-        $less_than_equals = function ( $key ) {
+        $less_than_equals = function ( $key ): bool {
             return substr( $key, -3 ) === ' <=';
         };
-        $is_in = function ( $key ) {
+        $is_in = function ( $key ): bool {
             return substr( $key, -3 ) === ' IN';
         };
-        $is_not_in = function ( $key ) {
+        $is_not_in = function ( $key ): bool {
             return substr( $key, -7 ) === ' NOT IN';
+        };
+        $between = function ( $key ): bool {
+            return substr( $key, -8 ) === ' BETWEEN';
         };
 
         if ( $is_like( $key ) || $is_not( $key ) ) {
@@ -1281,6 +1287,16 @@ class ConnectMySQL {
             } else {
                 return "{$key} {$value}";
             }
+        } else if ( $between( $key ) ) {
+            /**
+             * $fields BETWEEN $value_a and $value_b
+             */
+            if ( !is_array( $value ) || !isset( $value[0] ) || !isset( $value[1] ) ) {
+                throw new InvalidInputException( "When using 'BETWEEN', you must parse the value as a simple array, with two values." );
+            }
+            $this->bind["{$this->strip( $key )}_pta__{$rand}"] = $value[0];
+            $this->bind["{$this->strip( $key )}_ptb__{$rand}"] = $value[1];
+            return "{$key} :{$this->strip( $key )}_pta__{$rand} AND :{$this->strip( $key )}_ptb__{$rand}";
         }
         /**
          * $field = $value
@@ -1453,7 +1469,9 @@ class ConnectMySQL {
     /**
      * Log SQL queries.
      * 
-     * @param   mixed   $data
+     * @param   mixed   $data   The data to write.
+     * 
+     * @throws  FileNotWriteableError   If the log file is read only.
      * 
      * @access  private
      * @since   LRS 3.23.3
@@ -1472,11 +1490,11 @@ class ConnectMySQL {
         try {
             $fp = fopen( $path, 'a' );
             if ( is_bool( $fp ) ) {
-                throw new Exception( "Unable to write file to {$path}<br>" );
+                throw new FileNotWriteableError( "Unable to write file to {$path}<br>" );
             }
             fwrite( $fp, "{$timestamp}\t\t{$text}\n" );
             fclose( $fp );
-        } catch ( Throwable $th ) {
+        } catch ( FileNotWriteableError $th ) {
             echo "Error: {$th->getMessage()}";
         }
     }
@@ -1538,13 +1556,15 @@ class ConnectMySQL {
      * 
      * @param   string  $index_data_by.
      * 
+     * @throws  UniqueValueDulicateException    If a duplicate value is attempted to be set.
+     * 
      * @access  public
      * @since   LRS 3.27.0
      */
 
     public function set_index_data_by( string $index_data_by ): void {
         if ( !in_array( $index_data_by, $this->unique_values ) ) {
-            throw new Exception( "Index '{$index_data_by}' is not an a unque value for " . get_class( $this ) );
+            throw new UniqueValueDulicateException( "Index '{$index_data_by}' is not an a unque value for " . get_class( $this ) );
         }
         $this->index_data_by = $index_data_by;
     }

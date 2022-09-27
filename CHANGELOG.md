@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## Version 0.1.11-beta - 2022-09-27
+
+### Added
+
+- Added new Error handling files:
+  - `FileNotWriteableError`
+  - `UniqueValueDulicateException`
+
+### Changed
+
+- Added the option `BETWEEN` to SQL queries.
+
+---
+
 ## Version 0.1.10-beta - 2022-09-20
 
 ### Changed
