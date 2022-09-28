@@ -1479,6 +1479,11 @@ class ConnectMySQL {
 
     private function log_sql( mixed $data ): void {
         $timestamp = date( 'Y-m-d G:i:s' );
+        /**
+         * @todo figure out a better way for this.
+         * 
+         * __DIR__ ../relative maybe
+         */
         $path = realpath( "./bin/logs/sql.log" );
 
         if ( is_array( $data ) || is_object( $data ) ) {
