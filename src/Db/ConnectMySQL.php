@@ -1484,6 +1484,7 @@ class ConnectMySQL {
          * 
          * __DIR__ ../relative maybe
          */
+        // $path = realpath( __DIR__ . "/../../bin/logs/sql.log" );
         $path = realpath( "./bin/logs/sql.log" );
 
         if ( is_array( $data ) || is_object( $data ) ) {
