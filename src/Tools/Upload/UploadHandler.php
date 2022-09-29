@@ -193,7 +193,7 @@ class UploadHandler {
     /**
      * The maximum upload file size allowed
      * 
-     * @var int|float  $max_upload_size    Default: MAX_UPLOAD_SIZE
+     * @var int|float  $max_upload_size
      * 
      * @access  public
      * @since   LRS 3.6.0
@@ -246,7 +246,7 @@ class UploadHandler {
 
         public readonly string $save_path
     ) {
-        $this->max_upload_size = file_upload_max_size();
+        $this->max_upload_size = self::file_upload_max_size();
         if ( isset( $_FILES ) ) {
             $this->num_of_files = count( $_FILES );
             foreach ( $_FILES as $index => $file ) {
@@ -336,7 +336,7 @@ class UploadHandler {
                     if ( $size > $this->max_upload_size ) {
                         $this->error_count++;
                         $this->upload_failed = true;
-                        $this->upload_failed_reason = "File $this->file_name is bigger than the maximum upload size";
+                        $this->upload_failed_reason = "File {$this->file_name} is bigger than the maximum upload size";
                         return;
                     }
                 }
@@ -344,7 +344,7 @@ class UploadHandler {
                 if ( $this->size > $this->max_upload_size ) {
                     $this->error_count++;
                     $this->upload_failed = true;
-                    $this->upload_failed_reason = "File $this->file_name is bigger than the maximum upload size";
+                    $this->upload_failed_reason = "File {$this->file_name} is bigger than the maximum upload size";
                     return;
                 }
             }
@@ -471,6 +471,76 @@ class UploadHandler {
                 echo "Error";
             }
         }
+    }
+
+
+    /**
+     * Returns a file size limit in bytes based on the PHP upload_max_filesize and post_max_size
+     * I believe this is origonally a drupal implimentation
+     * 
+     * @link    https://stackoverflow.com/questions/13076480/php-get-actual-maximum-upload-size
+     * 
+     * @return  integer|float   $max_size The max size allowed to be uploaded
+     * 
+     * @static
+     * @access  public
+     * @since   LRS 3.6.0
+     * @since   LRS 3.11.1      Moved to functions.php
+     * @since   LBF 0.1.12-beta Moved to static method in UploadHandler.
+     */
+
+    public static function file_upload_max_size(): int|float {
+        /**
+         * To see what static below does, read here
+         * 
+         * @see https://www.php.net/manual/en/language.variables.scope.php
+         */
+        static $max_size = -1;
+    
+        if ( $max_size < 0 ) {
+            // Start with post_max_size.
+            $post_max_size = self::parse_size( ini_get( 'post_max_size' ) );
+            if ( $post_max_size > 0 ) {
+                $max_size = $post_max_size;
+            }
+
+            /**
+             * If upload_max_size is less, then reduce. Except if upload_max_size is
+             * zero, which indicates no limit.
+             */
+            $upload_max = self::parse_size( ini_get( 'upload_max_filesize' ) );
+            if ( $upload_max > 0 && $upload_max < $max_size ) {
+                $max_size = $upload_max;
+            }
+        }
+
+        return $max_size;
+    }
+
+
+    /**
+     * Parse the size from an ini_get command
+     * I believe this is origonally a drupal implimentation
+     * 
+     * @link    https://stackoverflow.com/questions/13076480/php-get-actual-maximum-upload-size
+     * 
+     * @param   string  $size   The raw size data to be parsed
+     * 
+     * @return  integer The max size allowed to be uploaded
+     * 
+     * @static
+     * @access  private
+     * @since   LRS 3.6.0
+     * @since   LRS 3.11.1      Moved to functions.php
+     * @since   LBF 0.1.12-beta Moved to static method in UploadHandler.
+     */
+
+    private static function parse_size( string $size ): int {
+        $unit = preg_replace( '/[^bkmgtpezy]/i', '', $size ); // Remove the non-unit characters from the size.
+        $size = preg_replace( '/[^0-9\.]/', '', $size ); // Remove the non-numeric characters from the size.
+
+        // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
+        return isset( $unit ) ? round( $size * pow( 1024, stripos( 'bkmgtpezy', $unit[0] ) ) ) : round( $size );
     }
 
 }
