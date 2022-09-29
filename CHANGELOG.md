@@ -1,6 +1,18 @@
 # CHANGELOG
 
-## Version 0.1.12-beta - 2022-09-27
+## Version 0.1.13-beta - 2022-09-29
+
+### Fixed
+
+- Fixed a bug with generating CRON files, calling the `Tools\Mail` classes.
+
+### Changed
+
+- Moved some specific methods in `CronHandler` back to LRS. Full overhall still required.
+
+---
+
+## Version 0.1.12-beta - 2022-09-29
 
 ### Changed
 

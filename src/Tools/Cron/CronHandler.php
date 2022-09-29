@@ -2,7 +2,6 @@
 
 namespace LBF\Tools\Cron;
 
-use App\Db\Data\CronEntriesData;
 use LBF\HTML\Draw;
 use LBF\Tools\Files\FileSystem;
 
@@ -459,86 +458,6 @@ class CronHandler {
             $string = str_replace( '%hour%', $hour, $string );
         }
         return $this->fill_in_template( $string, $schedule );
-    }
-
-
-    /**
-     * Create the text of the cron php file.
-     * 
-     * @access  protected
-     * @since   LRS 3.17.4
-     */
-
-    protected function create_php_template(): void {
-        $this->php_file_content = "<?php";
-        $this->php_file_content .= "\n\$ts = date( 'Y-m-d G:i:s' );";
-        $this->php_file_content .= "\necho \"\\n[{\$ts}] - CRON STARTED:: {$this->cron_name}\\n\";";
-        $this->php_file_content .= "\n\$start_time = microtime( true );";
-        $this->php_file_content .= "\nif ( isset( \$_SERVER['REMOTE_ADDR'] ) ) {";
-        $this->php_file_content .= "\n    die( 'Permission denied. You may not run this file directly' );";
-        $this->php_file_content .= "\n}";
-        $this->php_file_content .= "\nrequire '" . INCLUDES_PATH . "general-loader.php';";
-        $this->php_file_content .= "\n\$cron = new app\actions\CronActions;";
-        $this->php_file_content .= "\n\$cron->token = '{$this->template}';";
-        if ( isset( $this->send_to_email ) ) {
-            $this->php_file_content .= "\n\$cron->email = '{$this->send_to_email}';";
-        }
-        $this->php_file_content .= "\n\$cron->execute();";
-        if ( $this->send_email && isset( $this->send_to_email ) ) {
-            $this->php_file_content .= "\n\$mail = new LBF\Tools\Mail\Mail;";
-            $this->php_file_content .= "\n\$mail->send_mail( ";
-            $this->php_file_content .= "\n    '{$this->send_to_email}',";
-            $this->php_file_content .= "\n    \$cron->subject,";
-            $this->php_file_content .= "\n    \$cron->body,";
-            $this->php_file_content .= "\n    \$cron->attachment ?? null,";
-            $this->php_file_content .= "\n    APP_NAME,";
-            $this->php_file_content .= "\n    true";
-            $this->php_file_content .= "\n);";
-            $this->php_file_content .= "\nif ( isset( \$cron->attachment[0] ) && is_file( \$cron->attachment[0] ) ) {";
-            $this->php_file_content .= "\n    unlink( \$cron->attachment[0] );";
-            $this->php_file_content .= "\n}";
-        }
-        $this->php_file_content .= "\n\$end_time = microtime( true );";
-        $this->php_file_content .= "\n\$ts = date( 'Y-m-d G:i:s' );";
-        $this->php_file_content .= "\necho \"\\n[{\$ts}] - CRON COMPLETED:: The code took \" . (\$end_time - \$start_time) . \" seconds to complete. It completed successfully.\\n\\n\";";
-    }
-
-
-    /**
-     * Add the cron entry to the database
-     * 
-     * @param   string      $schedule   The schedule that will be applied.
-     *                                  Options are:
-     *                                  - 'MINUTE'
-     *                                  - 'HOURLY'
-     *                                  - 'DAILY'
-     *                                  - 'WEEKLY'
-     *                                  - 'MONTHLY'
-     * @param   string|int  $condition  The basic modifier, every x days or every x hours etc.
-     * 
-     * @access  public
-     * @since   LRS 3.17.4
-     */
-
-    public function add_to_database( string $schedule, string $condition ): void {
-        $cron_id = "{$this->template} . {$schedule} . " . date( 'Y-M-d' );
-        $cron_data = new CronEntriesData;
-        $cron_data->select_all( "cron_id LIKE '%{$cron_id}%'" );
-
-        if ( $cron_data->number_of_records > 0 ) {
-            $cron_id .= ' - ' . $cron_data->number_of_records;
-        }
-
-        $cron_data->insert( [
-            'cron_id'      => $cron_id,
-            'date_set'     => date( 'Y-m-d G:i:s' ),
-            'event_name'   => $this->cron_name,
-            'template'     => $this->template,
-            'send_to_addr' => $this->send_to_email ?? null,
-            'rec_schedule' => $schedule,
-            'conditions'   => $condition,
-            'start_time'   => $this->start_time ?? null,
-        ] );
     }
 
 
