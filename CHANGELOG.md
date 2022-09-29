@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.1.12-beta - 2022-09-27
+
+### Changed
+
+- Converted function `file_upload_max_size`and `parse_size` into static method of `src/Tools/Upload/UploadHandler.php`.
+
+---
+
 ## Version 0.1.11-beta - 2022-09-27
 
 ### Added
