@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.2.0 - UNRELEASED
+
+### Issues Closed
+
+- #17 WIP
+
+---
+
 ## Version 0.1.13-beta - 2022-09-29
 
 ### Fixed
