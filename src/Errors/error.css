@@ -1,0 +1,35 @@
+.error-exception-container {
+    padding: 15px
+}
+
+.exception-container {
+    background-color: #ebb462;
+}
+
+.error-container {
+    background-color: #ff5050;
+}
+
+.warning-container {
+    background-color: #4baeff;
+}
+
+.deprecated-container {
+    background-color: #b668ff;
+}
+
+.general-container {
+    background-color: #4bffab;
+}
+
+.error-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.2rem;
+}
+
+.error-table tr td {
+    border: 1px solid black;
+    padding: 8px;
+    margin: 2px;
+}
