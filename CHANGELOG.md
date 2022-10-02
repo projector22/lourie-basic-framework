@@ -2,6 +2,12 @@
 
 ## Version 0.2.0 - UNRELEASED
 
+### Packages Updated
+
+| Package | Old | New |
+| ------- | --- | --- |
+| PHP Debuggin Tool | 1.0.5 | 1.0.6 |
+
 ### Issues Closed
 
 - #17 WIP
