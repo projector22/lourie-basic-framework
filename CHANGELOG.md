@@ -1,6 +1,11 @@
 # CHANGELOG
 
-## Version 0.2.0 - UNRELEASED
+## Version 0.2.0-beta - UNRELEASED
+
+### Added
+
+- Enum `DrawError` for defining different ways of displaying an error.
+
 
 ### Packages Updated
 
