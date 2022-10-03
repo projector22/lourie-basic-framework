@@ -3,7 +3,9 @@
 namespace LBF\Tools\Errors;
 
 use Throwable;
+use LBF\Tools\JSON\JSONTools;
 use LBF\Tools\Errors\DrawError;
+use LBF\Tools\Files\FileSystem;
 
 /**
  * Class for creating custom ways of drawing out ERROR & EXCEPTION messages.
@@ -45,11 +47,41 @@ class ErrorExceptionHandler {
      * @var string  $css_path
      * 
      * @access  private
-     * @since   0.2.0-beta
+     * @since   LBF 0.2.0-beta
      */
 
     private string $css_path = __DIR__ . '/css/error.min.css';
     // private string $css_path = __DIR__ . '/css/error.css';
+
+    /**
+     * The path into which to log errors.
+     * 
+     * @var string  $log_file   Default: __DIR__ . '/../../bin/error.log'
+     * 
+     * @access  private
+     * @since   LBF 0.2.0-beta
+     */
+
+    private string $log_file = __DIR__ . '/../../bin/error.log';
+
+    /**
+     * The type of log to generate.
+     * 
+     * ## Options:
+     * 
+     * - LogTypes::LOG
+     * - LogTypes::HTML
+     * - LogTypes::MD
+     * - LogTypes::JSON
+     * 
+     * @var LogTypes    $log_type   Default: LogTypes::LOG
+     * 
+     * @access  private
+     * @since   LBF 0.2.0-beta
+     */
+
+    private LogTypes $log_type = LogTypes::LOG;
+
 
     /**
      * Class constructor.
@@ -104,14 +136,53 @@ class ErrorExceptionHandler {
     /**
      * Enable or disable logging to file.
      * 
-     * @param   boolean $log    Whether to enable or disable logging.
+     * @param   boolean     $log    Whether to enable or disable logging.
+     * @param   string      $path   Overwrite the path to where to write log file.
+     * @param   LogTypes    $type   The type of log file to create.
      * 
      * @access  public
      * @since   LBF 0.2.0-beta
      */
 
-    public function set_log_to_file( bool $log ): void {
+    public function set_log_to_file( bool $log, ?string $path, LogTypes $type = LogTypes::LOG ): void {
         $this->params['log_to_file'] = $log;
+        $this->log_type = $type;
+        if ( !is_null( $path ) ) {
+            $this->log_file = $path;
+            if ( !FileSystem::file_exists( $path ) ) {
+                FileSystem::create_blank_file( $path );
+                switch( $type ) {
+                    case LogTypes::HTML:
+                        $file = '
+                        <h1> LOG FILE</h1>
+                        <style>' . file_get_contents( $this->css_path ) . ' </style>
+                        <table class=\'log-table\'>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Error</th>
+                                <th>Details</th>
+                                <th>File</th>
+                                <th>Line</th>
+                                <th>Error Code</th>
+                                <th>Stack Trace</th>
+                            </tr>
+                        </table>';
+                        FileSystem::write_file( $path, $file );
+                        break;
+                    case LogTypes::MD:
+                        $file = '
+                        # LOG FILE
+
+                        | Timestamp | Error | Details | File | Line | Error Code | Stack Trace |
+                        | --------- | ----- | ------- | ---- | ---- | ---------- | ----------- |';
+                        FileSystem::write_file( $path, $file );
+                        break;
+                    case LogTypes::JSON:
+                        JSONTools::write_json_file( $path, [] );
+                        break;
+                }
+            }
+        }
     }
 
 
@@ -200,7 +271,7 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function catch_error_pretty( int $error_number, string $error_string, string $error_file, int $erorr_line ): void {
+    public function catch_error_pretty( int $error_number, string $error_string, string $error_file, int $error_line ): void {
         echo '<style>' . file_get_contents( $this->css_path ) . ' </style>';
         echo "<div class='error-exception-container " . match ( $error_number ) {
             E_NOTICE            => 'general-container',
@@ -214,8 +285,15 @@ class ErrorExceptionHandler {
             default             => 'general-container',
         } . "'>";
         echo "<h1>{$this->error_title( $error_number )}</h1>";
-        echo "{$error_string} in file <b>{$error_file}</b> on line <b>{$erorr_line}</b>";
+        echo "{$error_string} in file <b>{$error_file}</b> on line <b>{$error_line}</b>";
         echo "</div>"; // exception-container
+        $this->log_errors( [
+            'error'   => $error_number,
+            'details' => $error_string,
+            'file'    => $error_file,
+            'line'    => $error_line,
+            'code'    => $error_number,
+        ] );
     }
 
 
@@ -264,6 +342,14 @@ class ErrorExceptionHandler {
         echo "<tr>";
         echo "</table>";
         echo "</div>"; // exception-container
+        $this->log_errors( [
+            'error'   => get_class( $e ),
+            'details' => $e->getMessage(),
+            'file'    => $e->getFile(),
+            'line'    => $e->getLine(),
+            'code'    => $e->getCode(),
+            'trace'   => $e->getTraceAsString(),
+        ] );
     }
 
 
@@ -279,8 +365,15 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function catch_error_text_inline( int $error_number, string $error_string, string $error_file, int $erorr_line ): void {
-        echo "<b>{$this->error_title( $error_number )}</b>: {$error_string} in file <b>{$error_file}</b> on line <b>{$erorr_line}</b><br>";
+    public function catch_error_text_inline( int $error_number, string $error_string, string $error_file, int $error_line ): void {
+        echo "<b>{$this->error_title( $error_number )}</b>: {$error_string} in file <b>{$error_file}</b> on line <b>{$error_line}</b><br>";
+        $this->log_errors( [
+            'error'   => $error_number,
+            'details' => $error_string,
+            'file'    => $error_file,
+            'line'    => $error_line,
+            'code'    => $error_number,
+        ] );
     }
 
 
@@ -296,26 +389,132 @@ class ErrorExceptionHandler {
     public function text_inline( Throwable $e ): void {
         echo "<b>" . get_class( $e ) . "</b> '{$e->getMessage()}' in <b>{$e->getFile()}</b>({$e->getLine()})<br>";
         echo "<pre>Stack Trace:\n{$e->getTraceAsString()}</pre><br>";
+        $this->log_errors( [
+            'error'   => get_class( $e ),
+            'details' => $e->getMessage(),
+            'file'    => $e->getFile(),
+            'line'    => $e->getLine(),
+            'code'    => $e->getCode(),
+            'trace'   => $e->getTraceAsString(),
+        ] );
     }
 
 
     /**
      * Does nothing, called to hide error messages for Errors.
      * 
-     * @access  public
-     * @since   LBF 0.2.0-beta
-     */
-
-    public function hidden_error(): void {}
-
-
-    /**
-     * Does nothing, called to hide error messages for Errors.
+     * @param   int $error_number       The thrown error code.
+     * @param   string  $error_string   The error string describing what happened.
+     * @param   string  $error_file     The file in which the error occured.
+     * @param   int $error_line         The line on which the error occured.
      * 
      * @access  public
      * @since   LBF 0.2.0-beta
      */
 
-    public function hidden_exception(): void {}
+    public function hidden_error( int $error_number, string $error_string, string $error_file, int $error_line ): void {
+        $this->log_errors( [
+            'error'   => $error_number,
+            'details' => $error_string,
+            'file'    => $error_file,
+            'line'    => $error_line,
+            'code'    => $error_number,
+        ] );
+    }
+
+
+    /**
+     * Does nothing, called to hide error messages for Errors.
+     * 
+     * @param   Throwable   $e  The error object.
+     * 
+     * @access  public
+     * @since   LBF 0.2.0-beta
+     */
+
+    public function hidden_exception( Throwable $e ): void {
+        $this->log_errors( [
+            'error'   => get_class( $e ),
+            'details' => $e->getMessage(),
+            'file'    => $e->getFile(),
+            'line'    => $e->getLine(),
+            'code'    => $e->getCode(),
+            'trace'   => $e->getTraceAsString(),
+        ] );
+    }
+
+
+    /**
+     * Log any Errors and Exceptions that are thrown to file.
+     * 
+     * @param   array   $log_data   The data to log.
+     * 
+     * @access  private
+     * @since   LBF 0.2.0-beta
+     */
+
+    private function log_errors( array $log_data ): void {
+        if ( !$this->params['log_to_file'] ) {
+            return;
+        }
+        $log_data['error'] = match( $log_data['error'] ) {
+            E_ERROR             => 'E_ERROR',
+            E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
+            E_WARNING           => 'E_WARNING',
+            E_PARSE             => 'E_PARSE',
+            E_NOTICE            => 'E_NOTICE',
+            E_STRICT            => 'E_STRICT',
+            E_DEPRECATED        => 'E_DEPRECATED',
+            E_CORE_ERROR        => 'E_CORE_ERROR',
+            E_CORE_WARNING      => 'E_CORE_WARNING',
+            E_COMPILE_ERROR     => 'E_COMPILE_ERROR',
+            E_COMPILE_WARNING   => 'E_COMPILE_WARNING',
+            E_USER_ERROR        => 'E_USER_ERROR',
+            E_USER_WARNING      => 'E_USER_WARNING',
+            E_USER_NOTICE       => 'E_USER_NOTICE',
+            E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
+            E_ALL               => 'E_ALL',
+            default             => $log_data['error'],
+        };
+
+        if ( !isset( $log_data['trace'] ) ) {
+            $log_data['trace'] = '';
+        }
+
+        $timestamp = date( 'Y-m-d H:i:s' );
+        switch ( $this->log_type ) {
+            case LogTypes::LOG:
+                $log = "\n[{$timestamp}] - {$log_data['error']} | {$log_data['code']} | {$log_data['file']} | {$log_data['line']} | {$log_data['details']}";
+                if ( $log_data['trace'] !== '' ) {
+                    $log .= " | {$log_data['trace']}";
+                }
+                FileSystem::append_to_file( $this->log_file, $log );
+                break;
+            case LogTypes::HTML:
+                $log_data['trace'] = '<pre>' . $log_data['trace'] . '</pre>';
+                $new_log = "<tr>
+        <td>{$timestamp}</td>
+        <td>{$log_data['error']}</td>
+        <td>{$log_data['details']}</td>
+        <td>{$log_data['file']}</td>
+        <td>{$log_data['line']}</td>
+        <td>{$log_data['code']}</td>
+        <td>{$log_data['trace']}</td>
+    </tr>
+</table>";
+                $log = str_replace( '</table>', $new_log, file_get_contents( $this->log_file ) );
+                FileSystem::write_file( $this->log_file, $log );
+                break;
+            case LogTypes::MD:
+                $log = "\n| {$timestamp} | {$log_data['error']} | {$log_data['details']} | {$log_data['file']} | {$log_data['line']} | {$log_data['code']} | {$log_data['trace']} |";
+                FileSystem::append_to_file( $this->log_file, $log );
+                break;
+            case LogTypes::JSON:
+                $data = JSONTools::read_json_file_to_array( $this->log_file );
+                $data[time()] = $log_data;
+                JSONTools::write_json_file( $this->log_file, $data );
+                break;
+        }
+    }
 
 }
