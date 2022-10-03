@@ -31,13 +31,24 @@ class ErrorExceptionHandler {
     /**
      * Whether or not the app is running in CLI mode.
      * 
-     * @var bool    $is_cli
+     * @var boolean $is_cli
      * 
      * @access  private
      * @since   LBF 0.2.0-beta
      */
 
     private bool $is_cli;
+
+    /**
+     * Whether or not to log Errors & Exceptions to file.
+     * 
+     * @var boolean $log_to_file    Default: false
+     * 
+     * @access  private
+     * @since   LBF 0.2.0-beta
+     */
+
+    private bool $log_to_file = false;
 
     /**
      * The path to the minimized CSS file with styles used by the app.
@@ -97,7 +108,7 @@ class ErrorExceptionHandler {
     /**
      * Class constructor.
      * 
-     * @param   array   $params The params being parsed to the class.
+     * @param   boolean   $hide_all_errors  Whether or not to hide all the errors.
      * 
      * @access  public
      * @since   LBF 0.2.0-beta
@@ -106,40 +117,19 @@ class ErrorExceptionHandler {
     public function __construct(
 
         /**
-         * The params being parsed to the class.
+         * Hide all errors.
          * 
-         * @var array   $params
-         * ## Options for $params
-         * 
-         * - DrawError::STANDARD
-         * - DrawError::TEXT_INLINE
-         * - DrawError::PRETTY_INLINE
-         * - DrawError::BAR
-         * - DrawError::HIDDEN
-         * 
-         * @see src/Tools/Errors/DrawError.php
+         * @var boolean $hide_all_errors    Default: false
          * 
          * @access  private
          * @since   LBF 0.2.0-beta
          */
 
-        private array $params = [] 
+        private bool $hide_all_errors = false
     ) {
         $this->is_cli = !isset( $_SERVER['REMOTE_ADDR'] );
-
-        /**
-         * @see src/Tools/Errors/DrawError.php
-         */
-        $defaults = [
-            'log_to_file'     => false,
-            'hide_exceptions' => true,
-            'display'         => DrawError::STANDARD,
-        ];
-
-        foreach ( $defaults as $key => $param ) {
-            if ( !isset( $params[$key] ) ) {
-                $this->params[$key] = $param;
-            }
+        if ( $this->hide_all_errors ) {
+            $this->set_error_handlers( DrawError::HIDDEN );
         }
     }
 
@@ -156,7 +146,7 @@ class ErrorExceptionHandler {
      */
 
     public function set_log_to_file( bool $log, ?string $path = null, LogTypes $type = LogTypes::LOG ): void {
-        $this->params['log_to_file'] = $log;
+        $this->log_to_file = $log;
         $this->log_type = $type;
 
         if ( !is_null( $path ) ) {
@@ -168,20 +158,19 @@ class ErrorExceptionHandler {
                 FileSystem::create_blank_file( $this->log_file );
                 switch( $type ) {
                     case LogTypes::HTML:
-                        $file = '
-                        <h1> LOG FILE</h1>
-                        <style>' . file_get_contents( $this->css_path ) . ' </style>
-                        <table class=\'log-table\'>
-                            <tr>
-                                <th>Timestamp</th>
-                                <th>Error</th>
-                                <th>Details</th>
-                                <th>File</th>
-                                <th>Line</th>
-                                <th>Error Code</th>
-                                <th>Stack Trace</th>
-                            </tr>
-                        </table>';
+                        $file = '<style>' . file_get_contents( $this->css_path ) . ' </style>
+<h1> LOG FILE</h1>
+<table class=\'log-table\'>
+    <tr>
+        <th>Timestamp</th>
+        <th>Error</th>
+        <th>Details</th>
+        <th>File</th>
+        <th>Line</th>
+        <th>Error Code</th>
+        <th>Stack Trace</th>
+    </tr>
+</table>';
                         FileSystem::write_file( $this->log_file, $file );
                         break;
                     case LogTypes::MD:
@@ -203,20 +192,32 @@ class ErrorExceptionHandler {
     /**
      * Set the custom error handlers. All params should be set in class instantiation.
      * 
-     * @todo    Think if want set display type as param.
+     * @param   DrawError   $display    Default DrawError::STANDARD
+     * ## Options for $params
+     * - DrawError::STANDARD
+     * - DrawError::TEXT_INLINE
+     * - DrawError::PRETTY_INLINE
+     * - DrawError::BAR
+     * - DrawError::HIDDEN
+     * 
+     * @see src/Tools/Errors/DrawError.php
      * 
      * @access  public
      * @since   LBF 0.2.0-beta
      */
 
-    public function set_error_handlers(): void {
-        if ( $this->is_cli || $this->params['display'] === DrawError::STANDARD ) {
+    public function set_error_handlers( DrawError $display = DrawError::STANDARD ): void {
+        if ( $this->is_cli || $display === DrawError::STANDARD ) {
             return;
         }
+        if ( $this->hide_all_errors ) {
+            $display = DrawError::HIDDEN;
+        }
+
         /**
          * @see src/Tools/Errors/DrawError.php
          */
-        switch ( $this->params['display'] ) {
+        switch ( $display ) {
             case DrawError::TEXT_INLINE:
                 set_exception_handler( [$this, 'text_inline'] );
                 set_error_handler( [$this, 'catch_error_text_inline'], E_ALL );
@@ -382,7 +383,7 @@ class ErrorExceptionHandler {
      */
 
     public function catch_error_text_inline( int $error_number, string $error_string, string $error_file, int $error_line ): void {
-        echo "<b>{$this->error_title( $error_number )}</b>: {$error_string} in file <b>{$error_file}</b> on line <b>{$error_line}</b><br>";
+        echo "<b>{$this->error_title( $error_number )}</b>: {$error_string} in file <b>{$error_file}</b> on line <b>{$error_line}</b><br><br>";
         $this->log_errors( [
             'error'   => $error_number,
             'details' => $error_string,
@@ -404,7 +405,8 @@ class ErrorExceptionHandler {
 
     public function text_inline( Throwable $e ): void {
         echo "<b>" . get_class( $e ) . "</b> '{$e->getMessage()}' in <b>{$e->getFile()}</b>({$e->getLine()})<br>";
-        echo "<pre>Stack Trace:\n{$e->getTraceAsString()}</pre><br>";
+        $trace = str_replace( "#", "\t#", $e->getTraceAsString() );
+        echo "<pre>Stack Trace:\n{$trace}</pre><br><br>";
         $this->log_errors( [
             'error'   => get_class( $e ),
             'details' => $e->getMessage(),
@@ -470,7 +472,7 @@ class ErrorExceptionHandler {
      */
 
     private function log_errors( array $log_data ): void {
-        if ( !$this->params['log_to_file'] ) {
+        if ( !$this->log_to_file ) {
             return;
         }
         $log_data['error'] = match( $log_data['error'] ) {
