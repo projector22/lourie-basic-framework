@@ -1,14 +1,24 @@
 <?php
 
-namespace LBF\Errors;
+namespace LBF\Tools\Errors;
 
 use Throwable;
-use LBF\Errors\DrawError;
+use LBF\Tools\Errors\DrawError;
 
 /**
  * Class for creating custom ways of drawing out ERROR & EXCEPTION messages.
  * 
- * use LBF\Errors\ErrorExceptionHandler;
+ * use LBF\Tools\Errors\ErrorExceptionHandler;
+ * 
+ * ## Options for $params
+ * 
+ * - DrawError::STANDARD
+ * - DrawError::TEXT_INLINE
+ * - DrawError::PRETTY_INLINE
+ * - DrawError::BAR
+ * - DrawError::HIDDEN
+ * 
+ * @see src/Tools/Errors/DrawError.php
  * 
  * @author  Gareth Palmer   [Github & Gitlab /projector22]
  * @since   LBF 0.2.0-beta
@@ -56,6 +66,15 @@ class ErrorExceptionHandler {
          * The params being parsed to the class.
          * 
          * @var array   $params
+         * ## Options for $params
+         * 
+         * - DrawError::STANDARD
+         * - DrawError::TEXT_INLINE
+         * - DrawError::PRETTY_INLINE
+         * - DrawError::BAR
+         * - DrawError::HIDDEN
+         * 
+         * @see src/Tools/Errors/DrawError.php
          * 
          * @access  private
          * @since   LBF 0.2.0-beta
@@ -65,6 +84,9 @@ class ErrorExceptionHandler {
     ) {
         $this->is_cli = !isset( $_SERVER['REMOTE_ADDR'] );
 
+        /**
+         * @see src/Tools/Errors/DrawError.php
+         */
         $defaults = [
             'log_to_file'     => false,
             'hide_exceptions' => true,
@@ -106,6 +128,9 @@ class ErrorExceptionHandler {
         if ( $this->is_cli || $this->params['display'] === DrawError::STANDARD ) {
             return;
         }
+        /**
+         * @see src/Tools/Errors/DrawError.php
+         */
         switch ( $this->params['display'] ) {
             case DrawError::TEXT_INLINE:
                 set_exception_handler( [$this, 'text_inline'] );

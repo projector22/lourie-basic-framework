@@ -1,13 +1,13 @@
 <?php
 
-namespace LBF\Errors;
+namespace LBF\Tools\Errors;
 
 /**
  * Enum for defining the different ways errors may be displayed.
  * 
- * @see LBF\Errors\ErrorExceptionHandler
+ * @see LBF\Tools\Errors\ErrorExceptionHandler
  * 
- * use LBF\Errors\DrawError;
+ * use LBF\Tools\Errors\DrawError;
  * 
  * @author  Gareth Palmer   [Github & Gitlab /projector22]
  * @since   LBF 0.2.0-beta
