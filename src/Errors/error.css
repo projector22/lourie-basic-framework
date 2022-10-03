@@ -1,5 +1,9 @@
 .error-exception-container {
-    padding: 15px
+    padding: 1.5rem;
+    margin: 5px;
+    border: 5px double black;
+    border-radius: 10px;
+    
 }
 
 .exception-container {
