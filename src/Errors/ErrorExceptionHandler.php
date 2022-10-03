@@ -28,6 +28,20 @@ class ErrorExceptionHandler {
     private bool $is_cli;
 
     /**
+     * The path to the minimized CSS file with styles used by the app.
+     * 
+     * Swap to the commented out path when changing styles.
+     * 
+     * @var string  $css_path
+     * 
+     * @access  private
+     * @since   0.2.0-beta
+     */
+
+    private string $css_path = __DIR__ . '/error.min.css';
+    // private string $css_path = __DIR__ . '/error.css';
+
+    /**
      * Class constructor.
      * 
      * @param   array   $params The params being parsed to the class.
@@ -162,7 +176,7 @@ class ErrorExceptionHandler {
      */
 
     public function catch_error_pretty( int $error_number, string $error_string, string $error_file, int $erorr_line ): void {
-        echo '<style>' . file_get_contents( __DIR__ . '/error.css' ) . ' </style>';
+        echo '<style>' . file_get_contents( $this->css_path ) . ' </style>';
         echo "<div class='error-exception-container " . match ( $error_number ) {
             E_NOTICE            => 'general-container',
             E_USER_NOTICE       => 'general-container',
@@ -190,7 +204,7 @@ class ErrorExceptionHandler {
      */
 
     public function pretty_exception_table( Throwable $e ): void {
-        echo '<style>' . file_get_contents( __DIR__ . '/error.css' ) . ' </style>';
+        echo '<style>' . file_get_contents( $this->css_path ) . ' </style>';
         echo "<div class='error-exception-container exception-container'>";
         echo "<h1>" . get_class( $e ) . "</h1>";
         echo "'{$e->getMessage()}' in <b>{$e->getFile()}</b> ({$e->getLine()})\n";
