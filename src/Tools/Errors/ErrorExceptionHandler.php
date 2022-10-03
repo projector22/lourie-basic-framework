@@ -227,11 +227,19 @@ class ErrorExceptionHandler {
                 set_error_handler( [$this, 'catch_error_pretty'], E_ALL );
                 break;
             case DrawError::BAR:
-                /**
-                 * @todo    build this one.
-                 */
-                set_exception_handler( [$this, 'catch_exception'] );
-                set_error_handler( [$this, 'catch_error'], E_ALL );
+                $fn = function ( $relative_path ): string {
+                    if ( PHP_OS === 'WINNT' ) {
+                        $realpath = str_replace( $_SERVER['DOCUMENT_ROOT'], '', str_replace( '\\', '/', $relative_path ) );
+                        return $realpath;
+                    } else {
+                        $realpath = realpath( $relative_path );
+                        return str_replace( $_SERVER['DOCUMENT_ROOT'], '', $realpath );
+                    }
+                };
+                echo "<script src='{$fn( __DIR__ . '/js/scripts.min.js' )}' type='module'></script>";
+                echo "<style>" . file_get_contents( __DIR__ . '/css/error_bar.css' ) . "</style>";
+                set_exception_handler( [$this, 'log_exception_in_bar'] );
+                set_error_handler( [$this, 'log_error_in_bar'], E_ALL );
                 break;
             case DrawError::HIDDEN:
                 set_exception_handler( [$this, 'hidden_exception'] );
@@ -459,6 +467,41 @@ class ErrorExceptionHandler {
             'code'    => $e->getCode(),
             'trace'   => $e->getTraceAsString(),
         ] );
+    }
+
+
+    /**
+     * Draw out an Error in the error bar.
+     * 
+     * @param   int $error_number       The thrown error code.
+     * @param   string  $error_string   The error string describing what happened.
+     * @param   string  $error_file     The file in which the error occured.
+     * @param   int $error_line         The line on which the error occured.
+     * 
+     * @access  public
+     * @since   LBF 0.2.0-beta
+     */
+
+    public function log_error_in_bar( int $error_number, string $error_string, string $error_file, int $error_line ): void {
+        echo "<div class='error-bar-data'>";
+        $this->catch_error_pretty( $error_number, $error_string, $error_file, $error_line );
+        echo "</div>";
+    }
+
+
+    /**
+     * Draw out an Exception in the error bar.
+     * 
+     * @param   Throwable   $e  The error object.
+     * 
+     * @access  public
+     * @since   LBF 0.2.0-beta
+     */
+
+    public function log_exception_in_bar( Throwable $e ): void {
+        echo "<div class='error-bar-data'>";
+        $this->pretty_exception_table( $e );
+        echo "</div>";
     }
 
 
