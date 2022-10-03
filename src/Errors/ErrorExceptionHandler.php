@@ -38,8 +38,8 @@ class ErrorExceptionHandler {
      * @since   0.2.0-beta
      */
 
-    private string $css_path = __DIR__ . '/error.min.css';
-    // private string $css_path = __DIR__ . '/error.css';
+    private string $css_path = __DIR__ . '/css/error.min.css';
+    // private string $css_path = __DIR__ . '/css/error.css';
 
     /**
      * Class constructor.
