@@ -54,6 +54,17 @@ class ErrorExceptionHandler {
     // private string $css_path = __DIR__ . '/css/error.css';
 
     /**
+     * Define the default bin path in which errors may be saved.
+     * 
+     * @var string  DEFAULT_BIN_PATH
+     * 
+     * @access  public
+     * @since   LBF 0.2.0-beta
+     */
+
+    const DEFAULT_BIN_PATH = __DIR__ . '/../../../bin/';
+
+    /**
      * The path into which to log errors.
      * 
      * @var string  $log_file   Default: __DIR__ . '/../../bin/error.log'
@@ -62,7 +73,7 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    private string $log_file = __DIR__ . '/../../bin/error.log';
+    private string $log_file = self::DEFAULT_BIN_PATH . 'error.log';
 
     /**
      * The type of log to generate.
@@ -144,13 +155,17 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function set_log_to_file( bool $log, ?string $path, LogTypes $type = LogTypes::LOG ): void {
+    public function set_log_to_file( bool $log, ?string $path = null, LogTypes $type = LogTypes::LOG ): void {
         $this->params['log_to_file'] = $log;
         $this->log_type = $type;
+
         if ( !is_null( $path ) ) {
             $this->log_file = $path;
-            if ( !FileSystem::file_exists( $path ) ) {
-                FileSystem::create_blank_file( $path );
+        }
+
+        if ( $log ) {
+            if ( !FileSystem::file_exists( $this->log_file ) ) {
+                FileSystem::create_blank_file( $this->log_file );
                 switch( $type ) {
                     case LogTypes::HTML:
                         $file = '
@@ -167,18 +182,17 @@ class ErrorExceptionHandler {
                                 <th>Stack Trace</th>
                             </tr>
                         </table>';
-                        FileSystem::write_file( $path, $file );
+                        FileSystem::write_file( $this->log_file, $file );
                         break;
                     case LogTypes::MD:
-                        $file = '
-                        # LOG FILE
+                        $file = '# LOG FILE
 
-                        | Timestamp | Error | Details | File | Line | Error Code | Stack Trace |
-                        | --------- | ----- | ------- | ---- | ---- | ---------- | ----------- |';
-                        FileSystem::write_file( $path, $file );
+| Timestamp | Error | Details | File | Line | Error Code | Stack Trace |
+| --------- | ----- | ------- | ---- | ---- | ---------- | ----------- |';
+                        FileSystem::write_file( $this->log_file, $file );
                         break;
                     case LogTypes::JSON:
-                        JSONTools::write_json_file( $path, [] );
+                        JSONTools::write_json_file( $this->log_file, [] );
                         break;
                 }
             }
@@ -324,10 +338,12 @@ class ErrorExceptionHandler {
         $i = 0;
         foreach ( $e->getTrace() as $id => $line ) {
             $fn = ( $line['class'] ?? '' ) . ( $line['type'] ?? '' ) . $line['function'];
+            $file = $line['file'] ?? '';
+            $ln = $line['line'] ?? '';
             echo "<tr>";
             echo "<td>#{$id}</td>";
-            echo "<td>{$line['file']}</td>";
-            echo "<td>{$line['line']}</td>";
+            echo "<td>{$file}</td>";
+            echo "<td>{$ln}</td>";
             echo "<td>{$fn}</td>";
             echo "<td>" . implode( "<br>", $line['args'] ?? [] ) . "</td>";
             echo "</tr>";
@@ -486,7 +502,8 @@ class ErrorExceptionHandler {
             case LogTypes::LOG:
                 $log = "\n[{$timestamp}] - {$log_data['error']} | {$log_data['code']} | {$log_data['file']} | {$log_data['line']} | {$log_data['details']}";
                 if ( $log_data['trace'] !== '' ) {
-                    $log .= " | {$log_data['trace']}";
+                    $log_data['trace'] = str_replace( "#", "\t#", $log_data['trace'] );
+                    $log .= " | STACK TRACE:\n{$log_data['trace']}";
                 }
                 FileSystem::append_to_file( $this->log_file, $log );
                 break;
@@ -506,12 +523,14 @@ class ErrorExceptionHandler {
                 FileSystem::write_file( $this->log_file, $log );
                 break;
             case LogTypes::MD:
+                $log_data['trace'] = str_replace( "\n", "<br>", $log_data['trace'] );
+                $log_data['trace'] = str_replace( "#", "\#", $log_data['trace'] );
                 $log = "\n| {$timestamp} | {$log_data['error']} | {$log_data['details']} | {$log_data['file']} | {$log_data['line']} | {$log_data['code']} | {$log_data['trace']} |";
                 FileSystem::append_to_file( $this->log_file, $log );
                 break;
             case LogTypes::JSON:
                 $data = JSONTools::read_json_file_to_array( $this->log_file );
-                $data[time()] = $log_data;
+                $data[time()][] = $log_data;
                 JSONTools::write_json_file( $this->log_file, $data );
                 break;
         }

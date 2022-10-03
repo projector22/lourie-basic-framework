@@ -5,7 +5,7 @@
 ### Added
 
 - Enum `DrawError` for defining different ways of displaying an error.
-- Class `ErrorExceptionHandler` for custom handling the custom displaying of error messages. #17
+- Class `ErrorExceptionHandler` for custom handling the custom displaying of error messages. This includes the writing of logs #17
 
 ### Changed
 
