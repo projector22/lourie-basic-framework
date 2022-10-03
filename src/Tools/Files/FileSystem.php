@@ -209,7 +209,7 @@ class FileSystem {
 
     public static function create_blank_file( string $file_path ): bool {
         if ( !file_exists( $file_path ) ) {
-            return self::write_file( $file_path, '', 'w' );
+            return touch( $file_path );
         }
         return false;
     }

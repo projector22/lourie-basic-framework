@@ -7,6 +7,10 @@
 - Enum `DrawError` for defining different ways of displaying an error.
 - Class `ErrorExceptionHandler` for custom handling the custom displaying of error messages. #17
 
+### Changed
+
+- Changed `FileSystem::create_blank_file` to use the built in php function `touch`.
+
 ### Packages Updated
 
 | Package | Old | New |
