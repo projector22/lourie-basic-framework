@@ -2,7 +2,7 @@
 
 namespace LBF;
 
-use LBF\Errors\FileNotFoundError;
+use LBF\Errors\Files\FileNotFound;
 
 /**
  * Perform app autoloading tasks.
@@ -133,7 +133,7 @@ class Autoloader {
             if ( $this->debug_mode ) {
                 $this->draw_out_feedback_table( $class, $file, $path );
             } else {
-                throw new FileNotFoundError( "Called class {$class} not found.", 404 );
+                throw new FileNotFound( "Called class {$class} not found.", 404 );
             }
             return false;
         }

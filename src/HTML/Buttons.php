@@ -4,8 +4,8 @@ namespace LBF\HTML;
 
 use Feather\Icons;
 use LBF\Auth\Hash;
-use LBF\Errors\InvalidInputException;
-use LBF\Errors\MissingRequiredInputException;
+use LBF\Errors\IO\InvalidInput;
+use LBF\Errors\IO\MissingRequiredInput;
 use LBF\HTML\JS;
 use LBF\HTML\HTML;
 use LBF\HTML\HTMLMeta;
@@ -32,7 +32,7 @@ class Buttons extends HTMLMeta {
      * 
      * @return  array   $params     The modified params.
      * 
-     * @throws  InvalidInputException   If a button colour value is invalid.
+     * @throws  InvalidInput   If a button colour value is invalid.
      * 
      * @static
      * @access  private
@@ -62,7 +62,7 @@ class Buttons extends HTMLMeta {
 
         if ( isset( $params['colour'] ) && $params['colour'] !== 'default' ) {
             if ( !in_array( $params['colour'], $permitted_colours ) ) {
-                throw new InvalidInputException( 'Button colour selected is not a permitted colour' );
+                throw new InvalidInput( 'Button colour selected is not a permitted colour' );
             }
             $default_class .= " button_colour__{$params['colour']} coloured_button" ;
         }
@@ -131,7 +131,7 @@ class Buttons extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException   Required param 'content' missing.
+     * @throws  MissingRequiredInput   Required param 'content' missing.
      * 
      * @static
      * @access  public
@@ -142,7 +142,7 @@ class Buttons extends HTMLMeta {
 
     public static function general( array $params = [] ): string {
         if ( !isset( $params['content'] ) ) {
-            throw new MissingRequiredInputException( "Button \$param attribute 'content' has not been set. \$paramT['content'] must be set." );
+            throw new MissingRequiredInput( "Button \$param attribute 'content' has not been set. \$paramT['content'] must be set." );
         }
         $skip_fields = [
             'content', 'container', 'inline', 'padding', 'hidden',
@@ -437,7 +437,7 @@ class Buttons extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException   When `$params['link']` is missing.
+     * @throws  MissingRequiredInput   When `$params['link']` is missing.
      * 
      * @static
      * @access  private
@@ -446,7 +446,7 @@ class Buttons extends HTMLMeta {
 
     private static function go_to_button_template( array $params, string $content ): string {
         if ( !isset( $params['link'] ) ) {
-            throw new MissingRequiredInputException( "Button \$param attribute 'link' has not been set. \$paramT['link'] must be set." );
+            throw new MissingRequiredInput( "Button \$param attribute 'link' has not been set. \$paramT['link'] must be set." );
         }
         $button = '';
 

@@ -3,8 +3,8 @@
 namespace LBF\Tools\Env;
 
 use Throwable;
-use LBF\Errors\FileNotFoundError;
-use LBF\Errors\ConstantAlreadyDefinedError;
+use LBF\Errors\Files\FileNotFound;
+use LBF\Errors\General\ConstantAlreadyDefined;
 
 /**
  * Load environmental data to the system.
@@ -45,7 +45,7 @@ class LoadEnvironment {
          * 
          * @var string  $path_to_env
          * 
-         * @throws  FileNotFoundError   If the environmental variable doesn't exist.
+         * @throws  FileNotFound   If the environmental variable doesn't exist.
          * 
          * @readonly
          * @access  private
@@ -56,7 +56,7 @@ class LoadEnvironment {
     ) {
         if ( !file_exists( $this->path_to_env ) ) {
             echo "<pre>";
-            throw new FileNotFoundError( "Environment variable file not found." );
+            throw new FileNotFound( "Environment variable file not found." );
         }
         $lines = explode( "\n", file_get_contents( $this->path_to_env ) );
         foreach( $lines as $index => $line ) {
@@ -100,7 +100,7 @@ class LoadEnvironment {
      * 
      * @return  boolean
      * 
-     * @throws  ConstantAlreadyDefinedError If the constant is already defined in the app.
+     * @throws  ConstantAlreadyDefined If the constant is already defined in the app.
      * 
      * @throws  
      * @access  public
@@ -113,10 +113,10 @@ class LoadEnvironment {
                 $parts = array_map( 'trim', explode( '=', $line ) );
                 if ( defined( $parts[0] ) ) {
                     echo "<pre>";
-                    throw new ConstantAlreadyDefinedError( "Constant {$parts[0]} already defined in the app." );
+                    throw new ConstantAlreadyDefined( "Constant {$parts[0]} already defined in the app." );
                 }
                 define( $parts[0], $parts[1] );
-            } catch ( ConstantAlreadyDefinedError $e ) {
+            } catch ( ConstantAlreadyDefined $e ) {
                 die( $e->getMessage() );
             } catch ( Throwable $th ) {
                 return false;

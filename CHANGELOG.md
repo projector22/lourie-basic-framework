@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## Version 0.2.0-beta - 2022-10-05
+
+### Added
+
+- Enum `DrawError` for defining different ways of displaying an error.
+- Class `ErrorExceptionHandler` for custom handling the custom displaying of error messages. This includes the writing of logs #17
+- Interface for custom Exception classes `ExceptionInterface`.
+- Abstract Meta Class `ExceptionMeta` for extending to when creating custom Exception classes. All new custom Exceptions should extend to this.
+
+### Changed
+
+- Changed `FileSystem::create_blank_file` to use the built in php function `touch`.
+- Renamed and categorized the various Custom Exception classes.
+
+### Packages Updated
+
+| Package | Old | New |
+| ------- | --- | --- |
+| PHP Debuggin Tool | 1.0.5 | 1.0.6 |
+
+### Issues Closed
+
+- #17
+
+---
+
 ## Version 0.1.13-beta - 2022-09-29
 
 ### Fixed

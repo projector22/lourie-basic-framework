@@ -300,16 +300,16 @@
     "packages-dev": [
         {
             "name": "projector22/php-debuggin-tool",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/projector22/php-debuggin-tools.git",
-                "reference": "a85308a0d31a6d3936ef277f9f30addb23446f75"
+                "reference": "ae959c38f7d53f6a2fe148fb892307f941498a58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/projector22/php-debuggin-tools/zipball/a85308a0d31a6d3936ef277f9f30addb23446f75",
-                "reference": "a85308a0d31a6d3936ef277f9f30addb23446f75",
+                "url": "https://api.github.com/repos/projector22/php-debuggin-tools/zipball/ae959c38f7d53f6a2fe148fb892307f941498a58",
+                "reference": "ae959c38f7d53f6a2fe148fb892307f941498a58",
                 "shasum": ""
             },
             "require": {
@@ -335,9 +335,9 @@
             "description": "Various php debugging tools",
             "support": {
                 "issues": "https://github.com/projector22/php-debuggin-tools/issues",
-                "source": "https://github.com/projector22/php-debuggin-tools/tree/1.0.5"
+                "source": "https://github.com/projector22/php-debuggin-tools/tree/1.0.6"
             },
-            "time": "2022-08-30T11:02:35+00:00"
+            "time": "2022-10-02T19:23:07+00:00"
         }
     ],
     "aliases": [],

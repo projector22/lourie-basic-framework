@@ -4,9 +4,9 @@ namespace LBF\Db;
 
 use PDO;
 use PDOException;
-use LBF\Errors\FileNotWriteableError;
-use LBF\Errors\InvalidInputException;
-use LBF\Errors\UniqueValueDulicateException;
+use LBF\Errors\IO\InvalidInput;
+use LBF\Errors\Files\FileNotWriteable;
+use LBF\Errors\General\UniqueValueDulicate;
 
 /**
  * @todo    A much more elegant solution is needed here.
@@ -1067,7 +1067,7 @@ class ConnectMySQL {
      * 
      * @return  string
      * 
-     * @throws  InvalidInputException   If $where doesn't contain morning valid data.
+     * @throws  InvalidInput   If `$where` doesn't contain morning valid data.
      * 
      * @access  private
      * @since   LRS 3.21.0
@@ -1111,7 +1111,7 @@ class ConnectMySQL {
                     $uses_or = false;
                 }
             } else {
-                throw new InvalidInputException( "Invalid data passed to SQL WHERE clause." );
+                throw new InvalidInput( "Invalid data passed to SQL WHERE clause." );
             }
         }
         if ( $uses_or ) {
@@ -1184,7 +1184,7 @@ class ConnectMySQL {
      * 
      * @see https://dev.mysql.com/doc/refman/8.0/en/comparison-operators.html
      * 
-     * @throws  InvalidInputException   When parsing BETWEEN, not parsing value as array.
+     * @throws  InvalidInput   When parsing BETWEEN, not parsing value as array.
      * 
      * @access  private
      * @since   LRS 3.21.0
@@ -1292,7 +1292,7 @@ class ConnectMySQL {
              * $fields BETWEEN $value_a and $value_b
              */
             if ( !is_array( $value ) || !isset( $value[0] ) || !isset( $value[1] ) ) {
-                throw new InvalidInputException( "When using 'BETWEEN', you must parse the value as a simple array, with two values." );
+                throw new InvalidInput( "When using 'BETWEEN', you must parse the value as a simple array, with two values." );
             }
             $this->bind["{$this->strip( $key )}_pta__{$rand}"] = $value[0];
             $this->bind["{$this->strip( $key )}_ptb__{$rand}"] = $value[1];
@@ -1471,7 +1471,7 @@ class ConnectMySQL {
      * 
      * @param   mixed   $data   The data to write.
      * 
-     * @throws  FileNotWriteableError   If the log file is read only.
+     * @throws  FileNotWriteable   If the log file is read only.
      * 
      * @access  private
      * @since   LRS 3.23.3
@@ -1496,11 +1496,11 @@ class ConnectMySQL {
         try {
             $fp = fopen( $path, 'a' );
             if ( is_bool( $fp ) ) {
-                throw new FileNotWriteableError( "Unable to write file to {$path}<br>" );
+                throw new FileNotWriteable( "Unable to write file to {$path}<br>" );
             }
             fwrite( $fp, "{$timestamp}\t\t{$text}\n" );
             fclose( $fp );
-        } catch ( FileNotWriteableError $th ) {
+        } catch ( FileNotWriteable $th ) {
             echo "Error: {$th->getMessage()}";
         }
     }
@@ -1562,7 +1562,7 @@ class ConnectMySQL {
      * 
      * @param   string  $index_data_by.
      * 
-     * @throws  UniqueValueDulicateException    If a duplicate value is attempted to be set.
+     * @throws  UniqueValueDulicate    If a duplicate value is attempted to be set.
      * 
      * @access  public
      * @since   LRS 3.27.0
@@ -1570,7 +1570,7 @@ class ConnectMySQL {
 
     public function set_index_data_by( string $index_data_by ): void {
         if ( !in_array( $index_data_by, $this->unique_values ) ) {
-            throw new UniqueValueDulicateException( "Index '{$index_data_by}' is not an a unque value for " . get_class( $this ) );
+            throw new UniqueValueDulicate( "Index '{$index_data_by}' is not an a unque value for " . get_class( $this ) );
         }
         $this->index_data_by = $index_data_by;
     }

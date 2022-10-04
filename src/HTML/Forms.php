@@ -4,9 +4,9 @@ namespace LBF\HTML;
 
 use Feather\Icons;
 use LBF\Auth\Hash;
-use LBF\Errors\MethodNotFound;
-use LBF\Errors\InvalidInputException;
-use LBF\Errors\MissingRequiredInputException;
+use LBF\Errors\Classes\MethodNotFound;
+use LBF\Errors\IO\InvalidInput;
+use LBF\Errors\IO\MissingRequiredInput;
 use LBF\HTML\JS;
 use LBF\HTML\HTML;
 use LBF\HTML\HTMLMeta;
@@ -62,7 +62,7 @@ class Forms extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  InvalidInputException   If $params['flex'] value is invalid.
+     * @throws  InvalidInput   If $params['flex'] value is invalid.
      * 
      * @static
      * @access  private
@@ -73,7 +73,7 @@ class Forms extends HTMLMeta {
         $set_flex = '';
         if ( isset ( $params['flex'] ) ) {
             if ( !is_numeric( $params['flex'] ) ) {
-                throw new InvalidInputException( "The flex parameter must be a number" );
+                throw new InvalidInput( "The flex parameter must be a number" );
             }
             $set_flex = " style='flex: {$params['flex']};'";
         }
@@ -181,7 +181,7 @@ class Forms extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  InvalidInputException   If `$params['validate']` is not parsed as an array.
+     * @throws  InvalidInput   If `$params['validate']` is not parsed as an array.
      * 
      * @static
      * @access  private
@@ -200,7 +200,7 @@ class Forms extends HTMLMeta {
 
             if ( isset ( $params['validate'] ) ) {
                 if ( !is_array( $params['validate'] ) ) {
-                    throw new InvalidInputException( "Validations must be parsed as an array" );
+                    throw new InvalidInput( "Validations must be parsed as an array" );
                 }
                 $validate += $params['validate'];
             }
@@ -427,7 +427,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException   If field 'data' is missing.
+     * @throws  MissingRequiredInput   If field 'data' is missing.
      * 
      * @static
      * @access  public
@@ -442,7 +442,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['id'] = Hash::random_id_string();
         }
         if ( !isset ( $params['data'] ) ) {
-            throw new MissingRequiredInputException( "Select box field data not set" );
+            throw new MissingRequiredInput( "Select box field data not set" );
         }
 
         $skip_fields = [
@@ -658,7 +658,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
-     * @throws  InvalidInputException   If $params position is not either 'before' or 'after'.
+     * @throws  InvalidInput   If $params position is not either 'before' or 'after'.
      * 
      * @static
      * @access  public
@@ -685,7 +685,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['position'] = 'after';
         } else {
             if ( !in_array( $params['position'], ['before', 'after'] ) ) {
-                throw new InvalidInputException( "Parameter 'Position' may be either 'before' or 'after', not '{$params['position']}'" );
+                throw new InvalidInput( "Parameter 'Position' may be either 'before' or 'after', not '{$params['position']}'" );
             }
         }
 
@@ -733,8 +733,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException   If $params['name'] is missing.
-     * @throws  InvalidInputException           If $params position is not either 'before' or 'after'.
+     * @throws  MissingRequiredInput   If $params['name'] is missing.
+     * @throws  InvalidInput           If $params position is not either 'before' or 'after'.
      * 
      * @static
      * @access  public
@@ -743,7 +743,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function radio( array $params = [] ): string {
         if ( !isset( $params['name'] ) ) {
-            throw new MissingRequiredInputException( "Missing \$param attribute 'name'. Radio buttons require the 'name' attribute to be set." );
+            throw new MissingRequiredInput( "Missing \$param attribute 'name'. Radio buttons require the 'name' attribute to be set." );
         }
 
         if ( !isset( $params['id'] ) ) {
@@ -757,7 +757,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['position'] = 'after';
         } else {
             if ( !in_array( $params['position'], ['before', 'after'] ) ) {
-                throw new InvalidInputException( "Parameter 'Position' may be either 'before' or 'after', not '{$params['position']}'" );
+                throw new InvalidInput( "Parameter 'Position' may be either 'before' or 'after', not '{$params['position']}'" );
             }
         }
 
@@ -811,7 +811,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
-     * @throws  InvalidInputException   If $params checked is not parsed as a bool.
+     * @throws  InvalidInput   If $params checked is not parsed as a bool.
      * 
      * @static
      * @access  public
@@ -828,7 +828,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['checked'] = false;
         }
         if ( $params['checked'] != true && $params['checked'] != false ) {
-            throw new InvalidInputException( "Invalid value for param 'checked' set. It must be either true or false" );
+            throw new InvalidInput( "Invalid value for param 'checked' set. It must be either true or false" );
         }
 
         $skip_fields = ['label', 'hint', 'container', 'off', 'on'];
@@ -912,7 +912,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException   If $params['data'] not set.
+     * @throws  MissingRequiredInput   If $params['data'] not set.
      * 
      * @static
      * @access  public
@@ -923,7 +923,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function combo_box( array $params = [] ): string {
         if ( !isset( $params['data'] ) ) {
-            throw new MissingRequiredInputException( "\$params['data'] has not been set. This parameter must be set for a combo box." );
+            throw new MissingRequiredInput( "\$params['data'] has not been set. This parameter must be set for a combo box." );
         }
         $data_id = Hash::random_id_string( 7 );
         $item = "<datalist id='{$data_id}'>{$params['data']}</datalist>";
@@ -1031,8 +1031,8 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException   If neither id nor name is set as a param.
-     * @throws  MissingRequiredInputException   If no value is set.
+     * @throws  MissingRequiredInput   If neither id nor name is set as a param.
+     * @throws  MissingRequiredInput   If no value is set.
      * 
      * @static
      * @access  public
@@ -1043,10 +1043,10 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
     public static function hidden_input( array $params ): string {
         if ( !isset( $params['id'] ) && !isset( $params['name'] ) ) {
-            throw new MissingRequiredInputException( "Identifier not set. There must be either an 'id' or a 'name' parameter set" );
+            throw new MissingRequiredInput( "Identifier not set. There must be either an 'id' or a 'name' parameter set" );
         }
         if ( !isset( $params['value'] ) ) {
-            throw new MissingRequiredInputException( "Hidden value not set. \$params['value'] must be set." );
+            throw new MissingRequiredInput( "Hidden value not set. \$params['value'] must be set." );
         }
         $params['type'] = 'hidden';
         $item = self::html_tag_open( 'input', $params );
@@ -1206,7 +1206,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      *                                          Default: null
      * @param   boolean         $disabled       Whether or not to disable each column
      * 
-     * @throws  InvalidInputException   If $data_left or $data_right is invalid.
+     * @throws  InvalidInput   If $data_left or $data_right is invalid.
      * 
      * @static
      * @access  public
@@ -1232,7 +1232,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         } else if ( is_string ( $data_left ) ) {
             $values_left = $data_left;
         } else {
-            throw new InvalidInputException( 'Invalid data type for $data_left' );
+            throw new InvalidInput( 'Invalid data type for $data_left' );
         }
 
         $is_disabled = $disabled ? " disabled='disabled'" : '';
@@ -1283,7 +1283,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         } else if ( is_string ( $data_right ) ) {
             $values_right = $data_right;
         } else {
-            throw new InvalidInputException( 'Invalid data type for $data_right' );
+            throw new InvalidInput( 'Invalid data type for $data_right' );
         }
 
         HTML::div( ['class' => 'multicolumn_column multicolumn_buttons_vertical_inline'] );
