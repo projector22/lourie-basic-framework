@@ -6,6 +6,8 @@
 
 - Enum `DrawError` for defining different ways of displaying an error.
 - Class `ErrorExceptionHandler` for custom handling the custom displaying of error messages. This includes the writing of logs #17
+- Interface for custom Exception classes `ExceptionInterface`.
+- Abstract Meta Class `ExceptionMeta` for extending to when creating custom Exception classes. All new custom Exceptions should extend to this.
 
 ### Changed
 
