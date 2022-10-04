@@ -3,8 +3,8 @@
 namespace LBF\HTML;
 
 use LBF\Auth\Hash;
-use LBF\Errors\InvalidInputException;
-use LBF\Errors\MissingRequiredInputException;
+use LBF\Errors\IO\InvalidInput;
+use LBF\Errors\IO\MissingRequiredInput;
 use LBF\HTML\Draw;
 use LBF\HTML\HTMLMeta;
 
@@ -342,7 +342,7 @@ class HTMLElements extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException   If $params['text'] missing.
+     * @throws  MissingRequiredInput   If $params['text'] missing.
      * 
      * @static
      * @access  public
@@ -355,7 +355,7 @@ class HTMLElements extends HTMLMeta {
         }
 
         if ( !isset( $params['text'] ) ) {
-            throw new MissingRequiredInputException( "Param 'text' required" );
+            throw new MissingRequiredInput( "Param 'text' required" );
         }
 
         if ( !isset( $params['id'] ) ) {
@@ -380,7 +380,7 @@ class HTMLElements extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException   If param `src` is missing.
+     * @throws  MissingRequiredInput   If param `src` is missing.
      * 
      * @static
      * @access  public
@@ -389,7 +389,7 @@ class HTMLElements extends HTMLMeta {
 
     public static function img( array $params = [] ): string {
         if ( !isset( $params['src'] ) ) {
-            throw new MissingRequiredInputException( "Path to file not set. Please set param 'src" );
+            throw new MissingRequiredInput( "Path to file not set. Please set param 'src" );
         }
 
         $unit = $params['unit'] ?? 'px';
@@ -428,7 +428,7 @@ class HTMLElements extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException   If params src & srcdoc are missing.
+     * @throws  MissingRequiredInput   If params src & srcdoc are missing.
      * 
      * @static
      * @access  public
@@ -438,7 +438,7 @@ class HTMLElements extends HTMLMeta {
 
     public static function iframe( array $params ): string {
         if ( !isset( $params['src'] ) && !isset( $params['srcdoc'] ) ) {
-            throw new MissingRequiredInputException( "An iframe must have either the parameter 'src' or 'srcdoc'." );
+            throw new MissingRequiredInput( "An iframe must have either the parameter 'src' or 'srcdoc'." );
         }
 
         if ( !isset( $params['id'] ) ) {
@@ -506,9 +506,9 @@ class HTMLElements extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException if `$params['data']` not set.
-     * @throws  MissingRequiredInputException if `$params['data']` entries do not correctly list entries indexed as 'li'.
-     * @throws  InvalidInputException If `$params['data']` is not an array.
+     * @throws  MissingRequiredInput if `$params['data']` not set.
+     * @throws  MissingRequiredInput if `$params['data']` entries do not correctly list entries indexed as 'li'.
+     * @throws  InvalidInput If `$params['data']` is not an array.
      * 
      * @static
      * @access  public
@@ -540,9 +540,9 @@ class HTMLElements extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException if `$params['data']` not set.
-     * @throws  MissingRequiredInputException if `$params['data']` entries do not correctly list entries indexed as 'li'.
-     * @throws  InvalidInputException If `$params['data']` is not an array.
+     * @throws  MissingRequiredInput if `$params['data']` not set.
+     * @throws  MissingRequiredInput if `$params['data']` entries do not correctly list entries indexed as 'li'.
+     * @throws  InvalidInput If `$params['data']` is not an array.
      * 
      * @static
      * @access  public
@@ -565,9 +565,9 @@ class HTMLElements extends HTMLMeta {
      * 
      * @return  string
      * 
-     * @throws  MissingRequiredInputException if $params['data'] not set.
-     * @throws  MissingRequiredInputException if $params['data'] entries do not correctly list entries indexed as 'li'.
-     * @throws  InvalidInputException If $params['data'] is not an array.
+     * @throws  MissingRequiredInput if $params['data'] not set.
+     * @throws  MissingRequiredInput if $params['data'] entries do not correctly list entries indexed as 'li'.
+     * @throws  InvalidInput If $params['data'] is not an array.
      * 
      * @static
      * @access  private
@@ -578,12 +578,12 @@ class HTMLElements extends HTMLMeta {
         $item = '';
         if ( !isset( $params['data'] ) ) {
             echo "<pre>";
-            throw new MissingRequiredInputException( '$params[\'data\'] must be set.' );
+            throw new MissingRequiredInput( '$params[\'data\'] must be set.' );
             echo "</pre>";
         }
         if ( !is_array( $params['data'] ) ) {
             echo "<pre>";
-            throw new InvalidInputException( '$params[\'data\'] must be an array.' );
+            throw new InvalidInput( '$params[\'data\'] must be an array.' );
             echo "</pre>";
         }
 
@@ -609,7 +609,7 @@ class HTMLElements extends HTMLMeta {
             if ( is_array( $value ) ) {
                 if ( !isset( $value['li'] ) ) {
                     echo "<pre>";
-                    throw new MissingRequiredInputException( "Entry param 'li' missing from data entry." );
+                    throw new MissingRequiredInput( "Entry param 'li' missing from data entry." );
                     echo "</pre>";
                 }
                 $item .= "<li";

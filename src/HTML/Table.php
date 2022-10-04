@@ -2,7 +2,7 @@
 
 namespace LBF\HTML;
 
-use LBF\Errors\InvalidInputException;
+use LBF\Errors\IO\InvalidInput;
 use LBF\HTML\JS;
 use LBF\HTML\Form;
 use LBF\HTML\HTML;
@@ -189,7 +189,7 @@ class Table {
      * 
      * @return  self  $this
      * 
-     * @throws  InvalidInputException   If trying to set an id of the table.
+     * @throws  InvalidInput   If trying to set an id of the table.
      * 
      * @access  public
      * @since   LRS 3.15.5
@@ -197,7 +197,7 @@ class Table {
 
     public function table_start( array $headings = [], array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new InvalidInputException( "You cannot set an id for a Table" );
+            throw new InvalidInput( "You cannot set an id for a Table" );
         }
         $params['id'] = $this->table_id . '_table';
 
@@ -265,7 +265,7 @@ class Table {
      * 
      * @return  self  $this
      * 
-     * @throws  InvalidInputException   If trying to set an id of a table row.
+     * @throws  InvalidInput   If trying to set an id of a table row.
      * 
      * @access  public
      * @since   LRS 3.15.5
@@ -273,7 +273,7 @@ class Table {
 
     public function row_start( array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new InvalidInputException( "You cannot set an id for a Table Row" );
+            throw new InvalidInput( "You cannot set an id for a Table Row" );
         }
 
         $class = 'standard_row';
@@ -398,7 +398,7 @@ class Table {
      * 
      * @return  self  $this
      * 
-     * @throws  InvalidInputException   If trying to set an id of a table cell.
+     * @throws  InvalidInput   If trying to set an id of a table cell.
      * 
      * @access  public
      * @since   LRS 3.15.5
@@ -406,7 +406,7 @@ class Table {
 
     public function cell( mixed $content, array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new InvalidInputException( "You cannot set an id for a Table Cell" );
+            throw new InvalidInput( "You cannot set an id for a Table Cell" );
         }
         if ( !isset ( $params['heading'] ) || $params['heading'] == false ) {
             $params['id'] = $this->get_cell_id();
@@ -444,7 +444,7 @@ class Table {
      * 
      * @return  self  $this
      * 
-     * @throws  InvalidInputException   If trying to set an id of a table cell.
+     * @throws  InvalidInput   If trying to set an id of a table cell.
      * 
      * @access  public
      * @since   LRS 3.15.5
@@ -452,7 +452,7 @@ class Table {
 
     public function cell_edit_link( string $href, array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new InvalidInputException( "You cannot set an id for a Table Cell" );
+            throw new InvalidInput( "You cannot set an id for a Table Cell" );
         }
         $params['id'] = $this->get_cell_id();
         $params = $this->set_vertical_lines( $params );
@@ -487,7 +487,7 @@ class Table {
      * 
      * @return  self  $this
      * 
-     * @throws  InvalidInputException   If trying to set an id of a table cell.
+     * @throws  InvalidInput   If trying to set an id of a table cell.
      * 
      * @access  public
      * @since   LRS 3.15.5
@@ -495,7 +495,7 @@ class Table {
 
     public function hidden_data( mixed $value, array $params = [] ): self {
         if ( isset( $params['id'] ) ) {
-            throw new InvalidInputException( "You cannot set an id for a Table Cell" );
+            throw new InvalidInput( "You cannot set an id for a Table Cell" );
         }
         $params['id'] = $this->get_cell_id();
 

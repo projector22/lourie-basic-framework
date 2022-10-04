@@ -12,6 +12,7 @@
 ### Changed
 
 - Changed `FileSystem::create_blank_file` to use the built in php function `touch`.
+- Renamed and categorized the various Custom Exception classes.
 
 ### Packages Updated
 
