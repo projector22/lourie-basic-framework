@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Version 0.2.0-beta - UNRELEASED
+## Version 0.2.0-beta - 2022-10-05
 
 ### Added
 
@@ -22,7 +22,7 @@
 
 ### Issues Closed
 
-- #17 WIP
+- #17
 
 ---
 
