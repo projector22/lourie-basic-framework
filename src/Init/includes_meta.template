@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Defines the basic constants required by the app.
+ * 
+ * Change the variables here, in the top of the file to indicate
+ * changes to versioning, description etc.
+ * 
+ * @author  AUTHOR
+ * @since   VERSION
+ */
+
+$program_name    = 'APP_NAME';
+$description     = 'DESCRIPTION';
+$project_version = 'VERSION_NUMBER';
+$project_status  = 'VERSION_STATUS';
+$author          = 'AUTHOR';
+
+define( 'DIR_SEP', PHP_OS === 'WINNT' ? '\\' : '/' );
+
+// Load all the path constants
+require 'meta-paths.php';
+require 'meta-files.php';
+require 'meta-tables.php';
+
+define ( 'APPLICATION_NAME', $program_name );
+$version = $project_version;
+if ( $project_status !== '' ) {
+    $version .= "-{$project_status}";
+}
+define ( 'APP_VERSION', $version );
+define ( 'APP_STATUS', $project_status );
+define ( 'SITE_AUTHOR', $author );
+define ( 'SITE_DESCRIPTION', $description );

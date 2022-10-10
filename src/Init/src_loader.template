@@ -17,10 +17,18 @@ Autoloader::load_debugger();
 $_GET  = clean_and_escape( $_GET );
 $_POST = clean_and_escape( $_POST );
 
+/**
+ * The path to the home directory in which the app is installed.
+ * 
+ * @var string HOME_PATH
+ *
+ * @since   VERSION
+ */
+
 define( 'HOME_PATH',  substr( __DIR__, 0, -4 ) . '/' );
 
 require HOME_PATH . 'src/includes/meta.php';
-require VENDOR_PATH . 'projector22/lourie-basic-framework/src/Functions/functions.php';
+require LBF_FUNCTIONS;
 
 $loader = new Autoloader( SRC_PATH );
 $loader->load();

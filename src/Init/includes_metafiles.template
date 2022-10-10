@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Defines files constants used by the app.
+ * 
+ * @author  AUTHOR
+ * @since   VERSION
+ */
+
+/**
+ * The general functions file used by Lourie Basic Framework.
+ * 
+ * @var string
+ * 
+ * @since   VERSION
+ */
+
+define( 'LBF_FUNCTIONS', VENDOR_PATH . 'projector22/lourie-basic-framework/src/Functions/functions.php' );
+
+/**
+ * .env file containing the environmental variables for the app.
+ * 
+ * @var string
+ * 
+ * @since   VERSION
+ */
+
+define( 'ENV_FILE', HOME_PATH . '.env' );
+
+/**
+ * File containing static routes.
+ * 
+ * @var string
+ * 
+ * @since   VERSION
+ */
+
+define( 'STATIC_ROUTES', INCLUDES_PATH . 'static-routes.php' );

@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * Define all the tables in the app.
+ * 
+ * @author  AUTHOR
+ * @since   VERSION
+ */
+
+/** DEFINE TABLES HERE **/
+
+/**
+ * Define all the tables used by the app.
+ * 
+ * @var array   ALL_TABLES
+ * 
+ * @since   VERSION
+ */
+define( 'ALL_TABLES', [
+    /** PUT THE CONSTANTS OF ANY SQL TABLES USED BY THE APP HERE **/
+] );
