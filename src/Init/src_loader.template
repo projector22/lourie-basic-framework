@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * Perform the general loading of system constants and libraries into this application.
+ * 
+ * @author  AUTHOR
+ * @since   VERSION
+ */
+
+use LBF\Autoloader;
+use LBF\Tools\Env\LoadEnvironment;
+
+require 'vendor/autoload.php';
+
+Autoloader::load_debugger();
+
+$_GET  = clean_and_escape( $_GET );
+$_POST = clean_and_escape( $_POST );
+
+define( 'HOME_PATH',  substr( __DIR__, 0, -4 ) . '/' );
+
+require HOME_PATH . 'src/includes/meta.php';
+require VENDOR_PATH . 'projector22/lourie-basic-framework/src/Functions/functions.php';
+
+$loader = new Autoloader( SRC_PATH );
+$loader->load();
+
+if ( defined( 'ENV_FILE' ) && file_exists( ENV_FILE ) ) {
+    $env = new LoadEnvironment( ENV_FILE );
+    $env->load_to_env();
+}
+
+require HOME_PATH . 'src/includes/meta-tables.php';
+
+
+ /**
+ * Clean up the data being sent via $_GET & $_POST.
+ * 
+ * @param   array   $data   The data to be cleaned.
+ * 
+ * @return  array
+ * 
+ * @since   VERSION
+ */
+
+function clean_and_escape( array $data ): array {
+    foreach ( $data as $index => $entry ) {
+        $entry = trim( $entry );
+        $entry = stripslashes( $entry );
+        $entry = htmlspecialchars( $entry, ENT_QUOTES );
+        $data[$index] = $entry;
+    }
+    return $data;
+}
