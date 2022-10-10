@@ -41,7 +41,7 @@ if ( defined( 'ENV_FILE' ) && file_exists( ENV_FILE ) ) {
 require HOME_PATH . 'src/includes/meta-tables.php';
 
 
- /**
+/**
  * Clean up the data being sent via $_GET & $_POST.
  * 
  * @param   array   $data   The data to be cleaned.
