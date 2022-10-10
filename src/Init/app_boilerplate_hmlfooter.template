@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * Echo out the HTML ending tags, closing a <body> & <html>.
+ * 
+ * @author  &AUTHOR&
+ * @since   &VERSION&
+ */
+
+echo "</body>
+</html>";
