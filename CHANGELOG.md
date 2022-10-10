@@ -11,6 +11,14 @@
 
 ---
 
+## Version 0.3.0-beta - UNRELEASED
+
+| Package | Old | New |
+| ------- | --- | --- |
+| phpmailer | 6.6.4 | 6.6.5 |
+
+---
+
 ## Version 0.2.2-beta - 2022-10-18
 
 ### Changed
