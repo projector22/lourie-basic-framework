@@ -21,7 +21,6 @@ define( 'DIR_SEP', PHP_OS === 'WINNT' ? '\\' : '/' );
 // Load all the path constants
 require 'meta-paths.php';
 require 'meta-files.php';
-require 'meta-tables.php';
 
 define ( 'APPLICATION_NAME', $program_name );
 $version = $project_version;
