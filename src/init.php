@@ -299,17 +299,39 @@ class Init {
      */
 
     public function display_data( ?array $data = null, string $pfx = '' ): void {
-        $print = '';
-        if ( is_null( $data ) ) {
-            $data = $this->data;
-        }
+        $key_len = $val_len = 0;
         foreach ( $this->data as $key => $value ) {
-            if ( is_array( $value ) ) {
-                $print .= "{$key} -> \n{$pfx}{$this->display_data( $value, "\t" )}";
+            if ( strlen( $key ) > $key_len ) {
+                $key_len = strlen( $key );
             }
-            $print .= "{$pfx}{$key} -> {$value}\n";
+            if ( strlen( $value ) > $val_len ) {
+                $val_len = strlen( $value );
+            }
         }
-        echo $print;
+        $line_len = $key_len + $val_len + 7;
+        $single = $double = '';
+        for ( $i = 0; $i < $line_len; $i++ ) {
+            $single .= '-';
+            $double .= '=';
+        }
+        $single .= "\n";
+        $double .= "\n";
+        echo $single;
+        $cell = function ( $str, $total ): string {
+            $text = $str;
+            $len = $total - strlen( $str );
+            for ( $i = 0; $i < $len; $i++ ) {
+                $text .= ' ';
+            }
+            return $text;
+        };
+        echo "| {$cell( 'Key', $key_len )} | {$cell( 'Value', $val_len )} |\n";
+        echo $double;
+        foreach ( $this->data as $key => $value ) {
+            echo "| {$cell( $key, $key_len )} | {$cell( $value, $val_len )} |\n";
+        }
+        echo $double;
+        $this->lb( 2 );
     }
 
 
