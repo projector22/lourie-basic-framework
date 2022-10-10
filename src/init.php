@@ -16,9 +16,9 @@
  */
 
 $builder = new Init;
+$builder->gather_data();
+$builder->display_data();
 $builder->build();
-// $builder->gather_data();
-// $builder->display_data();
 
 
 class Init {
@@ -131,6 +131,7 @@ class Init {
     public function gather_data(): void {
         $this->data['app_name'] = readline( "Enter a name for your app: " );
         $this->data['description'] = readline( "Enter a simple description of your app: " );
+        $this->data['author'] = readline( "Enter you name and email, which will be used to attribute files to you. Example: Joe Soap <joe@soapweb.net>: " );
         $ver = readline( "Enter the starting version, without alpha or beta (Leave blank for '0.1.0'): " );
         $this->data['version'] = $ver !== '' ? $ver : '0.1.0';
         $status = 'z';
