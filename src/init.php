@@ -34,11 +34,12 @@ class Init {
 
     // private array $data;
     private array $data = [
-        'app_name' => 'Lourie Test App',
+        'app_name'    => 'Lourie Test App',
         'description' => 'App for testing the init tool',
-        'author' => 'Gareth Palmer [Github & Gitlab /projector22]',
-        'version' => '0.1.0',
-        'status' => 'alpha',
+        'author'      => 'Gareth Palmer [Github & Gitlab /projector22]',
+        'version'     => '0.1.0',
+        'status'      => 'alpha',
+        'app-version' => '0.1.0-alpha',
     ];
 
     /**
@@ -164,6 +165,10 @@ class Init {
             'b' => 'beta',
             ''  => '',
         };
+        $this->data['app-version'] = $this->data['version'];
+        if ( $this->data['status'] !== '' ) {
+            $this->data['app-version'] .= '-' . $this->data['status'];
+        }
     }
 
 
@@ -198,8 +203,8 @@ class Init {
             $write = fopen( $new_file, 'w' );
             fwrite( $write, match( $file ) {
                 'index.php'                           => $this->get_index( $template ),
-                'src/router.php'                      => '',
-                'src/loader.php'                      => '',
+                'src/router.php'                      => $this->get_router( $template),
+                'src/loader.php'                      => $this->get_loader( $template),
                 'src/app/actions/ActionHandler.php'   => '',
                 'src/app/boilerplate/html_footer.php' => '',
                 'src/app/boilerplate/HTMLHeader.php'  => '',
@@ -221,6 +226,44 @@ class Init {
 
 
     /**
+     * Return the php code for the router php file.
+     * 
+     * @param   string  $template   The relative path to the template file for index.php.
+     * 
+     * @return  string
+     * 
+     * @access  private
+     * @since   LBF 0.3.0-beta
+     */
+
+    private function get_router( string $template ): string {
+        $data = file_get_contents( $this->template_path . '/' . $template );
+        $data = str_replace( 'AUTHOR', $this->data['author'], $data );
+        $data = str_replace( 'VERSION', $this->data['app-version'], $data );
+        return $data;
+    }
+
+
+    /**
+     * Return the php code for the loader php file.
+     * 
+     * @param   string  $template   The relative path to the template file for index.php.
+     * 
+     * @return  string
+     * 
+     * @access  private
+     * @since   LBF 0.3.0-beta
+     */
+
+    private function get_loader( string $template ): string {
+        $data = file_get_contents( $this->template_path . '/' . $template );
+        $data = str_replace( 'AUTHOR', $this->data['author'], $data );
+        $data = str_replace( 'VERSION', $this->data['app-version'], $data );
+        return $data;
+    }
+
+
+    /**
      * Return the php code for the index page.
      * 
      * @param   string  $template   The relative path to the template file for index.php.
@@ -235,11 +278,7 @@ class Init {
         $data = file_get_contents( $this->template_path . '/' . $template );
         $data = str_replace( 'START_DATE', date( 'Y-m-d' ), $data );
         $data = str_replace( 'AUTHOR', $this->data['author'], $data );
-        $version = $this->data['version'];
-        if ( $this->data['status'] !== '' ) {
-            $version .= "-{$this->data['status']}";
-        }
-        $data = str_replace( 'VERSION', $version, $data );
+        $data = str_replace( 'VERSION', $this->data['app-version'], $data );
         return $data;
     }
 
