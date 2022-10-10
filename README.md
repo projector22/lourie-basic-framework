@@ -13,7 +13,7 @@ This project will function as a basic framework and template for future webapps.
 
 ## Note
 
-This app is in an early BETA state. Please do not use on anything anywhere near production.
+This app is in an BETA state. Use on production at your own risk.
 
 ## How to Use
 
