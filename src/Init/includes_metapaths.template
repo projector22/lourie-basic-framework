@@ -34,7 +34,7 @@ if ( !defined( 'HOME_PATH' ) ) {
 /**
  * The src directory, which contain the source code for the app.
  * 
- * @var string  HOME_PATH
+ * @var string  SRC_PATH
  * 
  * @since   &VERSION&
  */
