@@ -111,15 +111,15 @@ class Init {
 
     const FILE_STRUCTURE = [
         'index.php'                           => 'index.template',
-        'src/router.php'                      => '',
-        'src/loader.php'                      => '',
+        'src/router.php'                      => 'src_router.template',
+        'src/loader.php'                      => 'src_loader.template',
         'src/app/actions/ActionHandler.php'   => '',
         'src/app/boilerplate/html_footer.php' => '',
         'src/app/boilerplate/HTMLHeader.php'  => '',
-        'src/includes/meta.php'               => '',
-        'src/includes/meta-files.php'         => '',
-        'src/includes/meta-paths.php'         => '',
-        'src/includes/meta-tables.php'        => '',
+        'src/includes/meta.php'               => 'includes_meta.template',
+        'src/includes/meta-files.php'         => 'includes_metafiles.template',
+        'src/includes/meta-paths.php'         => 'includes_metapaths.template',
+        'src/includes/meta-tables.php'        => 'includes_metatables.template',
         'src/includes/static-routes.php'      => '',
         'src/css/styles.css'                  => '',
         'src/js/lib.js'                       => '',
@@ -201,22 +201,7 @@ class Init {
             $new_file = $this->working_dir . '/' . $file;
             touch( $new_file );
             $write = fopen( $new_file, 'w' );
-            fwrite( $write, match( $file ) {
-                'index.php'                           => $this->get_index( $template ),
-                'src/router.php'                      => $this->get_router( $template),
-                'src/loader.php'                      => $this->get_loader( $template),
-                'src/app/actions/ActionHandler.php'   => '',
-                'src/app/boilerplate/html_footer.php' => '',
-                'src/app/boilerplate/HTMLHeader.php'  => '',
-                'src/includes/meta.php'               => '',
-                'src/includes/meta-files.php'         => '',
-                'src/includes/meta-paths.php'         => '',
-                'src/includes/meta-tables.php'        => '',
-                'src/includes/static-routes.php'      => '',
-                'src/css/styles.css'                  => '',
-                'src/js/lib.js'                       => '',
-                default                               => '',
-            } );
+            fwrite( $write, $this->prepare_template( $template ) );
             fclose( $write );
             echo ".";
         }
@@ -226,28 +211,9 @@ class Init {
 
 
     /**
-     * Return the php code for the router php file.
+     * Prepare the template file for inserting
      * 
-     * @param   string  $template   The relative path to the template file for index.php.
-     * 
-     * @return  string
-     * 
-     * @access  private
-     * @since   LBF 0.3.0-beta
-     */
-
-    private function get_router( string $template ): string {
-        $data = file_get_contents( $this->template_path . '/' . $template );
-        $data = str_replace( 'AUTHOR', $this->data['author'], $data );
-        $data = str_replace( 'VERSION', $this->data['app-version'], $data );
-        return $data;
-    }
-
-
-    /**
-     * Return the php code for the loader php file.
-     * 
-     * @param   string  $template   The relative path to the template file for index.php.
+     * @param   string  $template   The relative path to the template file for meta.php.
      * 
      * @return  string
      * 
@@ -255,30 +221,18 @@ class Init {
      * @since   LBF 0.3.0-beta
      */
 
-    private function get_loader( string $template ): string {
+    private function prepare_template( string $template ): string {
+        if ( $template == '' || !file_exists( $this->template_path . '/' . $template ) ) {
+            return '';
+        }
         $data = file_get_contents( $this->template_path . '/' . $template );
-        $data = str_replace( 'AUTHOR', $this->data['author'], $data );
-        $data = str_replace( 'VERSION', $this->data['app-version'], $data );
-        return $data;
-    }
-
-
-    /**
-     * Return the php code for the index page.
-     * 
-     * @param   string  $template   The relative path to the template file for index.php.
-     * 
-     * @return  string
-     * 
-     * @access  private
-     * @since   LBF 0.3.0-beta
-     */
-
-    private function get_index( string $template ): string {
-        $data = file_get_contents( $this->template_path . '/' . $template );
-        $data = str_replace( 'START_DATE', date( 'Y-m-d' ), $data );
-        $data = str_replace( 'AUTHOR', $this->data['author'], $data );
-        $data = str_replace( 'VERSION', $this->data['app-version'], $data );
+        $data = str_replace( 'START_DATE',     date( 'Y-m-d' ),            $data );
+        $data = str_replace( 'AUTHOR',         $this->data['author'],      $data );
+        $data = str_replace( 'VERSION',        $this->data['app-version'], $data );
+        $data = str_replace( 'APP_NAME',       $this->data['app_name'],    $data );
+        $data = str_replace( 'DESCRIPTION',    $this->data['description'], $data );
+        $data = str_replace( 'VERSION_NUMBER', $this->data['version'],     $data );
+        $data = str_replace( 'VERSION_STATUS', $this->data['status'],      $data );
         return $data;
     }
 
