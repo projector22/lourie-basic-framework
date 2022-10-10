@@ -3,8 +3,8 @@
 /**
  * Perform the general routing tasks for this application.
  * 
- * @author  AUTHOR
- * @since   VERSION
+ * @author  &AUTHOR&
+ * @since   &VERSION&
  */
 
 use App\Boilerplate\HTMLHeader;

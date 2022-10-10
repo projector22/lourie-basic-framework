@@ -3,8 +3,8 @@
 /**
  * Perform the general loading of system constants and libraries into this application.
  * 
- * @author  AUTHOR
- * @since   VERSION
+ * @author  &AUTHOR&
+ * @since   &VERSION&
  */
 
 use LBF\Autoloader;
@@ -22,7 +22,7 @@ $_POST = clean_and_escape( $_POST );
  * 
  * @var string HOME_PATH
  *
- * @since   VERSION
+ * @since   &VERSION&
  */
 
 define( 'HOME_PATH',  substr( __DIR__, 0, -4 ) . '/' );
@@ -48,7 +48,7 @@ require HOME_PATH . 'src/includes/meta-tables.php';
  * 
  * @return  array
  * 
- * @since   VERSION
+ * @since   &VERSION&
  */
 
 function clean_and_escape( array $data ): array {

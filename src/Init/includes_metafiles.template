@@ -3,8 +3,8 @@
 /**
  * Defines files constants used by the app.
  * 
- * @author  AUTHOR
- * @since   VERSION
+ * @author  &AUTHOR&
+ * @since   &VERSION&
  */
 
 /**
@@ -12,7 +12,7 @@
  * 
  * @var string
  * 
- * @since   VERSION
+ * @since   &VERSION&
  */
 
 define( 'LBF_FUNCTIONS', VENDOR_PATH . 'projector22/lourie-basic-framework/src/Functions/functions.php' );
@@ -22,7 +22,7 @@ define( 'LBF_FUNCTIONS', VENDOR_PATH . 'projector22/lourie-basic-framework/src/F
  * 
  * @var string
  * 
- * @since   VERSION
+ * @since   &VERSION&
  */
 
 define( 'ENV_FILE', HOME_PATH . '.env' );
@@ -32,7 +32,7 @@ define( 'ENV_FILE', HOME_PATH . '.env' );
  * 
  * @var string
  * 
- * @since   VERSION
+ * @since   &VERSION&
  */
 
 define( 'STATIC_ROUTES', INCLUDES_PATH . 'static-routes.php' );

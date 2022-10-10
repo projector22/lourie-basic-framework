@@ -6,15 +6,15 @@
  * Change the variables here, in the top of the file to indicate
  * changes to versioning, description etc.
  * 
- * @author  AUTHOR
- * @since   VERSION
+ * @author  &AUTHOR&
+ * @since   &VERSION&
  */
 
-$program_name    = 'APP_NAME';
-$description     = 'DESCRIPTION';
-$project_version = 'VERSION_NUMBER';
-$project_status  = 'VERSION_STATUS';
-$author          = 'AUTHOR';
+$program_name    = '&APP_NAME&';
+$description     = '&DESCRIPTION&';
+$project_version = '&VERSION_NUMBER&';
+$project_status  = '&VERSION_STATUS&';
+$author          = '&AUTHOR&';
 
 define( 'DIR_SEP', PHP_OS === 'WINNT' ? '\\' : '/' );
 

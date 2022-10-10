@@ -226,13 +226,13 @@ class Init {
             return '';
         }
         $data = file_get_contents( $this->template_path . '/' . $template );
-        $data = str_replace( 'START_DATE',     date( 'Y-m-d' ),            $data );
-        $data = str_replace( 'AUTHOR',         $this->data['author'],      $data );
-        $data = str_replace( 'VERSION',        $this->data['app-version'], $data );
-        $data = str_replace( 'APP_NAME',       $this->data['app_name'],    $data );
-        $data = str_replace( 'DESCRIPTION',    $this->data['description'], $data );
-        $data = str_replace( 'VERSION_NUMBER', $this->data['version'],     $data );
-        $data = str_replace( 'VERSION_STATUS', $this->data['status'],      $data );
+        $data = str_replace( '&START_DATE&',     date( 'Y-m-d' ),            $data );
+        $data = str_replace( '&AUTHOR&',         $this->data['author'],      $data );
+        $data = str_replace( '&VERSION&',        $this->data['app-version'], $data );
+        $data = str_replace( '&APP_NAME&',       $this->data['app_name'],    $data );
+        $data = str_replace( '&DESCRIPTION&',    $this->data['description'], $data );
+        $data = str_replace( '&VERSION_NUMBER&', $this->data['version'],     $data );
+        $data = str_replace( '&VERSION_STATUS&', $this->data['status'],      $data );
         return $data;
     }
 
