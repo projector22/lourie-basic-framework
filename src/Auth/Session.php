@@ -23,7 +23,7 @@ class Session {
      * 
      * @access  public
      * @since   LRS 3.15.11
-     * @since   LBF 0.2.2-beta  Removed param `$hide_session_start_info`.
+     * @since   LBF 0.3.0-beta  Removed param `$hide_session_start_info`.
      */
 
     public static function start(): void {
