@@ -2,9 +2,16 @@
 
 ## Version 0.3.0-beta - UNRELEASED
 
+### Changed
+
+
+
+### Packages Updated
+
 | Package | Old | New |
 | ------- | --- | --- |
 | phpmailer | 6.6.4 | 6.6.5 |
+| PHP Debuggin Tool | 1.0.6 | 1.0.7 |
 
 ---
 
