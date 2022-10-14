@@ -4,7 +4,7 @@
 
 ### Changed
 
-
+- Improved with how `Session::start()` detects if a session has started. Removed param `$hide_session_start_info`.
 
 ### Packages Updated
 
