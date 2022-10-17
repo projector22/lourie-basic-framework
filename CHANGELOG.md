@@ -15,6 +15,14 @@
 
 ---
 
+## Version 0.2.1-beta - 2022-10-22
+
+### Fixed
+
+- Fixed a number of HTML tools not echoing correctly.
+
+---
+
 ## Version 0.2.0-beta - 2022-10-05
 
 ### Added

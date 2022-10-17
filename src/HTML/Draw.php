@@ -640,34 +640,30 @@ class Draw extends HTMLMeta {
      */
 
     public static function draggable_list( array $data ): void {
-        $hold = HTML::temporary_change_echo( true );
         $id = Hash::random_id_string( 5 );
 
         HTML::div( [
             'class' => 'draggable_container',
             'id'    => 'draggable_container' . $id
         ] );
-        HTML::$echo = false;
 
         $svg = new SVG( SVGImages::grabber->image() );
         $svg->set_viewbox( 0, 0, 16, 16 );
         foreach ( $data as $item ) {
-            $line = HTML::div_container(
-                ['class' => 'draggable_entry'],
+            HTML::div_container(
+                params: ['class' => 'draggable_entry'],
+                content:
                 HTML::span_container(
-                    ['class' => 'de_item'],
-                    $item
+                    params: ['class' => 'de_item', 'echo' => false],
+                    content: $item
                 ) .
                 HTML::span_container(
-                    ['class' => "de_grabber de_grabber{$id}"],
-                    $svg->return(),
+                    params: ['class' => "de_grabber de_grabber{$id}", 'echo' => false],
+                    content: $svg->return(),
                 )
             );
-
-            echo $line;
         }
 
-        HTML::$echo = true;
         HTML::close_div();
         /**
          * @see https://github.com/SortableJS/Sortable
@@ -686,7 +682,6 @@ class Draw extends HTMLMeta {
                 handle: '.de_grabber{$id}',
             });"
         );
-        HTML::restore_origonal_echo( $hold );
     }
 
 

@@ -376,7 +376,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $item .= "</div>"; // Container
         }
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -414,7 +414,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         self::restore_origonal_echo( $hold );
         
         
-        self::handle_echo( $form );
+        self::handle_echo( $form, $arguments[0] );
         return $form;
     }
 
@@ -510,7 +510,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $item .= "</div>"; // Container
         }
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -645,7 +645,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         $item .= "</div>"; // Container
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -720,7 +720,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $item .= "</div>";
         }
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -788,7 +788,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         $item .= "</div>";
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -894,7 +894,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $item .= "</div>"; // Container
         }
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -933,7 +933,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         $hold = self::temporary_change_echo( false );
         $item .= self::text( $params );
         self::restore_origonal_echo( $hold );
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -1018,7 +1018,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $item .= "</div>"; // Container
         }
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -1051,7 +1051,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         $params['type'] = 'hidden';
         $item = self::html_tag_open( 'input', $params );
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -1161,7 +1161,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         JS::script_module( "import UploaderElement from './vendor/projector22/lourie-basic-framework/src/js/uploader_element.js';\nconst upload = new UploaderElement('{$params['id']}');" );
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -1181,7 +1181,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
     public static function submit( array $params = [] ): string {
         $params['type'] = 'submit';
         $element = self::html_tag_open( 'input', $params );
-        self::handle_echo( $element );
+        self::handle_echo( $element, $params );
         return $element;
     }
 
