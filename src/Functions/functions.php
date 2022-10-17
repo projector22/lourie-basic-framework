@@ -924,10 +924,12 @@ function abreviate_outcome( string $outcome, int $aprox_max_length = 100 ): stri
         $pos = $aprox_max_length;
     }
     $abreviated = substr( $outcome, 0, $pos );
-    $hold = HTML::$echo;
-    HTML::$echo = false;
-    $link = HTML::link( 'javascript::void(0)', 'View all', ['title' => $outcome] );
-    HTML::$echo = $hold;
+    $link = HTML::a( [
+        'href'  => 'javascript::void(0)',
+        'text'  => 'View all',
+        'title' => $outcome,
+        'echo'  => false,
+    ] );
     return str_replace( "\n", '<br>', $abreviated ) . '... ' . $link;
 }
 

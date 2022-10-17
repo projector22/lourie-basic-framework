@@ -39,7 +39,7 @@ class HTMLElements extends HTMLMeta {
 
     public static function div( array $params = [] ): string {
         $element = self::html_tag_open( 'div', $params );
-        self::handle_echo( $element );
+        self::handle_echo( $element, $params );
         return $element;
     }
 
@@ -47,21 +47,30 @@ class HTMLElements extends HTMLMeta {
     /**
      * Echo or return a closing div statement.
      * 
-     * @param   integer|null    $count      The number of </div> elements to insert.
+     * @param   integer         $count      The number of </div> elements to insert.
      *                                      Default: 1
-     * @param   string          $comment    A bit of text to insert as a comment.
+     * @param   string|null     $comment    A bit of text to insert as a comment.
      *                                      Default: null
+     * @param   bool|null       $echo       Overwrite whether the method echos or not.
+     *                                      Default: false
      * 
      * @return  string
      * 
      * @static
      * @access  public
      * @since   LRS 3.12.5
+     * @since   LBF 0.2.1-beta   Added param `$echo`
      */
 
-    public static function close_div( int $count = 1, ?string $comment = null ): string {
+    public static function close_div( int $count = 1, ?string $comment = null, ?bool $echo = null ): string {
         $element = self::html_tag_close( 'div', $count, $comment );
+        if ( !is_null( $echo ) ) {
+            $hold = self::temporary_change_echo( $echo );
+        }
         self::handle_echo( $element );
+        if ( !is_null( $echo ) ) {
+            self::restore_origonal_echo( $hold );
+        }
         return $element;
     }
 
@@ -90,7 +99,7 @@ class HTMLElements extends HTMLMeta {
         $hold = self::temporary_change_echo( false );
         $element = self::div( $params ) . $content . self::close_div();
         self::restore_origonal_echo( $hold );
-        self::handle_echo( $element );
+        self::handle_echo( $element, $params );
         return $element;
     }
 
@@ -111,7 +120,7 @@ class HTMLElements extends HTMLMeta {
 
     public static function span( array $params = [] ): string {
         $element = self::html_tag_open( 'span', $params );
-        self::handle_echo( $element );
+        self::handle_echo( $element, $params );
         return $element;
     }
 
@@ -119,21 +128,30 @@ class HTMLElements extends HTMLMeta {
     /**
      * Echo or return a closing span statement.
      * 
-     * @param   integer $count          The number of </span> elements to insert.
+     * @param   integer     $count      The number of </span> elements to insert.
      *                                  Default: 1
-     * @param   string  $comment        A bit of text to insert as a comment.
+     * @param   string|null $comment    A bit of text to insert as a comment.
      *                                  Default: null
+     * @param   bool|null   $echo       Overwrite whether the method echos or not.
+     *                                  Default: false
      * 
      * @return  string
      * 
      * @static
      * @access  public
      * @since   LRS 3.12.5
+     * @since   LBF 0.2.1-beta   Added param `$echo`
      */
 
-    public static function close_span( int $count = 1, ?string $comment = null ) {
+    public static function close_span( int $count = 1, ?string $comment = null, ?bool $echo = null ): string {
         $element = self::html_tag_close( 'span', $count, $comment );
+        if ( !is_null( $echo ) ) {
+            $hold = self::temporary_change_echo( $echo );
+        }
         self::handle_echo( $element );
+        if ( !is_null( $echo ) ) {
+            self::restore_origonal_echo( $hold );
+        }
         return $element;
     }
 
@@ -162,7 +180,7 @@ class HTMLElements extends HTMLMeta {
         $hold = self::temporary_change_echo( false );
         $element = self::span( $params ) . $content . self::close_span();
         self::restore_origonal_echo( $hold );
-        self::handle_echo( $element );
+        self::handle_echo( $element, $params );
         return $element;
     }
 
@@ -183,7 +201,7 @@ class HTMLElements extends HTMLMeta {
 
     public static function p( array $params = [] ): string {
         $element = self::html_tag_open( 'p', $params );
-        self::handle_echo( $element );
+        self::handle_echo( $element, $params );
         return $element;
     }
 
@@ -191,21 +209,30 @@ class HTMLElements extends HTMLMeta {
     /**
      * Echo or return a closing `p` (paragraph) statement.
      * 
-     * @param   integer $count          The number of </span> elements to insert.
-     *                                  Default: 1
-     * @param   string  $comment        A bit of text to insert as a comment.
-     *                                  Default: null
+     * @param   integer         $count      The number of </p> elements to insert.
+     *                                      Default: 1
+     * @param   string|null     $comment    A bit of text to insert as a comment.
+     *                                      Default: null
+     * @param   bool|null       $echo       Overwrite whether the method echos or not.
+     *                                      Default: false
      * 
      * @return  string
      * 
      * @static
      * @access  public
      * @since   LBF 0.1.5-beta
+     * @since   LBF 0.2.1-beta   Added param `$echo`
      */
 
-    public static function close_p( int $count = 1, ?string $comment = null ) {
+    public static function close_p( int $count = 1, ?string $comment = null, ?bool $echo = null ): string {
         $element = self::html_tag_close( 'span', $count, $comment );
+        if ( !is_null( $echo ) ) {
+            $hold = self::temporary_change_echo( $echo );
+        }
         self::handle_echo( $element );
+        if ( !is_null( $echo ) ) {
+            self::restore_origonal_echo( $hold );
+        }
         return $element;
     }
 
@@ -234,7 +261,7 @@ class HTMLElements extends HTMLMeta {
         $hold = self::temporary_change_echo( false );
         $element = self::p( $params ) . $content . self::close_p();
         self::restore_origonal_echo( $hold );
-        self::handle_echo( $element );
+        self::handle_echo( $element, $params );
         return $element;
     }
 
@@ -256,7 +283,7 @@ class HTMLElements extends HTMLMeta {
     public static function heading( int $size, string $content, array $params = [] ): string {
         $params['text'] = $content;
         $element = self::html_element_container( "h{$size}", $params );
-        self::handle_echo( $element );
+        self::handle_echo( $element, $params );
         return $element;
     }
 
@@ -278,7 +305,7 @@ class HTMLElements extends HTMLMeta {
     public static function form( array $params = [], bool $new_tab = false ): string {
         $params['new_tab'] = $new_tab;
         $element = self::html_tag_open( 'form', $params );
-        self::handle_echo( $element );
+        self::handle_echo( $element, $params );
         return $element;
     }
 
@@ -286,16 +313,26 @@ class HTMLElements extends HTMLMeta {
     /**
      * draw a close form statement - `</form>`
      * 
+     * @param   bool|null   $echo   Overwrite whether the method echos or not.
+     *                              Default: false
+     * 
      * @return  string
      * 
      * @static
      * @access  public
      * @since   LRS 3.12.7
+     * @since   LBF 0.2.1-beta   Added param `$echo`
      */
 
-    public static function close_form(): string {
+    public static function close_form( ?bool $echo = null ): string {
         $element = '</form>';
+        if ( !is_null( $echo ) ) {
+            $hold = self::temporary_change_echo( $echo );
+        }
         self::handle_echo( $element );
+        if ( !is_null( $echo ) ) {
+            self::restore_origonal_echo( $hold );
+        }
         return $element;
     }
 
@@ -404,7 +441,7 @@ class HTMLElements extends HTMLMeta {
 
         $item = self::html_tag_open( 'img', $params, ['unit'] );
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -472,7 +509,7 @@ class HTMLElements extends HTMLMeta {
 
         $item = self::html_element_container( 'iframe', $params, ['default_unit'] );
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -517,7 +554,7 @@ class HTMLElements extends HTMLMeta {
 
     public static function ol( array $params ): string {
         $item = self::list( 'ol', $params );
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -551,7 +588,7 @@ class HTMLElements extends HTMLMeta {
 
     public static function ul( array $params ): string {
         $item = self::list( 'ul', $params );
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
