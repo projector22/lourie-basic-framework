@@ -2,16 +2,24 @@
 
 ## Version 0.3.0-beta - UNRELEASED
 
-### Changed
-
-- Improved with how `Session::start()` detects if a session has started. Removed param `$hide_session_start_info`.
-
 ### Packages Updated
 
 | Package | Old | New |
 | ------- | --- | --- |
 | phpmailer | 6.6.4 | 6.6.5 |
 | PHP Debuggin Tool | 1.0.6 | 1.0.7 |
+
+---
+
+## Version 0.2.1-beta - 2022-10-22
+
+### Changed
+
+- Improved with how `Session::start()` detects if a session has started. Removed param `$hide_session_start_info`.
+
+### Fixed
+
+- Fixed a number of HTML tools not echoing correctly.
 
 ---
 
