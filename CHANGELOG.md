@@ -12,7 +12,7 @@
 
 ### Changed
 
-- Revamped `Auth/Session::start` to function better.
+- Improved with how `Session::start()` detects if a session has started. Removed param `$hide_session_start_info`.
 
 ### Fixed
 
@@ -29,6 +29,14 @@
 ---
 
 ## Version 0.2.1-beta - 2022-10-17
+
+### Fixed
+
+- Fixed a number of HTML tools not echoing correctly.
+
+---
+
+## Version 0.2.1-beta - 2022-10-22
 
 ### Fixed
 
