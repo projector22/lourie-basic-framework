@@ -2,9 +2,20 @@
 
 ## Version 0.3.0-beta - UNRELEASED
 
+### Packages Updated
+
 | Package | Old | New |
 | ------- | --- | --- |
 | phpmailer | 6.6.4 | 6.6.5 |
+| PHP Debuggin Tool | 1.0.6 | 1.0.7 |
+
+---
+
+## Version 0.2.3-beta - 2022-10-19
+
+### Added
+
+- Added methods `copy_file` & `move_file` to the `FileSystem` class.
 
 ---
 
@@ -20,27 +31,15 @@
 
 ---
 
-## Version 0.2.1-beta - 2022-10-22
-
-### Fixed
-
-- Fixed a number of HTML tools not echoing correctly.
-
----
-
 ## Version 0.2.1-beta - 2022-10-17
 
-### Fixed
+### Changed
 
-- Fixed a number of HTML tools not echoing correctly.
-
----
-
-## Version 0.2.1-beta - 2022-10-22
+- Revamped `Auth/Session::start` to function better.
 
 ### Fixed
 
-- Fixed a number of HTML tools not echoing correctly.
+- Fixed a bug with `Forms::content_drawer_arrow`.
 
 ---
 
