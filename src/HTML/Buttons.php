@@ -214,7 +214,7 @@ class Buttons extends HTMLMeta {
             $item .= "<div class='btn_lb'></div>";
         }
 
-        self::handle_echo( $item );
+        self::handle_echo( $item, $params );
         return $item;
     }
 
@@ -245,10 +245,9 @@ class Buttons extends HTMLMeta {
             $params['colour'] = $colour;
         }
 
-        $echo_hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $button .= self::general( $params );
-        self::$echo = $echo_hold;
+        self::restore_origonal_echo( $hold );
 
         return $button;
     }
@@ -272,7 +271,7 @@ class Buttons extends HTMLMeta {
 
     public static function apply( array $params ): string {
         $button = self::do_button( $params, 'Apply', 'green' );
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -292,7 +291,7 @@ class Buttons extends HTMLMeta {
 
     public static function edit( array $params ): string {
         $button = self::do_button( $params, 'Edit' );
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -316,7 +315,7 @@ class Buttons extends HTMLMeta {
 
     public static function save( array $params ): string {
         $button = self::do_button( $params, 'Save', 'green' );
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -343,7 +342,7 @@ class Buttons extends HTMLMeta {
             }
         }
         $button = self::do_button( $params, 'OK', 'green' );
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -363,7 +362,7 @@ class Buttons extends HTMLMeta {
     public static function search( array $params ): string {
         $icon = new Icons;
         $button = self::do_button( $params, $icon->get( 'search', echo: false ) );
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -396,7 +395,7 @@ class Buttons extends HTMLMeta {
         $icon = new Icons;
         $button = self::do_button( $params, $icon->get( 'printer', echo: false ) );
 
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -424,7 +423,7 @@ class Buttons extends HTMLMeta {
         }
         $button = self::do_button( $params, 'Reset', 'blue' );
 
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -463,10 +462,9 @@ class Buttons extends HTMLMeta {
             }
         }
 
-        $echo_hold = self::$echo;
-        self::$echo = false;
+        $hold = self::temporary_change_echo( false );
         $button .= self::general( $params );
-        self::$echo = $echo_hold;
+        self::restore_origonal_echo( $hold );
 
         if ( isset( $params['class'] ) ) {
             if ( str_contains( $params['class'], 'todobttns' ) ) {
@@ -494,7 +492,7 @@ class Buttons extends HTMLMeta {
 
     public static function back( array $params ): string {
         $button = self::go_to_button_template( $params, 'Back' );
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -519,7 +517,7 @@ class Buttons extends HTMLMeta {
             $params['colour'] = 'blue';
         }
         $button = self::go_to_button_template( $params, 'Cancel' );
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -568,7 +566,7 @@ class Buttons extends HTMLMeta {
 
         $button .= "</div>"; // floaty_submit
 
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -662,11 +660,10 @@ class Buttons extends HTMLMeta {
         }
         $params['href'] = $link;
         $params['text'] = $button_text;
-        $params['echo'] = false;
 
-        $button .= HTML::a( $params );
+        $button .= HTML::a( $params + ['echo' => false] );
         $button .= "</div>";
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -690,7 +687,7 @@ class Buttons extends HTMLMeta {
         }
         $icon = new Icons;
         $button .= '>' . $icon->get( 'eye-off', echo: false ) . '</button>';
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
@@ -716,7 +713,7 @@ class Buttons extends HTMLMeta {
         $params['text'] = $text;
         $button = HTML::a( $params );
 
-        self::handle_echo( $button );
+        self::handle_echo( $button, $params );
         return $button;
     }
 
