@@ -1085,11 +1085,13 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         $element .= "<input type='checkbox' class='drawer_checkbox'>";
         $element .= $svg->return();
         $element .= HTML::close_span();
+        $hold1 = JS::temporary_change_echo( true );
         JS::script_module( "
         import { show_hide } from './vendor/projector22/lourie-basic-framework/src/js/ui.js';
         document.getElementById('$element_id').onclick = function () {
             show_hide('$show_hide_id');
         };" );
+        JS::restore_origonal_echo( $hold1 );
         HTML::restore_origonal_echo( $hold );
         self::handle_echo( $element );
         return $element;

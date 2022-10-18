@@ -11,11 +11,19 @@
 
 ---
 
-## Version 0.2.1-beta - 2022-10-22
+## Version 0.2.2-beta - 2022-10-18
 
 ### Changed
 
-- Improved with how `Session::start()` detects if a session has started. Removed param `$hide_session_start_info`.
+- Revamped `Auth/Session::start` to function better.
+
+### Fixed
+
+- Fixed a bug with `Forms::content_drawer_arrow`.
+
+---
+
+## Version 0.2.1-beta - 2022-10-22
 
 ### Fixed
 
@@ -23,7 +31,7 @@
 
 ---
 
-## Version 0.2.1-beta - 2022-10-22
+## Version 0.2.1-beta - 2022-10-17
 
 ### Fixed
 
