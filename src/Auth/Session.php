@@ -23,12 +23,11 @@ class Session {
      * 
      * @access  public
      * @since   LRS 3.15.11
+     * @since   LBF 0.2.2-beta  Removed param `$hide_session_start_info`.
      */
 
     public static function start( bool $hide_session_start_info = true ): void {
-        if ( $hide_session_start_info ) {
-            @session_start();
-        } else {
+        if ( session_status() == PHP_SESSION_NONE ) {
             session_start();
         }
     }
