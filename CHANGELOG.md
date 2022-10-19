@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.2.3-beta - 2022-10-19
+
+### Added
+
+- Added methods `copy_file` & `move_file` to the `FileSystem` class.
+
+---
+
 ## Version 0.2.2-beta - 2022-10-18
 
 ### Changed
