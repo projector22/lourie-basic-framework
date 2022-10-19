@@ -341,4 +341,52 @@ class FileSystem {
         return file_exists( $path );
     }
 
+
+    /**
+     * Copy a file from a source to a destination.
+     * 
+     * @param   string  $source         The source file to be copied. Must be the full file path including the file name.
+     *                                  Example: `/var/my/source/myFile.txt`.
+     * @param   string  $destination    The copy destination file. Must be the full file path including the file name.
+     *                                  Example: `/var/my/destination/myFile.txt`.
+     * 
+     * @return  bool
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.2.3-beta
+     */
+
+    public static function copy_file( string $source, string $destination ): bool {
+        try {
+            return copy( $source, $destination );
+        } catch ( \Throwable $th ) {
+            return false;
+        }
+    }
+
+
+    /**
+     * Move a file from a source to a destination.
+     * 
+     * @param   string  $source         The source file to be moved. Must be the full file path including the file name.
+     *                                  Example: `/var/my/source/myFile.txt`.
+     * @param   string  $destination    The copy destination file. Must be the full file path including the file name.
+     *                                  Example: `/var/my/destination/myFile.txt`.
+     * 
+     * @return  bool
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.2.3-beta
+     */
+
+    public static function move_file( string $source, string $destination ): bool {
+        try {
+            return rename( $source, $destination );
+        } catch ( \Throwable $th ) {
+            return false;
+        }
+    }
+
 }
