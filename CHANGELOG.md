@@ -5,6 +5,7 @@
 ## Changed
 
 - Added ordering by `ORDINAL_POSITION` in `ConnectMySQL` method `get_table_columns`.
+- Revamped `ConnectMySQL` to better handle error logs. Added a param to `set_debug_mode`, to manually set a logs path.
 
 ### Packages Updated
 

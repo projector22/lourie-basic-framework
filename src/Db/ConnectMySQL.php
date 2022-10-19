@@ -383,6 +383,16 @@ class ConnectMySQL {
 
     public array $unique_values = [];
 
+    /**
+     * The path to which logs are written.
+     * 
+     * @var string  $log_path.  Default is `__DIR__ . "/../../bin/logs/sql.log"`.
+     * 
+     * @access  private
+     * @since   LBF 0.3.0-beta
+     */
+
+    private string $log_path = __DIR__ . "/../../bin/logs/sql.log";
 
     /**
      * Constructor method, things to do when the class is loaded
@@ -396,6 +406,7 @@ class ConnectMySQL {
     public function __construct( bool $rollover = false ) {
         $this->rollover = $rollover;
         $this->connect_db();
+        $this->set_log_path( $this->log_path );
     }
 
 
@@ -1436,6 +1447,23 @@ class ConnectMySQL {
 
 
     /**
+     * Set the logging path for general logging.
+     * 
+     * @param   string  $path   The new path to log from.
+     * 
+     * @access  public
+     * @since   LBF 0.3.0-beta
+     */
+
+    public function set_log_path( string $path ): void {
+        if ( !file_exists( $path ) ) {
+            touch( $path );
+        }
+        $this->log_path = realpath( $path );
+    }
+
+
+    /**
      * Draw out errors if enabled
      * 
      * @param   object  $error  The error object to be drawn
@@ -1479,13 +1507,7 @@ class ConnectMySQL {
 
     private function log_sql( mixed $data ): void {
         $timestamp = date( 'Y-m-d G:i:s' );
-        /**
-         * @todo figure out a better way for this.
-         * 
-         * __DIR__ ../relative maybe
-         */
-        // $path = realpath( __DIR__ . "/../../bin/logs/sql.log" );
-        $path = realpath( "./bin/logs/sql.log" );
+        $this->set_log_path( $this->log_path );
 
         if ( is_array( $data ) || is_object( $data ) ) {
             $text = json_encode( $data, JSON_PRETTY_PRINT );
@@ -1494,9 +1516,9 @@ class ConnectMySQL {
         }
 
         try {
-            $fp = fopen( $path, 'a' );
+            $fp = fopen( $this->log_path, 'a' );
             if ( is_bool( $fp ) ) {
-                throw new FileNotWriteable( "Unable to write file to {$path}<br>" );
+                throw new FileNotWriteable( "Unable to write file to {$this->log_path}<br>" );
             }
             fwrite( $fp, "{$timestamp}\t\t{$text}\n" );
             fclose( $fp );
@@ -1720,14 +1742,19 @@ class ConnectMySQL {
     /**
      * Set the value of $this->debug_mode.
      * 
-     * @param   boolean $set    The value to set $this->debug_mode
+     * @param   boolean     $set            The value to set $this->debug_mode
+     * @param   string|null $log_to_path    The path that logs should be saved to. If null, use the default path. Default: null.
      * 
      * @access  public
      * @since   LRS 3.27.0
+     * @since   LBF 0.3.0-beta  Added param $log_to_path
      */
 
-    public function set_debug_mode( bool $set ): void {
+    public function set_debug_mode( bool $set, ?string $log_to_path = null ): void {
         $this->debug_mode = $set;
+        if ( !is_null ( $log_to_path ) ) {
+            $this->set_log_path( $log_to_path );
+        }
     }
 
 
