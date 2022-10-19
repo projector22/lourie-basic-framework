@@ -2,6 +2,10 @@
 
 ## Version 0.3.0-beta - UNRELEASED
 
+## Changed
+
+- Added ordering by `ORDINAL_POSITION` in `ConnectMySQL` method `get_table_columns`.
+
 ### Packages Updated
 
 | Package | Old | New |
