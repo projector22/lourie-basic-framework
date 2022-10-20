@@ -129,6 +129,7 @@ class Init {
         'src/css/styles.css'                  => 'css_styles.template',
         'src/js/lib.js'                       => 'js_lib.template',
         'src/js/home/home.js'                 => 'js_home_home.template',
+        '.htaccess'                           => 'htaccess.template',
     ];
 
 
