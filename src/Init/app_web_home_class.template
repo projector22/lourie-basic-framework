@@ -67,7 +67,7 @@ class Home {
          * $page->dashboard_home();
          */
 
-        HTML::heading( 1, 'Lourie Basic Framework' );
+        HTML::heading( 2, 'Lourie Basic Framework' );
         HTML::p_container( content: "Your new app awaits..." );
     }
 
