@@ -1,0 +1,74 @@
+<?php
+
+namespace App\Web;
+
+use Exception;
+use LBF\HTML\HTML;
+
+/**
+ * Draw out the parent application process.
+ * 
+ * use App\Web\Home;
+ * 
+ * @author  &AUTHOR&
+ * @since   &VERSION&
+ */
+
+class Home {
+
+    /**
+     * Class constructor.
+     * 
+     * @param   string  $page   The routed page being called.
+     * 
+     * @access  public
+     * @since   &VERSION&
+     */
+
+    public function __construct(
+
+        /**
+         * Property of the routed page called.
+         * 
+         * @var string  $page
+         * 
+         * @readonly
+         * @access  private
+         * @since   &VERSION&
+         */
+        private readonly string $page
+
+    ) {
+        $method = match( $this->page ) {
+            ''      => 'dashboard_home',
+            default => '404',
+        };
+        if ( $method == '404' ) {
+            throw new Exception( "Page '{$this->page}' not found", 404 );
+        }
+        echo "<main>";
+        $this->$method();
+        echo "</main>";
+    }
+
+
+    /**
+     * Draw out the dashboard home page.
+     * 
+     * @access  protected
+     * @since   &VERSION&
+     */
+
+    protected function dashboard_home(): void {
+        /**
+         * In general, call classes for the pages you wish to draw.
+         * 
+         * $page = new ExampleHomePage;
+         * $page->dashboard_home();
+         */
+
+        HTML::heading( 1, 'Lourie Basic Framework' );
+        HTML::p_container( content: "Your new app awaits..." );
+    }
+
+}

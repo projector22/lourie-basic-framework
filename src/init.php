@@ -125,7 +125,7 @@ class Init {
         'src/includes/meta-paths.php'         => 'includes_metapaths.template',
         'src/includes/meta-tables.php'        => 'includes_metatables.template',
         'src/includes/static-routes.php'      => 'includes_staticroutes.template',
-        'src/app/web/Home.php'                => '',
+        'src/app/web/Home.php'                => 'app_web_home_class.template',
         'src/css/styles.css'                  => '',
         'src/js/lib.js'                       => '',
         'src/js/home/home.js'                 => '',
