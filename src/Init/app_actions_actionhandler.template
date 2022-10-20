@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * Handles the action tasks for the app, usually invoked by AJAX.
+ * 
+ * @author  &AUTHOR&
+ * @since   &VERSION&
+ */
+
+use LBF\Autoloader;
+use LBF\Errors\Classes\MethodNotFound;
+use LBF\Tools\Env\LoadEnvironment;
+
+require '../../../vendor/autoload.php';
+
+Autoloader::load_debugger();
+
+$_GET  = clean( $_GET );
+$_POST = clean( $_POST );
+
+/**
+ * Clean up the data being sent via $_GET & $_POST.
+ * 
+ * @param   array   $data   The data to be cleaned.
+ * 
+ * @return  array
+ * 
+ * @since   &VERSION&
+ */
+
+function clean( array $data ): array {
+    foreach ( $data as $index => $entry ) {
+        $entry = trim( $entry );
+        $entry = stripslashes( $entry );
+        $entry = htmlspecialchars( $entry, ENT_QUOTES );
+        $data[$index] = $entry;
+    }
+    return $data;
+}
+
+require '../../../src/includes/meta.php';
+require VENDOR_PATH . 'projector22/lourie-basic-framework/src/Functions/functions.php';
+
+$loader = new Autoloader( SRC_PATH );
+$loader->load();
+
+$env = new LoadEnvironment( ENV_FILE );
+$env->load_to_env();
+
+require HOME_PATH . 'src/includes/meta-tables.php';
+
+$referrer = explode( '#', $_SERVER['HTTP_REFERER'] )[0];
+$referrer = explode( '?', $referrer )[0];
+$referrer = array_map( function ( string $item ): string {
+    return ucfirst( $item );
+}, array_reverse( explode( '/', $referrer ) ) );
+
+$class1 = "app\\actions\\pages\\{$referrer[0]}";
+$class2 = "app\\actions\\pages\\{$referrer[1]}";
+try {
+    $action = new $class1;
+} catch ( Throwable ) {
+    try {
+        $action = new $class2;
+    } catch ( Throwable ) {}
+}
+
+$token = get_token();
+
+switch ( $token ) {
+    default:
+        if ( $token == '' || is_null( $token ) ) {
+            break;
+        }
+        if ( !method_exists( $action, $token ) ) {
+            throw new MethodNotFound( "Method '{$token}' does not exist on in Class '{$class}'" );
+        }
+        $action->$token();
+}
