@@ -2,11 +2,11 @@
 
 ## Version 0.3.0-beta - 2022-10-20
 
-## Added
+### Added
 
 - Added a basic but functional init tool. Can be used to set up a new application with a single run. #5
 
-## Changed
+### Changed
 
 - Added ordering by `ORDINAL_POSITION` in `ConnectMySQL` method `get_table_columns`.
 - Revamped `ConnectMySQL` to better handle error logs. Added a param to `set_debug_mode`, to manually set a logs path.
