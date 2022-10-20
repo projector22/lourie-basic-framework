@@ -117,7 +117,7 @@ class Init {
         'index.php'                           => 'index.template',
         'src/router.php'                      => 'src_router.template',
         'src/loader.php'                      => 'src_loader.template',
-        'src/app/actions/ActionHandler.php'   => '',
+        'src/app/actions/ActionHandler.php'   => 'app_actions_actionhandler.template',
         'src/app/boilerplate/html_footer.php' => 'app_boilerplate_hmlfooter.template',
         'src/app/boilerplate/HTMLHeader.php'  => 'app_boilerplate_htmlheader.template',
         'src/includes/meta.php'               => 'includes_meta.template',
