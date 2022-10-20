@@ -130,6 +130,8 @@ class Init {
         'src/app/layout/PageSidebar.php'      => 'app_layout_sidebar.template',
         'src/app/layout/PageFooter.php'       => 'app_layout_footer.template',
         'src/app/web/Home.php'                => 'app_web_home_class.template',
+        'src/app/db/DbTemplate.php'           => 'app_db_template.template',
+        'src/app/db/DatabaseStructure.php'    => 'app_db_database_structure.template',
         'src/css/styles.css'                  => 'css_styles.template',
         'src/js/lib.js'                       => 'js_lib.template',
         'src/js/home/home.js'                 => 'js_home_home.template',

@@ -1,0 +1,155 @@
+<?php
+
+namespace App\Db;
+
+use LBF\Db\ConnectMySQL;
+use LBF\HTML\Draw;
+
+/**
+ * Class for controlling and building the site's database. Can be used to install or repair the database structure.
+ * 
+ * use App\Db\DatabaseStructure;
+ * 
+ * @author  &AUTHOR&
+ * 
+ * @since   &VERSION&
+ */
+
+class DatabaseStructure extends ConnectMySQL {
+
+    /**
+     * Define the structure of the database
+     * 
+     * @return  array   $data   The complete structure of the database for the app
+     * 
+     * @access  private
+     * @since   &VERSION&
+     */
+
+    private function database_tables() {
+        $data = [];
+        foreach ( ALL_TABLES as $table ) {
+            switch ( $table ) {
+            }
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * Executes the creation of all the tables in the database from the array data returned from database_tables()
+     * 
+     * @access  public
+     * @since   &VERSION&
+     */
+
+    public function create_tables(): void {
+        $errors = [];
+        $data = $this->database_tables();
+        foreach ( ALL_TABLES as $i => $table ) {
+            Draw::dot();
+            $sql = "CREATE TABLE IF NOT EXISTS $table(";
+            foreach ( $data[$i] as $k => $d ) {
+                $sql .= "$k $d,";      
+            }
+            $sql = remove_trailing_chars( $sql, ',' );  
+            $sql .= ') COLLATE utf8mb4_0900_ai_ci';
+            if ( !$this->sql_execute( $sql ) ) {
+                $errors[] = "Table $i : Creation failed";
+            }
+        }
+        Draw::lines( 2 );
+        foreach( $errors as $msg ) {
+            echo "{$msg} <br>";
+        }
+    }
+
+
+    /** 
+     * Checks the structure of any table pulled from database_tables() and adds any missing columns
+     * 
+     * @access  public
+     * @since   &VERSION&
+     */
+    
+    public function fix_missing_column(): void {
+        $database_name = DB_NAME;
+        $data = $this->database_tables();
+        foreach ( TABLE_NAMES as $i => $table ) {
+            // Drop the index if not primary
+            $result = $this->sql_select( "SELECT DISTINCT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = '{$database_name}' and TABLE_NAME='{$table}'" );
+            if ( count( $result ) > 0 ) {
+                foreach( $result as $row ) {
+                    if ( $row->INDEX_NAME != 'PRIMARY' ) {
+                        $this->sql_execute( "ALTER TABLE {$table} DROP INDEX " . $row->INDEX_NAME );
+                        Draw::dot();
+                    }
+                }
+            }
+
+            // Check each column
+            foreach( $data[$i] as $column => $info ) {
+                $results = $this->sql_select( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='{$database_name}' AND TABLE_NAME='{$table}' AND COLUMN_NAME='{$column}'" );
+                if ( count( $results ) > 0 ) {
+                    if ( $this->sql_execute( "ALTER TABLE {$table} CHANGE COLUMN `{$column}` `{$column}` {$info}" ) ) {
+                        Draw::dot();
+                    } // if execute update
+                } else {
+                    echo "<br>Adding {$column} to {$table}<br>";
+                    if ( !$this->sql_execute( "ALTER TABLE {$table} ADD {$column} {$info}" ) ) {
+                        echo "<br>Problem adding {$column} to {$table}<br>";
+                    } else { 
+                        echo "<br>Success: Added {$column} to {$table}<br>";
+                    } // if execute update
+                    Draw::lines( 2 );
+                }
+            }
+        }
+    } // execute_fix_missing_column
+
+
+    /**
+     * Copy all the tables to a different database. Generally for the yearly rollover
+     * 
+     * @param   string  $old_db  Name of the table from which the data is coming from
+     * @param   string  $new_db  Name of the table from which the data is going to
+     * 
+     * @return  boolean     Whether or not the process has succeeded successfully
+     * 
+     * @access  public
+     * @since   &VERSION&
+     */
+
+    public function duplicate_tables( string $old_db, string $new_db ): bool {
+        $errors = 0;
+        foreach ( $this->table_names as $table ) {
+            if ( !$this->sql_execute ( "CREATE TABLE {$new_db}.{$table} LIKE {$old_db}.{$table}" ) ) {
+                $errors++;
+            }
+            if ( !in_array ( $table, $this->rollover_empty_tables ) ) {
+                if ( !$this->sql_execute( "INSERT {$new_db}.{$table} SELECT * FROM {$old_db}.{$table}" ) ) {
+                    $errors++;
+                }
+            }
+        }
+
+        if ( $errors > 0 ) { 
+            return false;
+        }
+
+        return true;
+        
+        /**
+         * Alternative technique currently not needed but may be useful in the future
+         * Only works on Unix environments
+         * 
+         * $command = "mysqldump -u " . DB_USER . " --password=" . DB_PASS . " $this->old_database | mysql -u " . DB_USER . " --password=" . DB_PASS . " $this->new_database;";
+         * $execute = exec( "$command 2>&1" );
+         * 
+         * @since   &VERSION&
+         */
+
+    }
+
+}
