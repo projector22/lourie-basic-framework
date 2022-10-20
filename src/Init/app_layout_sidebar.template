@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Layout;
+
+/**
+ * Echo out the HTML <sidebar> element.
+ * 
+ * use App\Layout\PageSidebar;
+ * 
+ * @author  &AUTHOR&
+ * @since   &VERSION&
+ */
+
+class PageSidebar {
+
+    /**
+     * Class constructor.
+     * 
+     * @param   string  $routed_page    The page being routed to.
+     * 
+     * @access  public
+     * @since   &VERSION&
+     */
+
+    public function __construct(
+
+        /**
+         * The page being routed to.
+         * 
+         * @var string  $routed_page
+         * 
+         * @readonly
+         * @access  private
+         * @since   &VERSION&
+         */
+        private readonly string $routed_page,
+    ) {
+        $load_class = match( $this->routed_page ) {
+            default => 'no_sidebar',
+        };
+
+        $this->$load_class();
+    }
+
+
+    /**
+     * Draw out the admin sidebar.
+     * 
+     * @access  protected
+     * @since   &VERSION&
+     */
+
+    protected function default_sidebar(): void {
+        echo "<nav>";
+        // Build your sidebar here.
+        echo "</nav>";
+    }
+
+
+    /**
+     * Draw out the "No Sidebar" elements. Should do nothing,
+     * 
+     * @access  protected
+     * @since   &VERSION&
+     */
+
+    protected function no_sidebar(): void {}
+}

@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Layout;
+
+use LBF\HTML\HTML;
+
+/**
+ * Echo out the HTML <header> element.
+ * 
+ * use App\Layout\PageHeader;
+ * 
+ * @author  &AUTHOR&
+ * @since   &VERSION&
+ */
+
+class PageHeader {
+
+    /**
+     * Class constructor.
+     * 
+     * @param   string  $routed_page    The page being routed to.
+     * 
+     * @access  public
+     * @since   &VERSION&
+     */
+
+    public function __construct(
+
+        /**
+         * The page being routed to.
+         * 
+         * @var string  $routed_page
+         * 
+         * @readonly
+         * @access  private
+         * @since   &VERSION&
+         */
+        private readonly string $routed_page,
+    ) {
+        $load_class = match( $this->routed_page ) {
+            default => 'application_header',
+        };
+
+        $this->$load_class();
+    }
+
+
+    /**
+     * Draw the applications process header.
+     * 
+     * @access  protected
+     * @since   &VERSION&
+     */
+
+    protected function application_header(): void {
+        echo "<div>";
+        echo "<header>";
+        HTML::heading( 1, '&APP_NAME&' );
+        HTML::heading( 2, '&DESCRIPTION&' );
+        echo "</header>";
+    }
+
+}

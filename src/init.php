@@ -40,6 +40,7 @@ class Init {
         'version'     => '0.1.0',
         'status'      => 'alpha',
         'app-version' => '0.1.0-alpha',
+        'copyright'   => 'Gareth Palmer',
     ];
 
     /**
@@ -125,6 +126,9 @@ class Init {
         'src/includes/meta-paths.php'         => 'includes_metapaths.template',
         'src/includes/meta-tables.php'        => 'includes_metatables.template',
         'src/includes/static-routes.php'      => 'includes_staticroutes.template',
+        'app/layout/PageHeader.php'           => 'app_layout_header.template',
+        'app/layout/PageSidebar.php'          => 'app_layout_sidebar.template',
+        'app/layout/PageFooter.php'           => 'app_layout_footer.template',
         'src/app/web/Home.php'                => 'app_web_home_class.template',
         'src/css/styles.css'                  => 'css_styles.template',
         'src/js/lib.js'                       => 'js_lib.template',
@@ -157,9 +161,10 @@ class Init {
      */
 
     public function gather_data(): void {
-        $this->data['app_name'] = readline( "Enter a name for your app: " );
+        $this->data['app_name']    = readline( "Enter a name for your app: " );
         $this->data['description'] = readline( "Enter a simple description of your app: " );
-        $this->data['author'] = readline( "Enter you name and email, which will be used to attribute files to you. Example: Joe Soap <joe@soapweb.net>: " );
+        $this->data['author']      = readline( "Enter you name and email, which will be used to attribute files to you. Example: Joe Soap <joe@soapweb.net>: " );
+        $this->data['copyright']   = readline( "Enter the copyright owner for the app. Example: Joe Soap " );
         $ver = readline( "Enter the starting version, without alpha or beta (Leave blank for '0.1.0'): " );
         $this->data['version'] = $ver !== '' ? $ver : '0.1.0';
         $status = 'z';
@@ -199,7 +204,7 @@ class Init {
      * See the constant `FILE_STRUCTURE` for the name of each file.
      * 
      * @access  public
-     * @since   0.3.0-beta
+     * @since   LBF 0.3.0-beta
      */
 
     public function build_file_structure(): void {
@@ -233,6 +238,7 @@ class Init {
             return '';
         }
         $data = file_get_contents( $this->template_path . '/' . $template );
+        $data = str_replace( '&CURRENT_YEAR&',   date( 'Y' ),                $data );
         $data = str_replace( '&START_DATE&',     date( 'Y-m-d' ),            $data );
         $data = str_replace( '&AUTHOR&',         $this->data['author'],      $data );
         $data = str_replace( '&VERSION&',        $this->data['app-version'], $data );
@@ -240,6 +246,7 @@ class Init {
         $data = str_replace( '&DESCRIPTION&',    $this->data['description'], $data );
         $data = str_replace( '&VERSION_NUMBER&', $this->data['version'],     $data );
         $data = str_replace( '&VERSION_STATUS&', $this->data['status'],      $data );
+        $data = str_replace( '&COPYRIGHT&',      $this->data['copyright'],   $data );
         return $data;
     }
 
@@ -295,7 +302,7 @@ class Init {
      * @param   string      $pfx    A prefext to attach to a line, default is `''`, but anything can be parsed, including `\t` tabs.
      * 
      * @access  public
-     * @since   0.3.0-beta
+     * @since   LBF 0.3.0-beta
      */
 
     public function display_data( ?array $data = null, string $pfx = '' ): void {
@@ -341,7 +348,7 @@ class Init {
      * @param   int $lines  The number of lines to add. Default is 1.
      * 
      * @access  private
-     * @since   0.3.0-beta
+     * @since   LBF 0.3.0-beta
      */
 
     private function lb( int $lines = 1 ): void {
