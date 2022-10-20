@@ -131,8 +131,10 @@ class HTMLHeader {
      */
 
     private function load_styles(): void {
-        echo "<link rel='stylesheet' href='" . html_path( getcwd() . '/src/css/styles.min.css' ) . "'>";
-        $page_file = getcwd() . "/src/css/pages/{$this->page}.min.css";
+        echo "<link rel='stylesheet' href='" . html_path( getcwd() . '/src/css/styles.css' ) . "'>";
+        // echo "<link rel='stylesheet' href='" . html_path( getcwd() . '/src/css/styles.min.css' ) . "'>";
+        $page_file = getcwd() . "/src/css/pages/{$this->page}.css";
+        // $page_file = getcwd() . "/src/css/pages/{$this->page}.min.css";
         if ( file_exists( $page_file ) ) {
             echo "<link rel='stylesheet' href='" . html_path( $page_file ) . "'>";
         }
