@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## Version 0.3.0-beta - UNRELEASED
+## Version 0.3.0-beta - 2022-10-20
+
+## Added
+
+- Added a basic but functional init tool. Can be used to set up a new application with a single run. #5
 
 ## Changed
 
@@ -13,6 +17,10 @@
 | ------- | --- | --- |
 | phpmailer | 6.6.4 | 6.6.5 |
 | PHP Debuggin Tool | 1.0.6 | 1.0.7 |
+
+### Issues Closed
+
+- #5
 
 ---
 
