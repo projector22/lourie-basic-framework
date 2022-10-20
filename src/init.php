@@ -119,6 +119,7 @@ class Init {
         'src/js/lib.js'                       => 'js_lib.template',
         'src/js/home/home.js'                 => 'js_home_home.template',
         '.htaccess'                           => 'htaccess.template',
+        'app/img/favicon.ico'                 => 'favcon.template',
     ];
 
 
@@ -149,7 +150,7 @@ class Init {
         $this->data['app_name']    = readline( "Enter a name for your app: " );
         $this->data['description'] = readline( "Enter a simple description of your app: " );
         $this->data['author']      = readline( "Enter you name and email, which will be used to attribute files to you. Example: Joe Soap <joe@soapweb.net>: " );
-        $this->data['copyright']   = readline( "Enter the copyright owner for the app. Example: Joe Soap " );
+        $this->data['copyright']   = readline( "Enter the copyright owner for the app. Example: Joe Soap: " );
         $ver = readline( "Enter the starting version, without alpha or beta (Leave blank for '0.1.0'): " );
         $this->data['version'] = $ver !== '' ? $ver : '0.1.0';
         $status = 'z';
