@@ -119,7 +119,7 @@ class Init {
         'src/js/lib.js'                       => 'js_lib.template',
         'src/js/home/home.js'                 => 'js_home_home.template',
         '.htaccess'                           => 'htaccess.template',
-        'app/img/favicon.ico'                 => 'favcon.template',
+        'src/app/img/favicon.ico'             => 'favcon.template',
     ];
 
 
