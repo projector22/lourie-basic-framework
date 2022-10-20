@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * @start_date  &START_DATE&
+ * @author      &AUTHOR&
+ * @version     &VERSION&
+ */
+
+require 'src/router.php';

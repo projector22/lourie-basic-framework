@@ -1,0 +1,17 @@
+/**
+ * Basic styles used by the application.
+ * 
+ * @author  &AUTHOR&
+ */
+
+ html, body {
+	min-height: 100%;
+    scroll-behavior: smooth;
+    margin: 0px 0px;
+    padding: 0;
+}
+
+body {
+    background: #dddddd;
+	color: #1b1b1b;
+}

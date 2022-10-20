@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Layout;
+
+/**
+ * Echo out the HTML <footer> element.
+ * 
+ * use App\Layout\PageFooter;
+ * 
+ * @author  &AUTHOR&
+ * @since   &VERSION&
+ */
+
+class PageFooter {
+
+    /**
+     * Class constructor.
+     * 
+     * @param   string  $routed_page    The page being routed to.
+     * 
+     * @access  public
+     * @since   &VERSION&
+     */
+
+    public function __construct(
+
+        /**
+         * The page being routed to.
+         * 
+         * @var string  $routed_page
+         * 
+         * @readonly
+         * @access  private
+         * @since   &VERSION&
+         */
+        private readonly string $routed_page,
+    ) {
+        $load_class = match( $this->routed_page ) {
+            default => 'application_footer',
+        };
+
+        $this->$load_class();
+    }
+
+
+    /**
+     * Draw the applications process footer.
+     * 
+     * @access  protected
+     * @since   &VERSION&
+     */
+
+    protected function application_footer(): void {
+        echo '<footer class="pt-5 my-5 text-muted border-top">';
+        echo "Version " . APP_VERSION . " &middot ";
+        echo '&copy; &COPYRIGHT& &middot; ';
+        $year = date( 'Y' );
+        if ( $year > &CURRENT_YEAR& ) {
+            echo "&CURRENT_YEAR& - {$year}";
+        } else {
+            echo $year;
+        }
+        echo '</footer>';
+        echo '</div>';
+    }
+
+}

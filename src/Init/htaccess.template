@@ -1,0 +1,25 @@
+# Report errors
+# Show errors if localhost, hides errors otherwise/ in production
+# To develop on a remote server, uncomment the next line replacing 'server-ip' with the ip of you remote server and comment out the line following
+# <If "%{HTTP_HOST} == 'localhost' || %{HTTP_HOST} == '127.0.0.1' || %{REMOTE_ADDR} == '::1' || %{HTTP_HOST} == 'server-ip'">
+<If "%{HTTP_HOST} == 'localhost' || %{HTTP_HOST} == '127.0.0.1' || %{REMOTE_ADDR} == '::1'">
+    php_value error_reporting -1
+    php_flag display_errors 1
+    php_flag log_errors 1
+</If>
+<Else>
+    php_value error_reporting -1
+    php_flag display_errors 0
+    php_flag log_errors 1
+</Else>
+
+
+RewriteEngine on
+# If a directory or a file exists, use the request directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+# Otherwise forward the request to index.php
+RewriteRule . index.php
+
+# use index.php as index file
+DirectoryIndex index.php

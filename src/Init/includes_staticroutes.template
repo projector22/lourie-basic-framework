@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * Lists all pages for creating static routes.
+ * 
+ * Add other routes to load different pages.
+ * 
+ * @author  &AUTHOR&
+ * @since   &VERSION&
+ */
+
+return [
+    '/*' => 'App\Web\Home',
+];

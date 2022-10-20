@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * Perform the general routing tasks for this application.
+ * 
+ * @author  &AUTHOR&
+ * @since   &VERSION&
+ */
+
+use App\Boilerplate\HTMLHeader;
+use App\Layout\PageFooter;
+use App\Layout\PageHeader;
+use App\Layout\PageSidebar;
+use LBF\DevTools\Dashboard;
+use LBF\Tools\Router\Router;
+
+require 'loader.php';
+
+$router = new Router( require STATIC_ROUTES );
+
+$page    = $router->get_page();
+$subpage = $router->get_subpage();
+
+$html_header = new HTMLHeader( $page, $subpage );
+
+$header = new PageHeader( $page );
+$sidebar = new PageSidebar( $page );
+
+if ( str_contains( $_SERVER['REQUEST_URI'], '@dev-tools' ) && $_ENV['ENVIRONMENT'] == 'dev' ) {
+    $dev_tools = new Dashboard;
+    $dev_tools->construct_page();
+    die;
+}
+
+switch( $router->get_status_code() ) {
+    case 200:
+        $class = $router->get_class();
+        $route = new $class( $subpage );
+        break;
+    case 404:
+        /**
+         * @todo    Create a nice page for this.
+         */
+        throw new Exception( "Page not found", 404 );
+        break;
+    case 403:
+        /**
+         * @todo    Create a nice page for this.
+         */
+        throw new Exception( "Forbidden", 403 );
+        break;
+}
+
+$footer = new PageFooter( $page );
+
+require 'app/boilerplate/html_footer.php';
+
+

@@ -1,0 +1,132 @@
+<?php
+
+/**
+ * Defines path constants used by the app.
+ * 
+ * @author  &AUTHOR&
+ * @since   &VERSION&
+ */
+
+if ( !defined( 'HOME_PATH' ) ) {
+    $name = explode( DIR_SEP, dirname( __FILE__ ) );
+    $install_folder = '';
+    $test_name =  true;
+    foreach ( $name as $i => $n ) {
+        if ( $n == 'src' ) {
+            $test_name = false;
+        }
+        if ( $test_name ) {
+            $install_folder .= $n . '/';
+        }
+    }
+
+    /**
+     * The path to the home directory in which the app is installed.
+     * 
+     * @var string HOME_PATH
+     *
+     * @since   &VERSION&
+     */
+
+    define ( 'HOME_PATH', $install_folder );
+}
+
+/**
+ * The src directory, which contain the source code for the app.
+ * 
+ * @var string  SRC_PATH
+ * 
+ * @since   &VERSION&
+ */
+
+define ( 'SRC_PATH', HOME_PATH . 'src' . '/' );
+
+/**
+ * The app subdirectory, which contain the bulk of source code for the app.
+ * 
+ * @var string  APP_PATH
+ * 
+ * @since   &VERSION&
+ */
+
+define ( 'APP_PATH', SRC_PATH . 'app' . '/' );
+
+/**
+ * The boilerplate directory, which container the html boilerplate header and footer loaded onto the app.
+ * 
+ * @var string  BOILERPLATE_PATH
+ * 
+ * @since   &VERSION&
+ */
+
+define ( 'BOILERPLATE_PATH', SRC_PATH . 'boilerplate' . '/' );
+
+/**
+ * The src directory, which contain the source code for the app.
+ * 
+ * @var string  STYLES_PATH
+ * 
+ * @since   &VERSION&
+ */
+
+define ( 'STYLES_PATH', SRC_PATH . 'css' . '/' );
+
+/**
+ * The functions directory, which contain user defined functions.
+ * 
+ * @var string  FUNCTIONS_PATH
+ * 
+ * @since   &VERSION&
+ */
+
+define ( 'FUNCTIONS_PATH', SRC_PATH . 'functions' . '/' );
+
+/**
+ * The img directory, which contain images used by the app.
+ * 
+ * @var string  IMG_PATH
+ * 
+ * @since   &VERSION&
+ */
+
+define ( 'IMG_PATH', SRC_PATH . 'img' . '/' );
+
+/**
+ * The includes directory, which contains meta info used by the app.
+ * 
+ * @var string  INCLUDES_PATH
+ * 
+ * @since   &VERSION&
+ */
+
+define ( 'INCLUDES_PATH', SRC_PATH . 'includes' . '/' );
+
+/**
+ * The js directory, which contain all the Javascript libraries used by the app.
+ * 
+ * @var string  JS_PATH
+ * 
+ * @since   &VERSION&
+ */
+
+define ( 'JS_PATH', SRC_PATH . 'js' . '/' );
+
+/**
+ * The vendor directory, which contain the third party libraries used by the app.
+ * 
+ * @var string  VENDOR_PATH
+ * 
+ * @since   &VERSION&
+ */
+
+define( 'VENDOR_PATH', HOME_PATH . 'vendor' . '/' );
+
+/**
+ * The bin directory, which contain all client uploaded files and functions as a working directory for the app.
+ * 
+ * @var string  BIN_PATH
+ * 
+ * @since   &VERSION&
+ */
+
+define( 'BIN_PATH', HOME_PATH . 'bin' . '/' );

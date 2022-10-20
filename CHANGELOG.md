@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## Version 0.3.0-beta - 2022-10-20
+
+## Added
+
+- Added a basic but functional init tool. Can be used to set up a new application with a single run. #5
+
+## Changed
+
+- Added ordering by `ORDINAL_POSITION` in `ConnectMySQL` method `get_table_columns`.
+- Revamped `ConnectMySQL` to better handle error logs. Added a param to `set_debug_mode`, to manually set a logs path.
+
+### Packages Updated
+
+| Package | Old | New |
+| ------- | --- | --- |
+| phpmailer | 6.6.4 | 6.6.5 |
+| PHP Debuggin Tool | 1.0.6 | 1.0.7 |
+
+### Issues Closed
+
+- #5
+
+---
+
 ## Version 0.2.3-beta - 2022-10-19
 
 ### Added
@@ -12,7 +36,7 @@
 
 ### Changed
 
-- Revamped `Auth/Session::start` to function better.
+- Improved with how `Session::start()` detects if a session has started. Removed param `$hide_session_start_info`.
 
 ### Fixed
 
@@ -22,9 +46,13 @@
 
 ## Version 0.2.1-beta - 2022-10-17
 
+### Changed
+
+- Revamped `Auth/Session::start` to function better.
+
 ### Fixed
 
-- Fixed a number of HTML tools not echoing correctly.
+- Fixed a bug with `Forms::content_drawer_arrow`.
 
 ---
 

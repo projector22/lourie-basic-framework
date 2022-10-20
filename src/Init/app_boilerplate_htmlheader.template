@@ -1,0 +1,178 @@
+<?php
+
+namespace App\Boilerplate;
+
+// use App\Db\Data\UserAccountsData;
+// use LBF\Auth\Cookie;
+// use LBF\Auth\LoginHandler;
+
+/**
+ * Echo out the HTML Header elements, including the loading of bootstrap, CSS & JS.
+ * 
+ * use App\Boilerplate\HTMLHeader;
+ * 
+ * @author  &AUTHOR&
+ * @since   &VERSION&
+ */
+
+class HTMLHeader {
+
+    /**
+     * Class constructor.
+     * 
+     * @param   string  $page
+     * 
+     * @access  public
+     * @since   &VERSION&
+     */
+
+    public function __construct(
+
+        /**
+         * The routed page.
+         * 
+         * @var string  $page   The routed page.
+         * 
+         * @readonly
+         * @access  private
+         * @since   &VERSION&
+         */
+
+        private readonly string $page,
+
+        /**
+         * The routed page.
+         * 
+         * @var string  $subpage   The subpage being routed to.
+         * 
+         * @readonly
+         * @access  private
+         * @since   &VERSION&
+         */
+
+        private readonly string $subpage,
+    ) {
+        $this->check_auth();
+        $favicon = html_path( IMG_PATH . 'favicon.svg' );
+        echo "<!doctype html>
+        <html lang='en'>
+        <head>
+            <meta charset='utf-8'>
+            <title>" . APPLICATION_NAME . "</title>
+            <meta name='description' content='" . SITE_DESCRIPTION . "' />
+            <meta name='viewport' content='width=device-width, initial-scale=1'>
+            <meta http-equiv='X-Clacks-Overhead' content='GNU Terry Pratchett' />";
+
+        if ( $favicon !== false ) {
+            echo "<link rel='shortcut icon' href='{$favicon}'>";
+            echo "<link rel='apple-touch-icon' href='{$favicon}'>";
+        }
+
+        $this->load_lbf();
+        $this->load_styles();
+        $this->load_js();
+
+        echo "</head>";
+        echo "<body>";
+        /** BOOTSTRAP DIVS HERE **/
+    }
+
+
+    /**
+     * Check if authentication is required and redirect as required.
+     * 
+     * @access  private
+     * @since   &VERSION&
+     */
+
+    private function check_auth(): void {
+        /** ADAPT THIS BELOW TO BUILD AN AUTH ROUTINE IF DESIRED **/
+        // $required_auth = [
+        //     'admin'
+        // ];
+
+        // if ( in_array( $this->page, $required_auth ) ) {
+        //     if ( !Cookie::value_exists( 'login_account' ) ) {
+        //         header( "Location: login" );
+        //         die;
+        //     } else {
+        //         $handler = new LoginHandler( new \App\Db\Data\UserAccountsData, '' );
+        //         if ( !$handler->check_user_is_logged_in( Cookie::get_value( 'login_account' ) ) ) {
+        //             header( "Location: login" );
+        //             die;
+        //         }
+        //     }
+        // } else if ( str_contains( $this->page, 'login' ) && Cookie::value_exists( 'login_account' ) ) {
+            // $handler = new LoginHandler( new App\Db\Data\UserAccountsData, '' );
+        //     if ( $handler->check_user_is_logged_in( Cookie::get_value( 'login_account' ) ) ) {
+        //         header( "Location: admin" );
+        //         die;
+        //     }
+        // }
+    }
+
+
+    /**
+     * Load any custom styles into the app.
+     * 
+     * @since   &VERSION&
+     */
+
+    private function load_lbf(): void {
+        $vendor = getcwd() . '/vendor/projector22/lourie-basic-framework/src/';
+        echo "<link rel='stylesheet' href='" . html_path( $vendor . 'css/lourie-basic-framework.css' ) . "'>";
+    }
+
+
+    /**
+     * Load any custom styles into the app.
+     * 
+     * @since   &VERSION&
+     */
+
+    private function load_styles(): void {
+        echo "<link rel='stylesheet' href='" . html_path( getcwd() . '/src/css/styles.css' ) . "'>";
+        // echo "<link rel='stylesheet' href='" . html_path( getcwd() . '/src/css/styles.min.css' ) . "'>";
+        $page_file = getcwd() . "/src/css/pages/{$this->page}.css";
+        // $page_file = getcwd() . "/src/css/pages/{$this->page}.min.css";
+        if ( file_exists( $page_file ) ) {
+            echo "<link rel='stylesheet' href='" . html_path( $page_file ) . "'>";
+        }
+    }
+
+
+    /**
+     * Load any custom javascript files into the app.
+     * 
+     * @since   &VERSION&
+     */
+
+    private function load_js(): void {
+        $page    = $this->page;
+        $subpage = $this->subpage;
+
+        if ( str_contains( $page, '@dev-tools' ) || str_contains( $subpage, '@dev-tools' ) ) {
+            $page    = 'dev-tools';
+            $subpage = 'lib';
+        }
+
+        if ( $page == '' ) {
+            $page    = 'home';
+            $subpage = 'home';
+        }
+
+        if ( $subpage == '' ) {
+            $subpage = match ( $page ) {
+                /** IF THE SUBPAGE ISN'T SET, SET WHICH FILE TO LOAD FOR THAT PAGE HERE **/
+                default => null,
+            };
+        }
+
+        $path = getcwd() . "/src/js/{$page}/{$subpage}.js";
+        if ( file_exists( $path ) ) {
+            echo "<script type='module' src='" . html_path( $path ) . "'></script>";
+        }
+        echo "<script type='module' src='" . html_path( getcwd() . '/src/js/lib.js' ) . "'></script>";
+    }
+
+}
