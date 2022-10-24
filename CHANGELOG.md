@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## Version 0.3.0-beta - UNRELEASED
+## Version 0.3.2-beta - UNRELEASED
+
+---
+
+## Version 0.3.1-beta - 2022-10-24
 
 ## Added
 
