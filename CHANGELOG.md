@@ -2,7 +2,9 @@
 
 ## Version 0.3.0-beta - UNRELEASED
 
+## Added
 
+- Added error page `InvalidErrorCode`.
 
 ---
 
