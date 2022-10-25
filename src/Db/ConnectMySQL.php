@@ -1502,21 +1502,16 @@ class ConnectMySQL {
      * Log SQL queries.
      * 
      * @param   mixed       $data       The data to write.
-     * @param   string|null $log_path   Overwrite the path to log the data.
      * 
      * @throws  LogPathNotSet       If no logging path is set.
      * @throws  FileNotWriteable    If the log file is read only.
      * 
      * @access  private
      * @since   LRS 3.23.3
-     * @since   LBF 0.3.3-beta  Added param `$log_path`.
      */
 
-    private function log_sql( mixed $data, ?string $log_path = null ): void {
+    private function log_sql( mixed $data ): void {
         $timestamp = date( 'Y-m-d G:i:s' );
-        if ( !is_null( $log_path ) ) {
-            $this->set_log_path( $log_path );
-        }
         if ( is_null( $this->log_path ) ) {
             throw new LogPathNotSet( "Please set a value for logging an SQL result." );
         }
