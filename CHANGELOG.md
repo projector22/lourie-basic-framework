@@ -6,6 +6,10 @@
 
 - Added error `LogPathNotSet`.
 
+### Changed
+
+- Revamped ConnectMySQL so that the logging path is not set by default, and if one is not explicitly set, an exception is thrown. #47
+
 ### Issues Closed
 
 - #47 WIP

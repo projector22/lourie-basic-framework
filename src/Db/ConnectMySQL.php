@@ -7,6 +7,7 @@ use PDOException;
 use LBF\Errors\IO\InvalidInput;
 use LBF\Errors\Files\FileNotWriteable;
 use LBF\Errors\General\UniqueValueDulicate;
+use LBF\Errors\Log\LogPathNotSet;
 
 /**
  * @todo    A much more elegant solution is needed here.
@@ -386,13 +387,13 @@ class ConnectMySQL {
     /**
      * The path to which logs are written.
      * 
-     * @var string  $log_path.  Default is `__DIR__ . "/../../bin/logs/sql.log"`.
+     * @var string|null  $log_path.  Default is null.
      * 
      * @access  private
      * @since   LBF 0.3.0-beta
      */
 
-    private string $log_path = __DIR__ . "/../../bin/logs/sql.log";
+    private ?string $log_path = null;
 
     /**
      * Constructor method, things to do when the class is loaded
@@ -406,7 +407,6 @@ class ConnectMySQL {
     public function __construct( bool $rollover = false ) {
         $this->rollover = $rollover;
         $this->connect_db();
-        $this->set_log_path( $this->log_path );
     }
 
 
@@ -1057,6 +1057,7 @@ class ConnectMySQL {
         return "SELECT * FROM {$this->table}{$where}{$order_by}{$limit}";
     }
 
+
     /**
      * Clear the data in in $this->get_class_list_data
      * 
@@ -1457,6 +1458,9 @@ class ConnectMySQL {
 
     public function set_log_path( string $path ): void {
         if ( !file_exists( $path ) ) {
+            if ( !is_dir( dirname( $path ) ) ) {
+                mkdir( dirname( $path ), recursive: true );
+            }
             touch( $path );
         }
         $this->log_path = realpath( $path );
@@ -1497,17 +1501,25 @@ class ConnectMySQL {
     /**
      * Log SQL queries.
      * 
-     * @param   mixed   $data   The data to write.
+     * @param   mixed       $data       The data to write.
+     * @param   string|null $log_path   Overwrite the path to log the data.
      * 
-     * @throws  FileNotWriteable   If the log file is read only.
+     * @throws  LogPathNotSet       If no logging path is set.
+     * @throws  FileNotWriteable    If the log file is read only.
      * 
      * @access  private
      * @since   LRS 3.23.3
+     * @since   LBF 0.3.3-beta  Added param `$log_path`.
      */
 
-    private function log_sql( mixed $data ): void {
+    private function log_sql( mixed $data, ?string $log_path = null ): void {
         $timestamp = date( 'Y-m-d G:i:s' );
-        $this->set_log_path( $this->log_path );
+        if ( !is_null( $log_path ) ) {
+            $this->set_log_path( $log_path );
+        }
+        if ( is_null( $this->log_path ) ) {
+            throw new LogPathNotSet( "Please set a value for logging an SQL result." );
+        }
 
         if ( is_array( $data ) || is_object( $data ) ) {
             $text = json_encode( $data, JSON_PRETTY_PRINT );
