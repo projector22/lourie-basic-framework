@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## Version 0.3.3-beta - UNRELEASED
+
+### Added
+
+- Added error `LogPathNotSet`.
+
+### Issues Closed
+
+- #47 WIP
+
+---
+
 ## Version 0.3.2-beta - 2022-10-25
 
 ### Added
