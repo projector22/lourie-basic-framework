@@ -2,11 +2,15 @@
 
 ## Version 0.3.2-beta - UNRELEASED
 
+### Added
+
+- Added basic Captcha tools.
+
 ---
 
 ## Version 0.3.1-beta - 2022-10-24
 
-## Added
+### Added
 
 - Added error page `InvalidErrorCode`.
 
