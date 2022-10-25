@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## Version 0.3.3-beta - 2022-10-25
+
+### Added
+
+- Added error `LogPathNotSet`.
+
+### Changed
+
+- Revamped ConnectMySQL so that the logging path is not set by default, and if one is not explicitly set, an exception is thrown. #47
+
+### Packages Updated
+
+| Package | Old | New |
+| ------- | --- | --- |
+| phpmailer | v6.6.4 | v6.6.5 |
+| PHP Debuggin Tool | 1.0.5 | 1.0.7 |
+
+### Issues Closed
+
+- #47
+
+---
+
 ## Version 0.3.2-beta - 2022-10-25
 
 ### Added
