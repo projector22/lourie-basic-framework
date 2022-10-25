@@ -1,10 +1,11 @@
 # CHANGELOG
 
-## Version 0.3.2-beta - UNRELEASED
+## Version 0.3.2-beta - 2022-10-25
 
 ### Added
 
 - Added basic Captcha tools.
+- Added validation tools for South African ID number.
 
 ---
 
