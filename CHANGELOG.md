@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Version 0.3.4-beta - UNRELEASED
+## Version 0.3.4-beta - 2022-10-27
 
 ### Changed
 
