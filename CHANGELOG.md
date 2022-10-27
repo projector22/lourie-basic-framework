@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.3.4-beta - 2022-10-27
+
+### Changed
+
+- Added param `$params` to `Forms` method `include_exclude_columns`.
+
+---
+
 ## Version 0.3.3-beta - 2022-10-25
 
 ### Added

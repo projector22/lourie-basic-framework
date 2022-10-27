@@ -1207,12 +1207,14 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
      * @param   string|null     $title2         A title to put on the head of the right column. Leave as null to leave blank.
      *                                          Default: null
      * @param   boolean         $disabled       Whether or not to disable each column
+     * @param   array           $params         Params to add to the container div.
      * 
      * @throws  InvalidInput   If $data_left or $data_right is invalid.
      * 
      * @static
      * @access  public
      * @since   LRS 3.14.3
+     * @since   LBF 0.3.4-beta  Added param `$params`.
      */
 
     public static function include_exclude_columns (
@@ -1222,12 +1224,26 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         ?string $title1 = null,
         ?string $title2 = null,
         bool $disabled = false,
+        array $params = [],
     ): void {
         $hold = self::temporary_change_echo( true );
-        HTML::div( [
+        $div_params = [
             'class' => 'multi_class_selector_container',
             'id'    => $id,
-        ] );
+        ];
+        foreach( $params as $key => $value ) {
+            switch ( $key ) {
+                case 'class':
+                    $div_params['class'] .= " {$value}";
+                    break;
+                case 'id':
+                    // Skip id
+                    continue;
+                default:
+                    $div_params[$key] = $value;
+            }
+        }
+        HTML::div( $div_params );
 
         if ( is_array ( $data_left ) ) {
             $values_left = build_item_droplist( $data_left, array_keys( $data_left) );
