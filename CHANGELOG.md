@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.4.0-beta - 2022-10-28
+
+### Added
+
+- Added a Javascript Class tool called `SVGTool` for generating SVG images on the fly.
+
+---
+
 ## Version 0.3.4-beta - 2022-10-27
 
 ### Changed
