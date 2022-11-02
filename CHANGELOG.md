@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.4.1-beta - 2022-11-02
+
+### Changed
+
+- Revamped `Draw::section_break` to much more gracefully draw in a new section, adding title and description as parameters. Note this is a breaking change from how this method was called before if parameters were parsed.
+
+--
+
 ## Version 0.4.0-beta - 2022-10-28
 
 ### Added

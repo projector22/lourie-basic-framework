@@ -516,37 +516,27 @@ class Draw extends HTMLMeta {
 
 
     /**
-     * Draw the section break template.
-     * 
-     * @param   string  $description    The text to go into the description.
-     * @param   string  $class          The class of the new element.
-     * 
-     * @static
-     * @access  private
-     * @since   LRS 3.12.8
-     */
-
-    private static function break_template( string $description, string $class ): void {
-        $hold = HTML::temporary_change_echo( true );
-        HTML::close_div();
-        HTML::div_container( ['class' => 'page_element_description'], $description );
-        HTML::div( ['class' => $class] );
-        HTML::restore_origonal_echo( $hold );
-    }
-
-
-    /**
      * Draw elements to draw a section break in the general admin layout
      * 
-     * @param   string  $description    The description to be placed in this section break
+     * @param   string|null $title          The title to place on the page for the new section. Parse null to skip. Default: null
+     * @param   string      $description    The description to be placed in this section break. May be parsed multiple times
      * 
      * @static
      * @access  public
      * @since   LRS 3.8.0
+     * @since   LBF 0.4.1-beta  Added param title
      */
 
-    public static function section_break( string $description = '' ): void {
-        self::break_template( $description, 'page_element_main' );
+    public static function section_break( ?string $title = null, string ...$description ): void {
+        self::close_standard_page();
+        self::standard_column_left();
+        if ( !is_null( $title ) ) {
+            self::item_description_header( $title );
+        }
+        foreach ( $description as $i => $desc ) {
+            self::item_description( $desc, $i == 0 ? 0 : 2 );
+        }
+        self::standard_column_right();
     }
 
 
