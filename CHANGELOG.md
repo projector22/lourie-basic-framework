@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.4.2-beta - 2022-11-03
+
+### Added
+
+- Added email validation method.
+
+---
+
 ## Version 0.4.1-beta - 2022-11-02
 
 ### Changed

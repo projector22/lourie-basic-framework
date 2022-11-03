@@ -127,4 +127,28 @@ class Validations {
         return $validated;
     }
 
+
+    /**
+     * Validate an email address.
+     * 
+     * @see https://www.php.net/manual/en/filter.examples.validation.php
+     * 
+     * @param   mixed   $email  A bit of data to validate as a valid email address
+     * 
+     * @return  boolean
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.4.2-beta
+     */
+
+    public static function validate_email( mixed $email ): bool {
+        if ( is_string( $email ) ) {
+            if ( str_contains( $email, "\n" ) || str_contains( $email, "\r" ) ) {
+                return false;
+            }
+        }
+        return filter_var( $email, FILTER_VALIDATE_EMAIL ) !== false;
+    }
+
 }
