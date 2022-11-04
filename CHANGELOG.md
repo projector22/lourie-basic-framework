@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.4.5-beta - 2022-11-04
+
+### Fixed
+
+- Fixed a bug with the `__get` method in `GetSet`.
+
+---
+
 ## Version 0.4.4-beta - 2022-11-04
 
 ### Added

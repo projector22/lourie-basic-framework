@@ -59,6 +59,7 @@ trait GetSet {
         if ( !isset( $this->properties[$name] ) ) {
             throw new UndefinedProperty( "Property {$name} does not exist on " . __CLASS__ );
         }
+        return $this->properties[$name];
     }
 
 }
