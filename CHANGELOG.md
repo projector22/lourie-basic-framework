@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.4.3-beta - 2022-11-04
+
+### Added
+
+- Added error `UndefinedProperty`.
+
+---
+
 ## Version 0.4.2-beta - 2022-11-03
 
 ### Added
