@@ -45,7 +45,7 @@ trait GetSet {
     /**
      * Getter for dynamic properties.
      * 
-     * @param   string  $name   The key to the property
+     * @param   string  $name   The key to the property.
      * 
      * @return  mixed
      * 
@@ -60,6 +60,22 @@ trait GetSet {
             throw new UndefinedProperty( "Property {$name} does not exist on " . __CLASS__ );
         }
         return $this->properties[$name];
+    }
+
+
+    /**
+     * Magic method for determining if a private or protected property exists.
+     * 
+     * @param   string  $name   The key to the property.
+     * 
+     * @return  bool
+     * 
+     * @access  public
+     * @since   LBF 0.4.6-beta
+     */
+
+    public function __isset( string $name ): bool {
+        return isset( $this->properties[$name] );
     }
 
 }

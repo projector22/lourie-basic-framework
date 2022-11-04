@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.4.6-beta - 2022-11-04
+
+### Changed
+
+- Added magic method `__isset` to GetSet. This allows for calling `isset` on `__set` properties.
+
+---
+
 ## Version 0.4.5-beta - 2022-11-04
 
 ### Fixed
