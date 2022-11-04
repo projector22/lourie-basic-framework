@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.4.4-beta - 2022-11-04
+
+### Added
+
+- Added trait `GetSet`.
+
+---
+
 ## Version 0.4.3-beta - 2022-11-04
 
 ### Added
