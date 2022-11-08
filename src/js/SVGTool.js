@@ -5,7 +5,7 @@
  * 
  * @requires    ES6
  * 
- * @since   LRS 3.29.2
+ * @since   LRS 3.30.0
  * @since   LBF 0.4.0-beta
  */
 
