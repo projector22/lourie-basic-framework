@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.4.8-beta - UNRELEASED
+
+### Fixed
+
+- Fixed bug with Forms `break` throwing warning.
+
+---
+
 ## Version 0.4.7-beta - 2022-11-08
 
 ### Fixed
