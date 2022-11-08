@@ -1238,7 +1238,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
                     break;
                 case 'id':
                     // Skip id
-                    continue;
+                    break;
                 default:
                     $div_params[$key] = $value;
             }
