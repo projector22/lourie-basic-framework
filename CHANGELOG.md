@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.4.7-beta - 2022-11-08
+
+### Fixed
+
+- Fixed a bug where errors would be thrown if array keys were not sequential when dealing with SQL `IN()` and `NOT IN()`.
+
+---
+
 ## Version 0.4.6-beta - 2022-11-04
 
 ### Changed

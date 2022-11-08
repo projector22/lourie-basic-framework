@@ -1290,6 +1290,7 @@ class ConnectMySQL {
              * can be parsed.
              */
             if ( is_array( $value ) ) {
+                $value = array_values( $value ); // This ensures the keys are sequential.
                 $col_values = [];
                 for ( $i = 0; $i < count( $value ); $i++  ) {
                     $col_values[] = ':k' . $i . $rand;
