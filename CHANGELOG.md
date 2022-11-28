@@ -5,6 +5,7 @@
 ### Fixed
 
 - Fixed bug with Forms `break` throwing warning.
+- Fixed a situation where session starts still ocasionally throw errors.
 
 ---
 
