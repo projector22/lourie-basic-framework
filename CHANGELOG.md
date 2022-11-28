@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Version 0.4.8-beta - UNRELEASED
+## Version 0.4.8-beta - 2022-11-28
 
 ### Fixed
 
