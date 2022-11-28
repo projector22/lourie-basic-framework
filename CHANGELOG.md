@@ -1,10 +1,11 @@
 # CHANGELOG
 
-## Version 0.4.8-beta - UNRELEASED
+## Version 0.4.8-beta - 2022-11-28
 
 ### Fixed
 
 - Fixed bug with Forms `break` throwing warning.
+- Fixed a situation where session starts still ocasionally throw errors.
 
 ---
 
