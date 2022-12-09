@@ -63,7 +63,7 @@ class LoadEnvironment {
             if ( $line == '' ) {
                 unset( $lines[$index] );
             }
-            if ( trim( $line)[0] == '#') {
+            if ( ( trim( $line )[0] ?? '#' ) == '#' ) {
                 // skip comments
                 unset( $lines[$index] );
             }
