@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.4.9-beta - 2022-12-09
+
+- Fixed a minor bug with environment loading.
+
+---
+
 ## Version 0.4.8-beta - 2022-11-28
 
 ### Fixed
