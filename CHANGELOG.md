@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.5.0-beta - UNRELEASED
+
+### Changed
+
+- Updated `ConnectMySQL` to consistantly get it's database parameters from `$_ENV`.
+
+---
+
 ## Version 0.4.9-beta - 2022-12-09
 
 ### Fixed

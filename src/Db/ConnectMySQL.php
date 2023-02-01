@@ -9,30 +9,6 @@ use LBF\Errors\Files\FileNotWriteable;
 use LBF\Errors\General\UniqueValueDulicate;
 use LBF\Errors\Log\LogPathNotSet;
 
-/**
- * @todo    A much more elegant solution is needed here.
- * 
- * Look at .env files, and a revamp of LRS.
- * The problem is, the way this class is mostly extended to,
- * there is no oportunity to parse these constants, therefore
- * a better way is needed in LRS.
- * 
- * @since   LRS 3.28.0
- */
-
-// if ( !defined( "DB_LOC" ) ) {
-//     define( "DB_LOC", $_ENV['DB_LOCATION'] ?? '' );
-// }
-// if ( !defined( "DB_USER" ) ) {
-//     define( "DB_USER", $_ENV['DB_USERNAME'] ?? '' );
-// }
-// if ( !defined( "DB_PASS" ) ) {
-//     define( "DB_PASS", $_ENV['DB_PASSWORD'] ?? '' );
-// }
-// if ( !defined( "$_ENV['DB_NAME']" ) ) {
-//     define( "$_ENV['DB_NAME']", $_ENV['TABLE_PREFIX'] . $_ENV['$_ENV['DB_NAME']'] ?? '' );
-// }
-
 defined( "DB_YEAR" ) OR define( "DB_YEAR", null );
 
 /**
@@ -397,6 +373,7 @@ class ConnectMySQL {
 
     private ?string $log_path = null;
 
+
     /**
      * Constructor method, things to do when the class is loaded
      * 
@@ -441,7 +418,7 @@ class ConnectMySQL {
      */
 
     protected function connect_db( ?int $year = null ): bool {
-        $db_name = $_ENV['TBL_PFX'] . $_ENV['DB_NAME'];
+        $db_name = $_ENV['TABLE_PREFIX'] . $_ENV['DB_NAME'];
 
         if ( !is_null( DB_YEAR ) ) {
             if ( is_null ( $year ) ) {
@@ -452,11 +429,11 @@ class ConnectMySQL {
         }
 
         try {
-            $this->conn = new PDO( "mysql:host={$_ENV['DB_HOST']};dbname={$db_name}", $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'] );
+            $this->conn = new PDO( "mysql:host={$_ENV['DB_LOCATION']};dbname={$db_name}", $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'] );
             $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
             return true;
         } catch( PDOException $e ) {
-            echo $e . "\n";
+            echo "<pre>{$e}</pre>\n";
             $this->last_error = $e;
             return false;
         }
