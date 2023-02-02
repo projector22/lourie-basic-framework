@@ -9,29 +9,7 @@ use LBF\Errors\Files\FileNotWriteable;
 use LBF\Errors\General\UniqueValueDulicate;
 use LBF\Errors\Log\LogPathNotSet;
 
-/**
- * @todo    A much more elegant solution is needed here.
- * 
- * Look at .env files, and a revamp of LRS.
- * The problem is, the way this class is mostly extended to,
- * there is no oportunity to parse these constants, therefore
- * a better way is needed in LRS.
- * 
- * @since   LRS 3.28.0
- */
-
-if ( !defined( "DB_LOC" ) ) {
-    define( "DB_LOC", $_ENV['DB_LOCATION'] ?? '' );
-}
-if ( !defined( "DB_USER" ) ) {
-    define( "DB_USER", $_ENV['DB_USERNAME'] ?? '' );
-}
-if ( !defined( "DB_PASS" ) ) {
-    define( "DB_PASS", $_ENV['DB_PASSWORD'] ?? '' );
-}
-if ( !defined( "DB_NAME" ) ) {
-    define( "DB_NAME", $_ENV['TABLE_PREFIX'] . $_ENV['DB_NAME'] ?? '' );
-}
+defined( "DB_YEAR" ) OR define( "DB_YEAR", null );
 
 /**
  * New fully revamped MySQL interface class, making use of PDO prepared statements.
@@ -395,6 +373,7 @@ class ConnectMySQL {
 
     private ?string $log_path = null;
 
+
     /**
      * Constructor method, things to do when the class is loaded
      * 
@@ -439,24 +418,22 @@ class ConnectMySQL {
      */
 
     protected function connect_db( ?int $year = null ): bool {
-        $servername = DB_LOC;
-        $username   = DB_USER;
-        $password   = DB_PASS;
-        if ( !defined( "DB_YEAR" ) ) {
-            $db_name = DB_NAME;
-        } else {
+        $db_name = $_ENV['TABLE_PREFIX'] . $_ENV['DB_NAME'];
+
+        if ( !is_null( DB_YEAR ) ) {
             if ( is_null ( $year ) ) {
-                $db_name = !$this->rollover ? DB_NAME . DB_YEAR : DB_NAME . ( DB_YEAR + 1 );
+                $db_name = !$this->rollover ? $db_name . DB_YEAR : $db_name . ( DB_YEAR + 1 );
             } else {
-                $db_name = DB_NAME . $year;
+                $db_name .= $year;
             }
         }
 
         try {
-            $this->conn = new PDO( "mysql:host={$servername};dbname={$db_name}", $username, $password );
+            $this->conn = new PDO( "mysql:host={$_ENV['DB_LOCATION']};dbname={$db_name}", $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'] );
             $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
             return true;
         } catch( PDOException $e ) {
+            echo "<pre>{$e}</pre>\n";
             $this->last_error = $e;
             return false;
         }
@@ -502,8 +479,8 @@ class ConnectMySQL {
      */
 
     protected function get_tables(): array {
-        $db_name = DB_NAME;
-        if ( defined( 'DB_YEAR' ) ) {
+        $db_name = $_ENV['DB_NAME'];
+        if ( !is_null( 'DB_YEAR' ) ) {
             $db_name .= DB_YEAR;
         }
         $raw = $this->sql_select( 
@@ -531,8 +508,8 @@ class ConnectMySQL {
      */
 
     protected function get_table_columns( ?string $table = null ): array {
-        $db_name = DB_NAME;
-        if ( defined( 'DB_YEAR' ) ) {
+        $db_name = $_ENV['DB_NAME'];
+        if ( !is_null( 'DB_YEAR' ) ) {
             $db_name .= DB_YEAR;
         }
         $sql = function ( $table_name ) use ( $db_name ) {
@@ -571,8 +548,8 @@ class ConnectMySQL {
      */
 
     protected function get_table_columns_schemas( ?string $table = null ): array {
-        $db_name = DB_NAME;
-        if ( defined( 'DB_YEAR' ) ) {
+        $db_name = $_ENV['DB_NAME'];
+        if ( !is_null( 'DB_YEAR' ) ) {
             $db_name .= DB_YEAR;
         }
         $sql = function ( $table_name ) use ( $db_name ) {
