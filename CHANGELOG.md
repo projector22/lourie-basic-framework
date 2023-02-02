@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Version 0.5.0-beta - UNRELEASED
+## Version 0.5.0-beta - 2023-02-02
 
 ### Changed
 
