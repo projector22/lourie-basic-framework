@@ -35,7 +35,7 @@ class Oxen extends ConnectMySQL {
 
     protected function define_new_table( string $table_const, string $table_name ): void {
         if ( !defined ( $table_const ) ) {
-            define( $table_const, TBL_PFX . $table_name );
+            define( $table_const, getenv( 'TABLE_PREFIX' ) . $table_name );
         }
     }
 
@@ -44,8 +44,8 @@ class Oxen extends ConnectMySQL {
      * Add a element to bin/config.php
      * 
      * @example:
-     * $this->add_element_to_config( "define( 'ACCOUNTS_PERMISSIONS', TBL_PFX . 'user_permissions' );", <- last line of config.php
-     *                               "define( 'PARENTS', TBL_PFX . 'parents' );" );                     <- line to insert
+     * $this->add_element_to_config( "define( 'ACCOUNTS_PERMISSIONS', getenv( 'TABLE_PREFIX' ) . 'user_permissions' );", <- last line of config.php
+     *                               "define( 'PARENTS', getenv( 'TABLE_PREFIX' ) . 'parents' );" );                     <- line to insert
      * 
      * @param   string  $search_str         The point in the config from which to paste.
      * @param   string  $new_config_paste   The new content.

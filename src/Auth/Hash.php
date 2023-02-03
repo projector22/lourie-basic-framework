@@ -87,7 +87,7 @@ class Hash {
     /**
      * Generate a cookie hash used by the system.
      * 
-     * @param   string  $part1  A random string to be a part of the hash. In LRS this should be parsed as `TBL_PFX`.
+     * @param   string  $part1  A random string to be a part of the hash. In LRS this should be parsed as `getenv( 'TABLE_PREFIX' )`.
      * @param   string  $part2  A random string to be a part of the hash. In LRS this should be parsed as `DB_NAME`.
      * @param   string  $part3  A random string to be a part of the hash. In LRS this should be parsed as `SCHOOL_NAME`.
      * 
@@ -111,7 +111,7 @@ class Hash {
     /**
      * Generate a cookie hash used by the system.
      * 
-     * @param   string  $part1  A random string to be a part of the hash. In LRS this should be parsed as `TBL_PFX`.
+     * @param   string  $part1  A random string to be a part of the hash. In LRS this should be parsed as `getenv( 'TABLE_PREFIX' )`.
      * @param   string  $part2  A random string to be a part of the hash. In LRS this should be parsed as `DB_NAME`.
      * 
      * @return  string
