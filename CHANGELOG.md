@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.5.1-beta - 2023-02-03
+
+### Changed
+
+- Changed all `$_ENV` tasks to `getenv()`.
+
+---
+
 ## Version 0.5.0-beta - 2023-02-02
 
 ### Changed

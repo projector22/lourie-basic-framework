@@ -94,10 +94,6 @@ class CreateDBClasses extends ConnectMySQL {
      */
 
     public function prepare_table_php_class_creation( bool $return = false ): bool|array {
-        if ( !defined( 'TBL_PFX' ) ) {
-            define( 'TBL_PFX', $_ENV['TABLE_PREFIX'] ?? '' ); // Hide the error.
-            // throw new Exception( "Table Prefex TBL_PFX not defined" );
-        }
         /**
          * String cleaning of the table name as required.
          * 
@@ -118,7 +114,7 @@ class CreateDBClasses extends ConnectMySQL {
             $table_name = $clean_up_file_name( $table_name, ' ' );
             $table_name = $clean_up_file_name( $table_name, '_' );
         } else {
-            $table_name = str_replace( TBL_PFX, '', $_POST['table'] );
+            $table_name = str_replace( getenv( 'TABLE_PREFIX' ), '', $_POST['table'] );
             $table_name = $clean_up_file_name( $table_name, '_' );
         }
 
@@ -158,7 +154,7 @@ class CreateDBClasses extends ConnectMySQL {
                     'class' => "{$table_name}Data",
                 ],
                 'table_name'      => $_POST['table'],
-                'table_name_anon' => str_replace( TBL_PFX, 'TBL_PFX_', $_POST['table'] ),
+                'table_name_anon' => str_replace( getenv( 'TABLE_PREFIX' ), 'TABLE_PREFIX', $_POST['table'] ),
                 'constant'        => $table_constant,
                 'namespace'       => $namespace,
             ];

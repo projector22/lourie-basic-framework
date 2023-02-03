@@ -37,7 +37,7 @@ class ConnectMySQL {
      * @since   LRS 3.0.1
      */
 
-    private ?PDO $conn;
+    public ?PDO $conn;
 
     /**
      * Whether or not to show the error
@@ -418,7 +418,10 @@ class ConnectMySQL {
      */
 
     protected function connect_db( ?int $year = null ): bool {
-        $db_name = $_ENV['TABLE_PREFIX'] . $_ENV['DB_NAME'];
+        $db_name     = getenv( 'TABLE_PREFIX' ) . getenv( 'DB_NAME' );
+        $db_location = getenv( 'DB_LOCATION' );
+        $db_username = getenv( 'DB_USERNAME' );
+        $db_password = getenv( 'DB_PASSWORD' );
 
         if ( !is_null( DB_YEAR ) ) {
             if ( is_null ( $year ) ) {
@@ -429,7 +432,7 @@ class ConnectMySQL {
         }
 
         try {
-            $this->conn = new PDO( "mysql:host={$_ENV['DB_LOCATION']};dbname={$db_name}", $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'] );
+            $this->conn = new PDO( "mysql:host={$db_location};dbname={$db_name}", $db_username, $db_password );
             $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
             return true;
         } catch( PDOException $e ) {
@@ -479,7 +482,7 @@ class ConnectMySQL {
      */
 
     protected function get_tables(): array {
-        $db_name = $_ENV['DB_NAME'];
+        $db_name = getenv( 'DB_NAME' );
         if ( !is_null( 'DB_YEAR' ) ) {
             $db_name .= DB_YEAR;
         }
@@ -508,7 +511,7 @@ class ConnectMySQL {
      */
 
     protected function get_table_columns( ?string $table = null ): array {
-        $db_name = $_ENV['DB_NAME'];
+        $db_name = getenv( 'DB_NAME' );
         if ( !is_null( 'DB_YEAR' ) ) {
             $db_name .= DB_YEAR;
         }
@@ -548,7 +551,7 @@ class ConnectMySQL {
      */
 
     protected function get_table_columns_schemas( ?string $table = null ): array {
-        $db_name = $_ENV['DB_NAME'];
+        $db_name = getenv( 'DB_NAME' );
         if ( !is_null( 'DB_YEAR' ) ) {
             $db_name .= DB_YEAR;
         }
