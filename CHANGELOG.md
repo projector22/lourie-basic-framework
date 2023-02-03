@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.5.2-beta - UNRELEASED
+
+### Changed
+
+- Revamped `src/Auth/Api.php` generate_api_key method to better handle multi parameters parsed.
+
+---
+
 ## Version 0.5.1-beta - 2023-02-03
 
 ### Changed

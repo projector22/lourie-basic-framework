@@ -21,36 +21,29 @@ class Api {
     /**
      * Generate an API key. Single unique place to do this.
      * 
-     * @param   string      $id         A unique identifier to encrypt.
-     * @param   string|null $random1    A random string to include in the hashing.
-     *                                  If null, a random string will be generated. 
-     *                                  Default `null`. 
-     *                                  In LRS, this should be parsed as `COOKIE_HASH`
-     * @param   string|null $random1    A random string to include in the hashing.
-     *                                  If null, a random string will be generated. 
-     *                                  Default `null`. 
-     *                                  In LRS, this should be parsed as `SESSION_HASH`
+     * @param   string  $id         A unique identifier to encrypt.
+     * @param   string  ...$random  A random string or strings to include in the hashing process.
+     *                              If blank, a series of random strings will be parsed.
      * 
      * @return  string
      * 
      * @access  public
      * @since   LRS 3.16.1
-     * @since   LRS 3.28.0  Added param `$random1`, `$random2`
+     * @since   LRS 3.28.0      Added param `$random1`, `$random2`.
+     * @since   LBF 0.5.2-beta  Changed how params are parsed so multiple may be parsed.
      */
 
-    public static function generate_api_key( string $id, ?string $random1 = null, ?string $random2 = null ): string {
+    public static function generate_api_key( string $id, string ...$random ): string {
+        $random = count( $random ) > 0 ? implode( '', $random ) : null;
         return md5( 
-            $random1 ?? Hash::generate_cookie_hash(
+            $random ?? ( Hash::generate_cookie_hash(
                 Hash::random_id_string(),
                 Hash::random_id_string(),
                 Hash::random_id_string(),
-            ) . 
-            $random2 ?? Hash::generate_session_hash(
+            ) . Hash::generate_session_hash(
                 Hash::random_id_string(),
                 Hash::random_id_string(),
-            ) . 
-            time() . 
-            $id
+            ) ) . time() . $id
         );
     }
 
