@@ -5,6 +5,7 @@
 ### Changed
 
 - Revamped `src/Auth/Api.php` generate_api_key method to better handle multi parameters parsed.
+- Changed import for sortablejs in `Draw`.
 
 ---
 
