@@ -2,12 +2,32 @@
 
 ## Version 0.6.0 - UNRELEASED
 
+### Added
+
+- Added the following text inputs explicity, rather than relying on `__callStatic`:
+  - `email`
+  - `color`
+  - `date`
+  - `month`
+  - `number`
+  - `password`
+  - `range`
+  - `search`
+  - `tel`
+  - `time`
+  - `url`
+  - `week`
+
 ### Packages Updated
 
 | Package | Old | New |
 | ------- | --- | --- |
 | phpmailer/phpmailer | v6.6.5 | v6.7.1 |
 | tecnickcom/tcpdf | 6.5.0 | 6.6.2 |
+
+### Issues Closed
+
+- #65 WIP
 
 ---
 

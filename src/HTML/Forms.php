@@ -382,6 +382,294 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
 
     /**
+     * Method for generating a text input field, specifically for handling email.
+     * 
+     * @param   array   $params     The params to parse into the email field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function email( array $params = [] ): string {
+        $params['type'] = 'email';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling color.
+     * 
+     * @param   array   $params     The params to parse into the color field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function color( array $params = [] ): string {
+        $params['type'] = 'color';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling date.
+     * 
+     * @param   array   $params     The params to parse into the date field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function date( array $params = [] ): string {
+        $params['type'] = 'date';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling month.
+     * 
+     * @param   array   $params     The params to parse into the month field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function month( array $params = [] ): string {
+        $params['type'] = 'month';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling number.
+     * 
+     * @param   array   $params     The params to parse into the number field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function number( array $params = [] ): string {
+        $params['type'] = 'number';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling password.
+     * 
+     * @param   array   $params     The params to parse into the password field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function password( array $params = [] ): string {
+        $params['type'] = 'password';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling range.
+     * 
+     * @param   array   $params     The params to parse into the range field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function range( array $params = [] ): string {
+        $params['type'] = 'range';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling search.
+     * 
+     * @param   array   $params     The params to parse into the search field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function search( array $params = [] ): string {
+        $params['type'] = 'search';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling tel.
+     * 
+     * @param   array   $params     The params to parse into the tel field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function tel( array $params = [] ): string {
+        $params['type'] = 'tel';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling time.
+     * 
+     * @param   array   $params     The params to parse into the time field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function time( array $params = [] ): string {
+        $params['type'] = 'time';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling url.
+     * 
+     * @param   array   $params     The params to parse into the url field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function url( array $params = [] ): string {
+        $params['type'] = 'url';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
+     * Method for generating a text input field, specifically for handling week.
+     * 
+     * @param   array   $params     The params to parse into the week field.
+     *                              Default: `[]`
+     * 
+     * @static
+     * @return  string
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function week( array $params = [] ): string {
+        $params['type'] = 'week';
+
+        $hold = self::temporary_change_echo( false );
+        $form = self::text( $params );
+        self::restore_origonal_echo( $hold );
+
+        self::handle_echo( $form, $params );
+        return $form;
+    }
+
+
+    /**
      * Call the name of a text field elements
      * 
      * @param   string  $name       The name of the method called
@@ -401,8 +689,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $name = 'color';
         }
         $text_types = [
-            'email', 'color', 'date', 'month', 'number', 'password',
-            'range', 'search', 'tel', 'time', 'url', 'week',
+            'color',
         ];
         if ( !in_array ( $name, $text_types ) ) {
             throw new MethodNotFound( "Method '{$name}' does not exist." );
@@ -412,8 +699,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         $hold = self::temporary_change_echo( false );
         $form = self::text( $arguments[0] );
         self::restore_origonal_echo( $hold );
-        
-        
+
         self::handle_echo( $form, $arguments[0] );
         return $form;
     }
@@ -1026,7 +1312,7 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
     /**
      * Draw out an <input type='hidden'> element
      * 
-     * @param   array   $params     The fields to be added to the hidden input, 
+     * @param   array   $params     The fields to be added to the hidden input,
      *                              either id or name must be set.
      * 
      * @return  string
