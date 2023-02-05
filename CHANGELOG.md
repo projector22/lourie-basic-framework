@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## Version 0.6.0 - UNRELEASED
+
+### Packages Updated
+
+| Package | Old | New |
+| ------- | --- | --- |
+| phpmailer/phpmailer | v6.6.5 | v6.7.1 |
+| tecnickcom/tcpdf | 6.5.0 | 6.6.2 |
+
+---
+
 ## Version 0.5.2-beta - 2022-02-04
 
 ### Changed
