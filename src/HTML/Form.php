@@ -22,7 +22,7 @@ use SVGTools\SVG;
  * 
  * @since   LRS 3.6.0
  * @since   LRS 3.11.0      Moved to `Framework\HTML` namespace from `PageElements`
- * @since   LRS 3.17.2
+ * @since   LRS 3.17.2      Seperated out as a shortcut class to `src/HTML/Forms.php`.
  * @since   LRS 3.28.0      Seperated out of `Lourie Registration System` into `Lourie Basic Framework`.
  *                          Namespace changed from `Framework` to `LBF`.
  * @since   LBF 0.1.6-beta  Added extension `HTMLMeta`.
