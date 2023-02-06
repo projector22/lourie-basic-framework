@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## Version 0.6.0 - UNRELEASED
+## Version 0.6.0-beta - UNRELEASED
+
+### Changed
+
+- Merged `src/HTML/HTMLElements.php` into `src/HTML/HTML.php`.
 
 ### Packages Updated
 
