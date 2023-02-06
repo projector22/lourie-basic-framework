@@ -5,6 +5,7 @@
 ### Changed
 
 - Merged `src/HTML/HTMLElements.php` into `src/HTML/HTML.php`.
+- Merged `src/HTML/Forms.php` into `src/HTML/Form.php`.
 
 ### Packages Updated
 
