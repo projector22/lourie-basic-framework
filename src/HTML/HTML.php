@@ -7,7 +7,8 @@ use LBF\Errors\IO\InvalidInput;
 use LBF\Errors\IO\MissingRequiredInput;
 use LBF\HTML\Draw;
 use LBF\HTML\HTMLMeta;
-
+use LBF\HTML\Injector\CSSInjector;
+use LBF\HTML\Injector\JSInjector;
 
 /**
  * This class is to draw out basic HTML elements.
@@ -25,6 +26,9 @@ use LBF\HTML\HTMLMeta;
  */
 
 class HTML extends HTMLMeta {
+
+    use JSInjector;
+    use CSSInjector;
 
     /**
      * Echo or return a div element.
