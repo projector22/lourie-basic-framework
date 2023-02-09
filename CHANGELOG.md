@@ -2,6 +2,10 @@
 
 ## Version 0.6.0-beta - UNRELEASED
 
+### Added
+
+- Added traits to the HTML (`src/HTML/HTML.php`) class, to allow the inserting of JS & CSS into the web page. #69
+
 ### Changed
 
 - Merged `src/HTML/HTMLElements.php` into `src/HTML/HTML.php`.
@@ -15,6 +19,10 @@
 | ------- | --- | --- |
 | phpmailer/phpmailer | v6.6.5 | v6.7.1 |
 | tecnickcom/tcpdf | 6.5.0 | 6.6.2 |
+
+### Issues Closed
+
+- #69
 
 ---
 
