@@ -13,6 +13,14 @@
 - Merged `src/HTML/Buttons.php` into `src/HTML/Button.php`.
 - Merged `src/HTML/Scripts.php` into `src/HTML/JS.php`.
 
+### Deprecated
+
+- `src/HTML/JS.php`:
+  - `script`
+  - `script_module`
+  - `script_loader`
+  - `script_module_loader`
+
 ### Packages Updated
 
 | Package | Old | New |

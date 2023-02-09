@@ -34,6 +34,8 @@ class JS extends HTMLMeta {
      * @static
      * @since   LRS 3.7.6
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts. Added return & param $src
+     * 
+     * @deprecated  LBF 0.6.0-beta
      */
 
      public static function script( string $script, ?string $src = null ): string {
@@ -56,6 +58,8 @@ class JS extends HTMLMeta {
      * @static
      * @access  public
      * @since   LRS 3.13.0
+     * 
+     * @deprecated  LBF 0.6.0-beta
      */
 
     public static function script_module( string $script, ?string $src = null ): string {
@@ -76,6 +80,8 @@ class JS extends HTMLMeta {
      * @static
      * @access  public
      * @since   LRS 3.12.5
+     * 
+     * @deprecated  LBF 0.6.0-beta
      */
 
     public static function script_loader( string $src ): string {
@@ -95,6 +101,8 @@ class JS extends HTMLMeta {
      * @static
      * @access  public
      * @since   LRS 3.13.0
+     * 
+     * @deprecated  LBF 0.6.0-beta
      */
 
     public static function script_module_loader( string $src ): string {
