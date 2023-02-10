@@ -72,4 +72,19 @@ trait InjectorMeta {
         return implode( "\n", $data );
     }
 
+
+    /**
+     * Task to combine both Javascript and CSS into the desired part of the page.
+     * 
+     * @param   PagePositions   $position   The position to insert the Javascript & styles.
+     * 
+     * @access  public
+     * @since   0.6.0-beta
+     */
+
+    public function insert_js_and_css( PagePositions $position ): void {
+        $this->insert_js( $position );
+        $this->insert_css( $position );
+    }
+
 }
