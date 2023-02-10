@@ -15,6 +15,8 @@ class Router {
         $injector = new HTML;
 
         /**
+         * - [ ] Load in vendors, Autoloader, Exception Handler, functions, Session
+         * - [ ] Get all of the config data saved to an array. Parse it to Router.
          * - [ ] Generate the page data and save it to a variable.
          * - [ ] Render the <head> tags, with css & js injected.
          * - [ ] Render the <body> with css & hs injected, then the rendered page data, based on the error code.
