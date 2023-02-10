@@ -119,7 +119,7 @@ trait CSSInjector {
      * @param   PagePositions   $position   The position to insert the styles.
      * 
      * @access  public
-     * @since   0.6.0-beta
+     * @since   LBF 0.6.0-beta
      */
 
     public function insert_css( PagePositions $position ): void {

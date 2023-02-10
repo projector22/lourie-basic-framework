@@ -129,7 +129,7 @@ trait JSInjector {
      * @param   PagePositions   $position   The position to insert the styles.
      * 
      * @access  public
-     * @since   0.6.0-beta
+     * @since   LBF 0.6.0-beta
      */
 
      public function insert_js( PagePositions $position ): void {

@@ -20,7 +20,7 @@ trait InjectorMeta {
      * 
      * @static
      * @return  array
-     * @since   0.6.0-beta
+     * @since   LBF 0.6.0-beta
      */
 
     protected static function set_default_data(): array {
@@ -49,7 +49,7 @@ trait InjectorMeta {
      * @return  array
      * 
      * @access  public
-     * @since   0.6.0-beta
+     * @since   LBF 0.6.0-beta
      */
 
     public function remove_duplicates( array $data ): array {
@@ -65,7 +65,7 @@ trait InjectorMeta {
      * @return  string
      * 
      * @access  public
-     * @since   0.6.0-beta
+     * @since   LBF 0.6.0-beta
      */
 
     public function merge( array $data ): string {
@@ -79,7 +79,7 @@ trait InjectorMeta {
      * @param   PagePositions   $position   The position to insert the Javascript & styles.
      * 
      * @access  public
-     * @since   0.6.0-beta
+     * @since   LBF 0.6.0-beta
      */
 
     public function insert_js_and_css( PagePositions $position ): void {
