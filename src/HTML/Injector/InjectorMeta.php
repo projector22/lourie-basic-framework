@@ -29,4 +29,21 @@ trait InjectorMeta {
     public function remove_duplicates( array $data ): array {
         return array_unique( $data );
     }
+
+
+    /**
+     * Merge any entries into a single string.
+     * 
+     * @param   array   $data   List of styles / js.
+     * 
+     * @return  string
+     * 
+     * @access  public
+     * @since   0.6.0-beta
+     */
+
+    public function merge( array $data ): string {
+        return implode( "\n", $data );
+    }
+
 }
