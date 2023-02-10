@@ -1,6 +1,25 @@
 # CHANGELOG
 
-## Version 0.6.0 - UNRELEASED
+## Version 0.6.0-beta - UNRELEASED
+
+### Added
+
+- Added traits to the HTML (`src/HTML/HTML.php`) class, to allow the inserting of JS & CSS into the web page. #69
+
+### Changed
+
+- Merged `src/HTML/HTMLElements.php` into `src/HTML/HTML.php`.
+- Merged `src/HTML/Forms.php` into `src/HTML/Form.php`.
+- Merged `src/HTML/Buttons.php` into `src/HTML/Button.php`.
+- Merged `src/HTML/Scripts.php` into `src/HTML/JS.php`.
+
+### Deprecated
+
+- `src/HTML/JS.php`:
+  - `script`
+  - `script_module`
+  - `script_loader`
+  - `script_module_loader`
 
 ### Packages Updated
 
@@ -8,6 +27,10 @@
 | ------- | --- | --- |
 | phpmailer/phpmailer | v6.6.5 | v6.7.1 |
 | tecnickcom/tcpdf | 6.5.0 | 6.6.2 |
+
+### Issues Closed
+
+- #69
 
 ---
 
