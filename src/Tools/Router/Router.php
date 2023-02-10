@@ -26,6 +26,8 @@ namespace LBF\Tools\Router;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   LBF 0.1.4-beta
+ * 
+ * @deprecated  LBF 0.6.0-beta
  */
 
 class Router {
