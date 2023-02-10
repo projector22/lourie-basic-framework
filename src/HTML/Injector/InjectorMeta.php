@@ -16,6 +16,32 @@ trait InjectorMeta {
 
 
     /**
+     * Set the default values to the the JS or CSS array.
+     * 
+     * @static
+     * @return  array
+     * @since   0.6.0-beta
+     */
+
+    protected static function set_default_data(): array {
+        return [
+            PagePositions::IN_HEAD->id() => [
+                'raw' => [],
+                'cdn' => [],
+            ],
+            PagePositions::TOP_OF_PAGE->id() => [
+                'raw' => [],
+                'cdn' => [],
+            ],
+            PagePositions::BOTTOM_OF_PAGE->id() => [
+                'raw' => [],
+                'cdn' => [],
+            ],
+        ];
+    }
+
+
+    /**
      * Remove any duplicates in the array of data parsed.
      * 
      * @param   array   $data   List of styles / js.

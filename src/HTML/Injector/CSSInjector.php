@@ -31,20 +31,7 @@ trait CSSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    private static array $injected_styles = [
-        PagePositions::IN_HEAD->id() => [
-            'raw' => [],
-            'cdn' => [],
-        ],
-        PagePositions::TOP_OF_PAGE->id() => [
-            'raw' => [],
-            'cdn' => [],
-        ],
-        PagePositions::BOTTOM_OF_PAGE->id() => [
-            'raw' => [],
-            'cdn' => [],
-        ],
-    ];
+    private static array $injected_styles;
 
 
     /**
@@ -68,6 +55,9 @@ trait CSSInjector {
      */
 
     public static function inject_css( string $styles, PagePositions $position = PagePositions::IN_HEAD ): void {
+        if ( !isset( self::$injected_styles ) ) {
+            self::$injected_styles = self::set_default_data();
+        }
         self::$injected_styles[$position->id()]['raw'][] = $styles;
     }
 
@@ -93,6 +83,9 @@ trait CSSInjector {
         if ( !is_file( $file_path ) ) {
             throw new FileNotFound( "File {$file_path} does not exist." );
         }
+        if ( !isset( self::$injected_styles ) ) {
+            self::$injected_styles = self::set_default_data();
+        }
         self::$injected_styles[$position->id()]['raw'][] = file_get_contents($file_path);
     }
 
@@ -113,19 +106,29 @@ trait CSSInjector {
      */
 
     public static function inject_css_cdn( string $url, PagePositions $position = PagePositions::IN_HEAD ): void {
+        if ( !isset( self::$injected_styles ) ) {
+            self::$injected_styles = self::set_default_data();
+        }
         self::$injected_styles[$position->id()]['cdn'][] = "<link rel='stylesheet' href='{$url}'>";
     }
 
 
     /**
-     * @todo
-     * TEST OUT AND SEE HOW THE THE MERGING OF STATIC & NON STATIC METHODS & PROPERTIES.
+     * Insert the CSS elements into the parsed part of the page.
+     * 
+     * @param   PagePositions   $position   The position to insert the styles.
+     * 
+     * @access  public
+     * @since   0.6.0-beta
      */
 
     public function insert_css( PagePositions $position ): void {
-        $raw = $this->remove_duplicates( self::$injected_styles[$position->id()]['raw'] );
-        echo "<style>{$this->merge( $raw )}</style>";
-        $cdn = $this->remove_duplicates( self::$injected_styles[$position->id()]['cdn'] );
-        echo $this->merge( $cdn );
+        if ( isset( self::$injected_styles ) ) {
+            $raw = $this->remove_duplicates( self::$injected_styles[$position->id()]['raw'] );
+            echo "<style>{$this->merge( $raw )}</style>";
+            $cdn = $this->remove_duplicates( self::$injected_styles[$position->id()]['cdn'] );
+            echo $this->merge( $cdn );
+        }
     }
+
 }

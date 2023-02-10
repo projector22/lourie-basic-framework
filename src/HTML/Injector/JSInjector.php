@@ -31,20 +31,7 @@ trait JSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    public static array $injected_js = [
-        PagePositions::IN_HEAD->id() => [
-            'raw' => [],
-            'cdn' => [],
-        ],
-        PagePositions::TOP_OF_PAGE->id() => [
-            'raw' => [],
-            'cdn' => [],
-        ],
-        PagePositions::BOTTOM_OF_PAGE->id() => [
-            'raw' => [],
-            'cdn' => [],
-        ],
-    ];
+    private static array $injected_js;
 
 
     /**
@@ -65,6 +52,9 @@ trait JSInjector {
      */
 
     public static function inject_js( string $js, PagePositions $position = PagePositions::IN_HEAD ): void {
+        if ( !isset( self::$injected_js ) ) {
+            self::$injected_js = self::set_default_data();
+        }
         self::$injected_js[$position->id()]['raw'][] = $js;
     }
 
@@ -90,6 +80,9 @@ trait JSInjector {
         if ( !is_file( $file_path ) ) {
             throw new FileNotFound( "File {$file_path} does not exist." );
         }
+        if ( !isset( self::$injected_js ) ) {
+            self::$injected_js = self::set_default_data();
+        }
         self::$injected_js[$position->id()]['raw'][] = file_get_contents($file_path);   
     }
 
@@ -113,6 +106,9 @@ trait JSInjector {
      */
 
     public static function inject_js_cdn( string $url, PagePositions $position = PagePositions::IN_HEAD, bool $async = false, bool $defer = false, bool $module = false ): void {
+        if ( !isset( self::$injected_js ) ) {
+            self::$injected_js = self::set_default_data();
+        }
         $insert_async = $insert_defer = $insert_module = '';
         if ( $async ) {
             $insert_async = ' async';
@@ -124,6 +120,25 @@ trait JSInjector {
             $insert_module = " type='module'";
         }
         self::$injected_js[$position->id()]['cdn'][] = "<script src='{$url}'{$insert_async}{$insert_defer}{$insert_module}></script>";
+    }
+
+
+    /**
+     * Insert the Javascript elements into the parsed part of the page.
+     * 
+     * @param   PagePositions   $position   The position to insert the styles.
+     * 
+     * @access  public
+     * @since   0.6.0-beta
+     */
+
+     public function insert_js( PagePositions $position ): void {
+        if ( isset( self::$injected_js ) ) {
+            $raw = $this->remove_duplicates( self::$injected_js[$position->id()]['raw'] );
+            echo "<script type='module'>{$this->merge( $raw )}</script>";
+            $cdn = $this->remove_duplicates( self::$injected_js[$position->id()]['cdn'] );
+            echo $this->merge( $cdn );
+        }
     }
 
 }
