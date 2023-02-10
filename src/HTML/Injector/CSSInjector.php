@@ -116,4 +116,16 @@ trait CSSInjector {
         self::$injected_styles[$position->id()]['cdn'][] = "<link rel='stylesheet' href='{$url}'>";
     }
 
+
+    /**
+     * @todo
+     * TEST OUT AND SEE HOW THE THE MERGING OF STATIC & NON STATIC METHODS & PROPERTIES.
+     */
+
+    public function insert_css( PagePositions $position ): void {
+        $raw = $this->remove_duplicates( self::$injected_styles[$position->id()]['raw'] );
+        echo "<style>{$this->merge( $raw )}</style>";
+        $cdn = $this->remove_duplicates( self::$injected_styles[$position->id()]['cdn'] );
+        echo $this->merge( $cdn );
+    }
 }
