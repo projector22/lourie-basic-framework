@@ -25,4 +25,9 @@ class Router {
          */
 
     }
+
+
+    public static function load_lrs_functions(): void {
+        require __DIR__ . '/../Functions/functions.php';
+    }
 }
