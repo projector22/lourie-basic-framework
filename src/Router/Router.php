@@ -2,17 +2,22 @@
 
 namespace LBF\Router;
 
-use Debugger\Debug;
+use LBF\App\Config;
 use LBF\HTML\HTML;
 
 class Router {
 
-
     private readonly array $path;
 
-    public function __construct(
-        public readonly array $config
-    ) {
+    private readonly string $page;
+
+    private readonly string $subpage;
+
+    private readonly string $tab;
+
+
+
+    public function __construct() {
         $this->path = array_values( 
             array_filter( 
                 // REDIRECT_URL is generate by apache2
@@ -22,18 +27,29 @@ class Router {
                 }
             )
         );
-        // Debug::$display->data($this->path);
-
+        $this->page = $this->path[0] ?? 'index';
+        $this->subpage = $this->path[1] ?? '';
+        $this->tab = $this->path[2] ?? '';
+        Config::load( ['current_page' => [
+            'page'    => $this->page,
+            'subpage' => $this->subpage,
+            'tab'     => $this->tab,
+        ]] );
         $this->render_webpage();
 
     }
 
 
     public function render_webpage(): void {
-        $page_class = 'Web\\' . ucfirst( $this->path[0] ?? 'index' ) . 'Page';
+        $page_class = 'Web\\' . ucfirst( $this->page ) . 'Page';
 
-        $page = new $page_class( $this->path, $this->config );
-        $page->construct_page();
+        $page = new $page_class( $this->path );
+        ob_start();
+        $code = $page->construct_page();
+        if ( $code == 200 ) {
+            $html = ob_get_clean();
+        }
+        echo $html;
     }
 
 
@@ -69,5 +85,16 @@ class Router {
 
     public static function load_lrs_functions(): void {
         require __DIR__ . '/../Functions/functions.php';
+    }
+
+
+    public function get_page(): string {
+        return $this->page;
+    }
+    public function get_subpage(): string {
+        return $this->subpage;
+    }
+    public function get_tab(): string {
+        return $this->tab;
     }
 }
