@@ -24,14 +24,16 @@ class Router {
         );
         // Debug::$display->data($this->path);
 
+        $this->render_webpage();
+
+    }
+
+
+    public function render_webpage(): void {
         $page_class = 'Web\\' . ucfirst( $this->path[0] ?? 'index' ) . 'Page';
 
-        $page = new $page_class( $this->path );
-
-        $page_method = $this->path[1] ?? $page_class::DEFAULT_PAGE;
-
-        $page->$page_method();
-
+        $page = new $page_class( $this->path, $this->config );
+        $page->construct_page();
     }
 
 
