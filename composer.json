@@ -24,6 +24,7 @@
         }
     ],
     "require-dev": {
-        "projector22/php-debuggin-tool": "^1.0"
+        "projector22/php-debuggin-tool": "^1.0",
+        "phpunit/phpunit": "^10.0"
     }
 }
