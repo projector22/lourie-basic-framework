@@ -3,6 +3,8 @@
 namespace LBF\Auth;
 
 use Exception;
+use LBF\Errors\General\CantSetCookie;
+use Throwable;
 
 /**
  * This class handles the creation, update and deletion cookies and the variable $_COOKIE.
@@ -16,6 +18,18 @@ use Exception;
  */
 
 class Cookie {
+
+    /**
+     * Array for holding cookie details to be inserted at a defined point.
+     * 
+     * @var array   $cookie_list
+     * 
+     * @static
+     * @access  private
+     * @since   LBF 0.6.0
+     */
+
+    private static array $cookie_list;
 
     /**
      * Contains the default duration of any cookie that doesn't have a time explicity set.
@@ -128,15 +142,52 @@ class Cookie {
              */
             throw new Exception( "Cookie size bigger than 4k limit. Size is " . strlen( $value ) );
         }
-        return setcookie( 
-            $name, 
-            $value,
-            $expires,
-            $path, 
-            $domain, 
-            $secure, 
-            $httponly
-        );
+        return self::$cookie_list[] = [
+            'name' => $name,
+            'value' => $value,
+            'expires' => $expires,
+            'path' => $path,
+            'domain' => $domain,
+            'secure' => $secure,
+            'httponly' => $httponly,
+        ];
+    }
+
+
+    /**
+     * Injects any previously set cookies into the application.
+     * 
+     * @param   boolean $silent Whether to fail silently or not. Defaults to true.
+     * 
+     * @return  boolean
+     * 
+     * @throws  CantSetCookie   If a cookie cannot be set.
+     * 
+     * @access  public
+     * @since   
+     */
+
+    public function inject_cookies( bool $silent = true ): bool {
+        $success = true;
+        foreach ( self::$cookie_list as $cookie ) {
+            try {
+                setcookie(
+                    $cookie['name'],
+                    $cookie['value'],
+                    $cookie['expires'],
+                    $cookie['path'],
+                    $cookie['domain'],
+                    $cookie['secure'],
+                    $cookie['httponly'],
+                );
+            } catch ( Throwable $th ) {
+                if ( !$silent ) {
+                    throw new CantSetCookie( "Cannot set cookie {$cookie['name']}, Reason: {$th}" );
+                }
+                $success = false;
+            }
+        }
+        return $success;
     }
 
 
