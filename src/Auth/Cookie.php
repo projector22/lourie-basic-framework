@@ -29,7 +29,7 @@ class Cookie {
      * @since   LBF 0.6.0
      */
 
-    private static array $cookie_list;
+    private static array $cookie_list = [];
 
     /**
      * Contains the default duration of any cookie that doesn't have a time explicity set.
