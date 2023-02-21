@@ -41,7 +41,9 @@ class Router {
 
 
     public function render_webpage(): void {
-        $page_class = 'Web\\' . ucfirst( $this->page ) . 'Page';
+        $page = $this->page == 'home' ? 'index' : $this->page;
+
+        $page_class = 'Web\\' . ucfirst( $page ) . 'Page';
 
         $page = new $page_class( $this->path );
         ob_start();
