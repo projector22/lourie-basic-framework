@@ -3,6 +3,7 @@
 namespace LBF\Router;
 
 use LBF\App\Config;
+use LBF\Auth\Cookie;
 use LBF\HTML\HTML;
 
 class Router {
@@ -41,6 +42,7 @@ class Router {
 
 
     public function render_webpage(): void {
+        $cookie = new Cookie;
         $page = $this->page == 'home' ? 'index' : $this->page;
 
         $page_class = 'Web\\' . ucfirst( $page ) . 'Page';
@@ -51,6 +53,9 @@ class Router {
         if ( $code == 200 ) {
             $html = ob_get_clean();
         }
+
+        $cookie->inject_cookies(); // SET SILENT TO TRUE IF DEV
+
         echo $html;
     }
 
