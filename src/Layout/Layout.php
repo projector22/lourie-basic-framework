@@ -43,7 +43,7 @@ class Layout {
     }
 
 
-    public function load__header_css( string $files ): static {
+    public function load_header_css( string $files ): static {
         $this->html_header .= $files;
         return $this;
     }
