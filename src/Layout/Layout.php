@@ -62,7 +62,9 @@ class Layout {
 
 
 
-
+    public static function append_to_body( string $body ): void {
+        self::$body .= $body;
+    }
 
 
 
@@ -82,7 +84,7 @@ class Layout {
         echo $this->html_header;
     }
     public function render_body() {
-
+        $this->body = "<main>{$this->body}</main>";
         echo $this->body;
     }
     public function render_footer() {
