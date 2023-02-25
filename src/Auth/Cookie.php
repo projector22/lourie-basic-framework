@@ -233,29 +233,43 @@ class Cookie {
      * 
      * @param   string  $name   The key of the Cookie being destroyed.
      * 
-     * @static
-     * @access  public
-     * @since   0.1.2-beta
-     */
-
-    public static function destroy_value( string $name ): void {
-        setcookie( $name, '', 1 );
-        unset( $_COOKIE[$name] );
-    }
-
-
-    /**
-     * Unset all cookies on the site.
+     * @return  boolean
      * 
      * @static
      * @access  public
      * @since   0.1.2-beta
      */
 
-    public static function destroy_all_values(): void {
-        foreach( $_COOKIE as $name => $value ) {
-            self::destroy_value( $name );
+    public static function destroy_value( string $name ): bool {
+        try {
+            setcookie( $name, '', 1 );
+            unset( $_COOKIE[$name] );
+            return true;
+        } catch ( Throwable ) {
+            return false;
         }
+    }
+
+
+    /**
+     * Unset all cookies on the site.
+     * 
+     * @return  boolean
+     * 
+     * @static
+     * @access  public
+     * @since   0.1.2-beta
+     */
+
+    public static function destroy_all_values(): bool {
+        $completed = true;
+        foreach( $_COOKIE as $name => $value ) {
+            $success = self::destroy_value( $name );
+            if ( !$success ) {
+                $completed = false;
+            }
+        }
+        return $completed;
     }
 
 
@@ -297,6 +311,9 @@ class Cookie {
      */
 
     public static function __callStatic( string $id, array $arguments ): mixed {
+        if ( !isset( $_COOKIE[$id] ) ) {
+            throw new Exception( "'{$id}' is not in Cookie." );
+        }
         $data = self::decode_cookie( $_COOKIE[$id] );
         $args = array_flip( $arguments );
         if ( isset( $args['object'] ) ) {
@@ -307,7 +324,7 @@ class Cookie {
             $hold_data = json_decode( $data, true );
             if ( count( $hold_data ) > 0 ) {
                 if ( !isset( $hold_data[$arguments[0]] ) ) {
-                    throw new Exception( "Key '{$arguments[0]}' is not in Cookie '{$id}'" );
+                    throw new Exception( "Key '{$arguments[0]}' is not in Cookie '{$id}'." );
                 }
                 return $hold_data[$arguments[0]];
             }
