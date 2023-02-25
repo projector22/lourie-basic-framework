@@ -23,13 +23,13 @@ class Layout {
     HTML;
 
     if ( $block_robots ) {
-        $this->html_header .= <<<HTML
+        self::$html_header .= <<<HTML
         <meta name='robots' content='noindex, nofollow'>
         <meta name='googlebot' content='noindex, nofollow'>
         HTML;
     }
 
-    $this->html_header .= <<<HTML
+    self::$html_header .= <<<HTML
     <meta http-equiv='X-Clacks-Overhead' content='GNU Terry Pratchett' />
     <meta http-equiv='commune' content='Soli Deo Gloria' />
     HTML;
@@ -37,7 +37,7 @@ class Layout {
     }
 
     public function set_favicon( string $favicon ): static {
-        $this->html_header .= <<<HTML
+        self::$html_header .= <<<HTML
         <link rel='shortcut icon' href='{$favicon}' />
         <link rel='apple-touch-icon' href='{$favicon}' />
         HTML;
@@ -82,12 +82,12 @@ class Layout {
 
 
     public function render_header() {
-        $this->html_header .= implode( "\n", self::$header_meta ) . '</head>';
-        echo $this->html_header;
+        self::$html_header .= implode( "\n", self::$header_meta ) . '</head>';
+        echo self::$html_header;
     }
     public function render_body() {
-        $this->body = "<main>{$this->body}</main>";
-        echo $this->body;
+        self::$body = "<main>" . self::$body . "</main>";
+        echo self::$body;
     }
     public function render_footer() {
         self::$footer .= '</body></html>';
