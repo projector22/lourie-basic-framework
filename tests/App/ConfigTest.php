@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+namespace Test\App;
+
 use LBF\App\Config;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 final class ConfigTest extends TestCase {
 
@@ -14,6 +17,16 @@ final class ConfigTest extends TestCase {
         ]]);
 
         $test = new stdClass;
+        $test->meta = [
+            'program_name'    => 'YOUR PROGRAM NAME',
+            'description'     => 'A basic PHP Framework',
+            'project_version' => '0.1.0',
+            'project_status'  => '',
+            'page_title'      => 'Lourie Basic Framework',
+            'favicon'         => '',
+            'site_language'   => 'en',
+            'block_robots'    => false,
+        ];
         $test->cheese = [
             'cake' => 'chocolate',
             'mouse' => 'trap',
@@ -32,6 +45,16 @@ final class ConfigTest extends TestCase {
         ]] );
 
         $test = new stdClass;
+        $test->meta = [
+            'program_name'    => 'YOUR PROGRAM NAME',
+            'description'     => 'A basic PHP Framework',
+            'project_version' => '0.1.0',
+            'project_status'  => '',
+            'page_title'      => 'Lourie Basic Framework',
+            'favicon'         => '',
+            'site_language'   => 'en',
+            'block_robots'    => false,
+        ];
         $test->cheese = [
             'cake' => 'chocolate',
             'mouse' => 'trap',
@@ -51,6 +74,16 @@ final class ConfigTest extends TestCase {
         ]], true );
 
         $test = new stdClass;
+        $test->meta = [
+            'program_name'    => 'YOUR PROGRAM NAME',
+            'description'     => 'A basic PHP Framework',
+            'project_version' => '0.1.0',
+            'project_status'  => '',
+            'page_title'      => 'Lourie Basic Framework',
+            'favicon'         => '',
+            'site_language'   => 'en',
+            'block_robots'    => false,
+        ];
         $test->cat = ['rat' => 'trap'];
         $this->assertEquals( Config::$payload, $test );
     }
