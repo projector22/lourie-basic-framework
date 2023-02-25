@@ -80,7 +80,7 @@ class Router {
 
         $cookie->inject_cookies( false ); // SET SILENT TO FALSE IF DEV
 
-        $layout->init_header( Config::$payload->meta['title'], Config::$payload->meta['description'], block_robots: true );
+        $layout->init_header( Config::$payload->meta['page_title'], Config::$payload->meta['description'], block_robots: true );
         $layout->set_favicon( Config::$payload->meta['favicon'] );
         $layout->load_header_css( $injector->insert_css( PagePositions::IN_HEAD ) );
         $layout->load_header_js( $injector->insert_js( PagePositions::IN_HEAD ) );
