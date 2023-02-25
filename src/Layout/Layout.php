@@ -12,7 +12,7 @@ class Layout {
     private static array $header_meta = [];
 
     public function init_header( string $title, string $description, string $language = 'en', $block_robots = false ): static {
-        $this->html_header = <<<HTML
+        self::$html_header = <<<HTML
     <!DOCTYPE html>
     <html lang='{$language}'>
     <head>
