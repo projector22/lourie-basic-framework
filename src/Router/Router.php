@@ -82,19 +82,18 @@ class Router {
 
         $layout->init_header( Config::$payload->meta['page_title'], Config::$payload->meta['description'], block_robots: true );
         $layout->set_favicon( Config::$payload->meta['favicon'] );
-        $layout->load_header_css( $injector->insert_css( PagePositions::IN_HEAD ) );
-        $layout->load_header_js( $injector->insert_js( PagePositions::IN_HEAD ) );
-
+        $layout->append_to_header( $injector->insert_css( PagePositions::IN_HEAD ) );
+        $layout->append_to_header( $injector->insert_js( PagePositions::IN_HEAD ) );
         $layout->render_header();
 
-        $injector->insert_css( PagePositions::TOP_OF_PAGE );
-        $injector->insert_js( PagePositions::TOP_OF_PAGE );
+        Layout::append_to_body( $injector->insert_css( PagePositions::TOP_OF_PAGE ), true );
+        Layout::append_to_body( $injector->insert_js( PagePositions::TOP_OF_PAGE ), true );
+        Layout::append_to_body( $html );
+        $layout->render_body();
 
-        echo $html;
-
-        echo $injector->insert_css( PagePositions::BOTTOM_OF_PAGE );
-        echo $injector->insert_js( PagePositions::BOTTOM_OF_PAGE );
-
+        $layout->append_to_footer( $injector->insert_css( PagePositions::BOTTOM_OF_PAGE ) );
+        $layout->append_to_footer( $injector->insert_js( PagePositions::BOTTOM_OF_PAGE ) );
+        $layout->render_footer();
     }
 
 

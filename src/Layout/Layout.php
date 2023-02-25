@@ -5,9 +5,11 @@ namespace LBF\Layout;
 use LBF\HTML\HTML;
 
 class Layout {
-    private string $html_header = '';
-    private string $body = '';
+    private static string $html_header = '';
+    private static string $body = '';
     private static string $footer = '';
+
+    private static array $header_meta = [];
 
     public function init_header( string $title, string $description, string $language = 'en', $block_robots = false ): static {
         $this->html_header = <<<HTML
@@ -43,27 +45,27 @@ class Layout {
     }
 
 
-    public function load_header_css( string $files ): static {
-        $this->html_header .= $files;
+    public function append_to_header( string $files ): static {
+        self::$html_header .= $files;
         return $this;
     }
 
-    public function load_header_js( string $files ): static {
-        $this->html_header .= $files;
-        return $this;
-    }
 
-    public function load_header_meta( array|string $meta ) {
+    public static function load_header_meta( array|string $meta ): void {
         if ( is_array( $meta ) ) {
             $meta = implode( "\n", $meta );
         }
-        $this->html_header .= $meta;
+        self::$header_meta[] = $meta;
     }
 
 
 
-    public static function append_to_body( string $body ): void {
-        self::$body .= $body;
+    public static function append_to_body( string $body, bool $before = false ): void {
+        if ( $before ) {
+            self::$body = $body . self::$body;
+        } else {
+            self::$body .= $body;
+        }
     }
 
 
@@ -80,7 +82,7 @@ class Layout {
 
 
     public function render_header() {
-        $this->html_header .= '</head>';
+        $this->html_header .= implode( "\n", self::$header_meta ) . '</head>';
         echo $this->html_header;
     }
     public function render_body() {
