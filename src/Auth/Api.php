@@ -60,7 +60,7 @@ class Api {
     public static function get_key(): ?string {
         $api_key = null;
         if ( isset ( $_GET['auth_key'] ) || isset( $_POST['auth_key'] ) ) {
-            $api_key = isset( $_POST['auth_key'] ) ? $_POST['auth_key'] : $_GET['auth_key'];
+            $api_key = $_POST['auth_key'] ?? $_GET['auth_key'];
         }
         return $api_key;
     }
