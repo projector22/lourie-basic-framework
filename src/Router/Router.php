@@ -4,6 +4,7 @@ namespace LBF\Router;
 
 use LBF\App\Config;
 use LBF\Auth\Cookie;
+use LBF\Config\AppMode;
 use LBF\HTML\HTML;
 use LBF\HTML\Injector\PagePositions;
 use LBF\Layout\Layout;
@@ -78,7 +79,7 @@ class Router {
             $html = ob_get_clean();
         }
 
-        $cookie->inject_cookies( false ); // SET SILENT TO FALSE IF DEV
+        $cookie->inject_cookies( ( Config::$payload->ENVIRONMENT  ?? AppMode::DEVELOPEMENT ) !== AppMode::DEVELOPEMENT );
 
         $layout->init_header( 
             Config::$payload->meta['page_title'], 
