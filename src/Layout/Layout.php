@@ -2,8 +2,6 @@
 
 namespace LBF\Layout;
 
-use LBF\HTML\HTML;
-
 class Layout {
     private static string $html_header = '';
     private static string $body = '';
@@ -22,17 +20,17 @@ class Layout {
         <meta name='viewport' content='width=device-width, initial-scale=1'>
     HTML;
 
-    if ( $block_robots ) {
-        self::$html_header .= <<<HTML
-        <meta name='robots' content='noindex, nofollow'>
-        <meta name='googlebot' content='noindex, nofollow'>
-        HTML;
-    }
+        if ( $block_robots ) {
+            self::$html_header .= <<<HTML
+            <meta name='robots' content='noindex, nofollow'>
+            <meta name='googlebot' content='noindex, nofollow'>
+            HTML;
+        }
 
-    self::$html_header .= <<<HTML
-    <meta http-equiv='X-Clacks-Overhead' content='GNU Terry Pratchett' />
-    <meta http-equiv='commune' content='Soli Deo Gloria' />
-    HTML;
+        self::$html_header .= <<<HTML
+        <meta http-equiv='X-Clacks-Overhead' content='GNU Terry Pratchett' />
+        <meta http-equiv='commune' content='Soli Deo Gloria' />
+        HTML;
         return $this;
     }
 
