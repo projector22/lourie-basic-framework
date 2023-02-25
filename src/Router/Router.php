@@ -14,9 +14,9 @@ class Router {
 
     private readonly string $page;
 
-    private readonly string $subpage;
+    private readonly ?string $subpage;
 
-    private readonly string $tab;
+    private readonly ?string $tab;
 
 
 
@@ -31,8 +31,8 @@ class Router {
             )
         );
         $this->page = $this->path[0] ?? 'index';
-        $this->subpage = $this->path[1] ?? '';
-        $this->tab = $this->path[2] ?? '';
+        $this->subpage = $this->path[1] ?? null;
+        $this->tab = $this->path[2] ?? null;
         Config::load( ['current_page' => [
             'page'    => $this->page,
             'subpage' => $this->subpage,
@@ -92,8 +92,8 @@ class Router {
 
         echo $html;
 
-        $injector->insert_css( PagePositions::BOTTOM_OF_PAGE );
-        $injector->insert_js( PagePositions::BOTTOM_OF_PAGE );
+        echo $injector->insert_css( PagePositions::BOTTOM_OF_PAGE );
+        echo $injector->insert_js( PagePositions::BOTTOM_OF_PAGE );
 
     }
 
