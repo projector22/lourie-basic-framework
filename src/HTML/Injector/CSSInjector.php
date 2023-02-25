@@ -118,17 +118,21 @@ trait CSSInjector {
      * 
      * @param   PagePositions   $position   The position to insert the styles.
      * 
+     * @return  string
+     * 
      * @access  public
      * @since   LBF 0.6.0-beta
      */
 
-    public function insert_css( PagePositions $position ): void {
+    public function insert_css( PagePositions $position ): string {
+        $css = '';
         if ( isset( self::$injected_styles ) ) {
             $raw = $this->remove_duplicates( self::$injected_styles[$position->id()]['raw'] );
-            echo "<style>{$this->merge( $raw )}</style>";
+            $css .= "<style>{$this->merge( $raw )}</style>";
             $cdn = $this->remove_duplicates( self::$injected_styles[$position->id()]['cdn'] );
-            echo $this->merge( $cdn );
+            $css .= $this->merge( $cdn );
         }
+        return $css;
     }
 
 }

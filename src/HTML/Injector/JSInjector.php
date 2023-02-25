@@ -128,17 +128,21 @@ trait JSInjector {
      * 
      * @param   PagePositions   $position   The position to insert the styles.
      * 
+     * @return  string
+     * 
      * @access  public
      * @since   LBF 0.6.0-beta
      */
 
-     public function insert_js( PagePositions $position ): void {
+     public function insert_js( PagePositions $position ): string {
+        $js = '';
         if ( isset( self::$injected_js ) ) {
             $raw = $this->remove_duplicates( self::$injected_js[$position->id()]['raw'] );
-            echo "<script type='module'>{$this->merge( $raw )}</script>";
+            $js .= "<script type='module'>{$this->merge( $raw )}</script>";
             $cdn = $this->remove_duplicates( self::$injected_js[$position->id()]['cdn'] );
-            echo $this->merge( $cdn );
+            $js .= $this->merge( $cdn );
         }
+        return $js;
     }
 
 }
