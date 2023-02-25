@@ -48,14 +48,17 @@ class Config {
     public static function load( array $config, bool $overwrite = false ): void {
         if ( !isset( self::$payload ) || $overwrite == true ) {
             self::$payload = new stdClass;
-            self::$payload->page_details = [
-                'title'       => 'Lourie Basic Framework',
-                'description' => 'A basic PHP Framework',
-                'favicon'     => '',
+            self::$payload->meta = [
+                'program_name'    => 'YOUR PROGRAM NAME',
+                'description'     => 'A basic PHP Framework',
+                'project_version' => '0.1.0',
+                'project_status'  => '',
+                'page_title'      => 'Lourie Basic Framework',
+                'favicon'         => '',
             ];
         }
         foreach ( $config as $key => $value ) {
-            if (!isset( self::$payload->$key ) ) {
+            if ( !isset( self::$payload->$key ) ) {
                 self::$payload->$key = $value;
             } else {
                 self::$payload->$key = array_merge( self::$payload->$key, $value );
