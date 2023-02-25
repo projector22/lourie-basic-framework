@@ -219,7 +219,7 @@ class JS extends HTMLMeta {
 
     public static function hide_element_after_time( string $id, string $function_name = 'hide_element', int $time = 1200, string $content = '' ): void {
         HTML::inject_js(<<<JS
-            window.addEventListener('load', function () {
+            window.addEventListener('load', () => {
                 const element = document.getElementById('$id');
                 const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
                 const observer = new MutationObserver($function_name);
