@@ -4,6 +4,7 @@ namespace LBF\HTML;
 
 use LBF\Auth\Hash;
 use LBF\HTML\HTMLMeta;
+use LBF\HTML\Injector\PagePositions;
 
 /**
  * This class is to draw out various inline Javascript elements withing <script> tags.
@@ -161,23 +162,18 @@ class JS extends HTMLMeta {
      */
 
     public static function change_button_behaviour( string $input, string $button, int $keycode = 13, bool $do_nothing = false ): void {
-        if ( $do_nothing ) {
-            self::script( "var input = document.getElementById('$input');
-            input.addEventListener('keyup', function(event) {
+        $id = Hash::random_id_string(4);
+        HTML::inject_js(<<<JS
+            const input{$id} = document.getElementById('{$input}');
+            input{$id}.addEventListener('keyup', event => {
                 if (event.keyCode === $keycode) {
                     event.preventDefault();
+                    if (!$do_nothing) {
+                        document.getElementById('$button').click();
+                    }
                 }
-            });" );
-
-        } else {
-            self::script( "var input = document.getElementById('$input');
-            input.addEventListener('keyup', function(event) {
-                if (event.keyCode === $keycode) {
-                    event.preventDefault();
-                    document.getElementById('$button').click();
-                }
-            });" );
-        }
+            });
+        JS, PagePositions::BOTTOM_OF_PAGE );
     }
 
 
@@ -222,19 +218,21 @@ class JS extends HTMLMeta {
      */
 
     public static function hide_element_after_time( string $id, string $function_name = 'hide_element', int $time = 1200, string $content = '' ): void {
-        self::script( "window.addEventListener('load', function () {
-            const element = document.getElementById('$id');
-            const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
-            const observer = new MutationObserver($function_name);
-            observer.observe(element, {
-                childList: true
+        HTML::inject_js(<<<JS
+            window.addEventListener('load', function () {
+                const element = document.getElementById('$id');
+                const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+                const observer = new MutationObserver($function_name);
+                observer.observe(element, {
+                    childList: true
+                });
+                function $function_name() {
+                    setTimeout(function() {
+                    element.innerHTML = '$content';
+                    }, $time);
+                }
             });
-            function $function_name() {
-                setTimeout(function() {
-                element.innerHTML = '$content';
-                }, $time);
-            }
-        });" );
+        JS, PagePositions::BOTTOM_OF_PAGE );
     }
 
 
