@@ -93,7 +93,7 @@ class Router {
 
         Layout::append_to_body( $injector->insert_css( PagePositions::TOP_OF_PAGE ), true );
         Layout::append_to_body( $injector->insert_js( PagePositions::TOP_OF_PAGE ), true );
-        Layout::append_to_body( $html );
+        Layout::append_to_body( '<main>' . $html . '</main>' );
         $layout->render_body();
 
         $layout->append_to_footer( $injector->insert_css( PagePositions::BOTTOM_OF_PAGE ) );

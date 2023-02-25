@@ -84,8 +84,7 @@ class Layout {
         echo self::$html_header;
     }
     public function render_body() {
-        self::$body = "<main>" . self::$body . "</main>";
-        echo self::$body;
+        echo "<body>" . self::$body;
     }
     public function render_footer() {
         self::$footer .= '</body></html>';
