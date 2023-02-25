@@ -71,6 +71,11 @@ class Layout {
         self::$footer .= "<footer>{$footer}</footer>";
     }
 
+    public function append_to_footer( string $data ): static {
+        self::$footer .= $data;
+        return $this;
+    }
+
 
     public function render_header() {
         $this->html_header .= '</head>';

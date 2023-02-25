@@ -128,7 +128,10 @@ trait CSSInjector {
         $css = '';
         if ( isset( self::$injected_styles ) ) {
             $raw = $this->remove_duplicates( self::$injected_styles[$position->id()]['raw'] );
-            $css .= "<style>{$this->merge( $raw )}</style>";
+            $insert = $this->merge( $raw );
+            if ( $insert !== '' ) {
+                $css .= "<style>{$insert}</style>";
+            }
             $cdn = $this->remove_duplicates( self::$injected_styles[$position->id()]['cdn'] );
             $css .= $this->merge( $cdn );
         }

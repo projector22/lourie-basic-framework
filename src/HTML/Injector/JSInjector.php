@@ -138,7 +138,10 @@ trait JSInjector {
         $js = '';
         if ( isset( self::$injected_js ) ) {
             $raw = $this->remove_duplicates( self::$injected_js[$position->id()]['raw'] );
-            $js .= "<script type='module'>{$this->merge( $raw )}</script>";
+            $insert = $this->merge( $raw );
+            if ( $insert !== '' ) {
+                $js .= "<script type='module'>{$insert}</script>";
+            }
             $cdn = $this->remove_duplicates( self::$injected_js[$position->id()]['cdn'] );
             $js .= $this->merge( $cdn );
         }
