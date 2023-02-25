@@ -5,6 +5,7 @@ namespace LBF\Router;
 use LBF\App\Config;
 use LBF\Auth\Cookie;
 use LBF\HTML\HTML;
+use LBF\HTML\Injector\PagePositions;
 
 class Router {
 
@@ -36,13 +37,34 @@ class Router {
             'subpage' => $this->subpage,
             'tab'     => $this->tab,
         ]] );
-        $this->render_webpage();
-
     }
 
 
+    public function route() {
+
+
+        $this->render_webpage();
+
+
+
+
+        /**
+         * - [x] Load in vendors, Autoloader, Exception Handler, functions, Session
+         * - [x] Get all of the config data saved to an array. Parse it to Router.
+         * - [ ] Generate the page data and save it to a variable.
+         * - [ ] Render the <head> tags, with css & js injected.
+         * - [ ] Render the <body> with css & hs injected, then the rendered page data, based on the error code.
+         * - [ ] Render the <footer> followed by the final injected css & js.
+         * - [ ] Close the </body> tag
+         */
+    }
+
+
+
     public function render_webpage(): void {
+        $injector = new HTML;
         $cookie = new Cookie;
+
         $page = $this->page == 'home' ? 'index' : $this->page;
 
         $page_class = 'Web\\' . ucfirst( $page ) . 'Page';
@@ -54,38 +76,18 @@ class Router {
             $html = ob_get_clean();
         }
 
-        $cookie->inject_cookies(); // SET SILENT TO TRUE IF DEV
+        $cookie->inject_cookies( false ); // SET SILENT TO FALSE IF DEV
+
+        $injector->insert_css( PagePositions::IN_HEAD );
+        $injector->insert_js( PagePositions::IN_HEAD );
+
+        $injector->insert_css( PagePositions::TOP_OF_PAGE );
+        $injector->insert_js( PagePositions::TOP_OF_PAGE );
 
         echo $html;
-    }
 
-
-    public function route() {
-
-
-
-
-
-        $injector = new HTML;
-
-        /**
-         * - [x] Load in vendors, Autoloader, Exception Handler, functions, Session
-         * - [x] Get all of the config data saved to an array. Parse it to Router.
-         * - [ ] Generate the page data and save it to a variable.
-         * - [ ] Render the <head> tags, with css & js injected.
-         * - [ ] Render the <body> with css & hs injected, then the rendered page data, based on the error code.
-         * - [ ] Render the <footer> followed by the final injected css & js.
-         * - [ ] Close the </body> tag
-         */
-
-        // Insert Header
-
-        // Generate Body
-
-        // Insert Footer
-
-
-
+        $injector->insert_css( PagePositions::BOTTOM_OF_PAGE );
+        $injector->insert_js( PagePositions::BOTTOM_OF_PAGE );
 
     }
 

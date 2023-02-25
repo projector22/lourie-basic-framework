@@ -2,6 +2,7 @@
 
 namespace LBF\Auth;
 
+use Debugger\Debug;
 use Exception;
 use LBF\Errors\General\CantSetCookie;
 use Throwable;
@@ -142,7 +143,8 @@ class Cookie {
              */
             throw new Exception( "Cookie size bigger than 4k limit. Size is " . strlen( $value ) );
         }
-        return self::$cookie_list[] = [
+
+        self::$cookie_list[] = [
             'name' => $name,
             'value' => $value,
             'expires' => $expires,
@@ -151,6 +153,8 @@ class Cookie {
             'secure' => $secure,
             'httponly' => $httponly,
         ];
+
+        return true;
     }
 
 
