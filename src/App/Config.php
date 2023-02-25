@@ -55,6 +55,8 @@ class Config {
                 'project_status'  => '',
                 'page_title'      => 'Lourie Basic Framework',
                 'favicon'         => '',
+                'site_language'   => 'en',
+                'block_robots'    => false,
             ];
         }
         foreach ( $config as $key => $value ) {
