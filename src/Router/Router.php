@@ -6,6 +6,7 @@ use LBF\App\Config;
 use LBF\Auth\Cookie;
 use LBF\HTML\HTML;
 use LBF\HTML\Injector\PagePositions;
+use LBF\Layout\Layout;
 
 class Router {
 
@@ -64,6 +65,7 @@ class Router {
     public function render_webpage(): void {
         $injector = new HTML;
         $cookie = new Cookie;
+        $layout = new Layout;
 
         $page = $this->page == 'home' ? 'index' : $this->page;
 
@@ -78,8 +80,12 @@ class Router {
 
         $cookie->inject_cookies( false ); // SET SILENT TO FALSE IF DEV
 
-        $injector->insert_css( PagePositions::IN_HEAD );
-        $injector->insert_js( PagePositions::IN_HEAD );
+        $layout->init_header( Config::$payload->page_details['title'], Config::$payload->page_details['description'], block_robots: true );
+        $layout->set_favicon( Config::$payload->page_details['favicon'] );
+        $layout->load_header_css( $injector->insert_css( PagePositions::IN_HEAD ) );
+        $layout->load_header_js( $injector->insert_js( PagePositions::IN_HEAD ) );
+
+        $layout->render_header();
 
         $injector->insert_css( PagePositions::TOP_OF_PAGE );
         $injector->insert_js( PagePositions::TOP_OF_PAGE );
