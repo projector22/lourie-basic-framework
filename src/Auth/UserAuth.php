@@ -12,7 +12,7 @@ trait UserAuth {
         'can' => [],
     ];
 
-    public function set_permissions( object|array $permissions, bool $is = true ): bool {
+    public function set_permissions( array $permissions, bool $is = true ): bool {
         $is_can = $is ? 'is' : 'can';
         $this->user_permissions[$is_can] = [];
         try {
