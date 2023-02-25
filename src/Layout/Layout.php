@@ -67,9 +67,8 @@ class Layout {
 
 
 
-    public function set_footer_payload( string $footer ): static {
+    public static function set_footer_payload( string $footer ): void {
         self::$footer .= "<footer>{$footer}</footer>";
-        return $this;
     }
 
 
