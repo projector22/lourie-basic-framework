@@ -2,7 +2,6 @@
 
 namespace LBF\Auth;
 
-use Debugger\Debug;
 use Exception;
 use LBF\Errors\General\CantSetCookie;
 use Throwable;
@@ -395,6 +394,21 @@ class Cookie {
             return self::$duration = time() + $duration;
         }
         return self::$duration = $duration;        
+    }
+
+
+    /**
+     * Returns the list of sent cookies.
+     * 
+     * @return  array
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function get_cookie_list(): array {
+        return self::$cookie_list;
     }
 
 }
