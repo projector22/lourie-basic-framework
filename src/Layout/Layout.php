@@ -7,7 +7,7 @@ use LBF\HTML\HTML;
 class Layout {
     private string $html_header = '';
     private string $body = '';
-    private string $footer = '';
+    private static string $footer = '';
 
     public function init_header( string $title, string $description, string $language = 'en', $block_robots = false ): static {
         $this->html_header = <<<HTML
@@ -67,6 +67,10 @@ class Layout {
 
 
 
+    public function set_footer_payload( string $footer ): static {
+        self::$footer .= "<footer>{$footer}</footer>";
+        return $this;
+    }
 
 
     public function render_header() {
@@ -78,7 +82,7 @@ class Layout {
         echo $this->body;
     }
     public function render_footer() {
-
-        echo $this->footer;
+        self::$footer .= '</body></html>';
+        echo self::$footer;
     }
 }
