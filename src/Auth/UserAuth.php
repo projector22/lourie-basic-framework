@@ -4,7 +4,7 @@ namespace LBF\Auth;
 
 use Throwable;
 
-class UserAuth {
+trait UserAuth {
 
 
     private array $user_permissions = [
