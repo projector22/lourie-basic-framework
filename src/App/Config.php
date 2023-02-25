@@ -32,6 +32,18 @@ class Config {
 
     public static stdClass $payload;
 
+    /**
+     * The object containing the user account object;
+     * 
+     * @var object  $user;
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static object $user;
+
 
     /**
      * Load any config data into the `Config::$payload` object.
@@ -60,6 +72,10 @@ class Config {
             ];
         }
         foreach ( $config as $key => $value ) {
+            if ( $key == 'user' ) {
+                self::$user = $value;
+                continue;
+            }
             if ( !isset( self::$payload->$key ) ) {
                 self::$payload->$key = $value;
             } else {
@@ -87,6 +103,7 @@ class Config {
         } else {
             print_r( self::$payload );
         }
+        print_r( self::$user );
         echo "</pre>";
     }
 
@@ -105,6 +122,7 @@ class Config {
         foreach ( $keys as $key ) {
             print_r( $key ."\n" );
         }
+        print_r( '$user' ."\n" );
         echo "</pre>";
     }
 
