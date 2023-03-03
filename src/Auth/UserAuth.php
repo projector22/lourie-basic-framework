@@ -4,7 +4,7 @@ namespace LBF\Auth;
 
 use Throwable;
 
-trait UserAuth {
+class UserAuth {
 
     private array $user_permissions = [
         'is'  => [],
@@ -31,4 +31,8 @@ trait UserAuth {
     public function can( string $permit ): bool {
         return isset( $this->user_permissions['can'][$permit] );
     }
+
+
+    public function set_is( array $is ): void {}
+    public function set_can( array $can ): void {}
 }
