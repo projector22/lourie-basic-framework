@@ -58,6 +58,8 @@ class Router {
          * - [ ] Render the <body> with css & hs injected, then the rendered page data, based on the error code.
          * - [ ] Render the <footer> followed by the final injected css & js.
          * - [ ] Close the </body> tag
+         * 
+         * ## To Add - Static Routes
          */
     }
 

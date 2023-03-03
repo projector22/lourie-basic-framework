@@ -6,7 +6,6 @@ use Throwable;
 
 trait UserAuth {
 
-
     private array $user_permissions = [
         'is'  => [],
         'can' => [],
