@@ -8,6 +8,7 @@ use LBF\Config\AppMode;
 use LBF\HTML\HTML;
 use LBF\HTML\Injector\PagePositions;
 use LBF\Layout\Layout;
+use LBF\Router\Routes;
 
 class Router {
 
@@ -18,6 +19,10 @@ class Router {
     private readonly ?string $subpage;
 
     private readonly ?string $tab;
+
+    public readonly Routes $route;
+
+    public readonly HTTPMethod $http_method; 
 
 
 
@@ -31,14 +36,23 @@ class Router {
                 }
             )
         );
-        $this->page = $this->path[0] ?? 'index';
-        $this->subpage = $this->path[1] ?? null;
-        $this->tab = $this->path[2] ?? null;
-        Config::load( ['current_page' => [
-            'page'    => $this->page,
-            'subpage' => $this->subpage,
-            'tab'     => $this->tab,
-        ]] );
+
+        $this->route = $this->determine_route();
+
+        if ( $this->route == Routes::HTTP ) {
+            $this->page = $this->path[0] ?? 'index';
+            $this->subpage = $this->path[1] ?? null;
+            $this->tab = $this->path[2] ?? null;
+            Config::load( [
+                'current_page' => [
+                    'page'    => $this->page,
+                    'subpage' => $this->subpage,
+                    'tab'     => $this->tab,
+                ],
+                'http_method' => $this->http_method,
+                'route'       => $this->route,
+            ] );
+        }
     }
 
 
@@ -109,6 +123,37 @@ class Router {
         require __DIR__ . '/../Functions/functions.php';
     }
 
+
+    private function determine_route(): Routes {
+        if ( PHP_SAPI == 'cli' ) {
+            return Routes::CLI;
+        }
+
+        $this->http_method = $this->determine_http_method();
+
+        if ( true == false ) {
+            /**
+             * @todo    Detect an API call. Header needs to be parsed
+             */
+            return Routes::API;
+        }
+        return Routes::HTTP;
+    }
+
+
+    private function determine_http_method(): HTTPMethod {
+        if ( count( $_POST ) > 0 ) {
+            return HTTPMethod::POST;
+        } else {
+            return match ( $_SERVER['REQUEST_METHOD'] ) {
+                'GET'    => HTTPMethod::GET,
+                'POST'   => HTTPMethod::POST,
+                'PUT'    => HTTPMethod::PUT,
+                'DELETE' => HTTPMethod::DELETE,
+                default  => HTTPMethod::GET,
+            };
+        }
+    }
 
     public function get_page(): string {
         return $this->page;
