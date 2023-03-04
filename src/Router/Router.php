@@ -29,50 +29,65 @@ class Router {
     private readonly bool   $static_route;
 
     public function __construct() {
-        if ( isset( $_SERVER['REDIRECT_URL'] ) && isset( Config::$payload->static_routes[$_SERVER['REDIRECT_URL']] ) ) {
-            /**
-             * Handle Static Routes.
-             * Any defined static routes should be defined in the config. They should call
-             * the class desired for loading.
-             * 
-             * @example
-             * ```php
-             * return [
-             *  'static_routes' => [
-             *      '/home/cake' => 'mouse',
-             *  ],
-             * ];
-             * ```
-             * 
-             * The above example will call the class Web\MousePage;
-             */
-            $this->path = [Config::$payload->static_routes[$_SERVER['REDIRECT_URL']]];
-            $this->static_route = true;
-        } else {
-            $this->path = array_values( 
-                array_filter( 
-                    // REDIRECT_URL is generate by apache2
-                    explode( '/', ( $_SERVER['REDIRECT_URL'] ?? '' ) ), 
-                    function($value) {
-                        return trim($value) !== '';
-                    }
-                )
-            );
-            $this->static_route = false;
-        }
 
         $this->route = $this->determine_route();
 
-        if ( $this->route == Routes::HTTP ) {
-        }
         Config::load( [
-            'http_method' => $this->http_method,
-            'route'       => $this->route,
+            'route' => $this->route,
         ] );
+
+        if ( $this->route == Routes::API || $this->route == Routes::HTTP ) {
+            if ( isset( $_SERVER['REDIRECT_URL'] ) && isset( Config::$payload->static_routes[$_SERVER['REDIRECT_URL']] ) ) {
+                /**
+                 * Handle Static Routes.
+                 * Any defined static routes should be defined in the config. They should call
+                 * the class desired for loading.
+                 * 
+                 * @example
+                 * ```php
+                 * return [
+                 *  'static_routes' => [
+                 *      '/home/cake' => 'mouse',
+                 *  ],
+                 * ];
+                 * ```
+                 * 
+                 * The above example will call the class Web\MousePage;
+                 */
+                $this->path = [Config::$payload->static_routes[$_SERVER['REDIRECT_URL']]];
+                $this->static_route = true;
+            } else {
+                $this->path = array_values( 
+                    array_filter( 
+                        // REDIRECT_URL is generate by apache2
+                        explode( '/', ( $_SERVER['REDIRECT_URL'] ?? '' ) ), 
+                        function($value) {
+                            return trim($value) !== '';
+                        }
+                    )
+                );
+                $this->static_route = false;
+            }
+
+            $this->http_method = $this->determine_http_method();
+    
+            $this->page = $this->path[0] ?? 'index';
+            $this->subpage = $this->path[1] ?? null;
+            $this->tab = $this->path[2] ?? null;
+            Config::load( [
+                'current_page' => [
+                    'page'    => $this->page,
+                    'subpage' => $this->subpage,
+                    'tab'     => $this->tab,
+                ],
+                'http_method' => $this->http_method,
+            ] );
+
+        }
     }
 
 
-    public function route() {
+    public function route(): void {
         switch ( $this->route ) {
             case Routes::CLI:
                 $this->execute_cli();
@@ -152,20 +167,6 @@ class Router {
             return Routes::CLI;
         }
 
-        $this->http_method = $this->determine_http_method();
-
-        $this->page = $this->path[0] ?? 'index';
-        $this->subpage = $this->path[1] ?? null;
-        $this->tab = $this->path[2] ?? null;
-        Config::load( [
-            'current_page' => [
-                'page'    => $this->page,
-                'subpage' => $this->subpage,
-                'tab'     => $this->tab,
-            ],
-        ] );
-
-
         if ( true == false ) {
             /**
              * @todo    Detect an API call. Header needs to be parsed
@@ -177,7 +178,7 @@ class Router {
 
 
     private function determine_http_method(): HTTPMethod {
-        if ( count( $_POST ) > 0 ) {
+        if ( isset( $_POST ) && count( $_POST ) > 0 ) {
             return HTTPMethod::POST;
         } else {
             return match ( $_SERVER['REQUEST_METHOD'] ) {
