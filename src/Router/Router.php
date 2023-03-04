@@ -40,19 +40,11 @@ class Router {
         $this->route = $this->determine_route();
 
         if ( $this->route == Routes::HTTP ) {
-            $this->page = $this->path[0] ?? 'index';
-            $this->subpage = $this->path[1] ?? null;
-            $this->tab = $this->path[2] ?? null;
-            Config::load( [
-                'current_page' => [
-                    'page'    => $this->page,
-                    'subpage' => $this->subpage,
-                    'tab'     => $this->tab,
-                ],
-                'http_method' => $this->http_method,
-                'route'       => $this->route,
-            ] );
         }
+        Config::load( [
+            'http_method' => $this->http_method,
+            'route'       => $this->route,
+        ] );
     }
 
 
@@ -130,6 +122,18 @@ class Router {
         }
 
         $this->http_method = $this->determine_http_method();
+
+        $this->page = $this->path[0] ?? 'index';
+        $this->subpage = $this->path[1] ?? null;
+        $this->tab = $this->path[2] ?? null;
+        Config::load( [
+            'current_page' => [
+                'page'    => $this->page,
+                'subpage' => $this->subpage,
+                'tab'     => $this->tab,
+            ],
+        ] );
+
 
         if ( true == false ) {
             /**
