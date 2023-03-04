@@ -49,24 +49,17 @@ class Router {
 
 
     public function route() {
-
-
-        $this->render_webpage();
-
-
-
-
-        /**
-         * - [x] Load in vendors, Autoloader, Exception Handler, functions, Session
-         * - [x] Get all of the config data saved to an array. Parse it to Router.
-         * - [ ] Generate the page data and save it to a variable.
-         * - [ ] Render the <head> tags, with css & js injected.
-         * - [ ] Render the <body> with css & hs injected, then the rendered page data, based on the error code.
-         * - [ ] Render the <footer> followed by the final injected css & js.
-         * - [ ] Close the </body> tag
-         * 
-         * ## To Add - Static Routes
-         */
+        switch ( $this->route ) {
+            case Routes::CLI:
+                $this->execute_cli();
+                break;
+            case Routes::API:
+                $this->execute_api();
+                break;
+            case Routes::HTTP:
+                $this->render_webpage();
+                break;
+        }
     }
 
 
@@ -109,6 +102,9 @@ class Router {
         $layout->append_to_footer( $injector->insert_js( PagePositions::BOTTOM_OF_PAGE ) );
         $layout->render_footer();
     }
+
+    public function execute_api(): void {}
+    public function execute_cli(): void {}
 
 
     public static function load_lrs_functions(): void {
