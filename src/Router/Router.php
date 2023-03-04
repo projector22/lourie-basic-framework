@@ -2,6 +2,7 @@
 
 namespace LBF\Router;
 
+use Exception;
 use LBF\App\Config;
 use LBF\Auth\Cookie;
 use LBF\Config\AppMode;
@@ -9,6 +10,7 @@ use LBF\HTML\HTML;
 use LBF\HTML\Injector\PagePositions;
 use LBF\Layout\Layout;
 use LBF\Router\Routes;
+use Throwable;
 
 class Router {
 
@@ -24,11 +26,28 @@ class Router {
 
     public readonly HTTPMethod $http_method; 
 
-
+    private readonly bool   $static_route;
 
     public function __construct() {
-        if ( isset( Config::$payload->static_routes[$_SERVER['REDIRECT_URL']] ) ) {
-            $this->path = Config::$payload->static_routes[$_SERVER['REDIRECT_URL']];
+        if ( isset( $_SERVER['REDIRECT_URL'] ) && isset( Config::$payload->static_routes[$_SERVER['REDIRECT_URL']] ) ) {
+            /**
+             * Handle Static Routes.
+             * Any defined static routes should be defined in the config. They should call
+             * the class desired for loading.
+             * 
+             * @example
+             * ```php
+             * return [
+             *  'static_routes' => [
+             *      '/home/cake' => 'mouse',
+             *  ],
+             * ];
+             * ```
+             * 
+             * The above example will call the class Web\MousePage;
+             */
+            $this->path = [Config::$payload->static_routes[$_SERVER['REDIRECT_URL']]];
+            $this->static_route = true;
         } else {
             $this->path = array_values( 
                 array_filter( 
@@ -39,6 +58,7 @@ class Router {
                     }
                 )
             );
+            $this->static_route = false;
         }
 
         $this->route = $this->determine_route();
@@ -73,11 +93,22 @@ class Router {
         $cookie = new Cookie;
         $layout = new Layout;
 
-        $page = $this->page == 'home' ? 'index' : $this->page;
+        if ( $this->static_route ) {
+            $page_class = $this->page;
+        } else {
+            $page_class = 'Web\\' . ucfirst( $this->page ) . 'Page';
+        }
 
-        $page_class = 'Web\\' . ucfirst( $page ) . 'Page';
-
-        $page = new $page_class( $this->path );
+        try {
+            $page = new $page_class( $this->path );
+        } catch ( Throwable $e ) {
+            /**
+             * Load 404 PAGE.
+             * 
+             * @todo    Build in 404 page loading & redirection
+             */
+            throw new Exception( $e->getMessage(), 404 );
+        }
         ob_start();
         $code = $page->construct_page();
         if ( $code == 200 ) {
