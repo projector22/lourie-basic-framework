@@ -27,6 +27,7 @@ final class ConfigTest extends TestCase {
             'site_language'   => 'en',
             'block_robots'    => false,
         ];
+        $test->static_routes = [];
         $test->cheese = [
             'cake' => 'chocolate',
             'mouse' => 'trap',
@@ -55,6 +56,7 @@ final class ConfigTest extends TestCase {
             'site_language'   => 'en',
             'block_robots'    => false,
         ];
+        $test->static_routes = [];
         $test->cheese = [
             'cake' => 'chocolate',
             'mouse' => 'trap',
@@ -84,6 +86,7 @@ final class ConfigTest extends TestCase {
             'site_language'   => 'en',
             'block_robots'    => false,
         ];
+        $test->static_routes = [];
         $test->cat = ['rat' => 'trap'];
         $this->assertEquals( Config::$payload, $test );
     }

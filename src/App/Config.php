@@ -70,6 +70,7 @@ class Config {
                 'site_language'   => 'en',
                 'block_robots'    => false,
             ];
+            self::$payload->static_routes = [];
         }
         foreach ( $config as $key => $value ) {
             if ( $key == 'user' ) {
