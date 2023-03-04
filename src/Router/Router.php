@@ -125,10 +125,8 @@ class Router {
             throw new Exception( $e->getMessage(), 404 );
         }
         ob_start();
-        $code = $page->construct_page();
-        if ( $code == 200 ) {
-            $html = ob_get_clean();
-        }
+        $page->construct_page();
+        $html = ob_get_clean();
 
         $cookie->inject_cookies( ( Config::$payload->ENVIRONMENT  ?? AppMode::DEVELOPEMENT ) !== AppMode::DEVELOPEMENT );
 
