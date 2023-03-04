@@ -27,9 +27,7 @@ class Router {
 
 
     public function __construct() {
-
         if ( isset( Config::$payload->static_routes[$_SERVER['REDIRECT_URL']] ) ) {
-            echo "cheese"; die;
             $this->path = Config::$payload->static_routes[$_SERVER['REDIRECT_URL']];
         } else {
             $this->path = array_values( 
