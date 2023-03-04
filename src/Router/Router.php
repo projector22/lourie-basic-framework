@@ -27,15 +27,21 @@ class Router {
 
 
     public function __construct() {
-        $this->path = array_values( 
-            array_filter( 
-                // REDIRECT_URL is generate by apache2
-                explode( '/', ( $_SERVER['REDIRECT_URL'] ?? '' ) ), 
-                function($value) {
-                    return trim($value) !== '';
-                }
-            )
-        );
+
+        if ( isset( Config::$payload->static_routes[$_SERVER['REDIRECT_URL']] ) ) {
+            echo "cheese"; die;
+            $this->path = Config::$payload->static_routes[$_SERVER['REDIRECT_URL']];
+        } else {
+            $this->path = array_values( 
+                array_filter( 
+                    // REDIRECT_URL is generate by apache2
+                    explode( '/', ( $_SERVER['REDIRECT_URL'] ?? '' ) ), 
+                    function($value) {
+                        return trim($value) !== '';
+                    }
+                )
+            );
+        }
 
         $this->route = $this->determine_route();
 
