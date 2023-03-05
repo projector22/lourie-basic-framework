@@ -18,7 +18,7 @@ final class ConfigTest extends TestCase {
 
         $test = new stdClass;
         $test->meta = [
-            'program_name'    => 'YOUR PROGRAM NAME',
+            'app_name'        => 'YOUR APP NAME',
             'description'     => 'A basic PHP Framework',
             'project_version' => '0.1.0',
             'project_status'  => '',
@@ -47,7 +47,7 @@ final class ConfigTest extends TestCase {
 
         $test = new stdClass;
         $test->meta = [
-            'program_name'    => 'YOUR PROGRAM NAME',
+            'app_name'        => 'YOUR APP NAME',
             'description'     => 'A basic PHP Framework',
             'project_version' => '0.1.0',
             'project_status'  => '',
@@ -77,7 +77,7 @@ final class ConfigTest extends TestCase {
 
         $test = new stdClass;
         $test->meta = [
-            'program_name'    => 'YOUR PROGRAM NAME',
+            'app_name'        => 'YOUR APP NAME',
             'description'     => 'A basic PHP Framework',
             'project_version' => '0.1.0',
             'project_status'  => '',

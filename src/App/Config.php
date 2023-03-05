@@ -61,7 +61,7 @@ class Config {
         if ( !isset( self::$payload ) || $overwrite == true ) {
             self::$payload = new stdClass;
             self::$payload->meta = [
-                'program_name'    => 'YOUR PROGRAM NAME',
+                'app_name'        => 'YOUR APP NAME',
                 'description'     => 'A basic PHP Framework',
                 'project_version' => '0.1.0',
                 'project_status'  => '',
