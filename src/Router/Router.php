@@ -111,7 +111,9 @@ class Router {
         if ( $this->static_route ) {
             $page_class = $this->page;
         } else {
-            $page_class = 'Web\\' . ucfirst( $this->page ) . 'Page';
+            $page_class = 'Web\\' . implode( '', array_map( function ( $entry ) {
+                return ucfirst( $entry );
+            }, explode( '-', $this->page ) ) ) . 'Page';
         }
 
         try {
