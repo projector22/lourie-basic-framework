@@ -117,7 +117,7 @@ class Router {
         }
 
         try {
-            $page = new $page_class( $this->path );
+            $page = new $page_class();
         } catch ( Throwable $e ) {
             /**
              * Load 404 PAGE.
