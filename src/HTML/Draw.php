@@ -3,10 +3,11 @@
 namespace LBF\HTML;
 
 use Feather\Icons;
-use LBF\HTML\JS;
+use LBF\App\Config;
 use LBF\Auth\Hash;
 use LBF\HTML\HTML;
 use LBF\HTML\HTMLMeta;
+use LBF\HTML\JS;
 use LBF\Img\SVGImages;
 use SVGTools\SVG;
 
@@ -562,7 +563,7 @@ class Draw extends HTMLMeta {
     /**
      * Draw page tabs
      * 
-     * @param   array   $data       The data for each tab
+     * @param   array   $tabs       The data for each tab
      *                              Format: $name => $link
      *                              $link format: PAGE . ?p=page&t=tab
      * @param   string  $default    The default tab, in case $_GET is not set
@@ -570,14 +571,19 @@ class Draw extends HTMLMeta {
      * @static
      * @access  public
      * @since   LRS 3.12.0
+     * @since   LBR 0.6.0-beta  Renamed $data param to $tabs
      */
 
-    public static function page_tabs( array $data, string $default ): void {
+     public static function page_tabs( array $tabs, string $default ): void {
         echo "<ul class='general_page_tab'>";
-        foreach ( $data as $name => $link ) {
-            $tab = explode( '=', $link )[array_key_last ( explode( '=', $link ) )];
-            $selected = isset( $_GET['t'] ) && $_GET['t'] == $tab ? '' : ' tab_not_selected';
-            $selected = !isset( $_GET['t'] ) && $tab == $default ? '' : $selected;
+        foreach ( $tabs as $name => $link ) {
+            $selected = ' tab_not_selected';
+            if ( is_null( Config::$payload->current_page['tab'] ) && $link === $default ) {
+                $selected = '';
+            } else {
+                $selected = Config::$payload->current_page['tab'] === $link ? '' : ' tab_not_selected';
+            }
+            $link = '/' . Config::$payload->current_page['page'] . '/' . Config::$payload->current_page['subpage'] . '/' . $link;
             echo "<a href={$link}><li class='tab{$selected}'>{$name}</li></a>";
         }
         echo "<li class='tab_last_element'></li>";
