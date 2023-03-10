@@ -4,7 +4,7 @@ namespace LBF\Tools\PDF;
 
 use TCPDF;
 use Exception;
-use App\Templates\PDF\CustomHeaderFooter;
+use PDF\Templates\CustomHeaderFooter;
 
 /**
  * Class to interface with TCPDF and to simplify the generation of PDFs.
