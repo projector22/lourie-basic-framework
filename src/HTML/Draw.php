@@ -574,7 +574,7 @@ class Draw extends HTMLMeta {
      * @since   LBR 0.6.0-beta  Renamed $data param to $tabs
      */
 
-     public static function page_tabs( array $tabs, string $default ): void {
+    public static function page_tabs( array $tabs, string $default ): void {
         echo "<ul class='general_page_tab'>";
         foreach ( $tabs as $name => $link ) {
             $selected = ' tab_not_selected';
