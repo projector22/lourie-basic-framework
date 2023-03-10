@@ -565,7 +565,7 @@ class Draw extends HTMLMeta {
      * 
      * @param   array   $tabs       The data for each tab
      *                              Format: $name => $link
-     *                              $link format: PAGE . ?p=page&t=tab
+     *                              $link format: page/subpage/tab
      * @param   string  $default    The default tab, in case $_GET is not set
      * 
      * @static
