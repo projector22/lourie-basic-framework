@@ -91,7 +91,7 @@ export default class Ajax {
          * @since   LRS 3.13.0
          */
 
-        this.action_page = 'src/app/actions/ActionHandler.php';
+        this.action_page = 'src/actions/ActionHandler.php';
 
 
         /**
