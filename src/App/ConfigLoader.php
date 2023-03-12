@@ -30,6 +30,23 @@ class ConfigLoader {
 
 
     /**
+     * Add a file or files to skip when loading from directory.
+     * 
+     * @param   string|array    $skip   The file or files to skip.
+     * 
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public function skip( string|array $skip ): void {
+        if ( is_string( $skip ) ) {
+            $skip = [$skip];
+        }
+        $this->skip = array_merge( $this->skip, $skip );
+    }
+
+
+    /**
      * Load in nominated data into the `Config` object.
      * 
      * @param   array   $config     The data to load.
