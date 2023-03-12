@@ -75,7 +75,10 @@ class ConfigLoader {
             if ( in_array( $file, $this->skip ) ) {
                 continue;
             }
-            $config = array_merge( $config, require $file );
+            $new_data = require $dirname . '/' . $file;
+            if ( is_array( $new_data ) ) {
+                $config = array_merge( $config, $new_data );
+            }
         }
         if ( isset( $config['paths'] ) ) {
             foreach ( $config['paths'] as $key => $value ) {
