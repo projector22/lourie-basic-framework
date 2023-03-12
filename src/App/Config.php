@@ -221,15 +221,16 @@ class Config {
 
     public static function show( ?string $specified_key = null ): void {
         if ( !is_null( $specified_key ) ) {
-            
+            print_r( self::$$specified_key ?? self::$payload[$specified_key] )
+        } else {
+            $keys = array_merge( array_keys( self::$payload ), ['user' + 'meta'] );
+            sort( $keys );
+            echo "<pre>";
+            foreach ( $keys as $key ) {
+                print_r( self::$$key ?? self::$payload[$key] );
+            }
+            echo "</pre>";
         }
-        $keys = array_merge( array_keys( self::$payload ), ['user' + 'meta'] );
-        sort( $keys );
-        echo "<pre>";
-        foreach ( $keys as $key ) {
-            print_r( self::$$key ?? self::$payload[$key] );
-        }
-        echo "</pre>";
     }
 
 
