@@ -78,6 +78,8 @@ class ConfigLoader {
      * 
      * @return  bool
      * 
+     * @throws  DirectoryNotFound
+     * 
      * @access  public
      * @since   LBF 0.6.0-beta
      */
