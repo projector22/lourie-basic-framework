@@ -25,7 +25,7 @@
 
 | Package | Old | New |
 | ------- | --- | --- |
-| phpmailer/phpmailer | v6.6.5 | v6.7.1 |
+| phpmailer/phpmailer | v6.6.5 | v6.8.0 |
 | tecnickcom/tcpdf | 6.5.0 | 6.6.2 |
 
 ### Issues Closed
