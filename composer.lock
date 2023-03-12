@@ -946,16 +946,16 @@
         },
         {
             "name": "projector22/php-debuggin-tool",
-            "version": "1.0.7",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/projector22/php-debuggin-tools.git",
-                "reference": "c722bc8df8eedcee8f2584b9714ca8bd974a49e4"
+                "reference": "e4f4a45a6049333f912173748c69e4833f64eb53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/projector22/php-debuggin-tools/zipball/c722bc8df8eedcee8f2584b9714ca8bd974a49e4",
-                "reference": "c722bc8df8eedcee8f2584b9714ca8bd974a49e4",
+                "url": "https://api.github.com/repos/projector22/php-debuggin-tools/zipball/e4f4a45a6049333f912173748c69e4833f64eb53",
+                "reference": "e4f4a45a6049333f912173748c69e4833f64eb53",
                 "shasum": ""
             },
             "require": {
@@ -981,9 +981,9 @@
             "description": "Various php debugging tools",
             "support": {
                 "issues": "https://github.com/projector22/php-debuggin-tools/issues",
-                "source": "https://github.com/projector22/php-debuggin-tools/tree/1.0.7"
+                "source": "https://github.com/projector22/php-debuggin-tools/tree/1.1.0"
             },
-            "time": "2022-10-14T11:33:58+00:00"
+            "time": "2023-03-12T18:38:45+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -1953,5 +1953,5 @@
         "php": ">=8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }

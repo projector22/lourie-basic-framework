@@ -56,16 +56,39 @@ class Config {
         'block_robots'    => false,
     ];
 
-    public static object $meta;
+    const STATIC_ROUTES_DEFAULT = [];
+
+    public static array $meta;
+    public static array $static_routes;
 
 
-
+    /**
+     * Load in the default data to the Config object.
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
 
     public static function load_defaults(): void {
-        self::$meta = self::cast_as_object( self::META_DEFAULT );
+        self::$meta = self::META_DEFAULT;
+        self::$static_routes = self::cast_as_object( self::STATIC_ROUTES_DEFAULT );
     }
 
-    private static function cast_as_object( array|object $data ): object {
+
+    /**
+     * Converts the parsed data to an object if an array.
+     * 
+     * @param   array|object    $data   Data to convert to object.
+     * 
+     * @return  object
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function cast_as_object( array|object $data ): object {
         if ( is_array( $data ) ) {
             return (object)$data;
         }
@@ -73,10 +96,45 @@ class Config {
     }
 
 
-    public static function __callStatic( string $name, array $arguments ) {
-        if ( !isset( self::$payload[$name] ) ) {
-            throw new Exception( "")
+    /**
+     * Magic method for retrieving data from the Config object. This allows for the following example
+     * 
+     * ```php
+     * $data = ['cheese' => ['mouse' => ['trap']]];
+     * Config::load( $data );
+     * echo Config::cheese('mouse');
+     * ```
+     * 
+     * @param   string  $name
+     * @param   array   $arguments
+     * 
+     * @return  mixed
+     * 
+     * @throws  Exception
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function __callStatic( string $name, array $arguments ): mixed {
+        if ( !isset( self::$payload[$name] ) && !isset( self::$$name ) ) {
+            throw new Exception( "The method {$name} is not part of the Config." );
         }
+        if ( count( $arguments ) == 0 ) {
+            return self::$$name ?? self::$payload[$name];
+        }
+        $method = self::$$name ?? self::$payload[$name];
+        if ( is_object( $method ) ) {
+            if ( !isset( $method->{$arguments[0]} ) ) {
+                throw new Exception( "The key {$arguments[0]} is not in the method {$name}" );
+            }
+            return $method->{$arguments[0]};
+        }
+        if ( !isset( $method[$arguments[0]] ) ) {
+            throw new Exception( "The key {$arguments[0]} is not in the method {$name}" );
+        }
+        return $method[$arguments[0]];
     }
 
 
@@ -94,50 +152,59 @@ class Config {
      */
 
     public static function load( array $config, bool $overwrite = false ): void {
-        if ( !isset( self::$meta ) ) {
+        if ( !isset( self::$meta ) || !isset( self:: $static_routes ) ) {
             self::load_defaults();
         }
+
         foreach ( $config as $key => $value ) {
             if ( isset( self::$$key ) ) {
-                self::$$key = $value;
+                if ( $overwrite ) {
+                    self::$$key = $value;
+                } else {
+                    if ( is_array( self::$$key ) ) {
+                        // Merge arrays if that is being parsed
+                        if ( !is_array( $config ) ) {
+                            throw new Exception( "{$value} must be an array" );
+                        }
+                        self::$$key = array_merge( self::$$key, $value );
+                    } else if ( is_object( self::$$key ) ) {
+                        // Merge objects if that is being parsed.
+                        if ( !is_object( $value ) ) {
+                            throw new Exception( "{$value} must be a set of key => value pairs" );
+                        }
+                        foreach ( $value as $prop => $val ) {
+                            self::$$key->{$prop} = $val;
+                        }
+                    } else {
+                        // Overwrite if the data isn't an array or object
+                        self::$$key = $value;
+                    }
+                }
             } else {
-                self::$payload[$key] = $value;
+                if ( $overwrite || !isset( self::$payload[$key] ) ) {
+                    self::$payload[$key] = $value;
+                } else {
+                    if ( is_array( self::$payload[$key] ) ) {
+                        // Merge arrays if that is being parsed
+                        if ( !is_array( $config ) ) {
+                            throw new Exception( "{$value} must be an array" );
+                        }
+                        self::$payload[$key] = array_merge( self::$payload[$key], $value );
+                    } else if ( is_object( self::$payload[$key] ) ) {
+                        // Merge objects if that is being parsed.
+                        if ( !is_array( $value ) ) {
+                            throw new Exception( "{$value} must be a set of key => value pairs" );
+                        }
+                        foreach ( $value as $prop => $val ) {
+                            self::$payload[$key]->{$prop} = $val;
+                        }
+                    } else {
+                        // Overwrite if the data isn't an array or object
+                        self::$payload[$key] = $value;
+                    }
+                }
             }
         }
-
-
-
-
-
-
-
-
-        
-        // if ( !isset( self::$payload ) || $overwrite == true ) {
-        //     self::$payload = new stdClass;
-        //     self::$payload->meta = [
-        //         'app_name'        => 'YOUR APP NAME',
-        //         'description'     => 'A basic PHP Framework',
-        //         'project_version' => '0.1.0',
-        //         'project_status'  => '',
-        //         'page_title'      => 'Lourie Basic Framework',
-        //         'favicon'         => '',
-        //         'site_language'   => 'en',
-        //         'block_robots'    => false,
-        //     ];
-        //     self::$payload->static_routes = [];
-        // }
-        // foreach ( $config as $key => $value ) {
-        //     if ( $key == 'user' ) {
-        //         self::$user = $value;
-        //         continue;
-        //     }
-        //     if ( !isset( self::$payload->$key ) ) {
-        //         self::$payload->$key = $value;
-        //     } else {
-        //         self::$payload->$key = array_merge( self::$payload->$key, $value );
-        //     }
-        // }
     }
 
 
@@ -152,14 +219,16 @@ class Config {
      * @since   0.6.0-beta
      */
 
-    public static function show( ?string $key = null ): void {
-        echo "<pre>";
-        if ( !is_null( $key ) ) {
-            print_r( self::$payload->$key ?? 'Key not found.' );
-        } else {
-            print_r( self::$payload );
+    public static function show( ?string $specified_key = null ): void {
+        if ( !is_null( $specified_key ) ) {
+            
         }
-        print_r( self::$user );
+        $keys = array_merge( array_keys( self::$payload ), ['user' + 'meta'] );
+        sort( $keys );
+        echo "<pre>";
+        foreach ( $keys as $key ) {
+            print_r( self::$$key ?? self::$payload[$key] );
+        }
         echo "</pre>";
     }
 
