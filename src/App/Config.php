@@ -211,7 +211,7 @@ class Config {
     /**
      * Dev tool - show all the data saved in the `Config::$payload` object.
      * 
-     * @param   string|null $key    Limit the data shown to only data indexed by this key.
+     * @param   string|null $specified_key    Limit the data shown to only data indexed by this key.
      *                              Default: null.
      * 
      * @static
@@ -221,7 +221,7 @@ class Config {
 
     public static function show( ?string $specified_key = null ): void {
         if ( !is_null( $specified_key ) ) {
-            print_r( self::$$specified_key ?? self::$payload[$specified_key] )
+            print_r( self::$$specified_key ?? self::$payload[$specified_key] );
         } else {
             $keys = array_merge( array_keys( self::$payload ), ['user' + 'meta'] );
             sort( $keys );
