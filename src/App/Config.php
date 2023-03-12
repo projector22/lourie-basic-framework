@@ -44,6 +44,39 @@ class Config {
 
     public static object $user;
 
+    private static array $meta_default = [
+        'app_name'        => 'YOUR APP NAME',
+        'description'     => 'A basic PHP Framework',
+        'project_version' => '0.1.0',
+        'project_status'  => '',
+        'page_title'      => 'Lourie Basic Framework',
+        'favicon'         => '',
+        'site_language'   => 'en',
+        'block_robots'    => false,
+    ];
+
+    public static object $meta;
+
+
+
+    public function __set( string $name, mixed $value ): void {
+        if ( !isset( self::$meta ) ) {
+            self::load_defaults();
+        }
+        $this->properties[$name] = $value;
+    }
+
+    public static function load_defaults(): void {
+        self::$meta = self::cast_as_object( self::$meta_default );
+    }
+
+    private static function cast_as_object( array|object $data ): object {
+        if ( is_array( $data ) ) {
+            return (object)$data;
+        }
+        return $data;
+    }
+
 
     /**
      * Load any config data into the `Config::$payload` object.
@@ -58,6 +91,17 @@ class Config {
      */
 
     public static function load( array $config, bool $overwrite = false ): void {
+
+
+
+
+
+
+
+
+
+
+        
         if ( !isset( self::$payload ) || $overwrite == true ) {
             self::$payload = new stdClass;
             self::$payload->meta = [
