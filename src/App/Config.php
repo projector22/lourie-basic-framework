@@ -3,6 +3,7 @@
 namespace LBF\App;
 
 use AllowDynamicProperties;
+use Exception;
 use stdClass;
 
 /**
@@ -23,14 +24,14 @@ class Config {
     /**
      * The payload used throughout the app.
      * 
-     * @var stdClass    $payload
+     * @var array    $payload
      * 
      * @static
      * @access  public
      * @since   LBF 0.6.0-beta
      */
 
-    public static stdClass $payload;
+    public static array $payload;
 
     /**
      * The object containing the user account object;
@@ -44,7 +45,7 @@ class Config {
 
     public static object $user;
 
-    private static array $meta_default = [
+    const META_DEFAULT = [
         'app_name'        => 'YOUR APP NAME',
         'description'     => 'A basic PHP Framework',
         'project_version' => '0.1.0',
@@ -59,15 +60,9 @@ class Config {
 
 
 
-    public function __set( string $name, mixed $value ): void {
-        if ( !isset( self::$meta ) ) {
-            self::load_defaults();
-        }
-        $this->properties[$name] = $value;
-    }
 
     public static function load_defaults(): void {
-        self::$meta = self::cast_as_object( self::$meta_default );
+        self::$meta = self::cast_as_object( self::META_DEFAULT );
     }
 
     private static function cast_as_object( array|object $data ): object {
@@ -76,6 +71,14 @@ class Config {
         }
         return $data;
     }
+
+
+    public static function __callStatic( string $name, array $arguments ) {
+        if ( !isset( self::$payload[$name] ) ) {
+            throw new Exception( "")
+        }
+    }
+
 
 
     /**
@@ -91,8 +94,16 @@ class Config {
      */
 
     public static function load( array $config, bool $overwrite = false ): void {
-
-
+        if ( !isset( self::$meta ) ) {
+            self::load_defaults();
+        }
+        foreach ( $config as $key => $value ) {
+            if ( isset( self::$$key ) ) {
+                self::$$key = $value;
+            } else {
+                self::$payload[$key] = $value;
+            }
+        }
 
 
 
@@ -102,31 +113,31 @@ class Config {
 
 
         
-        if ( !isset( self::$payload ) || $overwrite == true ) {
-            self::$payload = new stdClass;
-            self::$payload->meta = [
-                'app_name'        => 'YOUR APP NAME',
-                'description'     => 'A basic PHP Framework',
-                'project_version' => '0.1.0',
-                'project_status'  => '',
-                'page_title'      => 'Lourie Basic Framework',
-                'favicon'         => '',
-                'site_language'   => 'en',
-                'block_robots'    => false,
-            ];
-            self::$payload->static_routes = [];
-        }
-        foreach ( $config as $key => $value ) {
-            if ( $key == 'user' ) {
-                self::$user = $value;
-                continue;
-            }
-            if ( !isset( self::$payload->$key ) ) {
-                self::$payload->$key = $value;
-            } else {
-                self::$payload->$key = array_merge( self::$payload->$key, $value );
-            }
-        }
+        // if ( !isset( self::$payload ) || $overwrite == true ) {
+        //     self::$payload = new stdClass;
+        //     self::$payload->meta = [
+        //         'app_name'        => 'YOUR APP NAME',
+        //         'description'     => 'A basic PHP Framework',
+        //         'project_version' => '0.1.0',
+        //         'project_status'  => '',
+        //         'page_title'      => 'Lourie Basic Framework',
+        //         'favicon'         => '',
+        //         'site_language'   => 'en',
+        //         'block_robots'    => false,
+        //     ];
+        //     self::$payload->static_routes = [];
+        // }
+        // foreach ( $config as $key => $value ) {
+        //     if ( $key == 'user' ) {
+        //         self::$user = $value;
+        //         continue;
+        //     }
+        //     if ( !isset( self::$payload->$key ) ) {
+        //         self::$payload->$key = $value;
+        //     } else {
+        //         self::$payload->$key = array_merge( self::$payload->$key, $value );
+        //     }
+        // }
     }
 
 
