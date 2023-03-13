@@ -45,7 +45,7 @@ class Config {
 
     public static object $user;
 
-    const META_DEFAULT = [
+    private const META_DEFAULT = [
         'app_name'        => 'YOUR APP NAME',
         'description'     => 'A basic PHP Framework',
         'project_version' => '0.1.0',
@@ -56,7 +56,7 @@ class Config {
         'block_robots'    => false,
     ];
 
-    const STATIC_ROUTES_DEFAULT = [];
+    private const STATIC_ROUTES_DEFAULT = [];
 
     public static array $meta;
     public static array $static_routes;
@@ -223,11 +223,14 @@ class Config {
         if ( !is_null( $specified_key ) ) {
             print_r( self::$$specified_key ?? self::$payload[$specified_key] );
         } else {
-            $keys = array_merge( array_keys( self::$payload ), ['user', 'meta'] );
-            sort( $keys );
+            $keys = self::get_class_keys();
             echo "<pre>";
             foreach ( $keys as $key ) {
-                print_r( self::$$key ?? self::$payload[$key] );
+                if ( isset( self::$$key ) || isset( self::$payload[$key] ) ) {
+                    echo "<h3>{$key}</h3>";
+                    print_r( self::$$key ?? self::$payload[$key] );
+                    echo "<hr>";
+                }
             }
             echo "</pre>";
         }
@@ -243,13 +246,32 @@ class Config {
      */
 
     public static function keys(): void {
-        $keys = array_keys( get_object_vars( self::$payload ) );
+        $keys = self::get_class_keys();
         echo "<pre>";
         foreach ( $keys as $key ) {
             print_r( $key ."\n" );
         }
         print_r( '$user' ."\n" );
         echo "</pre>";
+    }
+
+
+    /**
+     * Get the keys used by the application config.
+     * 
+     * @return  array
+     * 
+     * @static
+     * @access  private
+     * @since   0.6.0-beta
+     */
+
+    private static function get_class_keys(): array {
+        $set_properties = get_class_vars( self::class );
+        unset( $set_properties['payload'] );
+        $keys = array_merge( array_keys( self::$payload ), array_keys( $set_properties ) );
+        sort( $keys );
+        return $keys;
     }
 
 }
