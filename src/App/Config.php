@@ -33,17 +33,15 @@ class Config {
 
     public static array $payload;
 
+
     /**
-     * The object containing the user account object;
+     * The default meta details of the current application.
      * 
-     * @var object  $user;
+     * @var array   META_DEFAULT
      * 
-     * @static
-     * @access  public
+     * @access  private
      * @since   LBF 0.6.0-beta
      */
-
-    public static object $user;
 
     private const META_DEFAULT = [
         'app_name'        => 'YOUR APP NAME',
@@ -56,10 +54,16 @@ class Config {
         'block_robots'    => false,
     ];
 
-    private const STATIC_ROUTES_DEFAULT = [];
+    /**
+     * The default static routes defined in the current application.
+     * 
+     * @var array   STATIC_ROUTES_DEFAULT
+     * 
+     * @access  private
+     * @since   LBF 0.6.0-beta
+     */
 
-    public static array $meta;
-    public static array $static_routes;
+    private const STATIC_ROUTES_DEFAULT = [];
 
 
     /**
@@ -71,8 +75,11 @@ class Config {
      */
 
     public static function load_defaults(): void {
-        self::$meta = self::META_DEFAULT;
-        self::$static_routes = self::STATIC_ROUTES_DEFAULT;
+        self::$payload = [
+            'meta' => self::META_DEFAULT,
+            'user' => null,
+            'static_routes' => self::STATIC_ROUTES_DEFAULT
+        ];
     }
 
 
@@ -97,13 +104,33 @@ class Config {
 
 
     /**
-     * Magic method for retrieving data from the Config object. This allows for the following example
+     * Check if a key exists within the config. In other words, will Config::$key() give a result.
+     * 
+     * @param   string  $key    The key to search for
+     * 
+     * @return  boolean
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function key_exists( string $key ): bool {
+        return array_key_exists( $key, self::$payload ) || property_exists( self::class, $key );
+    }
+
+
+    /**
+     * Magic method for retrieving data from the Config object. This allows for the following example:
      * 
      * ```php
      * $data = ['cheese' => ['mouse' => ['trap']]];
      * Config::load( $data );
      * echo Config::cheese('mouse');
      * ```
+     * 
+     * Note, if argument 1 is parsed, it should be a bool, and if true, the method will throw an exception rather
+     * than return null. Useful for debugging.
      * 
      * @param   string  $name
      * @param   array   $arguments
@@ -118,21 +145,30 @@ class Config {
      */
 
     public static function __callStatic( string $name, array $arguments ): mixed {
-        if ( !isset( self::$payload[$name] ) && !isset( self::$$name ) ) {
-            throw new Exception( "The method {$name} is not part of the Config." );
+        if ( !self::key_exists( $name ) ) {
+            if ( isset( $arguments[1] ) && $arguments[1] === true ) {
+                throw new Exception( "The method {$name} is not part of the Config." );
+            }
+            return null;
         }
         if ( count( $arguments ) == 0 ) {
             return self::$$name ?? self::$payload[$name];
         }
-        $method = self::$$name ?? self::$payload[$name];
+        $method = self::$payload[$name];
         if ( is_object( $method ) ) {
             if ( !isset( $method->{$arguments[0]} ) && !property_exists( $method, $arguments[0] ) ) {
-                throw new Exception( "The key {$arguments[0]} is not in the method {$name}" );
+                if ( isset( $arguments[1] ) && $arguments[1] === true ) {
+                    throw new Exception( "The key {$arguments[0]} is not in the method {$name}" );
+                }
+                return null;
             }
             return $method->{$arguments[0]};
         }
         if ( !isset( $method[$arguments[0]] ) && !array_key_exists( $arguments[0], $method ) ) {
-            throw new Exception( "The key {$arguments[0]} is not in the method {$name}" );
+            if ( isset( $arguments[1] ) && $arguments[1] === true ) {
+                throw new Exception( "The key {$arguments[0]} is not in the method {$name}" );
+            }
+            return null;
         }
         return $method[$arguments[0]];
     }
@@ -152,7 +188,7 @@ class Config {
      */
 
     public static function load( array $config, bool $overwrite = false ): void {
-        if ( !isset( self::$meta ) || !isset( self:: $static_routes ) ) {
+        if ( !isset( self::$payload ) ) {
             self::load_defaults();
         }
 
