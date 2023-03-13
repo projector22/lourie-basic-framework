@@ -37,7 +37,7 @@ class Router {
         ] );
 
         if ( $this->route == Routes::API || $this->route == Routes::HTTP ) {
-            if ( isset( $_SERVER['REDIRECT_URL'] ) && isset( Config::$payload->static_routes[$_SERVER['REDIRECT_URL']] ) ) {
+            if ( isset( $_SERVER['REDIRECT_URL'] ) && isset( Config::static_routes( $_SERVER['REDIRECT_URL'] ) ) ) {
                 /**
                  * Handle Static Routes.
                  * Any defined static routes should be defined in the config. They should call
@@ -54,7 +54,7 @@ class Router {
                  * 
                  * The above example will call the class Web\MousePage;
                  */
-                $this->path = [Config::$payload->static_routes[$_SERVER['REDIRECT_URL']]];
+                $this->path = [Config::static_routes( $_SERVER['REDIRECT_URL'] )];
                 $this->static_route = true;
             } else {
                 $this->path = array_values( 
@@ -130,15 +130,15 @@ class Router {
         $page->construct_page();
         $html = ob_get_clean();
 
-        $cookie->inject_cookies( ( Config::$payload->ENVIRONMENT  ?? AppMode::DEVELOPEMENT ) !== AppMode::DEVELOPEMENT );
+        $cookie->inject_cookies( ( Config::ENVIRONMENT()  ?? AppMode::DEVELOPEMENT ) !== AppMode::DEVELOPEMENT );
 
         $layout->init_header( 
-            Config::$payload->meta['page_title'], 
-            Config::$payload->meta['description'],
-            Config::$payload->meta['site_language'],
-            Config::$payload->meta['block_robots'],
+            Config::meta( 'page_title' ),
+            Config::meta( 'description' ),
+            Config::meta( 'site_language' ),
+            Config::meta( 'block_robots' ),
         );
-        $layout->set_favicon( Config::$payload->meta['favicon'] );
+        $layout->set_favicon( Config::meta( 'favicon' ) );
         $layout->append_to_header( $injector->insert_css( PagePositions::IN_HEAD ) );
         $layout->append_to_header( $injector->insert_js( PagePositions::IN_HEAD ) );
         $layout->render_header();

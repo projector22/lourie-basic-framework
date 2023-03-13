@@ -578,12 +578,12 @@ class Draw extends HTMLMeta {
         echo "<ul class='general_page_tab'>";
         foreach ( $tabs as $name => $link ) {
             $selected = ' tab_not_selected';
-            if ( is_null( Config::$payload->current_page['tab'] ) && $link === $default ) {
+            if ( is_null( Config::current_page( 'tab' ) ) && $link === $default ) {
                 $selected = '';
             } else {
-                $selected = Config::$payload->current_page['tab'] === $link ? '' : ' tab_not_selected';
+                $selected = Config::current_page( 'tab' ) === $link ? '' : ' tab_not_selected';
             }
-            $link = '/' . Config::$payload->current_page['page'] . '/' . Config::$payload->current_page['subpage'] . '/' . $link;
+            $link = '/' . Config::current_page( 'page' ) . '/' . Config::current_page( 'subpage' ) . '/' . $link;
             echo "<a href={$link}><li class='tab{$selected}'>{$name}</li></a>";
         }
         echo "<li class='tab_last_element'></li>";

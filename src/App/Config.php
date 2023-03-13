@@ -8,7 +8,7 @@ use stdClass;
 
 /**
  * Class for holding the payload of config files to be used by the app.
- * Load in a config array and it should be available via `Config::$payload->my_key` throughout the app.
+ * Load in a config array and it should be available via `Config::my_key()` throughout the app.
  * 
  * use LBF\App\Config;
  * 
