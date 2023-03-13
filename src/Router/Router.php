@@ -37,7 +37,7 @@ class Router {
         ] );
 
         if ( $this->route == Routes::API || $this->route == Routes::HTTP ) {
-            if ( isset( $_SERVER['REDIRECT_URL'] ) && isset( Config::static_routes( $_SERVER['REDIRECT_URL'] ) ) ) {
+            if ( isset( $_SERVER['REDIRECT_URL'] ) && isset( Config::static_routes()[$_SERVER['REDIRECT_URL']] ) ) {
                 /**
                  * Handle Static Routes.
                  * Any defined static routes should be defined in the config. They should call
@@ -82,7 +82,6 @@ class Router {
                 ],
                 'http_method' => $this->http_method,
             ] );
-
         }
     }
 

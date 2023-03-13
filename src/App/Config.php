@@ -126,12 +126,12 @@ class Config {
         }
         $method = self::$$name ?? self::$payload[$name];
         if ( is_object( $method ) ) {
-            if ( !isset( $method->{$arguments[0]} ) ) {
+            if ( !isset( $method->{$arguments[0]} ) && !property_exists( $method, $arguments[0] ) ) {
                 throw new Exception( "The key {$arguments[0]} is not in the method {$name}" );
             }
             return $method->{$arguments[0]};
         }
-        if ( !isset( $method[$arguments[0]] ) ) {
+        if ( !isset( $method[$arguments[0]] ) && !array_key_exists( $arguments[0], $method ) ) {
             throw new Exception( "The key {$arguments[0]} is not in the method {$name}" );
         }
         return $method[$arguments[0]];
