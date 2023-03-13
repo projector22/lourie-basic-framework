@@ -211,8 +211,8 @@ class Config {
     /**
      * Dev tool - show all the data saved in the `Config::$payload` object.
      * 
-     * @param   string|null $specified_key    Limit the data shown to only data indexed by this key.
-     *                              Default: null.
+     * @param   string|null $specified_key  Limit the data shown to only data indexed by this key.
+     *                                      Default: null.
      * 
      * @static
      * @access  public
