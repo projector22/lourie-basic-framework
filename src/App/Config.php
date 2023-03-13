@@ -221,6 +221,7 @@ class Config {
 
     public static function show( ?string $specified_key = null ): void {
         if ( !is_null( $specified_key ) ) {
+            echo "<h3>{$specified_key}</h3>";
             print_r( self::$$specified_key ?? self::$payload[$specified_key] );
         } else {
             $keys = self::get_class_keys();
