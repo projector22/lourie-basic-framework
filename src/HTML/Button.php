@@ -3,6 +3,7 @@
 namespace LBF\HTML;
 
 use Feather\Icons;
+use LBF\App\Config;
 use LBF\Auth\Hash;
 use LBF\Errors\IO\InvalidInput;
 use LBF\Errors\IO\MissingRequiredInput;
@@ -417,11 +418,11 @@ class Button extends HTMLMeta {
      */
 
     public static function reset( array $params = [] ): string {
-        $tab = isset ( $params['tab'] ) ? "&t={$params['tab']}" : '';
+        $path = implode( '/', Config::current_page() );
         if ( isset ( $params['onclick'] ) ) {
-            $params['onclick'] .= " window.location.search=`?p={$_GET['p']}{$tab}`";
+            $params['onclick'] .= " window.location=`/{$path}`";
         } else {
-            $params['onclick'] = "window.location.search=`?p={$_GET['p']}{$tab}`";
+            $params['onclick'] = "window.location=`/{$path}`";
         }
         $button = self::do_button( $params, 'Reset', 'blue' );
 
