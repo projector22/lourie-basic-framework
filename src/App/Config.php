@@ -72,7 +72,7 @@ class Config {
 
     public static function load_defaults(): void {
         self::$meta = self::META_DEFAULT;
-        self::$static_routes = self::cast_as_object( self::STATIC_ROUTES_DEFAULT );
+        self::$static_routes = self::STATIC_ROUTES_DEFAULT;
     }
 
 
@@ -223,7 +223,7 @@ class Config {
         if ( !is_null( $specified_key ) ) {
             print_r( self::$$specified_key ?? self::$payload[$specified_key] );
         } else {
-            $keys = array_merge( array_keys( self::$payload ), ['user' + 'meta'] );
+            $keys = array_merge( array_keys( self::$payload ), ['user', 'meta'] );
             sort( $keys );
             echo "<pre>";
             foreach ( $keys as $key ) {
