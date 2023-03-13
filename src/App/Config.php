@@ -104,6 +104,45 @@ class Config {
 
 
     /**
+     * The general idea here is to take an already existing value in the config and modify it.
+     * 
+     * ### Example
+     * 
+     * ```php
+     * Config::env('cheese') == 'Cake'; // true
+     * Config::set_value('env', 'cheese', 'mouse');
+     * Config::env('cheese') == 'Cake'; // false
+     * echo Config::env('cheese'); // 'mouse'
+     * ```
+     * 
+     * @param   mixed       $new_value  The new value to inject into the Config.
+     * @param   string      $method     The already defined method in the config.
+     * @param   string|null $key        The subvalue of the $method. May be parsed as null if the $method is simple data (an int, string bool etc).
+     * 
+     * @return  bool
+     * 
+     * @throws  Exception
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function set_value( mixed $new_value, string $method, ?string $key = null ): bool {
+        if ( !isset( self::$payload[$method] ) ) {
+            throw new Exception( "Key {$method} is not in the config." );
+        }
+        if ( $key === null ) {
+            self::$payload[$method] = $new_value;
+            return true;
+        } else {
+            self::$payload[$method][$key] = $new_value;
+            return true;
+        }
+    }
+
+
+    /**
      * Check if a key exists within the config. In other words, will Config::$key() give a result.
      * 
      * @param   string  $key    The key to search for
