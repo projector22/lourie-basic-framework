@@ -16,4 +16,5 @@ enum AppMode: int {
     case PRODUCTION = 0;
     case MAINTENANCE = 1;
     case DEVELOPEMENT = 2;
+    case ARCHIVE = 3;
 }
