@@ -2,6 +2,7 @@
 
 namespace LBF\Tools\JSON;
 
+use Exception;
 use LBF\HTML\Draw;
 
 /**
@@ -37,21 +38,27 @@ class JSONTools {
      * @param   string  $file   The file path of the JSON file to write
      * @param   array   $data   The data to be converted to be encoded and written to file
      * 
+     * @return  boolean
+     * 
      * @access  public
      * @since   LRS 3.8.0
      */
 
-    public static function write_json_file( string $file, array $data ): void {
-        $json = json_encode( $data, JSON_PRETTY_PRINT );
-
-        // Write data to file
-        $new_config_write = fopen( $file, 'w' );
-        fwrite( $new_config_write, $json );
-        fclose( $new_config_write );
+    public static function write_json_file( string $file, array $data ): bool {
         try {
-            @chmod( $file, 0664 );
-        } catch ( \Exception $e ) {
-            echo "Unable to set file permissions";
+            $json = json_encode( $data, JSON_PRETTY_PRINT );
+    
+            // Write data to file
+            $new_config_write = fopen( $file, 'w' );
+            fwrite( $new_config_write, $json );
+            fclose( $new_config_write );
+            try {
+                return @chmod( $file, 0664 );
+            } catch ( Exception ) {
+                return false;
+            }
+        } catch ( Exception ) {
+            return false;
         }
     }
 
