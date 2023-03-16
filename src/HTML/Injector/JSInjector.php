@@ -88,6 +88,8 @@ trait JSInjector {
 
 
     /**
+     * @todo    ADD PARAM (Add TIMESTAMP)
+     * 
      * Insert a Javascript CDN into the website.
      * 
      * ```php
