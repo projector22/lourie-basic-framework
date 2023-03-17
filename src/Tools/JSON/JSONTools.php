@@ -202,11 +202,11 @@ class JSONTools {
      * 
      * @return  array
      * 
-     * @access  private
+     * @access  public
      * @since   LRS 3.14.4
      */
 
-    private static function check_values( array $master_data, array $live_data ): array {
+    public static function check_values( array $master_data, array $live_data ): array {
         $hold = [];
         foreach ( $master_data as $index => $value ) {
             if ( is_array( $value ) ) {
