@@ -1,0 +1,7 @@
+<?php
+
+namespace LBF\Tools\JSON;
+
+interface AppJsonInterface {
+  // Template of those enums with class JSON data.
+}
