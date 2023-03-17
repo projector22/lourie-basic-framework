@@ -2,7 +2,7 @@
 
 namespace LBF\Tools\JSON;
 
-interface RetrieveData {
+trait RetrieveData {
 
     public function data_as_array(): array {
         return JSONTools::read_json_file_to_array( $this->path() );
