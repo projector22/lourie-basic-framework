@@ -88,8 +88,6 @@ trait JSInjector {
 
 
     /**
-     * @todo    ADD PARAM (Add TIMESTAMP)
-     * 
      * Insert a Javascript CDN into the website.
      * 
      * ```php
@@ -136,6 +134,21 @@ trait JSInjector {
 
 
     /**
+     * inject the import map module.
+     * 
+     * @param   string  $map    JSON encoded import map.
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function inject_module_map( string $map ): void {
+        self::$injected_js[PagePositions::IN_HEAD->id()]['map'] = $map;
+    }
+
+
+    /**
      * Insert the Javascript elements into the parsed part of the page.
      * 
      * @param   PagePositions   $position   The position to insert the styles.
@@ -149,6 +162,10 @@ trait JSInjector {
      public function insert_js( PagePositions $position ): string {
         $js = '';
         if ( isset( self::$injected_js ) ) {
+            if ( $position === PagePositions::IN_HEAD && self::$injected_js[$position->id()]['map'] !== null ) {
+                $js .= $this->insert_module_map( self::$injected_js[$position->id()]['map'] );
+            }
+
             $raw = $this->remove_duplicates( self::$injected_js[$position->id()]['raw'] );
             $insert = $this->merge( $raw );
             if ( $insert !== '' ) {
@@ -158,6 +175,22 @@ trait JSInjector {
             $js .= $this->merge( $cdn );
         }
         return $js;
+    }
+
+
+    /**
+     * Return the script tags for inserting the module map.
+     * 
+     * @param   string  $map    json string import module map.
+     * 
+     * @return  string
+     * 
+     * @access  private
+     * @since   LBF 0.6.0-beta
+     */
+
+    private function insert_module_map( string $map ): string {
+        return "<script type='importmap'>{$map}</script>";
     }
 
 }

@@ -26,6 +26,7 @@ trait InjectorMeta {
     protected static function set_default_data(): array {
         return [
             PagePositions::IN_HEAD->id() => [
+                'map' => null,
                 'raw' => [],
                 'cdn' => [],
             ],

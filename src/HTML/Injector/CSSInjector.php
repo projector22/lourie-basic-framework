@@ -91,8 +91,6 @@ trait CSSInjector {
 
 
     /**
-     * @todo    ADD PARAM (Add TIMESTAMP)
-     * 
      * Insert a CSS CDN into the website.
      * 
      * ```php
