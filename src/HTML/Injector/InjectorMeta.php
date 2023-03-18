@@ -101,6 +101,9 @@ trait InjectorMeta {
      */
 
     protected static function add_timestamp( string $path ): string {
+        if ( $path[0] === '/' ) {
+            $path = substr( $path, 1 );
+        }
         return '?v=' . timestamp_cache_validation( $path );
     }
 
