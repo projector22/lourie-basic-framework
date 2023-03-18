@@ -87,4 +87,21 @@ trait InjectorMeta {
         $this->insert_css( $position );
     }
 
+
+    /**
+     * Return the timestamp uri component for validating file cache.
+     * 
+     * @param   string  $path   The path to the file being validated.
+     * 
+     * @return  string  Validation URI
+     * 
+     * @static
+     * @access  protected
+     * @since   LBF 0.6.0-beta
+     */
+
+    protected static function add_timestamp( string $path ): string {
+        return '?v=' . timestamp_cache_validation( $path );
+    }
+
 }

@@ -107,7 +107,14 @@ trait JSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function inject_js_cdn( string $url, PagePositions $position = PagePositions::IN_HEAD, bool $async = false, bool $defer = false, bool $module = false ): void {
+    public static function inject_js_cdn(
+        string $url,
+        PagePositions $position = PagePositions::IN_HEAD,
+        bool $async = false,
+        bool $defer = false,
+        bool $module = false,
+        bool $timestamp = false
+    ): void {
         if ( !isset( self::$injected_js ) ) {
             self::$injected_js = self::set_default_data();
         }
@@ -120,6 +127,9 @@ trait JSInjector {
         }
         if ( $module ) {
             $insert_module = " type='module'";
+        }
+        if ( $timestamp ) {
+            $url .= self::add_timestamp( $url );
         }
         self::$injected_js[$position->id()]['cdn'][] = "<script src='{$url}'{$insert_async}{$insert_defer}{$insert_module}></script>";
     }

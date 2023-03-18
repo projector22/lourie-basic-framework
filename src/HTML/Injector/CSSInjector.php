@@ -107,9 +107,12 @@ trait CSSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function inject_css_cdn( string $url, PagePositions $position = PagePositions::IN_HEAD ): void {
+    public static function inject_css_cdn( string $url, PagePositions $position = PagePositions::IN_HEAD, bool $timestamp = false ): void {
         if ( !isset( self::$injected_styles ) ) {
             self::$injected_styles = self::set_default_data();
+        }
+        if ( $timestamp ) {
+            $url .= self::add_timestamp( $url );
         }
         self::$injected_styles[$position->id()]['cdn'][] = "<link rel='stylesheet' href='{$url}'>";
     }
