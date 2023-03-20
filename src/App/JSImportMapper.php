@@ -2,25 +2,83 @@
 
 namespace LBF\App;
 
+/**
+ * Tools for generating a Javascript `<script type='importmap'>` tags. Includes default tags for LBF
+ * 
+ * Should be used as follows:
+ * 
+ * ```php
+ * JSImportMapper::import([
+ *  'example' => '../../../example-path.js'
+ *  ...
+  * ])->render();
+ * ```
+ * 
+ * use LBF\App\JSImportMapper;
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   LBF 0.6.0-beta
+ */
+
 class JSImportMapper {
 
-    const LRS_MAP = [
+    /**
+     * List of mappings used by LBF JS libraries.
+     * 
+     * @var array   LBF_MAP
+     * 
+     * @access  private
+     * @since   LBF 0.6.0-beta
+     */
 
+    private const LBF_MAP = [
+        'lrs-ajax' => '../../../../vendor/projector22/lourie-basic-framework/src/js/ajax.js',
     ];
 
+    /**
+     * The complete map in the form of an array. Will be JSON encoded.
+     * 
+     * @var array   $map
+     * 
+     * @access  private
+     * @since   LBF 0.6.0-beta
+     */
+
     private array $map;
+
+
+    /**
+     * Method for class instantiation and setting of mapping data.
+     * 
+     * @param   array   $map    User's custom mapping data.
+     * 
+     * @return  JSImportMapper
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
 
     public static function import( array $map ): JSImportMapper {
         $class = __CLASS__;
         $this_obj = new $class;
-        $class->map = array_merge(
-            self::LRS_MAP,
+        $this_obj->map = array_merge(
+            self::LBF_MAP,
             $map,
         );
         return $this_obj;
     }
 
-    public function render(): void {
-        return json_encode( ['import' => $this->map] );
+
+    /**
+     * Returns the the JSON encoded complete mapping data.
+     * 
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public function render(): string {
+        return json_encode( ['imports' => $this->map] );
     }
 }
