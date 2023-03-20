@@ -1126,8 +1126,9 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $params['content'] = 'Choose File';
         }
 
+        $rand_id = Hash::random_id_string();
         if ( !isset( $params['id'] ) ) {
-            $params['id'] = 'upl_' . Hash::random_id_string();
+            $params['id'] = 'upl_' . $rand_id;
         }
 
         $params['type'] = 'file';
@@ -1161,7 +1162,12 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         $item .= self::element_hint( $params );
         $item .= "</div>";
 
-        JS::script_module( "import UploaderElement from './vendor/projector22/lourie-basic-framework/src/js/uploader_element.js';\nconst upload = new UploaderElement('{$params['id']}');" );
+        HTML::inject_js(<<<JS
+            import UploaderElement from '../vendor/projector22/lourie-basic-framework/src/js/uploader_element.js';
+        JS );
+        HTML::inject_js(<<<JS
+            const upload_{$rand_id} = new UploaderElement('{$params['id']}');
+        JS );
 
         self::handle_echo( $item, $params );
         return $item;
