@@ -124,7 +124,9 @@ class JS extends HTMLMeta {
      */
 
     public static function alert( string $text ): void {
-        self::script( "alert('{$text}')" );
+        HTML::inject_js( <<<JS
+        alert('{$text}');
+        JS );
     }
 
 
@@ -141,8 +143,9 @@ class JS extends HTMLMeta {
      */
 
     public static function clipboardButton( string $id = '.btn' ): void {
-        self::script_loader( 'src/js/thirdparty/clipboard.min.js' );
-        self::script( "const clipboard = new ClipboardJS('{$id}');" );
+        HTML::inject_js( <<<JS
+        const clipboard = new ClipboardJS('{$id}');
+        JS );
     }
 
 
@@ -189,12 +192,14 @@ class JS extends HTMLMeta {
      */
 
     public static function block_default_button_press( int $keycode = 13 ): void {
-        self::script( "window.addEventListener('keydown', function (event) {
+        HTML::inject_js( <<<JS
+        window.addEventListener('keydown', function (event) {
             if (event.keyCode === $keycode) {
                 event.preventDefault();
                 return false;
             }
-        });" );
+        });
+        JS );
     }
 
 
@@ -254,10 +259,14 @@ class JS extends HTMLMeta {
          * 
          * @todo    Make this universal for library & LRS.
          */
-        self::script_module( "import { $desired_function } from './src/js/lib/keyboard_shortcuts.js';
+        HTML::inject_js( <<<JS
+        import { $desired_function } from '../src/js/lib/keyboard_shortcuts.js';
+        JS );
+        HTML::inject_js( <<<JS
         document.addEventListener('keydown', function(event) {
             $desired_function(event);
-        });" );
+        });
+        JS );
     }
 
 
@@ -268,14 +277,18 @@ class JS extends HTMLMeta {
      * @access  public
      * @since   LRS 3.6.4
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts
+     * @since   LBF 0.6.0-beta  Revamped to use HTML::inject_js
      */
 
     public static function insert_shift_multiselect(): void {
         $id = 'sm' . Hash::random_id_string();
-        self::script_module( "
-import Table_Filter from './vendor/projector22/lourie-basic-framework/src/js/table_filters.js';
-const $id = new Table_Filter;
-$id.shift_multiselect();" );
+        HTML::inject_js(<<<JS
+            import Table_Filter from '../vendor/projector22/lourie-basic-framework/src/js/table_filters.js';        
+        JS);
+        HTML::inject_js(<<<JS
+            const $id = new Table_Filter;
+            $id.shift_multiselect();        
+        JS);
     }
 
 }

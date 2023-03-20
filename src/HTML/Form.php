@@ -193,8 +193,6 @@ class Form extends HTMLMeta {
         if ( isset ( $params['validate'] ) || isset ( $params['required'] ) && $params['required'] ) {
             $item .= "<div id='{$params['id']}__validation_feedback' class='std_validation_feedback'></div>";
 
-            $hold = JS::temporary_change_echo( false );
-
             $validate = [];
             $nil_value = '';
 
@@ -213,12 +211,13 @@ class Form extends HTMLMeta {
             }
             $validate  = json_encode( $validate );
             $validator = 'validator' . Hash::random_id_string( 5 );
-            $item .= JS::script_module( "
-import Input_Validation from './vendor/projector22/lourie-basic-framework/src/js/input_validation.js';
-const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__validation_feedback', '{$nil_value}');
-{$validator}.general_validator({$validate});"
-            );
-            JS::restore_origonal_echo( $hold );
+            HTML::inject_js( <<<JS
+            import Input_Validation from '../vendor/projector22/lourie-basic-framework/src/js/input_validation.js';
+            JS );
+            HTML::inject_js( <<<JS
+            const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__validation_feedback', '{$nil_value}');
+            {$validator}.general_validator({$validate});            
+            JS );
         }
         return $item;
     }
@@ -620,15 +619,15 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
             $div_id = Hash::random_id_string( 7 );
             $input = 'counter' . Hash::random_id_string( 5 );
             $item .= "<div id='{$div_id}' class='text_area_counter'></div>";
-            $hold = JS::temporary_change_echo( false );
-            $item .= JS::script_module( "
-                import { text_area_text_counter } from './vendor/projector22/lourie-basic-framework/src/js/forms.js';
-                const $input = document.getElementById('{$params['id']}');
+            HTML::inject_js( <<<JS
+            import { text_area_text_counter } from '../vendor/projector22/lourie-basic-framework/src/js/forms.js';
+            JS );
+            HTML::inject_js( <<<JS
+            const $input = document.getElementById('{$params['id']}');
                 $input.addEventListener('keyup', function(event) {
                     text_area_text_counter('{$params['id']}', '{$div_id}')
-                });"
-            );
-            JS::restore_origonal_echo( $hold );
+                });
+            JS );
         }
 
         /**
@@ -1085,13 +1084,14 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
         $element .= "<input type='checkbox' class='drawer_checkbox'>";
         $element .= $svg->return();
         $element .= HTML::close_span();
-        $hold1 = JS::temporary_change_echo( true );
-        JS::script_module( "
-        import { show_hide } from './vendor/projector22/lourie-basic-framework/src/js/ui.js';
+        HTML::inject_js(<<<JS
+        import { show_hide } from '../vendor/projector22/lourie-basic-framework/src/js/ui.js';
+        JS );
+        HTML::inject_js(<<<JS
         document.getElementById('$element_id').onclick = function () {
             show_hide('$show_hide_id');
-        };" );
-        JS::restore_origonal_echo( $hold1 );
+        };        
+        JS );
         HTML::restore_origonal_echo( $hold );
         self::handle_echo( $element );
         return $element;
@@ -1319,11 +1319,12 @@ const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__va
 
         HTML::close_div();
 
-        Scripts::script_module( "
-        import {handle_column_changes} from './vendor/projector22/lourie-basic-framework/src/js/forms.js';
+        HTML::inject_js( <<<JS
+        import {handle_column_changes} from '../vendor/projector22/lourie-basic-framework/src/js/forms.js';
+        JS );
+        HTML::inject_js( <<<JS
         handle_column_changes('{$id}');
-        " );
-
+        JS );
         HTML::close_div(); // multi_class_selector_container $id
         self::restore_origonal_echo( $hold );
     }
