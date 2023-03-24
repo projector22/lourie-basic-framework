@@ -667,20 +667,18 @@ class Draw extends HTMLMeta {
          * 
          * @since   LRS 3.15.0
          * 
-         * @todo    Install via npm
-         * @todo    Try get composer to manage this so that it's not so dramatic
          */
-        JS::script_module( "
-            import Sortable from 'sortablejs';
-            const el = document.getElementById('draggable_container{$id}');
-            const sortable = Sortable.create(el, {
-                swap: true,
-                swapClass: 'highlight',
-                animation: 150,
-                ghostClass: 'draggable_ghost',
-                handle: '.de_grabber{$id}',
-            });"
-        );
+        HTML::inject_js( <<<JS
+        import Sortable from 'lrs-sortablejs';
+        const el = document.getElementById('draggable_container{$id}');
+        const sortable = Sortable.create(el, {
+            swap: true,
+            swapClass: 'highlight',
+            animation: 150,
+            ghostClass: 'draggable_ghost',
+            handle: '.de_grabber{$id}',
+        });        
+        JS );
     }
 
 
