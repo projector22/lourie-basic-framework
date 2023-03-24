@@ -162,16 +162,19 @@ class JS extends HTMLMeta {
      * @since   LRS 3.2.2
      * @since   LRS 3.4.5   $do_nothing added
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts
+     * @since   LBF 0.6.0-beta  Fixed bug with `$do_nothing`.
      */
 
-    public static function change_button_behaviour( string $input, string $button, int $keycode = 13, bool $do_nothing = false ): void {
+     public static function change_button_behaviour( string $input, string $button, int $keycode = 13, bool $do_nothing = false ): void {
         $id = Hash::random_id_string(4);
+        $do_nothing = $do_nothing ? 1 : 0;
         HTML::inject_js(<<<JS
             const input{$id} = document.getElementById('{$input}');
             input{$id}.addEventListener('keyup', event => {
                 if (event.keyCode === $keycode) {
                     event.preventDefault();
-                    if (!$do_nothing) {
+                    const do_nothing = $do_nothing;
+                    if (do_nothing === 0) {
                         document.getElementById('$button').click();
                     }
                 }
