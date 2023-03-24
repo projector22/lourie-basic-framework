@@ -260,7 +260,7 @@ class JS extends HTMLMeta {
          * @todo    Make this universal for library & LRS.
          */
         HTML::inject_js( <<<JS
-        import { $desired_function } from '../src/js/lib/keyboard_shortcuts.js';
+        import { $desired_function } from 'lrs-keyboard-shortcuts';
         JS );
         HTML::inject_js( <<<JS
         document.addEventListener('keydown', function(event) {
@@ -283,11 +283,11 @@ class JS extends HTMLMeta {
     public static function insert_shift_multiselect(): void {
         $id = 'sm' . Hash::random_id_string();
         HTML::inject_js(<<<JS
-            import Table_Filter from '../vendor/projector22/lourie-basic-framework/src/js/table_filters.js';        
+            import Table_Filter from 'lrs-table-filters';
         JS);
         HTML::inject_js(<<<JS
             const $id = new Table_Filter;
-            $id.shift_multiselect();        
+            $id.shift_multiselect();
         JS);
     }
 

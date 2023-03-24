@@ -33,7 +33,15 @@ class JSImportMapper {
      */
 
     private const LBF_MAP = [
-        'lrs-ajax' => '../../../../vendor/projector22/lourie-basic-framework/src/js/ajax.js',
+        'lrs-ajax' => 'vendor/projector22/lourie-basic-framework/src/js/lib/ajax.js',
+
+        'lrs-keyboard-shortcuts' => 'vendor/projector22/lourie-basic-framework/src/js/lib/keyboard_shortcuts.js',
+        'lrs-table-filters'      => 'vendor/projector22/lourie-basic-framework/src/js/lib/table_filters.js',
+        'lrs-uploader-element'   => 'vendor/projector22/lourie-basic-framework/src/js/lib/uploader_element.js',
+        'lrs-forms'              => 'vendor/projector22/lourie-basic-framework/src/js/lib/forms.js',
+        'lrs-input-validation'   => 'vendor/projector22/lourie-basic-framework/src/js/lib/input_validation.js',
+        'lrs-ui'                 => 'vendor/projector22/lourie-basic-framework/src/js/lib/ui.js',
+
     ];
 
     /**
@@ -46,6 +54,24 @@ class JSImportMapper {
      */
 
     private array $map;
+
+    private readonly array $lbf_map;
+
+    private readonly string $buffer;
+
+
+    public function __construct() {
+        if ( Config::current_page( 'tab' ) !== null ) {
+            $this->buffer = '../../../../../';
+        } else {
+            $this->buffer = '../../../../';
+        }
+        $map = [];
+        foreach ( self::LBF_MAP as $shortcut => $path ) {
+            $map[$shortcut] = $this->buffer . $path;
+        }
+        $this->lbf_map = $map;        
+    }
 
 
     /**
@@ -64,7 +90,7 @@ class JSImportMapper {
         $class = __CLASS__;
         $this_obj = new $class;
         $this_obj->map = array_merge(
-            self::LBF_MAP,
+            $this_obj->lbf_map,
             $map,
         );
         return $this_obj;

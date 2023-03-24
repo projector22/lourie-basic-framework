@@ -212,7 +212,7 @@ class Form extends HTMLMeta {
             $validate  = json_encode( $validate );
             $validator = 'validator' . Hash::random_id_string( 5 );
             HTML::inject_js( <<<JS
-            import Input_Validation from '../vendor/projector22/lourie-basic-framework/src/js/input_validation.js';
+            import Input_Validation from 'lrs-input-validation';
             JS );
             HTML::inject_js( <<<JS
             const {$validator} = new Input_Validation('{$params['id']}','{$params['id']}__validation_feedback', '{$nil_value}');
@@ -620,7 +620,7 @@ class Form extends HTMLMeta {
             $input = 'counter' . Hash::random_id_string( 5 );
             $item .= "<div id='{$div_id}' class='text_area_counter'></div>";
             HTML::inject_js( <<<JS
-            import { text_area_text_counter } from '../vendor/projector22/lourie-basic-framework/src/js/forms.js';
+            import { text_area_text_counter } from 'lrs-forms';
             JS );
             HTML::inject_js( <<<JS
             const $input = document.getElementById('{$params['id']}');
@@ -1085,7 +1085,7 @@ class Form extends HTMLMeta {
         $element .= $svg->return();
         $element .= HTML::close_span();
         HTML::inject_js(<<<JS
-        import { show_hide } from '../vendor/projector22/lourie-basic-framework/src/js/ui.js';
+        import { show_hide } from 'lrs-ui';
         JS );
         HTML::inject_js(<<<JS
         document.getElementById('$element_id').onclick = function () {
@@ -1163,7 +1163,7 @@ class Form extends HTMLMeta {
         $item .= "</div>";
 
         HTML::inject_js(<<<JS
-            import UploaderElement from '../vendor/projector22/lourie-basic-framework/src/js/uploader_element.js';
+            import UploaderElement from 'lrs-uploader-element';
         JS );
         HTML::inject_js(<<<JS
             const upload_{$rand_id} = new UploaderElement('{$params['id']}');
@@ -1320,7 +1320,7 @@ class Form extends HTMLMeta {
         HTML::close_div();
 
         HTML::inject_js( <<<JS
-        import {handle_column_changes} from '../vendor/projector22/lourie-basic-framework/src/js/forms.js';
+        import {handle_column_changes} from 'lrs-forms';
         JS );
         HTML::inject_js( <<<JS
         handle_column_changes('{$id}');
