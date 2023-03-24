@@ -245,7 +245,7 @@ class Table {
         JS::insert_shift_multiselect();
         if ( $this->select_all_checkbox ) {
             HTML::inject_js( <<<JS
-                import { select_all_checkboxes } from '../vendor/projector22/lourie-basic-framework/src/js/table_filters.js'
+                import { select_all_checkboxes } from 'lrs-table-filters'
             JS );
             HTML::inject_js( <<<JS
             document.getElementById('{$this->table_id}_select_all').onchange = function () {

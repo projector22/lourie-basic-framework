@@ -33,14 +33,30 @@ class JSImportMapper {
      */
 
     private const LBF_MAP = [
-        'lrs-ajax' => 'vendor/projector22/lourie-basic-framework/src/js/lib/ajax.js',
-
-        'lrs-keyboard-shortcuts' => 'vendor/projector22/lourie-basic-framework/src/js/lib/keyboard_shortcuts.js',
-        'lrs-table-filters'      => 'vendor/projector22/lourie-basic-framework/src/js/lib/table_filters.js',
-        'lrs-uploader-element'   => 'vendor/projector22/lourie-basic-framework/src/js/lib/uploader_element.js',
+        'lrs-ajax'               => 'vendor/projector22/lourie-basic-framework/src/js/lib/ajax.js',
+        'lrs-datetime'           => 'vendor/projector22/lourie-basic-framework/src/js/lib/datetime.js',
+        'lrs-filter'             => 'vendor/projector22/lourie-basic-framework/src/js/lib/filter.js',
         'lrs-forms'              => 'vendor/projector22/lourie-basic-framework/src/js/lib/forms.js',
+        'lrs-hash'               => 'vendor/projector22/lourie-basic-framework/src/js/lib/hash.js',
         'lrs-input-validation'   => 'vendor/projector22/lourie-basic-framework/src/js/lib/input_validation.js',
+        'lrs-loading'            => 'vendor/projector22/lourie-basic-framework/src/js/lib/loading.js',
+        'lrs-modal'              => 'vendor/projector22/lourie-basic-framework/src/js/lib/modal.js',
+        'lrs-mutations'          => 'vendor/projector22/lourie-basic-framework/src/js/lib/mutations.js',
+        'lrs-print'              => 'vendor/projector22/lourie-basic-framework/src/js/lib/print.js',
+        'lrs-responses'          => 'vendor/projector22/lourie-basic-framework/src/js/lib/responses.js',
+        'lrs-spreadsheetTool'    => 'vendor/projector22/lourie-basic-framework/src/js/lib/spreadsheetTool.js',
+        'lrs-SVGTool'            => 'vendor/projector22/lourie-basic-framework/src/js/lib/SVGTool.js',
+        'lrs-table-filters'      => 'vendor/projector22/lourie-basic-framework/src/js/lib/table_filters.js',
+        'lrs-tools'              => 'vendor/projector22/lourie-basic-framework/src/js/lib/tools.js',
         'lrs-ui'                 => 'vendor/projector22/lourie-basic-framework/src/js/lib/ui.js',
+        'lrs-uploader-element'   => 'vendor/projector22/lourie-basic-framework/src/js/lib/uploader_element.js',
+        'lrs-uri'                => 'vendor/projector22/lourie-basic-framework/src/js/lib/uri.js',
+        'lrs-validation'         => 'vendor/projector22/lourie-basic-framework/src/js/lib/validation.js',
+
+        /**
+         * This one needs to be moved to LRS
+         */
+        'lrs-keyboard-shortcuts' => 'vendor/projector22/lourie-basic-framework/src/js/lib/keyboard_shortcuts.js',
 
     ];
 
