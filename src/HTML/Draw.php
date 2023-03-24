@@ -668,10 +668,13 @@ class Draw extends HTMLMeta {
          * @since   LRS 3.15.0
          * 
          */
+        $rand_id = Hash::random_id_string();
         HTML::inject_js( <<<JS
         import Sortable from 'lrs-sortablejs';
-        const el = document.getElementById('draggable_container{$id}');
-        const sortable = Sortable.create(el, {
+        JS );
+        HTML::inject_js( <<<JS
+        const el{$rand_id} = document.getElementById('draggable_container{$id}');
+        const sortable{$rand_id} = Sortable.create(el{$rand_id}, {
             swap: true,
             swapClass: 'highlight',
             animation: 150,
