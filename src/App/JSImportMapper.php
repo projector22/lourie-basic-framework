@@ -62,7 +62,7 @@ class JSImportMapper {
          * 3rd Party
          */
 
-        'lrs-sortablejs' => 'vendor/projector22/lourie-basic-framework/node_modules/sortablejs/Sortable.min.js',
+        'lrs-sortablejs' => 'vendor/projector22/lourie-basic-framework/node_modules/sortablejs/modular/sortable.esm.js',
 
     ];
 
