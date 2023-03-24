@@ -26,13 +26,5 @@
     "require-dev": {
         "projector22/php-debuggin-tool": "^1.0",
         "phpunit/phpunit": "^10.0"
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "php vendor/projector22/lourie-basic-framework/install/post-install.php"
-        ],
-        "post-update-cmd": [
-            "php vendor/projector22/lourie-basic-framework/install/post-update.php"
-        ]
     }
 }
