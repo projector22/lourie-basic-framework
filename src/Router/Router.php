@@ -26,15 +26,16 @@ class Router {
 
     public readonly HTTPMethod $http_method; 
 
-    private readonly bool   $static_route;
+    private readonly bool $static_route;
+
+    private array $tasks = [];
+
 
     public function __construct() {
 
         $this->route = $this->determine_route();
 
-        Config::load( [
-            'route' => $this->route,
-        ] );
+        Config::load( ['route' => $this->route] );
 
         if ( $this->route == Routes::API || $this->route == Routes::HTTP ) {
             if ( isset( $_SERVER['REDIRECT_URL'] ) && isset( Config::static_routes()[$_SERVER['REDIRECT_URL']] ) ) {
@@ -125,31 +126,34 @@ class Router {
              */
             throw new Exception( $e->getMessage(), 404 );
         }
-        ob_start();
-        $page->construct_page();
-        $html = ob_get_clean();
 
-        $cookie->inject_cookies( ( Config::ENVIRONMENT()  ?? AppMode::DEVELOPEMENT ) !== AppMode::DEVELOPEMENT );
-
-        $layout->init_header( 
-            Config::meta( 'page_title' ),
-            Config::meta( 'description' ),
-            Config::meta( 'site_language' ),
-            Config::meta( 'block_robots' ),
-        );
-        $layout->set_favicon( Config::meta( 'favicon' ) );
-        $layout->append_to_header( $injector->insert_css( PagePositions::IN_HEAD ) );
-        $layout->append_to_header( $injector->insert_js( PagePositions::IN_HEAD ) );
-        $layout->render_header();
-
-        Layout::append_to_body( $injector->insert_css( PagePositions::TOP_OF_PAGE ), true );
-        Layout::append_to_body( $injector->insert_js( PagePositions::TOP_OF_PAGE ), true );
-        Layout::append_to_body( '<main>' . $html . '</main>' );
-        $layout->render_body();
-
-        $layout->append_to_footer( $injector->insert_css( PagePositions::BOTTOM_OF_PAGE ) );
-        $layout->append_to_footer( $injector->insert_js( PagePositions::BOTTOM_OF_PAGE ) );
-        $layout->render_footer();
+        if ( !in_array( $page_class, $this->tasks ) ) {
+            ob_start();
+            $page->construct_page();
+            $html = ob_get_clean();
+    
+            $cookie->inject_cookies( ( Config::ENVIRONMENT()  ?? AppMode::DEVELOPEMENT ) !== AppMode::DEVELOPEMENT );
+    
+            $layout->init_header( 
+                Config::meta( 'page_title' ),
+                Config::meta( 'description' ),
+                Config::meta( 'site_language' ),
+                Config::meta( 'block_robots' ),
+            );
+            $layout->set_favicon( Config::meta( 'favicon' ) );
+            $layout->append_to_header( $injector->insert_css( PagePositions::IN_HEAD ) );
+            $layout->append_to_header( $injector->insert_js( PagePositions::IN_HEAD ) );
+            $layout->render_header();
+    
+            Layout::append_to_body( $injector->insert_css( PagePositions::TOP_OF_PAGE ), true );
+            Layout::append_to_body( $injector->insert_js( PagePositions::TOP_OF_PAGE ), true );
+            Layout::append_to_body( '<main>' . $html . '</main>' );
+            $layout->render_body();
+    
+            $layout->append_to_footer( $injector->insert_css( PagePositions::BOTTOM_OF_PAGE ) );
+            $layout->append_to_footer( $injector->insert_js( PagePositions::BOTTOM_OF_PAGE ) );
+            $layout->render_footer();
+        }
     }
 
     public function execute_api(): void {}
@@ -204,5 +208,15 @@ class Router {
     }
     public function get_tab(): string {
         return $this->tab;
+    }
+
+
+    public function add_task( string $task ): void {
+        $this->tasks[] = $task;
+    }
+
+
+    public function add_multiple_tasks( array $tasks ): void {
+        array_merge( $tasks, $this->tasks );
     }
 }
