@@ -83,7 +83,7 @@ abstract class ActionHandler implements ActionsTemplate {
 
     public function execute_default_action( object $actions ): void {
         if ( $this->token == '' || is_null( $this->token ) ) {
-            break;
+            return;
         }
         if ( !method_exists( $actions, $this->token ) ) {
             throw new MethodNotFound( "Method '{$this->token}' does not exist on in Class '{$this->routing_class}'", 404 );
