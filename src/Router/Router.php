@@ -66,12 +66,12 @@ class Router {
                      * ```php
                      * return [
                      *  'static_routes' => [
-                     *      '/home/cake' => 'mouse',
+                     *      '/home/cake' => 'Mouse\Hole',
                      *  ],
                      * ];
                      * ```
                      * 
-                     * The above example will call the class Web\MousePage;
+                     * The above example will call the class `Mouse\Hole`;
                      */
                     $this->static_route = true;
                 } else {
