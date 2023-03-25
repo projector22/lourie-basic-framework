@@ -84,14 +84,14 @@ export default class Ajax {
 
 
         /**
-         * The actions page to direct ajax requests to, by default 'src/app/actions/ActionHandler.php'.
+         * The actions page to direct ajax requests to, by default '/actions'.
          * 
          * @var {string} action_page
          * 
          * @since   LRS 3.13.0
          */
 
-        this.action_page = 'src/actions/ActionHandler.php';
+        this.action_page = '/actions';
 
 
         /**
@@ -167,6 +167,8 @@ export default class Ajax {
             // code for IE6, IE5
             this.xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
+
+        this.xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
         /**
          * How long to wait before timing out the execution.
