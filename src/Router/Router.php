@@ -14,7 +14,7 @@ use Throwable;
 
 class Router {
 
-    private readonly array $path;
+    private array $path;
 
     private readonly string $page;
 
@@ -28,45 +28,56 @@ class Router {
 
     private readonly bool $static_route;
 
+    private readonly bool $wildcard;
+
     private array $tasks = [];
 
 
     public function __construct() {
-
         $this->route = $this->determine_route();
-
         Config::load( ['route' => $this->route] );
-
         if ( $this->route == Routes::API || $this->route == Routes::HTTP ) {
-            if ( isset( $_SERVER['REDIRECT_URL'] ) && isset( Config::static_routes()[$_SERVER['REDIRECT_URL']] ) ) {
-                /**
-                 * Handle Static Routes.
-                 * Any defined static routes should be defined in the config. They should call
-                 * the class desired for loading.
-                 * 
-                 * @example
-                 * ```php
-                 * return [
-                 *  'static_routes' => [
-                 *      '/home/cake' => 'mouse',
-                 *  ],
-                 * ];
-                 * ```
-                 * 
-                 * The above example will call the class Web\MousePage;
-                 */
-                $this->path = [Config::static_routes( $_SERVER['REDIRECT_URL'] )];
-                $this->static_route = true;
+            $this->path = array_values( 
+                array_filter( 
+                    // REDIRECT_URL is generate by apache2
+                    explode( '/', ( $_SERVER['REDIRECT_URL'] ?? '' ) ), 
+                    function($value) {
+                        return trim($value) !== '';
+                    }
+                )
+            );
+
+            if ( isset( $_SERVER['REDIRECT_URL'] ) ) {
+                $redirect_url = $_SERVER['REDIRECT_URL'];
+                $this->wildcard = isset( Config::static_routes()['/' . $this->path[0] . '/*'] );
+                if ( isset( Config::static_routes()[$redirect_url] ) || $this->wildcard ) {
+                    if ( $this->wildcard ) {
+                        $this->path[0] = Config::static_routes()['/' . $this->path[0] . '/*'];
+                    } else {
+                        $this->path[0] = Config::static_routes()[$redirect_url];
+                    }
+
+                    /**
+                     * Handle Static Routes.
+                     * Any defined static routes should be defined in the config. They should call
+                     * the class desired for loading.
+                     * 
+                     * @example
+                     * ```php
+                     * return [
+                     *  'static_routes' => [
+                     *      '/home/cake' => 'mouse',
+                     *  ],
+                     * ];
+                     * ```
+                     * 
+                     * The above example will call the class Web\MousePage;
+                     */
+                    $this->static_route = true;
+                } else {
+                    $this->static_route = false;
+                }
             } else {
-                $this->path = array_values( 
-                    array_filter( 
-                        // REDIRECT_URL is generate by apache2
-                        explode( '/', ( $_SERVER['REDIRECT_URL'] ?? '' ) ), 
-                        function($value) {
-                            return trim($value) !== '';
-                        }
-                    )
-                );
                 $this->static_route = false;
             }
 
@@ -217,6 +228,6 @@ class Router {
 
 
     public function add_multiple_tasks( array $tasks ): void {
-        array_merge( $tasks, $this->tasks );
+        $this->tasks = array_merge( $tasks, $this->tasks );
     }
 }
