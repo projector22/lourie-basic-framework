@@ -166,13 +166,19 @@ class Router {
             return Routes::CLI;
         }
 
-        if ( true == false ) {
-            /**
-             * @todo    Detect an API call. Header needs to be parsed
-             */
+        if ( $this->route_is_api() ) {
             return Routes::API;
         }
         return Routes::HTTP;
+    }
+
+
+    private function route_is_api(): bool {
+        if ( isset($_SERVER['HTTP_X_REQUESTED_WITH'] ) && strtolower( $_SERVER['HTTP_X_REQUESTED_WITH'] ) == 'xmlhttprequest') {
+            return true;
+        }
+        // Detect if a fetch is sent.
+        return false;
     }
 
 
