@@ -5,6 +5,7 @@ namespace LBF\Actions;
 use LBF\Actions\ActionsTemplate;
 use LBF\App\Config;
 use LBF\Config\AppMode;
+use LBF\Errors\Classes\MethodNotFound;
 
 /**
  * Base tools for handling Action API calls.
@@ -66,5 +67,28 @@ abstract class ActionHandler implements ActionsTemplate {
         $this->routing_class = 'Actions\\Pages\\' . prepare_routed_filename( $route_token ) . 'Actions';
 
         $this->token = get_token();
+    }
+
+
+    /**
+     * Performs the default task of executing the called token method.
+     * 
+     * @param   object  $actions    The object which has the default task.
+     * 
+     * @throws  MethodNotFound  If the requested method does not exist.
+     * 
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public function execute_default_action( object $actions ): void {
+        if ( $this->token == '' || is_null( $this->token ) ) {
+            break;
+        }
+        if ( !method_exists( $actions, $this->token ) ) {
+            throw new MethodNotFound( "Method '{$this->token}' does not exist on in Class '{$this->routing_class}'", 404 );
+        }
+        $task = $this->token;
+        $actions->$task();
     }
 }
