@@ -2,6 +2,7 @@
 
 namespace LBF\Actions;
 
+use LBF\Actions\ActionsTemplate;
 use LBF\App\Config;
 use LBF\Config\AppMode;
 
@@ -15,7 +16,7 @@ use LBF\Config\AppMode;
  * @since   LBF 0.6.0-beta
  */
 
-abstract class ActionHandler {
+abstract class ActionHandler implements ActionsTemplate {
 
     /**
      * The token parsed to by the AJAX request. This is used to direct the action handler to the correct method.
