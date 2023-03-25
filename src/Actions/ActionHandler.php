@@ -5,11 +5,49 @@ namespace LBF\Actions;
 use LBF\App\Config;
 use LBF\Config\AppMode;
 
-class ActionHandler {
+/**
+ * Base tools for handling Action API calls.
+ * 
+ * use LBF\Actions\ActionHandler;
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   LBF 0.6.0-beta
+ */
 
-    public string $token;
+abstract class ActionHandler {
 
-    public string $routing_class;
+    /**
+     * The token parsed to by the AJAX request. This is used to direct the action handler to the correct method.
+     * 
+     * @var string  $token
+     * 
+     * @readonly
+     * @access  protected
+     * @since   LBF 0.6.0-beta
+     */
+
+    protected readonly string $token;
+
+    /**
+     * The defined routing class according to several conditions.
+     * 
+     * @var string  $routing_class
+     * 
+     * @readonly
+     * @access  protected
+     * @since   LBF 0.6.0-beta
+     */
+
+    protected readonly string $routing_class;
+
+
+    /**
+     * Class Constructor, sets `$this->token` & `$this->routing_class`.
+     * 
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
 
     public function __construct() {
         $route_token = str_replace( '.php', '', $_POST['route_token'] );
