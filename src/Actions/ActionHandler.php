@@ -24,7 +24,7 @@ class ActionHandler {
             $route_token = 'FirstRun';
         }
 
-        $this->routing_class = 'App\\Actions\\Pages\\' . prepare_routed_filename( $route_token ) . 'Actions';
+        $this->routing_class = 'Actions\\Pages\\' . prepare_routed_filename( $route_token ) . 'Actions';
 
         $this->token = get_token();
     }
