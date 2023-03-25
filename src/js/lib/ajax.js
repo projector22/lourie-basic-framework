@@ -168,8 +168,6 @@ export default class Ajax {
             this.xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
 
-        this.xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
         /**
          * How long to wait before timing out the execution.
          * Set to null to bypass.
@@ -363,6 +361,7 @@ export default class Ajax {
         }
         this.check_padding();
         this.xmlhttp.open("POST", this.action_page, true);
+        this.xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         this.xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         this.xmlhttp.send(this.post);
     }
@@ -382,6 +381,7 @@ export default class Ajax {
         }
         this.check_padding();
         this.xmlhttp.open("POST", this.action_page, true);
+        this.xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         this.xmlhttp.send(this.post);
     }
 
