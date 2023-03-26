@@ -4,13 +4,52 @@ namespace LBF\Error;
 
 use LBF\Assets\HTTPStatusCode;
 
+/**
+ * Tool for handling and generating HTTP error pages.
+ * 
+ * use LBF\Error\ErrorPage;
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
+ * @since   LBF 0.6.0-beta
+ */
+
 class ErrorPage {
+
+    /**
+     * The defined error code thrown by the app.
+     * 
+     * @var integer $code
+     * 
+     * @static
+     * @access  private
+     * @since   LBF 0.6.0-beta
+     */
 
     private static int $code;
 
+    /**
+     * Whether or not to skip the router check. You would set this to true
+     * if an error page has already been thrown and generated.
+     * 
+     * @var boolean $skip_check
+     * 
+     * @static
+     * @access  private
+     * @since   LBF 0.6.0-beta
+     */
+
     private static bool $skip_check = false;
 
-    public function construct_page() {
+
+    /**
+     * Draw up the error page as defined by `self::$code`.
+     * 
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public function construct_page(): void {
         echo match (self::$code) {
             401     => $this->error_401(),
             403     => $this->error_403(),
@@ -21,15 +60,46 @@ class ErrorPage {
     }
 
 
+    /**
+     * Set the error message code and skip check properties. Used to "throw" an error code.
+     * 
+     * @param   integer $code       The code number to register.
+     * @param   boolean $skip_check Whether or not to skip the check in the router. Default: false.
+     * 
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
 
     public static function set_error(int $code, $skip_check = false): void {
         self::$code = $code;
         self::$skip_check = $skip_check;
     }
 
+
+    /**
+     * Return the current error code, or null if none has been set.
+     * 
+     * @return  integer|null
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
     public static function get_error_code(): ?int {
         return self::$code ?? null;
     }
+
+
+    /**
+     * Returns the current skip_check status.
+     * 
+     * @return  boolean
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
 
     public static function skip_check(): bool {
         return self::$skip_check;
