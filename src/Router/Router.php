@@ -135,7 +135,8 @@ class Router {
              * 
              * @todo    Build in 404 page loading & redirection
              */
-            throw new Exception( $e->getMessage(), 404 );
+            // throw new Exception( $e->getMessage(), 404 );
+            Nav::error_page( 404 );
         }
 
         if ( !in_array( $page_class, $this->tasks ) ) {
