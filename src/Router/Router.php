@@ -42,8 +42,8 @@ class Router {
                 array_filter( 
                     // REDIRECT_URL is generate by apache2
                     explode( '/', ( $_SERVER['REDIRECT_URL'] ?? '' ) ), 
-                    function($value) {
-                        return trim($value) !== '';
+                    function( $value ) {
+                        return trim( $value ) !== '';
                     }
                 )
             );
@@ -84,9 +84,9 @@ class Router {
 
             $this->http_method = $this->determine_http_method();
     
-            $this->page = $this->path[0] ?? 'index';
+            $this->page = $this->path[0]    ?? 'index';
             $this->subpage = $this->path[1] ?? null;
-            $this->tab = $this->path[2] ?? null;
+            $this->tab = $this->path[2]     ?? null;
             Config::load( [
                 'current_page' => [
                     'page'    => $this->page,
@@ -117,8 +117,8 @@ class Router {
 
     public function render_webpage(): void {
         $injector = new HTML;
-        $cookie = new Cookie;
-        $layout = new Layout;
+        $cookie   = new Cookie;
+        $layout   = new Layout;
 
         if ( $this->static_route ) {
             $page_class = $this->page;
@@ -139,7 +139,7 @@ class Router {
             // throw new Exception( $e->getMessage(), 404 );
             // Nav::error_page( 404 );
             ErrorPage::set_error( 404 );
-            $page = ErrorPage::class;
+            $page = new ErrorPage;
         }
 
         if ( !in_array( $page_class, $this->tasks ) ) {
@@ -147,7 +147,7 @@ class Router {
             $page->construct_page();
             $html = ob_get_clean();
     
-            $cookie->inject_cookies( ( Config::ENVIRONMENT()  ?? AppMode::DEVELOPEMENT ) !== AppMode::DEVELOPEMENT );
+            $cookie->inject_cookies( ( Config::ENVIRONMENT() ?? AppMode::DEVELOPEMENT ) !== AppMode::DEVELOPEMENT );
     
             $layout->init_header( 
                 Config::meta( 'page_title' ),
