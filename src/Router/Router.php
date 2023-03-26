@@ -6,6 +6,7 @@ use Exception;
 use LBF\App\Config;
 use LBF\Auth\Cookie;
 use LBF\Config\AppMode;
+use LBF\Error\ErrorPage;
 use LBF\HTML\HTML;
 use LBF\HTML\Injector\PagePositions;
 use LBF\Layout\Layout;
@@ -136,7 +137,9 @@ class Router {
              * @todo    Build in 404 page loading & redirection
              */
             // throw new Exception( $e->getMessage(), 404 );
-            Nav::error_page( 404 );
+            // Nav::error_page( 404 );
+            ErrorPage::set_error( 404 );
+            $page = ErrorPage::class;
         }
 
         if ( !in_array( $page_class, $this->tasks ) ) {

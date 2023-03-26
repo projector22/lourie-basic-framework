@@ -31,18 +31,4 @@ class Nav {
         die;
     }
 
-
-    public static function error_page( int $code ): never {
-        $file = match( $code ) {
-            401     => '401.php',
-            403     => '403.php',
-            404     => '404.php',
-            500     => '500.php',
-            default => '500.php',
-        };
-
-        $path = realpath( __DIR__ . '/../Error/' . $file );
-        require $path;
-        die;
-    }
 }
