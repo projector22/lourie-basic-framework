@@ -6,6 +6,8 @@ class ErrorPage {
 
     private static int $code;
 
+    private static bool $skip_check = false;
+
     public function construct_page() {
         $file = match( self::$code ) {
             401     => '401.php',
@@ -21,7 +23,16 @@ class ErrorPage {
 
 
 
-    public static function set_error( int $code ): void {
+    public static function set_error( int $code, $skip_check = false ): void {
         self::$code = $code;
+        self::$skip_check = $skip_check;
+    }
+
+    public static function get_error_code(): ?int {
+        return self::$code ?? null;
+    }
+
+    public static function skip_check(): bool {
+        return self::$skip_check;
     }
 }

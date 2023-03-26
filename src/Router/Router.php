@@ -131,14 +131,7 @@ class Router {
         try {
             $page = new $page_class();
         } catch ( Throwable $e ) {
-            /**
-             * Load 404 PAGE.
-             * 
-             * @todo    Build in 404 page loading & redirection
-             */
-            // throw new Exception( $e->getMessage(), 404 );
-            // Nav::error_page( 404 );
-            ErrorPage::set_error( 404 );
+            ErrorPage::set_error( 404, true );
             $page = new ErrorPage;
         }
 
@@ -146,6 +139,14 @@ class Router {
             ob_start();
             $page->construct_page();
             $html = ob_get_clean();
+            if ( !ErrorPage::skip_check() ) {
+                if ( ErrorPage::get_error_code() !== null ) {
+                    $page = new ErrorPage;
+                    ob_start();
+                    $page->construct_page();
+                    $html = ob_get_clean();
+                }
+            }
     
             $cookie->inject_cookies( ( Config::ENVIRONMENT() ?? AppMode::DEVELOPEMENT ) !== AppMode::DEVELOPEMENT );
     
