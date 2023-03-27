@@ -130,7 +130,7 @@ class Router {
 
         try {
             $page = new $page_class();
-        } catch ( Throwable $e ) {
+        } catch ( Throwable ) {
             ErrorPage::set_error( 404, true );
             $page = new ErrorPage;
         }
