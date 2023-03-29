@@ -1,5 +1,6 @@
 <?php
 
+use LBF\App\Config;
 use LBF\HTML\HTML;
 
 /**
@@ -756,7 +757,7 @@ function url_file_exists( string $url ): bool {
  */
 
 function get_tab( string $default = '' ): string {
-    return isset( $_GET['t'] ) ? $_GET['t'] : $default;
+    return Config::current_page( 'tab' ) ?? $default;
 }
 
 
