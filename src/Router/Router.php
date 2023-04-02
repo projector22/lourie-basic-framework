@@ -130,7 +130,10 @@ class Router {
 
         try {
             $page = new $page_class();
-        } catch ( Throwable ) {
+        } catch ( Throwable $e ) {
+            if( Config::ENVIRONMENT() == AppMode::DEVELOPEMENT ) {
+                throw new Exception( $e );
+            }
             ErrorPage::set_error( 404, true );
             $page = new ErrorPage;
         }
