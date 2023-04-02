@@ -183,7 +183,7 @@ class DownloadHandler {
      * @since   LRS 3.6.3
      */
 
-    public function download_error( ?int $error = null ): void { // return never when PHP 8.1
+    public function download_error( ?int $error = null ): never {
         switch ( $error ) {
             case 1:
                 echo "File not available for download";
