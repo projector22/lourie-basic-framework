@@ -263,7 +263,7 @@ class JS extends HTMLMeta {
          * @todo    Make this universal for library & LRS.
          */
         HTML::inject_js( <<<JS
-        import { $desired_function } from 'lrs-keyboard-shortcuts';
+        import { $desired_function } from '/src/js/keyboard_shortcuts.js';
         JS );
         HTML::inject_js( <<<JS
         document.addEventListener('keydown', function(event) {
