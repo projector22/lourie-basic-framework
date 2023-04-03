@@ -24,7 +24,7 @@
     min-height: 300px;
     max-height: calc(100vh - (var(--header-height) + var(--footer-height) + 50px));
     max-width: 90%;
-    z-index: 3;
+    z-index: 2000;
     background-color: var(--page-background-colour);
     position: absolute;
     left: 0;
