@@ -22,14 +22,14 @@ abstract class ActionHandler implements ActionsTemplate {
     /**
      * The token parsed to by the AJAX request. This is used to direct the action handler to the correct method.
      * 
-     * @var string  $token
+     * @var string|null  $token
      * 
      * @readonly
      * @access  protected
      * @since   LBF 0.6.0-beta
      */
 
-    protected readonly string $token;
+    protected readonly ?string $token;
 
     /**
      * The defined routing class according to several conditions.

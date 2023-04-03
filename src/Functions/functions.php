@@ -92,17 +92,16 @@ function protect( mixed $data ): mixed {
  * Order:
  * 1. $_POST
  * 2. $_GET
+ * 3. null if no result.
  * 
- * @return  string  Token string
+ * @return  string|null  Token string
  * 
  * @since   LRS 3.1.0
  * @since   LRS 3.15.0  Renamed from setToken() to get_token()
  */
 
-function get_token() {
-    if ( isset ( $_POST['token'] ) || isset( $_GET['token'] ) ) {
-        return $_POST['token'] ?? $_GET['token'];
-    }
+function get_token(): ?string {
+    return $_POST['token'] ?? $_GET['token'] ?? null;
 }
 
 
@@ -115,7 +114,7 @@ function get_token() {
  * @since   LRS 3.15.0  Renamed from token() to set_token()
  */
 
-function set_token( string $token ):void {
+function set_token( string $token ): void {
     echo "<input type='hidden' name='token' value='{$token}'>";
 }
 
