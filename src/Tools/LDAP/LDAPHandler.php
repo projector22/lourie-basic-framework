@@ -177,7 +177,7 @@ class LDAPHandler {
         }
         ldap_set_option( $this->ldap_con, LDAP_OPT_REFERRALS, 0 );
         ldap_set_option( $this->ldap_con, LDAP_OPT_PROTOCOL_VERSION, 3 );
-    } //__construct
+    }
 
 
     /**

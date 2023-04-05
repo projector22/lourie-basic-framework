@@ -417,6 +417,6 @@ class ReadExcel {
 
     public function __destruct() {
         $this->clean_up_files();
-    } //__destruct
+    }
 
 }

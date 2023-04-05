@@ -188,7 +188,7 @@ class Mail {
         $this->default_from  = $mail_config->default_send_addr;
 
         $this->default_from_name = $default_from_name ?? $this->default_from;
-    } //__construct
+    }
 
 
     /**

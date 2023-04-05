@@ -89,7 +89,7 @@ class ReadCSV {
                 die;
             }
         }
-    } //__construct
+    }
 
 
     /**
@@ -154,6 +154,6 @@ class ReadCSV {
 
     public function __destruct() {
         $this->clean_up_files();
-    } //__destruct
+    }
 
 }

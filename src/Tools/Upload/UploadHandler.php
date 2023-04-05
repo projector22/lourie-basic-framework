@@ -281,7 +281,7 @@ class UploadHandler {
             echo "No files selected";
             return;
         }
-    } //__construct
+    }
 
 
     /**
