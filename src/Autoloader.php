@@ -66,6 +66,24 @@ class Autoloader {
 
 
     /**
+     * Init the class a static with or without assigning it to a variable.
+     * 
+     * @param   string  $path       The base path where the classes are saved. The full path to the called class
+     *                              will be `$this->src_path . namespace . class.php`.
+     * @param   bool    $debug_mode Whether to perform debug operations to the autoload process. Default: false
+     * 
+     * @return  Autoloader
+     * 
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function path( string $path, bool $debug = false ): Autoloader {
+        return new Autoloader( $path, $debug );
+    }
+
+
+    /**
      * Perform the autoload task by calling `spl_autoload_register`.
      * 
      * @return  bool
