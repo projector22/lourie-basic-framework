@@ -113,7 +113,8 @@ final class DownloadHandler {
     /**
      * Create url link for downloading the file
      * 
-     * @param   string  $file   The file to be downloaded, can be specified later
+     * @param   string      $token  The download token to talk to the download handler.
+     * @param   string|null $file   The file to be downloaded, can be specified later
      *                          Default: null
      * 
      * @return  string  url string
@@ -123,8 +124,12 @@ final class DownloadHandler {
      * @since   LRS 3.6.3
      */
 
-    public static function create_download_url(string $token): string {
-        return "/download?token={$token}";
+    public static function create_download_url(string $token, ?string $file = null): string {
+        $url = "/download?token={$token}";
+        if (!is_null($file)) {
+            $url .= "&file={$file}";
+        }
+        return $url;
     }
 
 
