@@ -12,6 +12,7 @@
 - Merged `src/HTML/Forms.php` into `src/HTML/Form.php`.
 - Merged `src/HTML/Buttons.php` into `src/HTML/Button.php`.
 - Merged `src/HTML/Scripts.php` into `src/HTML/JS.php`.
+- Completely revamped DownloadHandler.
 
 ### Deprecated
 
