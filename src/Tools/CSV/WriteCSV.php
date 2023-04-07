@@ -117,11 +117,7 @@ class WriteCSV {
      */
 
     public function download(): void {
-        $download = new DownloadHandler;
-        $download->file = $this->save_path . $this->file_name;
-        $download->file_name = $this->file_name;
-        $download->mime_type = 'text/csv';
-        $download->execute_download();
+        DownloadHandler::file($this->save_path . $this->file_name)->download();
     }
 
 
