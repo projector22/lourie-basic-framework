@@ -27,6 +27,19 @@ use LBF\Router\Nav;
 final class DownloadHandler {
 
     /**
+     * The mimetype of the file to download
+     * 
+     * @var string  $mime_type
+     * 
+     * @readonly
+     * @access  private
+     * @since   LBF 0.6.0-beta
+     */
+
+    private readonly string $mime_type;
+
+
+    /**
      * Constructor method, things to do when the class is loaded.
      * 
      * @param   string  $file   The file to be downloaded, can be specified later
@@ -95,11 +108,11 @@ final class DownloadHandler {
      */
 
     public function download(): never {
-        $mime_type = mime_content_type($this->file);
+        $this->mime_type ??= mime_content_type($this->file);
         $file_name = basename($this->file);
 
         header('Content-Description: File Transfer');
-        header('Content-type: ' . $mime_type);
+        header('Content-type: ' . $this->mime_type);
         header('Content-Disposition: inline; filename="' . $file_name . '"');
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
@@ -107,6 +120,23 @@ final class DownloadHandler {
 
         readfile($this->file);
         die;
+    }
+
+
+    /**
+     * If a mimetype is not being detected correctly, you can set it deliberately here.
+     * 
+     * @param   string  $mime_type  The mimetype of the file to be downloaded. For example `text/csv`.
+     * 
+     * @return  static
+     * 
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public function set_mime_type(string $mime_type): static {
+        $this->mime_type = $mime_type;
+        return $this;
     }
 
 
