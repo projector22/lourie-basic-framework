@@ -87,14 +87,14 @@ final class DownloadHandler {
      * Note - you cannot start a download directly from an AJAX for security reasons.
      * It is better to open a new window and execute the download
      * 
-     * @return  bool
+     * @return  never
      * 
      * @access  public
      * @since   LRS 3.6.3
      * @since   LBF 0.6.0-beta  Renamed from `execute_download` to `download`.
      */
 
-    public function download(): bool {
+    public function download(): never {
         $mime_type = mime_content_type($this->file);
         $file_name = basename($this->file);
 
@@ -105,8 +105,8 @@ final class DownloadHandler {
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
 
-        $download = readfile($this->file);
-        return $download !== false;
+        readfile($this->file);
+        die;
     }
 
 
