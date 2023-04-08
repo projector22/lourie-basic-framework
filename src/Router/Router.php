@@ -332,10 +332,10 @@ class Router {
         if ($this->route_is_api()) {
             return Routes::API;
         }
-        if ($this->path[0] ?? null == 'pdf') {
+        if (($this->path[0] ?? null) == 'pdf') {
             return Routes::PDF;
         }
-        if ($this->path[0] ?? null == 'download') {
+        if (($this->path[0] ?? null) == 'download') {
             return Routes::DOWNLOAD;
         }
         return Routes::HTTP;
