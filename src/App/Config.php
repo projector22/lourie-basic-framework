@@ -4,7 +4,6 @@ namespace LBF\App;
 
 use AllowDynamicProperties;
 use Exception;
-use stdClass;
 
 /**
  * Class for holding the payload of config files to be used by the app.
@@ -63,7 +62,26 @@ class Config {
      * @since   LBF 0.6.0-beta
      */
 
-    private const STATIC_ROUTES_DEFAULT = [];
+    private const STATIC_ROUTES_DEFAULT = [
+        /**
+         * http
+         */
+        '/home'    => 'Web\IndexPage',
+        '/index'   => 'Web\IndexPage',
+        '/login'   => 'Web\LoginPage',
+        '/logout'  => 'Web\LogoutPage',
+
+        /**
+         * http wildcard
+         */
+        '/pdf/*'       => 'PDF\PDFHandler',
+        '/download/*'  => 'Downloads\DownloadHandler',
+
+        /**
+         * API
+         */
+        '/actions' => '\Actions\ActionHander',
+    ];
 
 
     /**
@@ -95,8 +113,8 @@ class Config {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function cast_as_object( array|object $data ): object {
-        if ( is_array( $data ) ) {
+    public static function cast_as_object(array|object $data): object {
+        if (is_array($data)) {
             return (object)$data;
         }
         return $data;
@@ -128,11 +146,11 @@ class Config {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function set_value( mixed $new_value, string $method, ?string $key = null ): bool {
-        if ( !isset( self::$payload[$method] ) ) {
-            throw new Exception( "Key {$method} is not in the config." );
+    public static function set_value(mixed $new_value, string $method, ?string $key = null): bool {
+        if (!isset(self::$payload[$method])) {
+            throw new Exception("Key {$method} is not in the config.");
         }
-        if ( $key === null ) {
+        if ($key === null) {
             self::$payload[$method] = $new_value;
             return true;
         } else {
@@ -154,8 +172,8 @@ class Config {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function key_exists( string $key ): bool {
-        return array_key_exists( $key, self::$payload ) || property_exists( self::class, $key );
+    public static function key_exists(string $key): bool {
+        return array_key_exists($key, self::$payload) || property_exists(self::class, $key);
     }
 
 
@@ -183,29 +201,29 @@ class Config {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function __callStatic( string $name, array $arguments ): mixed {
-        if ( !self::key_exists( $name ) ) {
-            if ( isset( $arguments[1] ) && $arguments[1] === true ) {
-                throw new Exception( "The method {$name} is not part of the Config." );
+    public static function __callStatic(string $name, array $arguments): mixed {
+        if (!self::key_exists($name)) {
+            if (isset($arguments[1]) && $arguments[1] === true) {
+                throw new Exception("The method {$name} is not part of the Config.");
             }
             return null;
         }
-        if ( count( $arguments ) == 0 ) {
+        if (count($arguments) == 0) {
             return self::$$name ?? self::$payload[$name];
         }
         $method = self::$payload[$name];
-        if ( is_object( $method ) ) {
-            if ( !isset( $method->{$arguments[0]} ) && !property_exists( $method, $arguments[0] ) ) {
-                if ( isset( $arguments[1] ) && $arguments[1] === true ) {
-                    throw new Exception( "The key {$arguments[0]} is not in the method {$name}" );
+        if (is_object($method)) {
+            if (!isset($method->{$arguments[0]}) && !property_exists($method, $arguments[0])) {
+                if (isset($arguments[1]) && $arguments[1] === true) {
+                    throw new Exception("The key {$arguments[0]} is not in the method {$name}");
                 }
                 return null;
             }
             return $method->{$arguments[0]};
         }
-        if ( !isset( $method[$arguments[0]] ) && !array_key_exists( $arguments[0], $method ) ) {
-            if ( isset( $arguments[1] ) && $arguments[1] === true ) {
-                throw new Exception( "The key {$arguments[0]} is not in the method {$name}" );
+        if (!isset($method[$arguments[0]]) && !array_key_exists($arguments[0], $method)) {
+            if (isset($arguments[1]) && $arguments[1] === true) {
+                throw new Exception("The key {$arguments[0]} is not in the method {$name}");
             }
             return null;
         }
@@ -226,28 +244,28 @@ class Config {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function load( array $config, bool $overwrite = false ): void {
-        if ( !isset( self::$payload ) ) {
+    public static function load(array $config, bool $overwrite = false): void {
+        if (!isset(self::$payload)) {
             self::load_defaults();
         }
 
-        foreach ( $config as $key => $value ) {
-            if ( isset( self::$$key ) ) {
-                if ( $overwrite ) {
+        foreach ($config as $key => $value) {
+            if (isset(self::$$key)) {
+                if ($overwrite) {
                     self::$$key = $value;
                 } else {
-                    if ( is_array( self::$$key ) ) {
+                    if (is_array(self::$$key)) {
                         // Merge arrays if that is being parsed
-                        if ( !is_array( $config ) ) {
-                            throw new Exception( "{$value} must be an array" );
+                        if (!is_array($config)) {
+                            throw new Exception("{$value} must be an array");
                         }
-                        self::$$key = array_merge( self::$$key, $value );
-                    } else if ( is_object( self::$$key ) ) {
+                        self::$$key = array_merge(self::$$key, $value);
+                    } else if (is_object(self::$$key)) {
                         // Merge objects if that is being parsed.
-                        if ( !is_object( $value ) ) {
-                            throw new Exception( "{$value} must be a set of key => value pairs" );
+                        if (!is_object($value)) {
+                            throw new Exception("{$value} must be a set of key => value pairs");
                         }
-                        foreach ( $value as $prop => $val ) {
+                        foreach ($value as $prop => $val) {
                             self::$$key->{$prop} = $val;
                         }
                     } else {
@@ -256,21 +274,21 @@ class Config {
                     }
                 }
             } else {
-                if ( $overwrite || !isset( self::$payload[$key] ) ) {
+                if ($overwrite || !isset(self::$payload[$key])) {
                     self::$payload[$key] = $value;
                 } else {
-                    if ( is_array( self::$payload[$key] ) ) {
+                    if (is_array(self::$payload[$key])) {
                         // Merge arrays if that is being parsed
-                        if ( !is_array( $config ) ) {
-                            throw new Exception( "{$value} must be an array" );
+                        if (!is_array($config)) {
+                            throw new Exception("{$value} must be an array");
                         }
-                        self::$payload[$key] = array_merge( self::$payload[$key], $value );
-                    } else if ( is_object( self::$payload[$key] ) ) {
+                        self::$payload[$key] = array_merge(self::$payload[$key], $value);
+                    } else if (is_object(self::$payload[$key])) {
                         // Merge objects if that is being parsed.
-                        if ( !is_array( $value ) ) {
-                            throw new Exception( "{$value} must be a set of key => value pairs" );
+                        if (!is_array($value)) {
+                            throw new Exception("{$value} must be a set of key => value pairs");
                         }
-                        foreach ( $value as $prop => $val ) {
+                        foreach ($value as $prop => $val) {
                             self::$payload[$key]->{$prop} = $val;
                         }
                     } else {
@@ -294,19 +312,19 @@ class Config {
      * @since   0.6.0-beta
      */
 
-    public static function show( ?string $specified_key = null ): void {
-        if ( !is_null( $specified_key ) ) {
+    public static function show(?string $specified_key = null): void {
+        if (!is_null($specified_key)) {
             echo "<h3>{$specified_key}</h3>";
             echo "<pre>";
-            print_r( self::$$specified_key ?? self::$payload[$specified_key] );
+            print_r(self::$$specified_key ?? self::$payload[$specified_key]);
             echo "</pre>";
         } else {
             $keys = self::get_class_keys();
             echo "<pre>";
-            foreach ( $keys as $key ) {
-                if ( isset( self::$$key ) || isset( self::$payload[$key] ) ) {
+            foreach ($keys as $key) {
+                if (isset(self::$$key) || isset(self::$payload[$key])) {
                     echo "<h3>{$key}</h3>";
-                    print_r( self::$$key ?? self::$payload[$key] );
+                    print_r(self::$$key ?? self::$payload[$key]);
                     echo "<hr>";
                 }
             }
@@ -326,10 +344,10 @@ class Config {
     public static function keys(): void {
         $keys = self::get_class_keys();
         echo "<pre>";
-        foreach ( $keys as $key ) {
-            print_r( $key ."\n" );
+        foreach ($keys as $key) {
+            print_r($key . "\n");
         }
-        print_r( '$user' ."\n" );
+        print_r('$user' . "\n");
         echo "</pre>";
     }
 
@@ -345,11 +363,10 @@ class Config {
      */
 
     private static function get_class_keys(): array {
-        $set_properties = get_class_vars( self::class );
-        unset( $set_properties['payload'] );
-        $keys = array_merge( array_keys( self::$payload ), array_keys( $set_properties ) );
-        sort( $keys );
+        $set_properties = get_class_vars(self::class);
+        unset($set_properties['payload']);
+        $keys = array_merge(array_keys(self::$payload), array_keys($set_properties));
+        sort($keys);
         return $keys;
     }
-
 }
