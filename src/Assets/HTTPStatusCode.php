@@ -156,7 +156,7 @@ enum HTTPStatusCode {
      */
 
     public function code(): int {
-        return match( $this ) {
+        return match ($this) {
             self::CONTINUE                             => 100,
             self::SWITCHING_PROTOCOLS                  => 101,
             self::PROCESSING                           => 102,
@@ -234,7 +234,7 @@ enum HTTPStatusCode {
      */
 
     public function status_text(): string {
-        return match( $this ) {
+        return match ($this) {
             self::CONTINUE                             => 'Continue',
             self::SWITCHING_PROTOCOLS                  => 'Switching Protocols',
             self::PROCESSING                           => 'Processing',
@@ -314,7 +314,7 @@ enum HTTPStatusCode {
      */
 
     public function explanation(): string {
-        return match ( $this ) {
+        return match ($this) {
             self::OK => <<<HTML
             <p>The request succeeded. The result meaning of "success" depends on the HTTP method:</p>
             <ul>
@@ -386,64 +386,43 @@ enum HTTPStatusCode {
      */
 
     public function image(): ?SVGImages {
-        return match( $this ) {
+        return match ($this) {
             // self::BAD_REQUEST
             self::UNAUTHORIZED => SVGImages::error401,
             self::FORBIDDEN    => SVGImages::error403,
             self::NOT_FOUND    => SVGImages::error404,
-            // self::INTERNAL_SERVER_ERROR
+                // self::INTERNAL_SERVER_ERROR
 
             default => null,
         };
     }
+
+
+    /**
+     * Throw a specific HTTP status code error / status according to the Status code parsed.
+     * Returns as a JSON
+     * 
+     * @param   HTTPStatusCode  $code   Parsed enum of the status.
+     * 
+     * @return  never
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function throw_error(HTTPStatusCode $code): never {
+        header('Content-Type: application/json');
+        http_response_code($code->code());
+        $payload = [];
+
+        if ($code->code >= 400) {
+            $payload['status'] = 'error';
+        }
+        $payload['response_code'] = $code->code();
+        $payload['message'] = $code->status_text();
+
+        echo json_encode($payload);
+        die;
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
