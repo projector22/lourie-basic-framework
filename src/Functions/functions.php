@@ -558,6 +558,8 @@ function order_by( array &$data, string $field, bool $is_object = false ): array
  * @return  string|boolean
  * 
  * @since   LRS 3.6.0
+ * 
+ * @deprecated  LBF 0.6.0-beta
  */
 
 function site_logo(): string|bool {
