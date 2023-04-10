@@ -1604,14 +1604,14 @@ class ConnectMySQL {
      * Get the Primary Key ID of the entry that was last inserted.
      * Note: Only works if the primary key is numeric.
      * 
-     * @return  string
+     * @return  string|null
      * 
      * @access  public
      * @since   LRS 3.27.0
      */
 
-    public function get_last_inserted_id(): string {
-        return $this->last_inserted_id;
+    public function get_last_inserted_id(): ?string {
+        return $this->last_inserted_id ?? null;
     }
 
 
