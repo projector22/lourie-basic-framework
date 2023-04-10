@@ -38,11 +38,16 @@ class ConfigLoader {
      * @since   LBF 0.6.0-beta
      */
 
-    public function skip( string|array $skip ): void {
-        if ( is_string( $skip ) ) {
+    public function skip(string|array $skip): void {
+        if (is_string($skip)) {
             $skip = [$skip];
         }
-        $this->skip = array_merge( $this->skip, $skip );
+        $this->skip = array_merge($this->skip, $skip);
+    }
+
+
+    public function load(): ConfigLoader {
+        return new ConfigLoader;
     }
 
 
@@ -55,8 +60,8 @@ class ConfigLoader {
      * @since   LBF 0.6.0-beta
      */
 
-    public function load_config( array $config ): void {
-        Config::load( $config );
+    public function load_config(array $config): void {
+        Config::load($config);
     }
 
 
@@ -84,53 +89,52 @@ class ConfigLoader {
      * @since   LBF 0.6.0-beta
      */
 
-    public function load_config_from_dir( string $dirname ): bool {
+    public function from_dir(string $dirname): bool {
         $config = [];
-        if ( !is_dir( $dirname ) ) {
-            throw new DirectoryNotFound( "Cannot find directory {$dirname}" );
+        if (!is_dir($dirname)) {
+            throw new DirectoryNotFound("Cannot find directory {$dirname}");
         }
-        $files = scandir( $dirname );
-        foreach ( $files as $file ) {
-            if ( in_array( $file, $this->skip ) ) {
+        $files = scandir($dirname);
+        foreach ($files as $file) {
+            if (in_array($file, $this->skip)) {
                 continue;
             }
             $new_data = require $dirname . '/' . $file;
-            if ( is_array( $new_data ) ) {
-                $config = array_merge( $config, $new_data );
+            if (is_array($new_data)) {
+                $config = array_merge($config, $new_data);
             }
         }
-        if ( isset( $config['paths'] ) ) {
-            foreach ( $config['paths'] as $key => $value ) {
-                $this->replace_vars( $config, "@{$key}", $value );
+        if (isset($config['paths'])) {
+            foreach ($config['paths'] as $key => $value) {
+                $this->replace_vars($config, "@{$key}", $value);
             }
         }
-        $this->load_config( $config );
+        $this->load_config($config);
         return true;
     }
 
 
     /**
-    * Recursively replace shortcuts in the config.
-    * 
-    * @param    array   $the_config     The Config array data.
-    * @param    string  $search         The value to search for.
-    * @param    string  $replace        The replacement value.
-    * 
-    * @access   private
-    * @since    LBF 0.6.0-beta
-    */
+     * Recursively replace shortcuts in the config.
+     * 
+     * @param    array   $the_config     The Config array data.
+     * @param    string  $search         The value to search for.
+     * @param    string  $replace        The replacement value.
+     * 
+     * @access   private
+     * @since    LBF 0.6.0-beta
+     */
 
-    private function replace_vars( mixed &$the_config, string $search, string $replace ): void {
-        foreach ( $the_config as &$value ) {
-            if ( is_array( $value ) ) {
-                $this->replace_vars( $value, $search, $replace );
-            } else if ( is_object( $value ) ) {
-               // Skip - object properties should not use shortcuts.
-               continue;
-           } else if ( is_string( $value ) ) {
-               $value = str_replace( $search, $replace, $value );
-           }
+    private function replace_vars(mixed &$the_config, string $search, string $replace): void {
+        foreach ($the_config as &$value) {
+            if (is_array($value)) {
+                $this->replace_vars($value, $search, $replace);
+            } else if (is_object($value)) {
+                // Skip - object properties should not use shortcuts.
+                continue;
+            } else if (is_string($value)) {
+                $value = str_replace($search, $replace, $value);
+            }
         }
     }
-   
 }
