@@ -46,7 +46,16 @@ class ConfigLoader {
     }
 
 
-    public function load(): ConfigLoader {
+    /**
+     * Static constructor. Allows inline method calls
+     * 
+     * @return  ConfigLoader
+     * 
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function load(): ConfigLoader {
         return new ConfigLoader;
     }
 
