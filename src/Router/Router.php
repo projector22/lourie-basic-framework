@@ -355,7 +355,12 @@ class Router {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
             return true;
         }
+
         // Detect if a fetch is sent.
+
+        if (($this->path[0] ?? null) === 'api') {
+            return true;
+        }
         return false;
     }
 
