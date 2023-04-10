@@ -13,7 +13,7 @@ namespace LBF\Layout;
  */
 
 class Layout {
-    
+
     /**
      * The contents of the HTML Header, between the `<header></header>` tags.
      * 
@@ -25,7 +25,7 @@ class Layout {
      */
 
     private static string $html_header = '';
-    
+
     /**
      * The contents of the page body, between the `<body></body>` tags.
      * 
@@ -37,7 +37,7 @@ class Layout {
      */
 
     private static string $body = '';
-    
+
     /**
      * The contents of the `<footer></footer>` tags.
      * 
@@ -49,7 +49,7 @@ class Layout {
      */
 
     private static string $footer = '';
-    
+
     /**
      * Any extra `<meta>` tags to be inserted into the HTML header.
      * 
@@ -82,7 +82,7 @@ class Layout {
      * @since   LBF 0.6.0-beta
      */
 
-    public function init_header( string $title, string $description, string $language = 'en', bool $block_robots = false ): static {
+    public function init_header(string $title, string $description, string $language = 'en', bool $block_robots = false): static {
         self::$html_header = <<<HTML
     <!DOCTYPE html>
     <html lang='{$language}'>
@@ -93,7 +93,7 @@ class Layout {
         <meta name='viewport' content='width=device-width, initial-scale=1'>
     HTML;
 
-        if ( $block_robots ) {
+        if ($block_robots) {
             self::$html_header .= <<<HTML
             <meta name='robots' content='noindex, nofollow'>
             <meta name='googlebot' content='noindex, nofollow'>
@@ -119,7 +119,7 @@ class Layout {
      * @since   LBF 0.6.0-beta
      */
 
-    public function set_favicon( string $favicon ): static {
+    public function set_favicon(string $favicon): static {
         self::$html_header .= <<<HTML
         <link rel='shortcut icon' href='{$favicon}' />
         <link rel='apple-touch-icon' href='{$favicon}' />
@@ -139,7 +139,7 @@ class Layout {
      * @since   LBF 0.6.0-beta
      */
 
-    public function append_to_header( string $files ): static {
+    public function append_to_header(string $files): static {
         self::$html_header .= $files;
         return $this;
     }
@@ -156,9 +156,9 @@ class Layout {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function load_header_meta( array|string $meta ): void {
-        if ( is_array( $meta ) ) {
-            $meta = implode( "\n", $meta );
+    public static function load_header_meta(array|string $meta): void {
+        if (is_array($meta)) {
+            $meta = implode("\n", $meta);
         }
         self::$header_meta[] = $meta;
     }
@@ -180,8 +180,8 @@ class Layout {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function append_to_body( string $body, bool $before = false ): void {
-        if ( $before ) {
+    public static function append_to_body(string $body, bool $before = false): void {
+        if ($before) {
             self::$body = $body . self::$body;
         } else {
             self::$body .= $body;
@@ -193,7 +193,7 @@ class Layout {
      * FOOTER *
      **********/
 
-    
+
     /**
      * Set the footer payload between the `<footer></footer>` tags.
      * 
@@ -204,7 +204,7 @@ class Layout {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function set_footer_payload( string $footer ): void {
+    public static function set_footer_payload(string $footer): void {
         self::$footer .= "<footer>{$footer}</footer>";
     }
 
@@ -220,7 +220,7 @@ class Layout {
      * @since   LBF 0.6.0-beta
      */
 
-    public function append_to_footer( string $data ): static {
+    public function append_to_footer(string $data): static {
         self::$footer .= $data;
         return $this;
     }
@@ -230,7 +230,7 @@ class Layout {
      * RENDER *
      **********/
 
-    
+
     /**
      * Render the HTML header.
      * 
@@ -239,7 +239,7 @@ class Layout {
      */
 
     public function render_header(): void {
-        self::$html_header .= implode( "\n", self::$header_meta ) . '</head>';
+        self::$html_header .= implode("\n", self::$header_meta) . '</head>';
         echo self::$html_header;
     }
 
@@ -247,12 +247,19 @@ class Layout {
     /**
      * Render the HTML body.
      * 
+     * @param   bool    $login  If the page being called is the login page. Default: false
+     * 
      * @access  public
      * @since   LBF 0.6.0-beta
      */
 
-    public function render_body(): void {
-        echo "<body>" . self::$body;
+    public function render_body(bool $login = false): void {
+        if ($login) {
+            echo "<body class='login-body'>";
+        } else {
+            echo "<body>";
+        }
+        echo self::$body;
     }
 
 
@@ -267,5 +274,4 @@ class Layout {
         self::$footer .= '</body></html>';
         echo self::$footer;
     }
-
 }

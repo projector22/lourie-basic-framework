@@ -291,7 +291,7 @@ class Router {
             Layout::append_to_body($injector->insert_css(PagePositions::TOP_OF_PAGE), true);
             Layout::append_to_body($injector->insert_js(PagePositions::TOP_OF_PAGE), true);
             Layout::append_to_body("<main>{$html}</main>");
-            $layout->render_body();
+            $layout->render_body($this->get_page() === 'Web\LoginPage');
 
             $layout->append_to_footer($injector->insert_css(PagePositions::BOTTOM_OF_PAGE));
             $layout->append_to_footer($injector->insert_js(PagePositions::BOTTOM_OF_PAGE));
