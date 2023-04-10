@@ -207,7 +207,7 @@ class JSONTools {
      */
 
     public static function check_values( array $master_data, array $live_data ): array {
-        $hold = [];
+        $hold = $live_data;
         foreach ( $master_data as $index => $value ) {
             if ( is_array( $value ) ) {
                 if ( isset( $live_data[$index] ) ) {
@@ -216,11 +216,7 @@ class JSONTools {
                     $hold[$index] = $master_data[$index];
                 }
             } else {
-                if ( isset( $live_data[$index] ) ) {
-                    $hold[$index] = $live_data[$index];
-                } else {
-                    $hold[$index] = $master_data[$index];
-                }
+                $hold[$index] = $live_data[$index] ?? $master_data[$index];
             }
         }
         return $hold;
