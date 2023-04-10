@@ -416,7 +416,7 @@ enum HTTPStatusCode {
         http_response_code($code->code());
         $payload = [];
 
-        if ($code->code >= 400) {
+        if ($code->code() >= 400) {
             $payload['status'] = 'error';
         }
         $payload['response_code'] = $code->code();
