@@ -44,9 +44,9 @@ class HTML extends HTMLMeta {
      * @since   LRS 3.12.5
      */
 
-     public static function div( array $params = [] ): string {
-        $element = self::html_tag_open( 'div', $params );
-        self::handle_echo( $element, $params );
+    public static function div(array $params = []): string {
+        $element = self::html_tag_open('div', $params);
+        self::handle_echo($element, $params);
         return $element;
     }
 
@@ -69,14 +69,14 @@ class HTML extends HTMLMeta {
      * @since   LBF 0.2.1-beta   Added param `$echo`
      */
 
-    public static function close_div( int $count = 1, ?string $comment = null, ?bool $echo = null ): string {
-        $element = self::html_tag_close( 'div', $count, $comment );
-        if ( !is_null( $echo ) ) {
-            $hold = self::temporary_change_echo( $echo );
+    public static function close_div(int $count = 1, ?string $comment = null, ?bool $echo = null): string {
+        $element = self::html_tag_close('div', $count, $comment);
+        if (!is_null($echo)) {
+            $hold = self::temporary_change_echo($echo);
         }
-        self::handle_echo( $element );
-        if ( !is_null( $echo ) ) {
-            self::restore_origonal_echo( $hold );
+        self::handle_echo($element);
+        if (!is_null($echo)) {
+            self::restore_origonal_echo($hold);
         }
         return $element;
     }
@@ -102,11 +102,11 @@ class HTML extends HTMLMeta {
      * @since   LRS 3.12.7
      */
 
-    public static function div_container( array $params = [], string $content = '' ): string {
-        $hold = self::temporary_change_echo( false );
-        $element = self::div( $params ) . $content . self::close_div();
-        self::restore_origonal_echo( $hold );
-        self::handle_echo( $element, $params );
+    public static function div_container(array $params = [], string $content = ''): string {
+        $hold = self::temporary_change_echo(false);
+        $element = self::div($params) . $content . self::close_div();
+        self::restore_origonal_echo($hold);
+        self::handle_echo($element, $params);
         return $element;
     }
 
@@ -125,9 +125,9 @@ class HTML extends HTMLMeta {
      * @since   LRS 3.12.5
      */
 
-    public static function span( array $params = [] ): string {
-        $element = self::html_tag_open( 'span', $params );
-        self::handle_echo( $element, $params );
+    public static function span(array $params = []): string {
+        $element = self::html_tag_open('span', $params);
+        self::handle_echo($element, $params);
         return $element;
     }
 
@@ -150,14 +150,14 @@ class HTML extends HTMLMeta {
      * @since   LBF 0.2.1-beta   Added param `$echo`
      */
 
-    public static function close_span( int $count = 1, ?string $comment = null, ?bool $echo = null ): string {
-        $element = self::html_tag_close( 'span', $count, $comment );
-        if ( !is_null( $echo ) ) {
-            $hold = self::temporary_change_echo( $echo );
+    public static function close_span(int $count = 1, ?string $comment = null, ?bool $echo = null): string {
+        $element = self::html_tag_close('span', $count, $comment);
+        if (!is_null($echo)) {
+            $hold = self::temporary_change_echo($echo);
         }
-        self::handle_echo( $element );
-        if ( !is_null( $echo ) ) {
-            self::restore_origonal_echo( $hold );
+        self::handle_echo($element);
+        if (!is_null($echo)) {
+            self::restore_origonal_echo($hold);
         }
         return $element;
     }
@@ -183,11 +183,11 @@ class HTML extends HTMLMeta {
      * @since   LRS 3.12.7
      */
 
-    public static function span_container( array $params = [], string $content = '' ): string {
-        $hold = self::temporary_change_echo( false );
-        $element = self::span( $params ) . $content . self::close_span();
-        self::restore_origonal_echo( $hold );
-        self::handle_echo( $element, $params );
+    public static function span_container(array $params = [], string $content = ''): string {
+        $hold = self::temporary_change_echo(false);
+        $element = self::span($params) . $content . self::close_span();
+        self::restore_origonal_echo($hold);
+        self::handle_echo($element, $params);
         return $element;
     }
 
@@ -206,9 +206,9 @@ class HTML extends HTMLMeta {
      * @since   LBF 0.1.5-beta
      */
 
-    public static function p( array $params = [] ): string {
-        $element = self::html_tag_open( 'p', $params );
-        self::handle_echo( $element, $params );
+    public static function p(array $params = []): string {
+        $element = self::html_tag_open('p', $params);
+        self::handle_echo($element, $params);
         return $element;
     }
 
@@ -231,14 +231,14 @@ class HTML extends HTMLMeta {
      * @since   LBF 0.2.1-beta   Added param `$echo`
      */
 
-    public static function close_p( int $count = 1, ?string $comment = null, ?bool $echo = null ): string {
-        $element = self::html_tag_close( 'span', $count, $comment );
-        if ( !is_null( $echo ) ) {
-            $hold = self::temporary_change_echo( $echo );
+    public static function close_p(int $count = 1, ?string $comment = null, ?bool $echo = null): string {
+        $element = self::html_tag_close('span', $count, $comment);
+        if (!is_null($echo)) {
+            $hold = self::temporary_change_echo($echo);
         }
-        self::handle_echo( $element );
-        if ( !is_null( $echo ) ) {
-            self::restore_origonal_echo( $hold );
+        self::handle_echo($element);
+        if (!is_null($echo)) {
+            self::restore_origonal_echo($hold);
         }
         return $element;
     }
@@ -264,11 +264,11 @@ class HTML extends HTMLMeta {
      * @since   LBF 0.1.5-beta
      */
 
-    public static function p_container( array $params = [], string $content = '' ): string {
-        $hold = self::temporary_change_echo( false );
-        $element = self::p( $params ) . $content . self::close_p();
-        self::restore_origonal_echo( $hold );
-        self::handle_echo( $element, $params );
+    public static function p_container(array $params = [], string $content = ''): string {
+        $hold = self::temporary_change_echo(false);
+        $element = self::p($params) . $content . self::close_p();
+        self::restore_origonal_echo($hold);
+        self::handle_echo($element, $params);
         return $element;
     }
 
@@ -287,10 +287,10 @@ class HTML extends HTMLMeta {
      * @since   LRS 3.12.7
      */
 
-    public static function heading( int $size, string $content, array $params = [] ): string {
+    public static function heading(int $size, string $content, array $params = []): string {
         $params['text'] = $content;
-        $element = self::html_element_container( "h{$size}", $params );
-        self::handle_echo( $element, $params );
+        $element = self::html_element_container("h{$size}", $params);
+        self::handle_echo($element, $params);
         return $element;
     }
 
@@ -307,12 +307,12 @@ class HTML extends HTMLMeta {
      * @static
      * @access  public
      * @since   LRS 3.12.7
-     */    
+     */
 
-    public static function form( array $params = [], bool $new_tab = false ): string {
+    public static function form(array $params = [], bool $new_tab = false): string {
         $params['new_tab'] = $new_tab;
-        $element = self::html_tag_open( 'form', $params );
-        self::handle_echo( $element, $params );
+        $element = self::html_tag_open('form', $params);
+        self::handle_echo($element, $params);
         return $element;
     }
 
@@ -331,14 +331,14 @@ class HTML extends HTMLMeta {
      * @since   LBF 0.2.1-beta   Added param `$echo`
      */
 
-    public static function close_form( ?bool $echo = null ): string {
+    public static function close_form(?bool $echo = null): string {
         $element = '</form>';
-        if ( !is_null( $echo ) ) {
-            $hold = self::temporary_change_echo( $echo );
+        if (!is_null($echo)) {
+            $hold = self::temporary_change_echo($echo);
         }
-        self::handle_echo( $element );
-        if ( !is_null( $echo ) ) {
-            self::restore_origonal_echo( $hold );
+        self::handle_echo($element);
+        if (!is_null($echo)) {
+            self::restore_origonal_echo($hold);
         }
         return $element;
     }
@@ -362,11 +362,11 @@ class HTML extends HTMLMeta {
      * @deprecated  LBF 0.1.6-beta
      */
 
-    public static function link( string $href, ?string $text, array $params = [] ): string {
+    public static function link(string $href, ?string $text, array $params = []): string {
         $element = "<a href='{$href}'";
 
-        foreach ( $params as $index => $value ) {
-            if ( $index == 'new_tab' ) {
+        foreach ($params as $index => $value) {
+            if ($index == 'new_tab') {
                 $element .= ' ' . Draw::NEW_TAB;
                 continue;
             }
@@ -374,7 +374,7 @@ class HTML extends HTMLMeta {
         }
 
         $element .= ">{$text}</a>";
-        self::handle_echo( $element );
+        self::handle_echo($element);
         return $element;
     }
 
@@ -393,16 +393,16 @@ class HTML extends HTMLMeta {
      * @since   LBF 0.1.6-beta
      */
 
-    public static function a( array $params ): string {
-        if ( !isset( $params['href'] ) ) {
+    public static function a(array $params): string {
+        if (!isset($params['href'])) {
             $params['href'] = 'javascript:void(0)';
         }
 
-        if ( !isset( $params['text'] ) ) {
-            throw new MissingRequiredInput( "Param 'text' required" );
+        if (!isset($params['text'])) {
+            throw new MissingRequiredInput("Param 'text' required");
         }
 
-        if ( !isset( $params['id'] ) ) {
+        if (!isset($params['id'])) {
             $params['id'] = Hash::random_id_string();
         }
 
@@ -410,9 +410,9 @@ class HTML extends HTMLMeta {
             'echo', 'text',
         ];
 
-        $item = self::html_element_container( 'a', $params, $skip_params );
+        $item = self::html_element_container('a', $params, $skip_params);
 
-        self::handle_echo( $item, $params );
+        self::handle_echo($item, $params);
         return $item;
     }
 
@@ -431,24 +431,24 @@ class HTML extends HTMLMeta {
      * @since   LRS 3.17.1
      */
 
-    public static function img( array $params = [] ): string {
-        if ( !isset( $params['src'] ) ) {
-            throw new MissingRequiredInput( "Path to file not set. Please set param 'src" );
+    public static function img(array $params = []): string {
+        if (!isset($params['src'])) {
+            throw new MissingRequiredInput("Path to file not set. Please set param 'src");
         }
 
         $unit = $params['unit'] ?? 'px';
         $dimensions = ['height', 'width'];
-        foreach ( $dimensions as $dimension ) {
-            if ( isset( $params[$dimension] ) ) {
-                if ( is_numeric( $params[$dimension] ) ) {
+        foreach ($dimensions as $dimension) {
+            if (isset($params[$dimension])) {
+                if (is_numeric($params[$dimension])) {
                     $params[$dimension] = "{$params[$dimension]}{$unit}";
                 }
             }
         }
 
-        $item = self::html_tag_open( 'img', $params, ['unit'] );
+        $item = self::html_tag_open('img', $params, ['unit']);
 
-        self::handle_echo( $item, $params );
+        self::handle_echo($item, $params);
         return $item;
     }
 
@@ -480,43 +480,43 @@ class HTML extends HTMLMeta {
      * @since   LRS 3.27.1  Moved from `src/Framework/HTML/Draw.php` to `src/Framework/HTML/HTMLElements.php`
      */
 
-    public static function iframe( array $params ): string {
-        if ( !isset( $params['src'] ) && !isset( $params['srcdoc'] ) ) {
-            throw new MissingRequiredInput( "An iframe must have either the parameter 'src' or 'srcdoc'." );
+    public static function iframe(array $params): string {
+        if (!isset($params['src']) && !isset($params['srcdoc'])) {
+            throw new MissingRequiredInput("An iframe must have either the parameter 'src' or 'srcdoc'.");
         }
 
-        if ( !isset( $params['id'] ) ) {
+        if (!isset($params['id'])) {
             $params['id'] = Hash::random_id_string();
         }
-        if ( !isset( $params['loading'] ) ) {
+        if (!isset($params['loading'])) {
             $params['loading'] = 'lazy';
         }
 
-        if ( !isset( $params['default_unit'] ) ) {
+        if (!isset($params['default_unit'])) {
             $params['default_unit'] = 'px';
         }
 
-        if ( !isset( $params['width'] ) ) {
+        if (!isset($params['width'])) {
             $params['width'] = '100%';
         } else {
-            if ( is_numeric( $params['width'] ) ) {
+            if (is_numeric($params['width'])) {
                 $params['width'] .= $params['default_unit'];
             }
         }
 
-        if ( !isset( $params['height'] ) ) {
+        if (!isset($params['height'])) {
             $params['height'] = '300px';
         } else {
-            if ( is_numeric( $params['height'] ) ) {
+            if (is_numeric($params['height'])) {
                 $params['height'] .= $params['default_unit'];
             }
         }
 
         $params['text'] = 'Sorry, your browser does not allow iframe previews.';
 
-        $item = self::html_element_container( 'iframe', $params, ['default_unit'] );
+        $item = self::html_element_container('iframe', $params, ['default_unit']);
 
-        self::handle_echo( $item, $params );
+        self::handle_echo($item, $params);
         return $item;
     }
 
@@ -559,9 +559,9 @@ class HTML extends HTMLMeta {
      * @since   0.1.5-beta
      */
 
-    public static function ol( array $params ): string {
-        $item = self::list( 'ol', $params );
-        self::handle_echo( $item, $params );
+    public static function ol(array $params): string {
+        $item = self::list('ol', $params);
+        self::handle_echo($item, $params);
         return $item;
     }
 
@@ -593,9 +593,9 @@ class HTML extends HTMLMeta {
      * @since   0.1.5-beta
      */
 
-    public static function ul( array $params ): string {
-        $item = self::list( 'ul', $params );
-        self::handle_echo( $item, $params );
+    public static function ul(array $params): string {
+        $item = self::list('ul', $params);
+        self::handle_echo($item, $params);
         return $item;
     }
 
@@ -618,16 +618,16 @@ class HTML extends HTMLMeta {
      * @since   0.1.5-beta
      */
 
-    private static function list( string $tag, array $params ): string {
+    private static function list(string $tag, array $params): string {
         $item = '';
-        if ( !isset( $params['data'] ) ) {
+        if (!isset($params['data'])) {
             echo "<pre>";
-            throw new MissingRequiredInput( '$params[\'data\'] must be set.' );
+            throw new MissingRequiredInput('$params[\'data\'] must be set.');
             echo "</pre>";
         }
-        if ( !is_array( $params['data'] ) ) {
+        if (!is_array($params['data'])) {
             echo "<pre>";
-            throw new InvalidInput( '$params[\'data\'] must be an array.' );
+            throw new InvalidInput('$params[\'data\'] must be an array.');
             echo "</pre>";
         }
 
@@ -636,11 +636,11 @@ class HTML extends HTMLMeta {
         ];
 
         $item .= "<{$tag}";
-        foreach ( $params as $key => $value ) {
-            if ( in_array( $key, $skip_params ) ) {
+        foreach ($params as $key => $value) {
+            if (in_array($key, $skip_params)) {
                 continue;
             }
-            switch ( $key ) {
+            switch ($key) {
                 case 'reversed':
                     $item .= $value ? ' reversed' : '';
                     break;
@@ -649,16 +649,16 @@ class HTML extends HTMLMeta {
             }
         }
         $item .= '>';
-        foreach ( $params['data'] as $value ) {
-            if ( is_array( $value ) ) {
-                if ( !isset( $value['li'] ) ) {
+        foreach ($params['data'] as $value) {
+            if (is_array($value)) {
+                if (!isset($value['li'])) {
                     echo "<pre>";
-                    throw new MissingRequiredInput( "Entry param 'li' missing from data entry." );
+                    throw new MissingRequiredInput("Entry param 'li' missing from data entry.");
                     echo "</pre>";
                 }
                 $item .= "<li";
-                foreach ( $value as $index => $entry ) {
-                    if ( $index == 'li' ) {
+                foreach ($value as $index => $entry) {
+                    if ($index == 'li') {
                         continue;
                     }
                     $item .= " {$index}='{$entry}'";
@@ -672,4 +672,26 @@ class HTML extends HTMLMeta {
         return $item;
     }
 
+
+    /**
+     * Draw a `<script>` tag onto the screen.
+     * 
+     * @param   string  $js     The Javascript to put between the <script> tag. Default: ''
+     * @param   array   $src    Any params to inject onto the script tag. Things like `src`, `module` etc. Default: []
+     * 
+     * @return  string
+     * 
+     * @static
+     * @since   LRS 3.7.6
+     * @since   LRS 3.12.5      Moved from `PageElements` to `Framework\HTML\Scripts`.
+     *                          Added `$return` & `$param` $src.
+     * @since   LBF 0.6.0-beta  Revamped and moved from JS to HTML.
+     */
+
+    public static function script(string $js = '', array $params = []): string {
+        $params['text'] = $js;
+        $element = self::html_element_container("script", $params);
+        self::handle_echo($element, $params);
+        return $element;
+    }
 }

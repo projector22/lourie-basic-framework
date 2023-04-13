@@ -23,29 +23,6 @@ use LBF\HTML\Injector\PagePositions;
 
 class JS extends HTMLMeta {
 
-    /**
-     * Draw a script onto the screen
-     * 
-     * @param   string      $script Any kind of JavaScript or JS function call
-     * @param   string|null $src    An src element on the <script> tag
-     *                              Default: null
-     * 
-     * @return  string
-     * 
-     * @static
-     * @since   LRS 3.7.6
-     * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts. Added return & param $src
-     * 
-     * @deprecated  LBF 0.6.0-beta
-     */
-
-     public static function script( string $script, ?string $src = null ): string {
-        $add_src = is_null( $src ) ? '' : " src='{$src}'";
-        $element = "<script{$add_src}>{$script}</script>";
-        self::handle_echo( $element );
-        return $element;
-    }
-
 
     /**
      * Draw a script onto the screen, with type = module
@@ -63,10 +40,10 @@ class JS extends HTMLMeta {
      * @deprecated  LBF 0.6.0-beta
      */
 
-    public static function script_module( string $script, ?string $src = null ): string {
-        $add_src = is_null( $src ) ? '' : " src='{$src}'";
+    public static function script_module(string $script, ?string $src = null): string {
+        $add_src = is_null($src) ? '' : " src='{$src}'";
         $element = "<script{$add_src} type='module'>{$script}</script>";
-        self::handle_echo( $element );
+        self::handle_echo($element);
         return $element;
     }
 
@@ -85,9 +62,9 @@ class JS extends HTMLMeta {
      * @deprecated  LBF 0.6.0-beta
      */
 
-    public static function script_loader( string $src ): string {
+    public static function script_loader(string $src): string {
         $element = "<script src='{$src}'></script>";
-        self::handle_echo( $element );
+        self::handle_echo($element);
         return $element;
     }
 
@@ -106,9 +83,9 @@ class JS extends HTMLMeta {
      * @deprecated  LBF 0.6.0-beta
      */
 
-    public static function script_module_loader( string $src ): string {
+    public static function script_module_loader(string $src): string {
         $element = "<script src='{$src}' type='module'></script>";
-        self::handle_echo( $element );
+        self::handle_echo($element);
         return $element;
     }
 
@@ -123,10 +100,10 @@ class JS extends HTMLMeta {
      * @since   LRS 3.12.5
      */
 
-    public static function alert( string $text ): void {
-        HTML::inject_js( <<<JS
+    public static function alert(string $text): void {
+        HTML::inject_js(<<<JS
         alert('{$text}');
-        JS );
+        JS);
     }
 
 
@@ -142,10 +119,10 @@ class JS extends HTMLMeta {
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
-    public static function clipboardButton( string $id = '.btn' ): void {
-        HTML::inject_js( <<<JS
+    public static function clipboardButton(string $id = '.btn'): void {
+        HTML::inject_js(<<<JS
         const clipboard = new ClipboardJS('{$id}');
-        JS );
+        JS);
     }
 
 
@@ -165,7 +142,7 @@ class JS extends HTMLMeta {
      * @since   LBF 0.6.0-beta  Fixed bug with `$do_nothing`.
      */
 
-     public static function change_button_behaviour( string $input, string $button, int $keycode = 13, bool $do_nothing = false ): void {
+    public static function change_button_behaviour(string $input, string $button, int $keycode = 13, bool $do_nothing = false): void {
         $id = Hash::random_id_string(4);
         $do_nothing = $do_nothing ? 1 : 0;
         HTML::inject_js(<<<JS
@@ -179,7 +156,7 @@ class JS extends HTMLMeta {
                     }
                 }
             });
-        JS, PagePositions::BOTTOM_OF_PAGE );
+        JS, PagePositions::BOTTOM_OF_PAGE);
     }
 
 
@@ -194,15 +171,15 @@ class JS extends HTMLMeta {
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
-    public static function block_default_button_press( int $keycode = 13 ): void {
-        HTML::inject_js( <<<JS
+    public static function block_default_button_press(int $keycode = 13): void {
+        HTML::inject_js(<<<JS
         window.addEventListener('keydown', function (event) {
             if (event.keyCode === $keycode) {
                 event.preventDefault();
                 return false;
             }
         });
-        JS );
+        JS);
     }
 
 
@@ -225,7 +202,7 @@ class JS extends HTMLMeta {
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
-    public static function hide_element_after_time( string $id, string $function_name = 'hide_element', int $time = 1200, string $content = '' ): void {
+    public static function hide_element_after_time(string $id, string $function_name = 'hide_element', int $time = 1200, string $content = ''): void {
         HTML::inject_js(<<<JS
             window.addEventListener('load', () => {
                 const element = document.getElementById('$id');
@@ -240,7 +217,7 @@ class JS extends HTMLMeta {
                     }, $time);
                 }
             });
-        JS, PagePositions::BOTTOM_OF_PAGE );
+        JS, PagePositions::BOTTOM_OF_PAGE);
     }
 
 
@@ -255,21 +232,21 @@ class JS extends HTMLMeta {
      * @since   LRS 3.12.5  Moved from PageElements to Framework\HTML\Scripts
      */
 
-    public static function insert_keyboard_shortcuts( string $desired_function ): void {
+    public static function insert_keyboard_shortcuts(string $desired_function): void {
         /**
          * @see src\js\lib\keyboard_shortcuts.js
          * -> Keyboard shortcut functions should all be in this library
          * 
          * @todo    Make this universal for library & LRS.
          */
-        HTML::inject_js( <<<JS
+        HTML::inject_js(<<<JS
         import { $desired_function } from '/src/js/keyboard_shortcuts.js';
-        JS );
-        HTML::inject_js( <<<JS
+        JS);
+        HTML::inject_js(<<<JS
         document.addEventListener('keydown', function(event) {
             $desired_function(event);
         });
-        JS );
+        JS);
     }
 
 
@@ -294,4 +271,23 @@ class JS extends HTMLMeta {
         JS);
     }
 
+
+    /**
+     * Alert the user of something then navigate to a new location.
+     * 
+     * @param   string  $message    The message to show to the user.
+     * @param   string  $nav        The location to navigate to.
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function alert_then_nav(string $message, string $nav): never {
+        HTML::script(<<<JS
+            alert('{$message}');
+            window.location = '{$nav}';
+        JS, ['echo' => true]);
+        die;
+    }
 }
