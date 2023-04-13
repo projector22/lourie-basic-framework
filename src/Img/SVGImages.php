@@ -52,7 +52,7 @@ enum SVGImages {
      */
 
     public function path(): string {
-        return match( $this ) {
+        return match ($this) {
             self::maintenance        => __DIR__ . '/maintenance.svg',
             self::error401           => __DIR__ . '/401.svg',
             self::error403           => __DIR__ . '/403.svg',
@@ -73,6 +73,6 @@ enum SVGImages {
      */
 
     public function image(): string {
-        return file_get_contents( $this->path() );
+        return file_get_contents($this->path());
     }
 }

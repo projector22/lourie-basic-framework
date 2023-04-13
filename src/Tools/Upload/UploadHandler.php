@@ -156,7 +156,7 @@ class UploadHandler {
      */
 
     public bool $check_file_type = false;
-    
+
     /**
      * Switch to allow checking if the file already exists
      * 
@@ -167,7 +167,7 @@ class UploadHandler {
      */
 
     public bool $check_file_exists = false;
-    
+
     /**
      * Switch to allow checking if the file exceeds the file limit
      * 
@@ -247,30 +247,30 @@ class UploadHandler {
         public readonly string $save_path
     ) {
         $this->max_upload_size = self::file_upload_max_size();
-        if ( isset( $_FILES ) ) {
-            $this->num_of_files = count( $_FILES );
-            foreach ( $_FILES as $index => $file ) {
+        if (isset($_FILES)) {
+            $this->num_of_files = count($_FILES);
+            foreach ($_FILES as $index => $file) {
                 $this->indexes[] = $index;
-                if ( $this->num_of_files == 1 ) {
+                if ($this->num_of_files == 1) {
                     $this->file_name = $file['name'];
-                    $this->name      = pathinfo( $file['name'], PATHINFO_FILENAME );
-                    $this->extension = strtolower( pathinfo( $file['name'], PATHINFO_EXTENSION ) );
+                    $this->name      = pathinfo($file['name'], PATHINFO_FILENAME);
+                    $this->extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
                     $this->type      = $file['type'];
                     $this->tmp_name  = $file['tmp_name'];
                     $this->error     = $file['error'];
-                    if ( $this->error == 1 ) {
+                    if ($this->error == 1) {
                         $this->error_count++;
                     }
                     $this->size     = $file['size'];
                     $this->new_name = $this->file_name;
                 } else {
                     $this->file_name[$index] = $file['name'];
-                    $this->name[$index]      = pathinfo( $file['name'], PATHINFO_FILENAME );
-                    $this->extension[$index] = strtolower( pathinfo( $file['name'], PATHINFO_EXTENSION ) );
+                    $this->name[$index]      = pathinfo($file['name'], PATHINFO_FILENAME);
+                    $this->extension[$index] = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
                     $this->type[$index]      = $file['type'];
                     $this->tmp_name[$index]  = $file['tmp_name'];
                     $this->error[$index]     = $file['error'];
-                    if ( $this->error[$index] == 1 ) {
+                    if ($this->error[$index] == 1) {
                         $this->error_count++;
                     }
                     $this->size[$index]     = $file['size'];
@@ -281,7 +281,7 @@ class UploadHandler {
             echo "No files selected";
             return;
         }
-    } //__construct
+    }
 
 
     /**
@@ -296,7 +296,7 @@ class UploadHandler {
      */
 
     public function upload_error(): bool {
-        switch ( $this->error_count ) {
+        switch ($this->error_count) {
             case '0':
                 return false;
             case '1':
@@ -319,7 +319,7 @@ class UploadHandler {
      */
 
     public function upload_check(): void {
-        if ( $this->upload_error() ) {
+        if ($this->upload_error()) {
             return;
         }
         $this->upload_failed = false;
@@ -330,10 +330,10 @@ class UploadHandler {
          * defined in .htaccess or php.ini
          */
 
-        if ( $this->check_size_limit ) {
-            if ( $this->num_of_files > 1 ) {
-                foreach ( $this->size as $size ) {
-                    if ( $size > $this->max_upload_size ) {
+        if ($this->check_size_limit) {
+            if ($this->num_of_files > 1) {
+                foreach ($this->size as $size) {
+                    if ($size > $this->max_upload_size) {
                         $this->error_count++;
                         $this->upload_failed = true;
                         $this->upload_failed_reason = "File {$this->file_name} is bigger than the maximum upload size";
@@ -341,7 +341,7 @@ class UploadHandler {
                     }
                 }
             } else {
-                if ( $this->size > $this->max_upload_size ) {
+                if ($this->size > $this->max_upload_size) {
                     $this->error_count++;
                     $this->upload_failed = true;
                     $this->upload_failed_reason = "File {$this->file_name} is bigger than the maximum upload size";
@@ -354,10 +354,10 @@ class UploadHandler {
          * This bit checks if the file / files already exist on the server
          */
 
-        if ( $this->check_file_exists ) {
-            if ( $this->num_of_files > 1 ) {
-                foreach ( $this->file_name as $name ) {
-                    if ( file_exists( $this->save_path . $name ) ) {
+        if ($this->check_file_exists) {
+            if ($this->num_of_files > 1) {
+                foreach ($this->file_name as $name) {
+                    if (file_exists($this->save_path . $name)) {
                         $this->error_count++;
                         $this->upload_failed = true;
                         $this->upload_failed_reason = "File {$this->save_path}{$name} already exists and may not be overwritten";
@@ -365,54 +365,58 @@ class UploadHandler {
                     }
                 }
             } else {
-                if ( file_exists( $this->save_path . $this->file_name ) ) {
+                if (file_exists($this->save_path . $this->file_name)) {
                     $this->error_count++;
                     $this->upload_failed = true;
                     $this->upload_failed_reason = "File {$this->save_path}{$this->file_name} already exists and may not be overwritten";
                     return;
                 }
-            }        
+            }
         }
-        
+
         /**
          * This bit checks if a file matches the predefined file type limit
          */
 
-        if ( $this->check_file_type ) {
-            if ( is_string( $this->allowed_file_types ) ) {
+        if ($this->check_file_type) {
+            if (is_string($this->allowed_file_types)) {
                 $this->allowed_file_types = [$this->allowed_file_types];
             }
             $hold = [];
             $test_all = false;
-            foreach ( $this->allowed_file_types as $i => $type ) {
+            foreach ($this->allowed_file_types as $i => $type) {
                 //Strip leading '.' in the defined file extension
-                if ( $type[0] == '.' ) {
-                    $this->allowed_file_types[$i] = ltrim( $type, '.' );
+                if ($type[0] == '.') {
+                    $this->allowed_file_types[$i] = ltrim($type, '.');
                 }
                 //check if a /* MIME Type is being used - eg. image/*
-                if ( str_contains( $type, '/' ) && explode( '/', $type )[1] == '*' ) {
-                    $hold[] = explode( '/', $type )[0] . '/';
+                if (str_contains($type, '/') && explode('/', $type)[1] == '*') {
+                    $hold[] = explode('/', $type)[0] . '/';
                 }
             }
-            if ( count( $hold ) > 0 ) {
+            if (count($hold) > 0) {
                 $test_all = true;
-                $this->allowed_file_types = array_merge( $this->allowed_file_types, $hold );
+                $this->allowed_file_types = array_merge($this->allowed_file_types, $hold);
             }
 
-            if ( $this->num_of_files > 1 ) {
-                foreach ( $this->type as $i => $type ) {
-                    if ( $test_all ) {
-                        if ( !in_array( explode( '/', $type )[0] . '/',  $this->allowed_file_types ) 
-                        && !in_array( $type, $this->allowed_file_types ) 
-                        && !in_array( $this->extension[$i], $this->allowed_file_types ) ) {
+            if ($this->num_of_files > 1) {
+                foreach ($this->type as $i => $type) {
+                    if ($test_all) {
+                        if (
+                            !in_array(explode('/', $type)[0] . '/',  $this->allowed_file_types)
+                            && !in_array($type, $this->allowed_file_types)
+                            && !in_array($this->extension[$i], $this->allowed_file_types)
+                        ) {
                             $this->error_count++;
                             $this->upload_failed = true;
                             $this->upload_failed_reason = "Invalid file type $type / " . $this->extension[$i] . " not allowed";
                             return;
                         }
                     } else {
-                        if ( !in_array( $type, $this->allowed_file_types ) 
-                        && !in_array( $this->extension[$i], $this->allowed_file_types ) ) {
+                        if (
+                            !in_array($type, $this->allowed_file_types)
+                            && !in_array($this->extension[$i], $this->allowed_file_types)
+                        ) {
                             $this->error_count++;
                             $this->upload_failed = true;
                             $this->upload_failed_reason = "Invalid file type $type / " . $this->extension[$i] . " not allowed";
@@ -421,18 +425,22 @@ class UploadHandler {
                     }
                 }
             } else {
-                if ( $test_all ) {
-                    if ( !in_array( explode( '/', $this->type )[0] . '/',  $this->allowed_file_types ) 
-                    && !in_array( $this->type, $this->allowed_file_types ) 
-                    && !in_array( $this->extension, $this->allowed_file_types ) ) {
+                if ($test_all) {
+                    if (
+                        !in_array(explode('/', $this->type)[0] . '/',  $this->allowed_file_types)
+                        && !in_array($this->type, $this->allowed_file_types)
+                        && !in_array($this->extension, $this->allowed_file_types)
+                    ) {
                         $this->error_count++;
                         $this->upload_failed = true;
                         $this->upload_failed_reason = "Invalid file type $this->type / $this->extension not allowed";
                         return;
                     }
                 } else {
-                    if ( !in_array( $this->type, $this->allowed_file_types ) 
-                    && !in_array( $this->extension, $this->allowed_file_types ) ) {
+                    if (
+                        !in_array($this->type, $this->allowed_file_types)
+                        && !in_array($this->extension, $this->allowed_file_types)
+                    ) {
                         $this->error_count++;
                         $this->upload_failed = true;
                         $this->upload_failed_reason = "Invalid file type $this->type / $this->extension not allowed";
@@ -452,20 +460,20 @@ class UploadHandler {
      */
 
     public function place_uploaded_file(): void {
-        if ( $this->upload_error() ) {
+        if ($this->upload_error()) {
             return;
         }
 
-        if ( $this->num_of_files > 1 ) {
-            foreach ( $this->indexes as $index ) {
-                if ( !move_uploaded_file( $this->tmp_name[$index], $this->save_path . $this->new_name[$index] ) ) {
+        if ($this->num_of_files > 1) {
+            foreach ($this->indexes as $index) {
+                if (!move_uploaded_file($this->tmp_name[$index], $this->save_path . $this->new_name[$index])) {
                     $this->error_count++;
                     $this->upload_failed = true;
                     echo "Error";
                 }
             }
         } else {
-            if ( !move_uploaded_file( $this->tmp_name, $this->save_path . $this->new_name ) ) {
+            if (!move_uploaded_file($this->tmp_name, $this->save_path . $this->new_name)) {
                 $this->error_count++;
                 $this->upload_failed = true;
                 echo "Error";
@@ -496,11 +504,11 @@ class UploadHandler {
          * @see https://www.php.net/manual/en/language.variables.scope.php
          */
         static $max_size = -1;
-    
-        if ( $max_size < 0 ) {
+
+        if ($max_size < 0) {
             // Start with post_max_size.
-            $post_max_size = self::parse_size( ini_get( 'post_max_size' ) );
-            if ( $post_max_size > 0 ) {
+            $post_max_size = self::parse_size(ini_get('post_max_size'));
+            if ($post_max_size > 0) {
                 $max_size = $post_max_size;
             }
 
@@ -508,8 +516,8 @@ class UploadHandler {
              * If upload_max_size is less, then reduce. Except if upload_max_size is
              * zero, which indicates no limit.
              */
-            $upload_max = self::parse_size( ini_get( 'upload_max_filesize' ) );
-            if ( $upload_max > 0 && $upload_max < $max_size ) {
+            $upload_max = self::parse_size(ini_get('upload_max_filesize'));
+            if ($upload_max > 0 && $upload_max < $max_size) {
                 $max_size = $upload_max;
             }
         }
@@ -535,12 +543,11 @@ class UploadHandler {
      * @since   LBF 0.1.12-beta Moved to static method in UploadHandler.
      */
 
-    private static function parse_size( string $size ): int {
-        $unit = preg_replace( '/[^bkmgtpezy]/i', '', $size ); // Remove the non-unit characters from the size.
-        $size = preg_replace( '/[^0-9\.]/', '', $size ); // Remove the non-numeric characters from the size.
+    private static function parse_size(string $size): int {
+        $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
+        $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
 
         // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
-        return isset( $unit ) ? round( $size * pow( 1024, stripos( 'bkmgtpezy', $unit[0] ) ) ) : round( $size );
+        return isset($unit) ? round($size * pow(1024, stripos('bkmgtpezy', $unit[0]))) : round($size);
     }
-
 }

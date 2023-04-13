@@ -81,20 +81,17 @@ export function toggle_hidden(element, show_hide_id, show_when_on = true) {
  * 
  * @since   LRS 3.5.2
  * @since   LBF 0.1.1-beta
+ * @since   LBF 0.6.0-beta  Completely rewrote using `scrollIntoView`, no longer requires numbers.
  */
 
 export function zoom_updown(direction) {
-    const top = 0;
-    const bottom = 50000; // Would like to find a better way of detecting the bottom
-    const element = document.getElementById('content_wrapper');
+    const main = document.querySelector('main').firstChild;
     switch (direction) {
         case 'ftb_up':
-            element.scrollTop = top;
-            element.scrollTop = top;
+            main.scrollIntoView({ behavior: 'smooth', block: 'start' });
             break;
         case 'ftb_down':
-            element.scrollTop = bottom;
-            element.scrollTop = bottom;
+            main.scrollIntoView({ behavior: 'smooth', block: 'end' });
             break;
     }
 }

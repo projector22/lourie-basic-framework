@@ -54,18 +54,18 @@ class LoadEnvironment {
 
         private readonly string $path_to_env
     ) {
-        if ( !file_exists( $this->path_to_env ) ) {
+        if (!file_exists($this->path_to_env)) {
             echo "<pre>";
-            throw new FileNotFound( "Environment variable file not found." );
+            throw new FileNotFound("Environment variable file not found.");
         }
-        $lines = explode( "\n", file_get_contents( $this->path_to_env ) );
-        foreach( $lines as $index => $line ) {
-            if ( $line == '' ) {
-                unset( $lines[$index] );
+        $lines = explode("\n", file_get_contents($this->path_to_env));
+        foreach ($lines as $index => $line) {
+            if ($line == '') {
+                unset($lines[$index]);
             }
-            if ( ( trim( $line )[0] ?? '#' ) == '#' ) {
+            if ((trim($line)[0] ?? '#') == '#') {
                 // skip comments
-                unset( $lines[$index] );
+                unset($lines[$index]);
             }
         }
         $this->lines = $lines;
@@ -82,12 +82,12 @@ class LoadEnvironment {
      */
 
     public function load_to_env(): bool {
-        foreach ( $this->lines as $line ) {
+        foreach ($this->lines as $line) {
             try {
-                $parts = array_map( 'trim', explode( '=', $line ) );
+                $parts = array_map('trim', explode('=', $line));
                 $_ENV[$parts[0]] = $parts[1];
-                putenv( trim( $line ) );
-            } catch ( Throwable $th ) {
+                putenv(trim($line));
+            } catch (Throwable $th) {
                 return false;
             }
         }
@@ -108,21 +108,20 @@ class LoadEnvironment {
      */
 
     public function load_to_const(): bool {
-        foreach ( $this->lines as $line ) {
+        foreach ($this->lines as $line) {
             try {
-                $parts = array_map( 'trim', explode( '=', $line ) );
-                if ( defined( $parts[0] ) ) {
+                $parts = array_map('trim', explode('=', $line));
+                if (defined($parts[0])) {
                     echo "<pre>";
-                    throw new ConstantAlreadyDefined( "Constant {$parts[0]} already defined in the app." );
+                    throw new ConstantAlreadyDefined("Constant {$parts[0]} already defined in the app.");
                 }
-                define( $parts[0], $parts[1] );
-            } catch ( ConstantAlreadyDefined $e ) {
-                die( $e->getMessage() );
-            } catch ( Throwable $th ) {
+                define($parts[0], $parts[1]);
+            } catch (ConstantAlreadyDefined $e) {
+                die($e->getMessage());
+            } catch (Throwable $th) {
                 return false;
             }
         }
         return false;
     }
-
 }

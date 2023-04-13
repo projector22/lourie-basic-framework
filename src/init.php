@@ -101,20 +101,20 @@ class Init {
         'index.php'                           => 'index.template',
         'src/router.php'                      => 'src_router.template',
         'src/loader.php'                      => 'src_loader.template',
-        'src/app/actions/ActionHandler.php'   => 'app_actions_actionhandler.template',
-        'src/app/boilerplate/html_footer.php' => 'app_boilerplate_hmlfooter.template',
-        'src/app/boilerplate/HTMLHeader.php'  => 'app_boilerplate_htmlheader.template',
+        'src/actions/ActionHandler.php'       => 'app_actions_actionhandler.template',
+        'src/boilerplate/html_footer.php'     => 'app_boilerplate_hmlfooter.template',
+        'src/boilerplate/HTMLHeader.php'      => 'app_boilerplate_htmlheader.template',
         'src/includes/meta.php'               => 'includes_meta.template',
         'src/includes/meta-files.php'         => 'includes_metafiles.template',
         'src/includes/meta-paths.php'         => 'includes_metapaths.template',
         'src/includes/meta-tables.php'        => 'includes_metatables.template',
         'src/includes/static-routes.php'      => 'includes_staticroutes.template',
-        'src/app/layout/PageHeader.php'       => 'app_layout_header.template',
-        'src/app/layout/PageSidebar.php'      => 'app_layout_sidebar.template',
-        'src/app/layout/PageFooter.php'       => 'app_layout_footer.template',
-        'src/app/web/Home.php'                => 'app_web_home_class.template',
-        'src/app/db/DbTemplate.php'           => 'app_db_template.template',
-        'src/app/db/DatabaseStructure.php'    => 'app_db_database_structure.template',
+        'src/layout/PageHeader.php'           => 'app_layout_header.template',
+        'src/layout/PageSidebar.php'          => 'app_layout_sidebar.template',
+        'src/layout/PageFooter.php'           => 'app_layout_footer.template',
+        'src/web/Home.php'                    => 'app_web_home_class.template',
+        'src/db/DbTemplate.php'               => 'app_db_template.template',
+        'src/db/DatabaseStructure.php'        => 'app_db_database_structure.template',
         'src/css/styles.css'                  => 'css_styles.template',
         'src/js/lib.js'                       => 'js_lib.template',
         'src/js/home/home.js'                 => 'js_home_home.template',
@@ -131,11 +131,11 @@ class Init {
      */
 
     public function __construct() {
-        if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
-            die( 'Permission denied. You may not run this file in the browser' );
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            die('Permission denied. You may not run this file in the browser');
         }
-        $this->working_dir   = realpath( __DIR__ . '/../../../../' );
-        $this->template_path = realpath( __DIR__ . '/Init' );
+        $this->working_dir   = realpath(__DIR__ . '/../../../../');
+        $this->template_path = realpath(__DIR__ . '/Init');
     }
 
 
@@ -147,24 +147,24 @@ class Init {
      */
 
     public function gather_data(): void {
-        $this->data['app_name']    = readline( "Enter a name for your app: " );
-        $this->data['description'] = readline( "Enter a simple description of your app: " );
-        $this->data['author']      = readline( "Enter you name and email, which will be used to attribute files to you. Example: Joe Soap <joe@soapweb.net>: " );
-        $this->data['copyright']   = readline( "Enter the copyright owner for the app. Example: Joe Soap: " );
-        $ver = readline( "Enter the starting version, without alpha or beta (Leave blank for '0.1.0'): " );
+        $this->data['app_name']    = readline("Enter a name for your app: ");
+        $this->data['description'] = readline("Enter a simple description of your app: ");
+        $this->data['author']      = readline("Enter you name and email, which will be used to attribute files to you. Example: Joe Soap <joe@soapweb.net>: ");
+        $this->data['copyright']   = readline("Enter the copyright owner for the app. Example: Joe Soap: ");
+        $ver = readline("Enter the starting version, without alpha or beta (Leave blank for '0.1.0'): ");
         $this->data['version'] = $ver !== '' ? $ver : '0.1.0';
         $status = 'z';
         $valid = ['a', 'b', ''];
-        while ( !in_array( strtolower( $status ), $valid ) ) {
-            $status = readline( "Set the app to an Alpha or Beta status, entry 'a' or 'b' or leave blank to not set to 'live': " );
+        while (!in_array(strtolower($status), $valid)) {
+            $status = readline("Set the app to an Alpha or Beta status, entry 'a' or 'b' or leave blank to not set to 'live': ");
         }
-        $this->data['status'] = match( strtolower( $status ) ) {
+        $this->data['status'] = match (strtolower($status)) {
             'a' => 'alpha',
             'b' => 'beta',
             ''  => '',
         };
         $this->data['app-version'] = $this->data['version'];
-        if ( $this->data['status'] !== '' ) {
+        if ($this->data['status'] !== '') {
             $this->data['app-version'] .= '-' . $this->data['status'];
         }
     }
@@ -195,12 +195,12 @@ class Init {
 
     public function build_file_structure(): void {
         echo "Creating required files: ";
-        foreach ( self::FILE_STRUCTURE as $file => $template ) {
+        foreach (self::FILE_STRUCTURE as $file => $template) {
             $new_file = $this->working_dir . '/' . $file;
-            touch( $new_file );
-            $write = fopen( $new_file, 'w' );
-            fwrite( $write, $this->prepare_template( $template ) );
-            fclose( $write );
+            touch($new_file);
+            $write = fopen($new_file, 'w');
+            fwrite($write, $this->prepare_template($template));
+            fclose($write);
             echo ".";
         }
         echo " Done";
@@ -219,20 +219,20 @@ class Init {
      * @since   LBF 0.3.0-beta
      */
 
-    private function prepare_template( string $template ): string {
-        if ( $template == '' || !file_exists( $this->template_path . '/' . $template ) ) {
+    private function prepare_template(string $template): string {
+        if ($template == '' || !file_exists($this->template_path . '/' . $template)) {
             return '';
         }
-        $data = file_get_contents( $this->template_path . '/' . $template );
-        $data = str_replace( '&CURRENT_YEAR&',   date( 'Y' ),                $data );
-        $data = str_replace( '&START_DATE&',     date( 'Y-m-d' ),            $data );
-        $data = str_replace( '&AUTHOR&',         $this->data['author'],      $data );
-        $data = str_replace( '&VERSION&',        $this->data['app-version'], $data );
-        $data = str_replace( '&APP_NAME&',       $this->data['app_name'],    $data );
-        $data = str_replace( '&DESCRIPTION&',    $this->data['description'], $data );
-        $data = str_replace( '&VERSION_NUMBER&', $this->data['version'],     $data );
-        $data = str_replace( '&VERSION_STATUS&', $this->data['status'],      $data );
-        $data = str_replace( '&COPYRIGHT&',      $this->data['copyright'],   $data );
+        $data = file_get_contents($this->template_path . '/' . $template);
+        $data = str_replace('&CURRENT_YEAR&',   date('Y'),                $data);
+        $data = str_replace('&START_DATE&',     date('Y-m-d'),            $data);
+        $data = str_replace('&AUTHOR&',         $this->data['author'],      $data);
+        $data = str_replace('&VERSION&',        $this->data['app-version'], $data);
+        $data = str_replace('&APP_NAME&',       $this->data['app_name'],    $data);
+        $data = str_replace('&DESCRIPTION&',    $this->data['description'], $data);
+        $data = str_replace('&VERSION_NUMBER&', $this->data['version'],     $data);
+        $data = str_replace('&VERSION_STATUS&', $this->data['status'],      $data);
+        $data = str_replace('&COPYRIGHT&',      $this->data['copyright'],   $data);
         return $data;
     }
 
@@ -248,7 +248,7 @@ class Init {
 
     private function build_folder_structure(): void {
         echo "Creating folder structure: ";
-        $this->create_dirs( self::DIR_STRUCTURE, $this->working_dir );
+        $this->create_dirs(self::DIR_STRUCTURE, $this->working_dir);
         echo " Done";
         $this->lb();
     }
@@ -264,18 +264,18 @@ class Init {
      * @since   LBF 0.3.0-beta
      */
 
-    private function create_dirs( array $file_system, string $working_dir ): void {
-        foreach ( $file_system as $dir_name => $sub_dir ) {
-            if ( is_string( $sub_dir ) ) {
-                if ( !file_exists( $working_dir . '/' . $sub_dir ) ) {
+    private function create_dirs(array $file_system, string $working_dir): void {
+        foreach ($file_system as $dir_name => $sub_dir) {
+            if (is_string($sub_dir)) {
+                if (!file_exists($working_dir . '/' . $sub_dir)) {
                     mkdir(
-                        directory: $working_dir . '/' . $sub_dir, 
+                        directory: $working_dir . '/' . $sub_dir,
                         recursive: true
                     );
                 }
                 echo ".";
             } else {
-                $this->create_dirs( $sub_dir, $working_dir . '/' . $dir_name );
+                $this->create_dirs($sub_dir, $working_dir . '/' . $dir_name);
             }
         }
     }
@@ -291,40 +291,40 @@ class Init {
      * @since   LBF 0.3.0-beta
      */
 
-    public function display_data( ?array $data = null, string $pfx = '' ): void {
+    public function display_data(?array $data = null, string $pfx = ''): void {
         $key_len = $val_len = 0;
-        foreach ( $this->data as $key => $value ) {
-            if ( strlen( $key ) > $key_len ) {
-                $key_len = strlen( $key );
+        foreach ($this->data as $key => $value) {
+            if (strlen($key) > $key_len) {
+                $key_len = strlen($key);
             }
-            if ( strlen( $value ) > $val_len ) {
-                $val_len = strlen( $value );
+            if (strlen($value) > $val_len) {
+                $val_len = strlen($value);
             }
         }
         $line_len = $key_len + $val_len + 7;
         $single = $double = '';
-        for ( $i = 0; $i < $line_len; $i++ ) {
+        for ($i = 0; $i < $line_len; $i++) {
             $single .= '-';
             $double .= '=';
         }
         $single .= "\n";
         $double .= "\n";
         echo $single;
-        $cell = function ( $str, $total ): string {
+        $cell = function ($str, $total): string {
             $text = $str;
-            $len = $total - strlen( $str );
-            for ( $i = 0; $i < $len; $i++ ) {
+            $len = $total - strlen($str);
+            for ($i = 0; $i < $len; $i++) {
                 $text .= ' ';
             }
             return $text;
         };
-        echo "| {$cell( 'Key', $key_len )} | {$cell( 'Value', $val_len )} |\n";
+        echo "| {$cell('Key',$key_len)} | {$cell('Value',$val_len)} |\n";
         echo $double;
-        foreach ( $this->data as $key => $value ) {
-            echo "| {$cell( $key, $key_len )} | {$cell( $value, $val_len )} |\n";
+        foreach ($this->data as $key => $value) {
+            echo "| {$cell($key,$key_len)} | {$cell($value,$val_len)} |\n";
         }
         echo $double;
-        $this->lb( 2 );
+        $this->lb(2);
     }
 
 
@@ -337,10 +337,9 @@ class Init {
      * @since   LBF 0.3.0-beta
      */
 
-    private function lb( int $lines = 1 ): void {
-        for ( $i = 0; $i < $lines; $i++ ) {
+    private function lb(int $lines = 1): void {
+        for ($i = 0; $i < $lines; $i++) {
             echo "\n";
         }
     }
-
 }

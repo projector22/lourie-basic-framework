@@ -81,15 +81,15 @@ class ReadCSV {
      * @since   LRS 3.12.0
      */
 
-    public function __construct( ?string $path = null ) {
-        if ( !is_null( $path ) ) {
+    public function __construct(?string $path = null) {
+        if (!is_null($path)) {
             $this->csv_file_path = $path;
-            if ( !is_file( $this->csv_file_path ) ) {
+            if (!is_file($this->csv_file_path)) {
                 echo "File not found";
                 die;
             }
         }
-    } //__construct
+    }
 
 
     /**
@@ -100,21 +100,21 @@ class ReadCSV {
      */
 
     public function read_csv_file(): void {
-        if ( ( $handle = fopen( $this->csv_file_path, "r" ) ) !== false ) {
+        if (($handle = fopen($this->csv_file_path, "r")) !== false) {
             $i = 0;
-            while ( ( $row = fgetcsv( $handle, 1000, "," ) ) !== false ) {
-                foreach ( $row as $k => $cell ) {
-                    if ( $i == 0 ) {
-                        if ( $this->header_row ) {
-                            $this->headers[$k] = protect( $cell );
+            while (($row = fgetcsv($handle, 1000, ",")) !== false) {
+                foreach ($row as $k => $cell) {
+                    if ($i == 0) {
+                        if ($this->header_row) {
+                            $this->headers[$k] = protect($cell);
                         } else {
-                            $this->data[$i][$k] = protect( $cell );
+                            $this->data[$i][$k] = protect($cell);
                         }
                     } else {
-                        if ( $this->header_row ) {
-                            $this->data[$i][$this->headers[$k]] = protect( iconv( "cp1252", "utf-8", $cell ) );
+                        if ($this->header_row) {
+                            $this->data[$i][$this->headers[$k]] = protect(iconv("cp1252", "utf-8", $cell));
                         } else {
-                            $this->data[$i][$k] = protect( iconv( "cp1252", "utf-8", $cell ) );
+                            $this->data[$i][$k] = protect(iconv("cp1252", "utf-8", $cell));
                         }
                     }
                 }
@@ -123,7 +123,7 @@ class ReadCSV {
         } else {
             echo "Cannot read the file {$this->csv_file_path}";
         }
-        fclose( $handle );
+        fclose($handle);
     }
 
 
@@ -136,8 +136,8 @@ class ReadCSV {
      */
 
     public function clean_up_files(): void {
-        if ( !$this->keep_csv ) {
-            unlink( $this->csv_file_path );
+        if (!$this->keep_csv) {
+            unlink($this->csv_file_path);
         }
     }
 
@@ -154,6 +154,5 @@ class ReadCSV {
 
     public function __destruct() {
         $this->clean_up_files();
-    } //__destruct
-
+    }
 }

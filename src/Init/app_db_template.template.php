@@ -31,7 +31,7 @@ interface DbTemplate {
      * @since   &VERSION&
      */
 
-    public function __construct( bool $select_all = false, array $search_params = [] );
+    public function __construct(bool $select_all = false, array $search_params = []);
 
     /**
      * Destructor method, things to do when the class is closed

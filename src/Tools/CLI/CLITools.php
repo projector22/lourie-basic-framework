@@ -146,25 +146,25 @@ class CLITools {
      * @since   LRS 3.17.0
      */
 
-    public function execute( string $command ): void {
-        $command = $this->check_php_command( $command );
+    public function execute(string $command): void {
+        $command = $this->check_php_command($command);
 
-        if ( $this->print_command ) {
+        if ($this->print_command) {
             echo $command;
         }
 
-        switch ( $this->return ) {
+        switch ($this->return) {
             case self::STRING:
-                $this->last_result = shell_exec( $command );
+                $this->last_result = shell_exec($command);
                 break;
             case self::ARRAY:
-                exec( $command, $this->last_result, $this->result_code );
+                exec($command, $this->last_result, $this->result_code);
                 break;
             default:
-                throw new Exception( 'Invalid value for property \'$this->return\'' );
+                throw new Exception('Invalid value for property \'$this->return\'');
         }
 
-        if ( $this->keep_all_results ) {
+        if ($this->keep_all_results) {
             $this->all_results[] = $this->last_result;
         }
     }
@@ -181,15 +181,15 @@ class CLITools {
      * @since   LRS 3.17.0
      */
 
-    public function silent_execute( string $command ): void {
-        $command = $this->check_php_command( $command );
+    public function silent_execute(string $command): void {
+        $command = $this->check_php_command($command);
         $command .= self::HIDE_OUTPUT;
 
-        if ( $this->print_command ) {
+        if ($this->print_command) {
             echo $command;
         }
 
-        shell_exec( $command );
+        shell_exec($command);
     }
 
 
@@ -204,12 +204,11 @@ class CLITools {
      * @since   LRS 3.17.0
      */
 
-    private function check_php_command( string $command ): string {
-        if ( $this->php_command ) {
+    private function check_php_command(string $command): string {
+        if ($this->php_command) {
             $command = "\"{$command}\"";
             $command = php_executable_path() . ' --run ' . $command;
         }
         return $command;
     }
-
 }

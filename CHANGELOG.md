@@ -5,6 +5,20 @@
 ### Added
 
 - Added traits to the HTML (`src/HTML/HTML.php`) class, to allow the inserting of JS & CSS into the web page. #69
+- Added Node Modules for installing node packages. NPM Packages are now supported.
+- Added template class for handling actions.
+- Added class for loading up and referencing Config data - Objects, Closures and standard data types which is available to use throughout an app.
+- Build a class for creating JS Import Maps.
+- Enum for using and referencing HTTP Status codes (200, 404 etc.)
+- Trait for user accounts permissions.
+- Enum for app modes (dev, prod etc.)
+- Class for handling various layout elements. Which is invoked one at a time in the router.
+- Enum for listing possible HTTP Methods (POST, GET, PUT, DELETE).
+- Class for performing navigation tasks.
+- Enum of possible routes (HTTP, API, CLI etc.)
+- Built a new Downloader tool for invoking file downloading.
+- Class for returning some standard datetime data.
+- Changed the headers an AJAX request sends.
 
 ### Changed
 
@@ -12,25 +26,40 @@
 - Merged `src/HTML/Forms.php` into `src/HTML/Form.php`.
 - Merged `src/HTML/Buttons.php` into `src/HTML/Button.php`.
 - Merged `src/HTML/Scripts.php` into `src/HTML/JS.php`.
+- Completely revamped DownloadHandler.
+- Improved Cookie handling.
+- Converted `Autoload` to be invoked statically.
+- Changed how error pages are loaded and drawn.
+- Moved the `<script>` tag injector to HTML.
+- Built an entirely new router and routing method.
 
-### Deprecated
+### Fixed
+
+- Fixed some JSON handling methods.
+- Fixed UI buttons for scrolling to the top or bottom.
+
+### Removed
 
 - `src/HTML/JS.php`:
-  - `script`
   - `script_module`
   - `script_loader`
   - `script_module_loader`
+
+### Deprecated
+
+- Function `site_logo`.
 
 ### Packages Updated
 
 | Package | Old | New |
 | ------- | --- | --- |
-| phpmailer/phpmailer | v6.6.5 | v6.7.1 |
+| phpmailer/phpmailer | v6.6.5 | v6.8.0 |
 | tecnickcom/tcpdf | 6.5.0 | 6.6.2 |
 
 ### Issues Closed
 
 - #69
+- #70
 
 ---
 

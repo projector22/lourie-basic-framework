@@ -13,4 +13,5 @@ use LBF\Errors\Meta\ExceptionMeta;
  * @since   LBF 0.3.1-beta
  */
 
-class InvalidErrorCode extends ExceptionMeta {}
+class InvalidErrorCode extends ExceptionMeta {
+}

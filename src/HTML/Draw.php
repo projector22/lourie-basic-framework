@@ -3,10 +3,11 @@
 namespace LBF\HTML;
 
 use Feather\Icons;
-use LBF\HTML\JS;
+use LBF\App\Config;
 use LBF\Auth\Hash;
 use LBF\HTML\HTML;
 use LBF\HTML\HTMLMeta;
+use LBF\HTML\JS;
 use LBF\Img\SVGImages;
 use SVGTools\SVG;
 
@@ -76,12 +77,12 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.1.0
      */
 
-    public static function dot( int $k = 1 ): void {
-        if ( !isset( self::$cli ) ) {
+    public static function dot(int $k = 1): void {
+        if (!isset(self::$cli)) {
             self::$cli = php_sapi_name() == 'cli';
         }
         $dot = self::$cli ? '.' : '<b>.</b> ';
-        for ( $i = 0; $i < $k; $i++) {
+        for ($i = 0; $i < $k; $i++) {
             echo $dot;
         }
     }
@@ -102,17 +103,17 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.14.0  Added a catch for CLI_INTERFACE
      */
 
-    public static function lines( int $k ): string {
-        if ( !isset( self::$cli ) ) {
+    public static function lines(int $k): string {
+        if (!isset(self::$cli)) {
             self::$cli = php_sapi_name() == 'cli';
         }
         $lb = self::$cli ? "\n" : "<br>";
         $line = '';
-        for ( $i = 0; $i < $k; $i++ ) {
+        for ($i = 0; $i < $k; $i++) {
             $line .= $lb;
         }
 
-        self::handle_echo( $line );
+        self::handle_echo($line);
         return $line;
     }
 
@@ -130,13 +131,13 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.17.4
      */
 
-    public static function line_separator( int $k = 1 ): string {
+    public static function line_separator(int $k = 1): string {
         $line = '';
-        for ( $i = 0; $i < $k; $i++ ) {
+        for ($i = 0; $i < $k; $i++) {
             $line .= '<hr>';
         }
 
-        self::handle_echo( $line );
+        self::handle_echo($line);
         return $line;
     }
 
@@ -166,13 +167,13 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.1.0
      */
 
-    public static function action_error( string $info = '' ): string {
-        if ( $info == '' ) {
+    public static function action_error(string $info = ''): string {
+        if ($info == '') {
             $error = "An error has occured ";
         } else {
             $error = "An error has occured, {$info} ";
         }
-        if ( self::$echo ) {
+        if (self::$echo) {
             echo $error;
         }
         return $error;
@@ -195,11 +196,11 @@ class Draw extends HTMLMeta {
      * @since   LBF 0.1.6-beta  Revamped.
      */
 
-    public static function item_description( string $input, int $lines = 0 ): string {
-        $hold = self::temporary_change_echo( false );
-        $element = self::lines( $lines ) . "<span>{$input}</span>";
-        self::restore_origonal_echo( $hold );
-        self::handle_echo( $element );
+    public static function item_description(string $input, int $lines = 0): string {
+        $hold = self::temporary_change_echo(false);
+        $element = self::lines($lines) . "<span>{$input}</span>";
+        self::restore_origonal_echo($hold);
+        self::handle_echo($element);
         return $element;
     }
 
@@ -215,7 +216,7 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.1.0
      */
 
-    public static function response_text( string $id, string $content = '' ): void  {
+    public static function response_text(string $id, string $content = ''): void {
         echo "<span id='{$id}'>{$content}</span>";
     }
 
@@ -235,8 +236,8 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.4.0
      */
 
-    public static function copy_text_textbox( string $text, string $id ): void {
-        HTML::div( ['class' => 'ctt_contain'] );
+    public static function copy_text_textbox(string $text, string $id): void {
+        HTML::div(['class' => 'ctt_contain']);
         echo "<input class='ctt_text_box' id='{$id}' value='{$text}' readonly>";
         echo "<button class='btn cct_bttn' data-clipboard-target='#{$id}' onClick='return false'>";
         echo "<img class='ctt_img' src='data:image/svg+xml;charset=UTF-8," . SVGImages::clippy->image() . "' alt='Copy to clipboard'>";
@@ -256,7 +257,7 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.4.1
      */
 
-    public static function structure_header_divider( string $text ): void {
+    public static function structure_header_divider(string $text): void {
         echo "<div class='admin_structure_header_divider'>";
         echo "<h1>{$text}</h1>";
         echo "</div>";
@@ -273,9 +274,9 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.4.1
      */
 
-    public static function ajax_response_bottom_left( string $id ): void {
+    public static function ajax_response_bottom_left(string $id): void {
         echo "<div class='ajax_response_bottom_left'>";
-        self::response_text( $id );
+        self::response_text($id);
         echo "</div>";
     }
 
@@ -289,13 +290,13 @@ class Draw extends HTMLMeta {
      */
 
     public static function print_landscape(): void {
-        ?>
+?>
         <style type="text/css" media="print">
             @page {
                 size: landscape;
             }
         </style>
-        <?php
+<?php
     }
 
 
@@ -313,12 +314,12 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.14.0  Added param $content
      */
 
-    public static function code_feedback_box( string $id, ?string $custom_height = null, string $content = '' ): void {
+    public static function code_feedback_box(string $id, ?string $custom_height = null, string $content = ''): void {
         $params = ['class' => 'code_feedback_box', 'id' => $id];
-        if ( !is_null( $custom_height ) ) {
+        if (!is_null($custom_height)) {
             $params['style'] = "height: $custom_height";
         }
-        HTML::div_container( $params, $content );
+        HTML::div_container($params, $content);
     }
 
 
@@ -332,7 +333,7 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.6.0
      */
 
-    public static function console_header( $header ): void {
+    public static function console_header($header): void {
         echo "<h2>$header</h2>";
     }
 
@@ -347,8 +348,8 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.6.0
      */
 
-    public static function more_info_help( $page ): void {
-        self::lines( 2 );
+    public static function more_info_help($page): void {
+        self::lines(2);
         echo "<a href='help?p=$page'>More Information</a>";
     }
 
@@ -365,10 +366,10 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.6.0
      */
 
-    public static function item_heading( string $text, bool $line_break = true ): void {
+    public static function item_heading(string $text, bool $line_break = true): void {
         echo "<span class='item_heading'><b>{$text}</b></span>";
-        if ( $line_break ) {
-            self::lines( 1 );
+        if ($line_break) {
+            self::lines(1);
         }
     }
 
@@ -398,18 +399,18 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.6.0
      */
 
-    public static function item_input( string $input, bool $line_break = true, ?string $id = null ): void {
+    public static function item_input(string $input, bool $line_break = true, ?string $id = null): void {
         $set_id = '';
-        if ( !is_null ( $id ) ) {
+        if (!is_null($id)) {
             $set_id = " id='{$id}'";
         }
         $set_class = 'item_input';
-        if ( self::$display_item_input_inline ) {
+        if (self::$display_item_input_inline) {
             $set_class .= ' item_input_inline';
         }
         echo "<span class='{$set_class}'{$set_id}>{$input}</span> ";
-        if ( $line_break ) {
-            self::lines( 1 );
+        if ($line_break) {
+            self::lines(1);
         }
     }
 
@@ -429,15 +430,15 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.8.0   Added @param $id
      */
 
-    public static function item_text( string $text, bool $line_break = true, ?string $id = null ): void {
+    public static function item_text(string $text, bool $line_break = true, ?string $id = null): void {
         $element = "<span class='item_text'";
-        if ( !is_null ( $id ) ) {
+        if (!is_null($id)) {
             $element .= " id='{$id}' ";
         }
         $element .= ">{$text}</span> ";
         echo $element;
-        if ( $line_break ) {
-            self::lines( 1 );
+        if ($line_break) {
+            self::lines(1);
         }
     }
 
@@ -455,10 +456,10 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.6.0
      */
 
-    public static function item_checkbox( string $checkbox, string $label, bool $line_break = true ): void {
+    public static function item_checkbox(string $checkbox, string $label, bool $line_break = true): void {
         echo "<span class='item_input'>$checkbox $label</span>";
-        if ( $line_break ) {
-            self::lines( 1 );
+        if ($line_break) {
+            self::lines(1);
         }
     }
 
@@ -475,9 +476,9 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.6.0
      */
 
-    public static function item_description_header( string $text ): string {
+    public static function item_description_header(string $text): string {
         $h = "<h1>{$text}</h1>";
-        self::handle_echo( $h );
+        self::handle_echo($h);
         return $h;
     }
 
@@ -496,9 +497,9 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.6.0
      */
 
-    public static function custom_header( string $text, string $size = '12px' ): string {
+    public static function custom_header(string $text, string $size = '12px'): string {
         $div = "<div style='font-size: {$size}'>{$text}</div>";
-        self::handle_echo( $div );
+        self::handle_echo($div);
         return $div;
     }
 
@@ -527,14 +528,14 @@ class Draw extends HTMLMeta {
      * @since   LBF 0.4.1-beta  Added param title
      */
 
-    public static function section_break( ?string $title = null, string ...$description ): void {
+    public static function section_break(?string $title = null, string ...$description): void {
         self::close_standard_page();
         self::standard_column_left();
-        if ( !is_null( $title ) ) {
-            self::item_description_header( $title );
+        if (!is_null($title)) {
+            self::item_description_header($title);
         }
-        foreach ( $description as $i => $desc ) {
-            self::item_description( $desc, $i == 0 ? 0 : 2 );
+        foreach ($description as $i => $desc) {
+            self::item_description($desc, $i == 0 ? 0 : 2);
         }
         self::standard_column_right();
     }
@@ -551,33 +552,38 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.9.0
      */
 
-    public static function accounts_toggle( string $group_name, string $toggle ): void {
+    public static function accounts_toggle(string $group_name, string $toggle): void {
         echo "<div class='group_container'>";
         echo "<span class='center_vertical'>$group_name</span>";
         echo "<span class='center_vertical'>$toggle</span>";
-        echo "</div>";// group_container
+        echo "</div>"; // group_container
     }
 
 
     /**
      * Draw page tabs
      * 
-     * @param   array   $data       The data for each tab
+     * @param   array   $tabs       The data for each tab
      *                              Format: $name => $link
-     *                              $link format: PAGE . ?p=page&t=tab
+     *                              $link format: page/subpage/tab
      * @param   string  $default    The default tab, in case $_GET is not set
      * 
      * @static
      * @access  public
      * @since   LRS 3.12.0
+     * @since   LBR 0.6.0-beta  Renamed $data param to $tabs
      */
 
-    public static function page_tabs( array $data, string $default ): void {
+    public static function page_tabs(array $tabs, string $default): void {
         echo "<ul class='general_page_tab'>";
-        foreach ( $data as $name => $link ) {
-            $tab = explode( '=', $link )[array_key_last ( explode( '=', $link ) )];
-            $selected = isset( $_GET['t'] ) && $_GET['t'] == $tab ? '' : ' tab_not_selected';
-            $selected = !isset( $_GET['t'] ) && $tab == $default ? '' : $selected;
+        foreach ($tabs as $name => $link) {
+            $selected = ' tab_not_selected';
+            if (is_null(Config::current_page('tab')) && $link === $default) {
+                $selected = '';
+            } else {
+                $selected = Config::current_page('tab') === $link ? '' : ' tab_not_selected';
+            }
+            $link = '/' . Config::current_page('page') . '/' . Config::current_page('subpage') . '/' . $link;
             echo "<a href={$link}><li class='tab{$selected}'>{$name}</li></a>";
         }
         echo "<li class='tab_last_element'></li>";
@@ -597,9 +603,9 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.14.0
      */
 
-    public static function tabs( int $n ): string {
+    public static function tabs(int $n): string {
         $t = '';
-        for ( $i = 0; $i < $n; $i++ ) {
+        for ($i = 0; $i < $n; $i++) {
             $t .= "\t";
         }
         return $t;
@@ -615,7 +621,7 @@ class Draw extends HTMLMeta {
      */
 
     public static function end_of_script(): void {
-        self::lines( 2 );
+        self::lines(2);
     }
 
 
@@ -629,28 +635,27 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.15.0
      */
 
-    public static function draggable_list( array $data ): void {
-        $id = Hash::random_id_string( 5 );
+    public static function draggable_list(array $data): void {
+        $id = Hash::random_id_string(5);
 
-        HTML::div( [
+        HTML::div([
             'class' => 'draggable_container',
             'id'    => 'draggable_container' . $id
-        ] );
+        ]);
 
-        $svg = new SVG( SVGImages::grabber->image() );
-        $svg->set_viewbox( 0, 0, 16, 16 );
-        foreach ( $data as $item ) {
+        $svg = new SVG(SVGImages::grabber->image());
+        $svg->set_viewbox(0, 0, 16, 16);
+        foreach ($data as $item) {
             HTML::div_container(
                 params: ['class' => 'draggable_entry'],
-                content:
-                HTML::span_container(
+                content: HTML::span_container(
                     params: ['class' => 'de_item', 'echo' => false],
                     content: $item
                 ) .
-                HTML::span_container(
-                    params: ['class' => "de_grabber de_grabber{$id}", 'echo' => false],
-                    content: $svg->return(),
-                )
+                    HTML::span_container(
+                        params: ['class' => "de_grabber de_grabber{$id}", 'echo' => false],
+                        content: $svg->return(),
+                    )
             );
         }
 
@@ -661,20 +666,21 @@ class Draw extends HTMLMeta {
          * 
          * @since   LRS 3.15.0
          * 
-         * @todo    Install via npm
-         * @todo    Try get composer to manage this so that it's not so dramatic
          */
-        JS::script_module( "
-            import Sortable from 'sortablejs';
-            const el = document.getElementById('draggable_container{$id}');
-            const sortable = Sortable.create(el, {
-                swap: true,
-                swapClass: 'highlight',
-                animation: 150,
-                ghostClass: 'draggable_ghost',
-                handle: '.de_grabber{$id}',
-            });"
-        );
+        $rand_id = Hash::random_id_string();
+        HTML::inject_js(<<<JS
+        import Sortable from 'lrs-sortablejs';
+        JS);
+        HTML::inject_js(<<<JS
+        const el{$rand_id} = document.getElementById('draggable_container{$id}');
+        const sortable{$rand_id} = Sortable.create(el{$rand_id}, {
+            swap: true,
+            swapClass: 'highlight',
+            animation: 150,
+            ghostClass: 'draggable_ghost',
+            handle: '.de_grabber{$id}',
+        });        
+        JS);
     }
 
 
@@ -689,21 +695,21 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.15.8
      */
 
-    public static function standard_column_left( array $params = [] ): void {
-        $hold = HTML::temporary_change_echo( true );
+    public static function standard_column_left(array $params = []): void {
+        $hold = HTML::temporary_change_echo(true);
 
-        if ( isset ( $params['class'] ) ) {
+        if (isset($params['class'])) {
             $params['class'] = 'page_element_description ' . $params['class'];
         } else {
             $params['class'] = 'page_element_description';
         }
 
-        if ( !isset ( $params['name'] ) ) {
+        if (!isset($params['name'])) {
             $params['name'] = 'page_element_description';
         }
 
-        HTML::div( $params );
-        HTML::restore_origonal_echo( $hold );
+        HTML::div($params);
+        HTML::restore_origonal_echo($hold);
     }
 
 
@@ -720,56 +726,56 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.15.8
      */
 
-    public static function standard_column_right( array $params = [], bool $close_left_column = true ): void {
-        $hold = self::temporary_change_echo( true );
+    public static function standard_column_right(array $params = [], bool $close_left_column = true): void {
+        $hold = self::temporary_change_echo(true);
 
-        if ( $close_left_column ) {
+        if ($close_left_column) {
             HTML::close_div(); // page_element_description
         }
 
-        if ( !isset( $params['maxmin'] ) ) {
+        if (!isset($params['maxmin'])) {
             $params['maxmin'] = true;
         }
 
-        if ( isset ( $params['class'] ) ) {
+        if (isset($params['class'])) {
             $params['class'] = 'page_element_main ' . $params['class'];
         } else {
             $params['class'] = 'page_element_main';
         }
 
-        HTML::div( $params );
+        HTML::div($params);
 
-        HTML::div( ['class' => 'main_page_maxmin__container'] );
-        if( $params['maxmin'] ) {
+        HTML::div(['class' => 'main_page_maxmin__container']);
+        if ($params['maxmin']) {
             $id = Hash::random_id_string();
-            HTML::div( [
+            HTML::div([
                 'class'     => 'main_page_maxmin',
                 'name'      => 'minmax_bttn',
                 'id'        => $id,
                 'data-open' => 0,
-            ] );
-            HTML::span( [
+            ]);
+            HTML::span([
                 'id'   => "{$id}_max",
                 'name' => 'minmax_max',
-            ] );
+            ]);
             $icon = new Icons;
-            $svg_max = new SVG( $icon->get( 'maximize', echo: false ) );
-            $svg_max->set_size( 18, 18 );
+            $svg_max = new SVG($icon->get('maximize', echo: false));
+            $svg_max->set_size(18, 18);
             $svg_max->echo();
             HTML::close_span();
-            HTML::span( [
+            HTML::span([
                 'class' => 'hidden',
                 'id'    => "{$id}_min",
                 'name'  => 'minmax_min',
-            ] );
-            $svg_min = new SVG( $icon->get( 'minimize', echo: false ) );
-            $svg_min->set_size( 18, 18 );
+            ]);
+            $svg_min = new SVG($icon->get('minimize', echo: false));
+            $svg_min->set_size(18, 18);
             $svg_min->echo();
             HTML::close_span();
             HTML::close_div();
         }
         HTML::close_div();
-        HTML::restore_origonal_echo( $hold );
+        HTML::restore_origonal_echo($hold);
     }
 
 
@@ -784,17 +790,17 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.16.0
      */
 
-    public static function standard_single_column( array $params = [] ): void {
-        $hold = self::temporary_change_echo( true );
+    public static function standard_single_column(array $params = []): void {
+        $hold = self::temporary_change_echo(true);
 
-        if ( isset ( $params['class'] ) ) {
+        if (isset($params['class'])) {
             $params['class'] = 'page_element_main ' . $params['class'];
         } else {
             $params['class'] = 'page_element_main';
         }
 
-        HTML::div( $params );
-        HTML::restore_origonal_echo( $hold );
+        HTML::div($params);
+        HTML::restore_origonal_echo($hold);
     }
 
 
@@ -887,5 +893,4 @@ class Draw extends HTMLMeta {
     public static function close_align_entries_left(): void {
         echo "</div>";
     }
-
 }

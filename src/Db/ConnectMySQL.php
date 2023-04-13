@@ -9,7 +9,7 @@ use LBF\Errors\Files\FileNotWriteable;
 use LBF\Errors\General\UniqueValueDulicate;
 use LBF\Errors\Log\LogPathNotSet;
 
-defined( "DB_YEAR" ) OR define( "DB_YEAR", null );
+defined("DB_YEAR") or define("DB_YEAR", null);
 
 /**
  * New fully revamped MySQL interface class, making use of PDO prepared statements.
@@ -142,7 +142,7 @@ class ConnectMySQL {
      * @access  private
      * @since   LRS 3.27.0
      */
-    
+
     private bool $set_primary_key_index = false;
 
     /**
@@ -383,7 +383,7 @@ class ConnectMySQL {
      * @since   LRS 3.0.1
      */
 
-    public function __construct( bool $rollover = false ) {
+    public function __construct(bool $rollover = false) {
         $this->rollover = $rollover;
         $this->connect_db();
     }
@@ -417,25 +417,25 @@ class ConnectMySQL {
      * @since   LBF 0.1.5-beta  Revamped to only return a bool. Set $this->conn directly.
      */
 
-    protected function connect_db( ?int $year = null ): bool {
-        $db_name     = getenv( 'TABLE_PREFIX' ) . getenv( 'DB_NAME' );
-        $db_location = getenv( 'DB_LOCATION' );
-        $db_username = getenv( 'DB_USERNAME' );
-        $db_password = getenv( 'DB_PASSWORD' );
+    protected function connect_db(?int $year = null): bool {
+        $db_name     = getenv('TABLE_PREFIX') . getenv('DB_NAME');
+        $db_location = getenv('DB_LOCATION');
+        $db_username = getenv('DB_USERNAME');
+        $db_password = getenv('DB_PASSWORD');
 
-        if ( !is_null( DB_YEAR ) ) {
-            if ( is_null ( $year ) ) {
-                $db_name = !$this->rollover ? $db_name . DB_YEAR : $db_name . ( DB_YEAR + 1 );
+        if (!is_null(DB_YEAR)) {
+            if (is_null($year)) {
+                $db_name = !$this->rollover ? $db_name . DB_YEAR : $db_name . (DB_YEAR + 1);
             } else {
                 $db_name .= $year;
             }
         }
 
         try {
-            $this->conn = new PDO( "mysql:host={$db_location};dbname={$db_name}", $db_username, $db_password );
-            $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            $this->conn = new PDO("mysql:host={$db_location};dbname={$db_name}", $db_username, $db_password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return true;
-        } catch( PDOException $e ) {
+        } catch (PDOException $e) {
             echo "<pre>{$e}</pre>\n";
             $this->last_error = $e;
             return false;
@@ -451,7 +451,7 @@ class ConnectMySQL {
      */
 
     protected function check_db_connection(): void {
-        if ( !isset( $this->conn ) ) {
+        if (!isset($this->conn)) {
             $this->connect_db();
         }
     }
@@ -465,7 +465,7 @@ class ConnectMySQL {
      */
 
     protected function close_connection(): void {
-        if ( isset( $this->conn ) ) {
+        if (isset($this->conn)) {
             // Enable the line below to check how many database connections are being called 
             // echo __FILE__  . "<br>";
             $this->conn = null;
@@ -482,17 +482,17 @@ class ConnectMySQL {
      */
 
     protected function get_tables(): array {
-        $db_name = getenv( 'DB_NAME' );
-        if ( !is_null( 'DB_YEAR' ) ) {
+        $db_name = getenv('DB_NAME');
+        if (!is_null('DB_YEAR')) {
             $db_name .= DB_YEAR;
         }
-        $raw = $this->sql_select( 
+        $raw = $this->sql_select(
             "SELECT table_name 
              FROM information_schema.tables 
              WHERE TABLE_SCHEMA='{$db_name}';"
         );
         $sorted_data = [];
-        foreach ( $raw as $table ) {
+        foreach ($raw as $table) {
             $sorted_data[] = $table->TABLE_NAME;
         }
         return $sorted_data;
@@ -510,28 +510,28 @@ class ConnectMySQL {
      * @since   LRS 3.19.0
      */
 
-    protected function get_table_columns( ?string $table = null ): array {
-        $db_name = getenv( 'DB_NAME' );
-        if ( !is_null( 'DB_YEAR' ) ) {
+    protected function get_table_columns(?string $table = null): array {
+        $db_name = getenv('DB_NAME');
+        if (!is_null('DB_YEAR')) {
             $db_name .= DB_YEAR;
         }
-        $sql = function ( $table_name ) use ( $db_name ) {
+        $sql = function ($table_name) use ($db_name) {
             return "SELECT COLUMN_NAME 
             FROM INFORMATION_SCHEMA.COLUMNS
             WHERE TABLE_SCHEMA='{$db_name}' AND TABLE_NAME='{$table_name}' ORDER BY ORDINAL_POSITION;";
         };
         $all_data = [];
-        if ( is_null ( $table ) ) {
+        if (is_null($table)) {
             $tables = $this->get_tables();
-            foreach( $tables as $the_table ) {
-                $raw = $this->sql_select( $sql($the_table) );
-                foreach ( $raw as $column ) {
+            foreach ($tables as $the_table) {
+                $raw = $this->sql_select($sql($the_table));
+                foreach ($raw as $column) {
                     $all_data[$the_table][] = $column['COLUMN_NAME'];
                 }
             }
         } else {
-            $raw = $this->sql_select( $sql($table) );
-            foreach ( $raw as $column ) {
+            $raw = $this->sql_select($sql($table));
+            foreach ($raw as $column) {
                 $all_data[$table][] = $column['COLUMN_NAME'];
             }
         }
@@ -550,28 +550,28 @@ class ConnectMySQL {
      * @since   LRS 3.19.0
      */
 
-    protected function get_table_columns_schemas( ?string $table = null ): array {
-        $db_name = getenv( 'DB_NAME' );
-        if ( !is_null( 'DB_YEAR' ) ) {
+    protected function get_table_columns_schemas(?string $table = null): array {
+        $db_name = getenv('DB_NAME');
+        if (!is_null('DB_YEAR')) {
             $db_name .= DB_YEAR;
         }
-        $sql = function ( $table_name ) use ( $db_name ) {
+        $sql = function ($table_name) use ($db_name) {
             return "SELECT * 
             FROM INFORMATION_SCHEMA.COLUMNS
             WHERE TABLE_SCHEMA='{$db_name}' AND TABLE_NAME='{$table_name}';";
         };
         $all_data = [];
-        if ( is_null ( $table ) ) {
+        if (is_null($table)) {
             $tables = $this->get_tables();
-            foreach( $tables as $the_table ) {
-                $raw = $this->sql_select( $sql($the_table) );
-                foreach ( $raw as $column ) {
+            foreach ($tables as $the_table) {
+                $raw = $this->sql_select($sql($the_table));
+                foreach ($raw as $column) {
                     $all_data[$the_table][$column->COLUMN_NAME] = $column;
                 }
             }
         } else {
-            $raw = $this->sql_select( $sql($table) );
-            foreach ( $raw as $column ) {
+            $raw = $this->sql_select($sql($table));
+            foreach ($raw as $column) {
                 $all_data[$table][$column->COLUMN_NAME] = $column;
             }
         }
@@ -613,7 +613,7 @@ class ConnectMySQL {
      *                  to be done manually later.
      */
 
-    public function sql_select( 
+    public function sql_select(
         string $sql,
         ?array $bind = null,
         ?string $index_by = null,
@@ -622,67 +622,67 @@ class ConnectMySQL {
         ?array $constructor_args = null,
     ): object|array {
         $this->check_db_connection();
-        if ( $this->debug_mode ) {
-            $this->set_display_error( true );
-            $this->set_echo_sql( true );
-            $this->set_log_sql( true );
+        if ($this->debug_mode) {
+            $this->set_display_error(true);
+            $this->set_echo_sql(true);
+            $this->set_log_sql(true);
         }
         try {
-            $statement = $this->conn->prepare( 
-                $sql, 
+            $statement = $this->conn->prepare(
+                $sql,
                 [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY],
             );
-            if ( $expect_one ) {
-                if ( !is_null( $call_class ) ) {
-                    $statement->setFetchMode( PDO::FETCH_CLASS, $call_class, $constructor_args );
+            if ($expect_one) {
+                if (!is_null($call_class)) {
+                    $statement->setFetchMode(PDO::FETCH_CLASS, $call_class, $constructor_args);
                 } else {
-                    $statement->setFetchMode( PDO::FETCH_CLASS|PDO::FETCH_CLASSTYPE );
+                    $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_CLASSTYPE);
                 }
             }
-            $statement->execute( $bind );
+            $statement->execute($bind);
             $this->number_of_rows = $statement->rowCount();
-            if ( $this->log_sql ) {
+            if ($this->log_sql) {
                 ob_start();
                 $statement->debugDumpParams();
                 $dump = ob_get_contents();
-                if ( $dump == null || $dump == false ) {
+                if ($dump == null || $dump == false) {
                     $dump = $sql;
                 }
-                $this->log_sql( trim( $dump ) );
-                $this->log_sql( 'Number of Rows Selected: ' . $statement->rowCount() );
+                $this->log_sql(trim($dump));
+                $this->log_sql('Number of Rows Selected: ' . $statement->rowCount());
                 ob_end_clean();
             }
-            if ( $this->echo_sql ) {
+            if ($this->echo_sql) {
                 echo "<pre class='text_align_left'>";
                 $statement->debugDumpParams();
                 echo "</pre>";
             }
 
-            if ( $this->set_primary_key_index && is_null( $index_by ) ) {
-                $fetch_method = PDO::FETCH_CLASS|PDO::FETCH_UNIQUE;
+            if ($this->set_primary_key_index && is_null($index_by)) {
+                $fetch_method = PDO::FETCH_CLASS | PDO::FETCH_UNIQUE;
             } else {
                 $fetch_method = PDO::FETCH_CLASS;
             }
-            if ( $expect_one ) {
+            if ($expect_one) {
                 $data = $statement->fetch();
             } else {
-                $data = $statement->fetchAll( $fetch_method, $call_class, $constructor_args );
-                if ( !is_null( $index_by ) && !$this->set_primary_key_index ) {
+                $data = $statement->fetchAll($fetch_method, $call_class, $constructor_args);
+                if (!is_null($index_by) && !$this->set_primary_key_index) {
                     $kdata = [];
-                    foreach ( $data as $entries ) {
+                    foreach ($data as $entries) {
                         $kdata[$entries->$index_by] = $entries;
                     }
                     $data = $kdata;
-                    unset( $kdata );
+                    unset($kdata);
                 }
             }
-            if ( !$data ) {
+            if (!$data) {
                 return [];
             }
             return $data;
-        } catch( PDOException $exception ) {
+        } catch (PDOException $exception) {
             $this->last_error = $exception;
-            $this->display_the_error( $exception, $sql, $bind );
+            $this->display_the_error($exception, $sql, $bind);
             return [];
         }
     }
@@ -719,22 +719,22 @@ class ConnectMySQL {
         ?array $bind = null,
     ): bool {
         $this->check_db_connection();
-        if ( $this->debug_mode ) {
-            $this->set_display_error( true );
-            $this->set_echo_sql( true );
-            $this->set_log_sql( true );
+        if ($this->debug_mode) {
+            $this->set_display_error(true);
+            $this->set_echo_sql(true);
+            $this->set_log_sql(true);
         }
         try {
             $this->conn->setAttribute(
                 PDO::ATTR_ERRMODE,
                 PDO::ERRMODE_EXCEPTION
             );
-            $exec = $this->conn->prepare( $sql );
-            if ( !is_null( $bind ) ) {
+            $exec = $this->conn->prepare($sql);
+            if (!is_null($bind)) {
                 /**
                  * If bind params are parsed. This is the ideal way of avoiding SQL injection.
                  */
-                if ( isset( $bind[0] ) && is_array( $bind[0] ) ) {
+                if (isset($bind[0]) && is_array($bind[0])) {
                     /**
                      * If the bind parameters are an array of arrays,
                      * execute each entry recursively.
@@ -744,22 +744,22 @@ class ConnectMySQL {
                      * 
                      * @since   LRS 3.27.0
                      */
-                    foreach ( $bind as $b ) {
-                        $exec->execute( $b );
-                        $this->post_sql_execute( $exec, $sql );
+                    foreach ($bind as $b) {
+                        $exec->execute($b);
+                        $this->post_sql_execute($exec, $sql);
                     }
                 } else {
-                    $exec->execute( $bind );
-                    $this->post_sql_execute( $exec, $sql );
+                    $exec->execute($bind);
+                    $this->post_sql_execute($exec, $sql);
                 }
             } else {
                 $exec->execute();
-                $this->post_sql_execute( $exec, $sql );
+                $this->post_sql_execute($exec, $sql);
             }
             return true;
-        } catch( PDOException $exception ) {
+        } catch (PDOException $exception) {
             $this->last_error = $exception;
-            $this->display_the_error( $exception, $sql, $bind );
+            $this->display_the_error($exception, $sql, $bind);
             return false;
         }
     }
@@ -775,21 +775,21 @@ class ConnectMySQL {
      * @since   LRS 3.27.0
      */
 
-    private function post_sql_execute( object $exec, string $sql ): void {
+    private function post_sql_execute(object $exec, string $sql): void {
         $this->last_inserted_id = $this->conn->lastInsertId() ?? null;
         $this->number_of_rows   = $exec->rowCount();
-        if ( $this->log_sql ) {
+        if ($this->log_sql) {
             ob_start();
             $exec->debugDumpParams();
             $dump = ob_get_contents();
-            if ( $dump == null || $dump == false ) {
+            if ($dump == null || $dump == false) {
                 $dump = $sql;
             }
-            $this->log_sql( trim( $dump ) );
-            $this->log_sql( 'Number of Rows Affected: ' . $exec->rowCount() );
+            $this->log_sql(trim($dump));
+            $this->log_sql('Number of Rows Affected: ' . $exec->rowCount());
             ob_end_clean();
         }
-        if ( $this->echo_sql ) {
+        if ($this->echo_sql) {
             echo "<pre class='text_align_left'>";
             $exec->debugDumpParams();
             echo "</pre>";
@@ -811,18 +811,18 @@ class ConnectMySQL {
      * @since   LRS 3.27.0  Rewritten to handle multi entries in the array $data.
      */
 
-    public function insert( array $data, bool $insert_ignore = false ): bool {
+    public function insert(array $data, bool $insert_ignore = false): bool {
         $place_ignore = $insert_ignore ? 'IGNORE ' : '';
-        if ( isset( $data[0] ) && is_array( $data[0] ) ) {
-            $headings = '(' . implode( ',', array_keys( $data[0] ) ) . ')';
-            $values   = "(:" . implode( ",:", array_keys( $data[0] ) ) . ")";
+        if (isset($data[0]) && is_array($data[0])) {
+            $headings = '(' . implode(',', array_keys($data[0])) . ')';
+            $values   = "(:" . implode(",:", array_keys($data[0])) . ")";
         } else {
-            $headings = '(' . implode( ',', array_keys( $data ) ) . ')';
-            $values   = "(:" . implode( ",:", array_keys( $data ) ) . ")";
+            $headings = '(' . implode(',', array_keys($data)) . ')';
+            $values   = "(:" . implode(",:", array_keys($data)) . ")";
         }
 
         $sql = "INSERT {$place_ignore}INTO {$this->table} {$headings} VALUES {$values}";
-        return $this->sql_execute( $sql, $data );
+        return $this->sql_execute($sql, $data);
     }
 
 
@@ -843,29 +843,29 @@ class ConnectMySQL {
      * @since   LRS 3.27.0  Updated to parse prepared statements.
      */
 
-    public function update( array|string $values, array|string $where = '' ): bool {
+    public function update(array|string $values, array|string $where = ''): bool {
         $this->bind = [];
-        if ( is_array( $values ) ) {
+        if (is_array($values)) {
             $update_values = [];
-            foreach ( $values as $key => $value ) {
+            foreach ($values as $key => $value) {
                 $update_values[] = "{$key}=:{$key}__val";
                 $this->bind[$key . "__val"] = $value;
             }
-            $update_values = implode( ', ', $update_values );
+            $update_values = implode(', ', $update_values);
         } else {
             $update_values = $values;
         }
         $set_where = '';
-        if ( is_string( $where ) && $where !== '' ) {
+        if (is_string($where) && $where !== '') {
             $set_where = " WHERE {$where}";
-        } else if ( is_array( $where ) && count( $where ) > 0 ) {
-            $set_where = $this->prepare_where( $where );
+        } else if (is_array($where) && count($where) > 0) {
+            $set_where = $this->prepare_where($where);
         }
         $sql = "UPDATE {$this->table} SET {$update_values}{$set_where}";
-        if ( count( $this->bind ) == 0 ) {
+        if (count($this->bind) == 0) {
             $this->bind = null;
         }
-        return $this->sql_execute( $sql, $this->bind );
+        return $this->sql_execute($sql, $this->bind);
     }
 
 
@@ -887,19 +887,19 @@ class ConnectMySQL {
      * @since   LRS 3.27.0  Updated to handle parsed prepared statements.
      */
 
-    public function delete( array|string $where = '' ): bool {
+    public function delete(array|string $where = ''): bool {
         $set_where = '';
         $this->bind = [];
-        if ( is_string( $where ) && $where !== '' ) {
+        if (is_string($where) && $where !== '') {
             $set_where = " WHERE {$where}";
-        } else if ( is_array( $where ) && count( $where ) > 0 ) {
-            $set_where = $this->prepare_where( $where );
+        } else if (is_array($where) && count($where) > 0) {
+            $set_where = $this->prepare_where($where);
         }
         $sql = "DELETE FROM {$this->table}{$set_where}";
-        if ( count( $this->bind ) == 0 ) {
+        if (count($this->bind) == 0) {
             $this->bind = null;
         }
-        return $this->sql_execute( $sql, $this->bind );
+        return $this->sql_execute($sql, $this->bind);
     }
 
 
@@ -928,17 +928,17 @@ class ConnectMySQL {
         array|string $where = '',
         string $order_by = '',
         string $limit = ''
-    ) : void {
+    ): void {
         $this->bind = null;
         $this->single_result = false;
-        $this->data = $this->sql_select( 
-            sql: $this->prepare_select_sql( $where, $order_by, $limit ),
+        $this->data = $this->sql_select(
+            sql: $this->prepare_select_sql($where, $order_by, $limit),
             bind: $this->bind ?? null,
             index_by: $this->index_data_by,
             call_class: $this->template_class,
             expect_one: false,
         );
-        $this->number_of_records = count( $this->data ) ?? 0;
+        $this->number_of_records = count($this->data) ?? 0;
     }
 
 
@@ -954,11 +954,11 @@ class ConnectMySQL {
      * @since   LRS 3.27.0  Consolidated into ConnectMySQL, updated for prepared statements.
      */
 
-    public function select_one( array|string $where ): void {
+    public function select_one(array|string $where): void {
         $this->bind = null;
         $this->single_result = true;
-        $this->data = $this->sql_select( 
-            sql: $this->prepare_select_sql( $where ),
+        $this->data = $this->sql_select(
+            sql: $this->prepare_select_sql($where),
             bind: $this->bind ?? null,
             call_class: $this->template_class,
             expect_one: true,
@@ -988,48 +988,48 @@ class ConnectMySQL {
      * @since   LRS 3.27.0  Consolidated a number of steps into this method.
      */
 
-    protected function prepare_select_sql( 
+    protected function prepare_select_sql(
         array|string $where = '',
         string $order_by = '',
         string $limit = ''
     ): string {
-        if ( !$this->append_to_data ) {
+        if (!$this->append_to_data) {
             // Discards any previous data
             $this->clear_data();
         }
 
-        if ( is_string( $where ) ) {
+        if (is_string($where)) {
             // String
-            $where = $this->prepare_select_where_sql_by_string( $where );
+            $where = $this->prepare_select_where_sql_by_string($where);
         } else {
             // Array
-            if ( count( $where ) == 0 ) {
+            if (count($where) == 0) {
                 $where = '';
             } else {
-                $where = $this->prepare_where( $where, true, true );
+                $where = $this->prepare_where($where, true, true);
             }
         }
 
-        if ( $order_by != '' ) {
+        if ($order_by != '') {
             // Handle adding the ORDER BY clause to the search string
-            if ( stripos( $order_by, 'ORDER BY' ) === false ) {
+            if (stripos($order_by, 'ORDER BY') === false) {
                 $order_by = ' ORDER BY ' . $order_by;
             }
 
             // Handle adding a leading space to the $order_by clause, in case it's needed
-            if ( $order_by[0] != '' ) {
+            if ($order_by[0] != '') {
                 $order_by = ' ' . $order_by;
             }
         }
 
-        if ( $limit != '' ) {
+        if ($limit != '') {
             // Handle adding the LIMIT clause to the search string
-            if ( stripos( $limit, 'LIMIT' ) === false ) {
+            if (stripos($limit, 'LIMIT') === false) {
                 $limit = ' LIMIT ' . $limit;
             }
 
             // Handle adding a leading space to the $limit clause, in case it's needed
-            if ( $limit[0] != '' ) {
+            if ($limit[0] != '') {
                 $limit = ' ' . $limit;
             }
         }
@@ -1068,13 +1068,13 @@ class ConnectMySQL {
      *                      prepared statements.
      */
 
-    private function prepare_where( array $where, bool $check_extras = false, bool $reset_bind = false ): string {
+    private function prepare_where(array $where, bool $check_extras = false, bool $reset_bind = false): string {
         $random_id = function () {
-            return substr( md5( rand() ), 0, 4 );
+            return substr(md5(rand()), 0, 4);
         };
 
         $set_where = [];
-        if ( $reset_bind ) {
+        if ($reset_bind) {
             /**
              * @note    The conditional, is because some situations doesn't require a reset (UPDATE, DELETE)
              *          whereas some do (SELECT_ALL).
@@ -1083,10 +1083,10 @@ class ConnectMySQL {
              */
             $this->bind = [];
         }
-        foreach ( $where as $key => $value ) {
-            if ( is_string( $value ) || is_int( $value ) || is_float( $value ) || is_null( $value ) ) {
+        foreach ($where as $key => $value) {
+            if (is_string($value) || is_int($value) || is_float($value) || is_null($value)) {
                 $uses_or = false;
-            } else if ( is_array( $value ) ) {
+            } else if (is_array($value)) {
                 /**
                  * THis handles the difference between IN() and logical OR groupings.
                  * 
@@ -1097,55 +1097,55 @@ class ConnectMySQL {
                  * 
                  * @since   LRS 3.27.0
                  */
-                if ( isset( $where[0] ) ) {
+                if (isset($where[0])) {
                     $uses_or = true;
                 } else {
                     $uses_or = false;
                 }
             } else {
-                throw new InvalidInput( "Invalid data passed to SQL WHERE clause." );
+                throw new InvalidInput("Invalid data passed to SQL WHERE clause.");
             }
         }
-        if ( $uses_or ) {
-            foreach ( $where as $array ) {
-                if ( $check_extras ) {
-                    if ( $this->can_be_hidden  && !$this->include_hidden ) {
+        if ($uses_or) {
+            foreach ($where as $array) {
+                if ($check_extras) {
+                    if ($this->can_be_hidden  && !$this->include_hidden) {
                         $array += ['is_hidden' => 0];
                     }
-                    if ( $this->can_be_deleted  && !$this->include_deleted ) {
+                    if ($this->can_be_deleted  && !$this->include_deleted) {
                         $array += ['is_deleted' => 0];
                     }
-                    if ( $this->can_be_archived && !$this->include_inactive ) {
+                    if ($this->can_be_archived && !$this->include_inactive) {
                         $array += ['is_archived' => 0];
                     }
                 }
                 $rand = $random_id();
                 $or = [];
-                foreach ( $array as $key => $value ) {
-                    $or[] = $this->handle_prep_key_val( $key, $value, $rand );
+                foreach ($array as $key => $value) {
+                    $or[] = $this->handle_prep_key_val($key, $value, $rand);
                 }
-                $set_where[] = implode( ' AND ', $or );
+                $set_where[] = implode(' AND ', $or);
             }
-            $set_where = implode( " OR ", $set_where );
+            $set_where = implode(" OR ", $set_where);
         } else {
-            if ( $check_extras ) {
-                if ( $this->can_be_hidden  && !$this->include_hidden ) {
+            if ($check_extras) {
+                if ($this->can_be_hidden  && !$this->include_hidden) {
                     $where += ['is_hidden' => 0];
                 }
-                if ( $this->can_be_deleted  && !$this->include_deleted ) {
+                if ($this->can_be_deleted  && !$this->include_deleted) {
                     $where += ['is_deleted' => 0];
                 }
-                if ( $this->can_be_archived && !$this->include_inactive ) {
+                if ($this->can_be_archived && !$this->include_inactive) {
                     $where += ['is_archived' => 0];
                 }
             }
-            foreach ( $where as $key => $value ) {
+            foreach ($where as $key => $value) {
                 $rand = $random_id();
-                $set_where[] = $this->handle_prep_key_val( $key, $value, $rand );
+                $set_where[] = $this->handle_prep_key_val($key, $value, $rand);
             }
-            $set_where = implode( ' AND ', $set_where );
+            $set_where = implode(' AND ', $set_where);
         }
-        if ( count ( $this->bind ) == 0 ) {
+        if (count($this->bind) == 0) {
             $this->bind == null;
         }
         return " WHERE " . $set_where;
@@ -1190,66 +1190,66 @@ class ConnectMySQL {
         string|int|array $value,
         string $rand
     ): string {
-        $is_like = function ( $key ): bool {
-            return substr( $key, -5 ) === ' LIKE';
+        $is_like = function ($key): bool {
+            return substr($key, -5) === ' LIKE';
         };
-        $is_not = function ( $key ): bool {
-            return substr( $key, -9 ) === ' NOT LIKE';
+        $is_not = function ($key): bool {
+            return substr($key, -9) === ' NOT LIKE';
         };
-        $is_null = function ( $value ): bool {
+        $is_null = function ($value): bool {
             return $value === 'IS NULL';
         };
-        $is_not_null = function ( $value ): bool {
+        $is_not_null = function ($value): bool {
             return $value === 'IS NOT NULL';
         };
-        $not_equals = function ( $key ): bool {
-            return substr( $key, -3 ) === ' !=';
+        $not_equals = function ($key): bool {
+            return substr($key, -3) === ' !=';
         };
-        $greater_than = function ( $key ): bool {
-            return substr( $key, -2 ) === ' >';
+        $greater_than = function ($key): bool {
+            return substr($key, -2) === ' >';
         };
-        $greater_than_equals = function ( $key ): bool {
-            return substr( $key, -3 ) === ' >=';
+        $greater_than_equals = function ($key): bool {
+            return substr($key, -3) === ' >=';
         };
-        $less_than = function ( $key ): bool {
-            return substr( $key, -2 ) === ' <';
+        $less_than = function ($key): bool {
+            return substr($key, -2) === ' <';
         };
-        $less_than_equals = function ( $key ): bool {
-            return substr( $key, -3 ) === ' <=';
+        $less_than_equals = function ($key): bool {
+            return substr($key, -3) === ' <=';
         };
-        $is_in = function ( $key ): bool {
-            return substr( $key, -3 ) === ' IN';
+        $is_in = function ($key): bool {
+            return substr($key, -3) === ' IN';
         };
-        $is_not_in = function ( $key ): bool {
-            return substr( $key, -7 ) === ' NOT IN';
+        $is_not_in = function ($key): bool {
+            return substr($key, -7) === ' NOT IN';
         };
-        $between = function ( $key ): bool {
-            return substr( $key, -8 ) === ' BETWEEN';
+        $between = function ($key): bool {
+            return substr($key, -8) === ' BETWEEN';
         };
 
-        if ( $is_like( $key ) || $is_not( $key ) ) {
+        if ($is_like($key) || $is_not($key)) {
             /**
              * $field LIKE $value
              * $field NOT LIKE $value
              */
-            $this->bind["{$this->strip( $key )}__{$rand}"] = $value;
-            return "{$key} :{$this->strip( $key )}__{$rand}";
-        } else if ( $is_null( $value ) || $is_not_null( $value ) ) {
+            $this->bind["{$this->strip($key)}__{$rand}"] = $value;
+            return "{$key} :{$this->strip($key)}__{$rand}";
+        } else if ($is_null($value) || $is_not_null($value)) {
             /**
              * $field IN NULL
              * $field IS NOT NULL
              */
             return "{$key} {$value}";
-        } else if ( $not_equals( $key ) ) {
+        } else if ($not_equals($key)) {
             /**
              * Is not equal
              * $field != $value
              */
-            $this->bind["{$this->strip( $key )}__{$rand}"] = $value;
-            return " {$key}:{$this->strip( $key )}__{$rand}";
-        } else if ( 
-            $greater_than( $key ) || $greater_than_equals( $key ) ||
-            $less_than( $key ) || $less_than_equals( $key )
+            $this->bind["{$this->strip($key)}__{$rand}"] = $value;
+            return " {$key}:{$this->strip($key)}__{$rand}";
+        } else if (
+            $greater_than($key) || $greater_than_equals($key) ||
+            $less_than($key) || $less_than_equals($key)
         ) {
             /**
              * $field > $value
@@ -1257,9 +1257,9 @@ class ConnectMySQL {
              * $field < $value
              * $field <= $value
              */
-            $this->bind["{$this->strip( $key )}__{$rand}"] = $value;
-            return " {$key}:{$this->strip( $key )}__{$rand}";
-        } else if ( $is_in( $key ) || $is_not_in( $key ) ) {
+            $this->bind["{$this->strip($key)}__{$rand}"] = $value;
+            return " {$key}:{$this->strip($key)}__{$rand}";
+        } else if ($is_in($key) || $is_not_in($key)) {
             /**
              * If using the IN() function.
              * 
@@ -1269,33 +1269,33 @@ class ConnectMySQL {
              * Can be parsed as a string, so that SQL statements
              * can be parsed.
              */
-            if ( is_array( $value ) ) {
-                $value = array_values( $value ); // This ensures the keys are sequential.
+            if (is_array($value)) {
+                $value = array_values($value); // This ensures the keys are sequential.
                 $col_values = [];
-                for ( $i = 0; $i < count( $value ); $i++  ) {
+                for ($i = 0; $i < count($value); $i++) {
                     $col_values[] = ':k' . $i . $rand;
                     $this->bind['k' . $i . $rand] = $value[$i];
-                }            
-                return "{$key} (" . implode( ',', $col_values ) . ")";
+                }
+                return "{$key} (" . implode(',', $col_values) . ")";
             } else {
                 return "{$key} {$value}";
             }
-        } else if ( $between( $key ) ) {
+        } else if ($between($key)) {
             /**
              * $fields BETWEEN $value_a and $value_b
              */
-            if ( !is_array( $value ) || !isset( $value[0] ) || !isset( $value[1] ) ) {
-                throw new InvalidInput( "When using 'BETWEEN', you must parse the value as a simple array, with two values." );
+            if (!is_array($value) || !isset($value[0]) || !isset($value[1])) {
+                throw new InvalidInput("When using 'BETWEEN', you must parse the value as a simple array, with two values.");
             }
-            $this->bind["{$this->strip( $key )}_pta__{$rand}"] = $value[0];
-            $this->bind["{$this->strip( $key )}_ptb__{$rand}"] = $value[1];
-            return "{$key} :{$this->strip( $key )}_pta__{$rand} AND :{$this->strip( $key )}_ptb__{$rand}";
+            $this->bind["{$this->strip($key)}_pta__{$rand}"] = $value[0];
+            $this->bind["{$this->strip($key)}_ptb__{$rand}"] = $value[1];
+            return "{$key} :{$this->strip($key)}_pta__{$rand} AND :{$this->strip($key)}_ptb__{$rand}";
         }
         /**
          * $field = $value
          */
-        $this->bind["{$this->strip( $key )}__{$rand}"] = $value;
-        return "{$key}=:{$this->strip( $key )}__{$rand}";
+        $this->bind["{$this->strip($key)}__{$rand}"] = $value;
+        return "{$key}=:{$this->strip($key)}__{$rand}";
     }
 
 
@@ -1310,10 +1310,10 @@ class ConnectMySQL {
      * @since   LRS 3.27.0
      */
 
-    private function strip( string $s_key ): string {
-        $pt = explode( ' ', $s_key )[0];
-        $pt = str_replace( '(', '_', $pt );
-        $pt = str_replace( ')', '_', $pt );
+    private function strip(string $s_key): string {
+        $pt = explode(' ', $s_key)[0];
+        $pt = str_replace('(', '_', $pt);
+        $pt = str_replace(')', '_', $pt);
         return $pt;
     }
 
@@ -1329,55 +1329,55 @@ class ConnectMySQL {
      * @since   LRS 3.21.0
      */
 
-    private function prepare_select_where_sql_by_string( string $where ): string {
-        if ( $this->can_be_hidden && !$this->include_hidden ) {
-            if ( $where == '' ) {
+    private function prepare_select_where_sql_by_string(string $where): string {
+        if ($this->can_be_hidden && !$this->include_hidden) {
+            if ($where == '') {
                 $where = "is_hidden=0";
             } else {
-                $split = preg_split( "/OR /i", $where );
+                $split = preg_split("/OR /i", $where);
                 $where = '';
-                foreach ( $split as $item ) {
+                foreach ($split as $item) {
                     $where .= ' ' . $item . " AND is_hidden=0 OR";
                 }
-                $where = rtrim( $where, 'OR' );
+                $where = rtrim($where, 'OR');
             }
         }
 
-        if ( $this->can_be_deleted && !$this->include_deleted ) {
-            if ( $where == '' ) {
+        if ($this->can_be_deleted && !$this->include_deleted) {
+            if ($where == '') {
                 $where = "is_deleted=0";
             } else {
-                $split = preg_split( "/OR /i", $where );
+                $split = preg_split("/OR /i", $where);
                 $where = '';
-                foreach ( $split as $item ) {
+                foreach ($split as $item) {
                     $where .= ' ' . $item . " AND is_deleted=0 OR";
                 }
-                $where = rtrim( $where, 'OR' );
+                $where = rtrim($where, 'OR');
             }
         }
 
         // Inject is_archived=0 in the $where when $this->include_inactive = false
-        if ( $this->can_be_archived && !$this->include_inactive ) {
-            if ( $where == '' ) {
+        if ($this->can_be_archived && !$this->include_inactive) {
+            if ($where == '') {
                 $where = "is_archived=0";
             } else {
-                $split = preg_split( "/OR /i", $where );
+                $split = preg_split("/OR /i", $where);
                 $where = '';
-                foreach ( $split as $item ) {
+                foreach ($split as $item) {
                     $where .= ' ' . $item . " AND is_archived=0 OR";
                 }
-                $where = rtrim( $where, 'OR' );
+                $where = rtrim($where, 'OR');
             }
         }
 
-        if ( $where != '' ) {
+        if ($where != '') {
             // Handle adding the WHERE clause to the search string
-            if ( strtoupper( explode( ' ', $where )[0] ) != 'WHERE' ) {
-                $where = " WHERE " . trim( $where );
+            if (strtoupper(explode(' ', $where)[0]) != 'WHERE') {
+                $where = " WHERE " . trim($where);
             }
 
             // Handle adding a leading space to the $where clause, in case it's needed
-            if ( $where[0] != ' ' ) {
+            if ($where[0] != ' ') {
                 $where = ' ' . $where;
             }
         }
@@ -1399,8 +1399,8 @@ class ConnectMySQL {
      * @since   LBF 0.1.5-beta  Optimized to only execute `$this->connect_db` once.
      */
 
-    public function set_db_year( string|int $year ): bool {
-        return $this->connect_db( $year ) !== false;
+    public function set_db_year(string|int $year): bool {
+        return $this->connect_db($year) !== false;
     }
 
 
@@ -1424,7 +1424,7 @@ class ConnectMySQL {
      */
 
     public function empty_table(): void {
-        $this->sql_execute( "TRUNCATE TABLE " . $this->table );
+        $this->sql_execute("TRUNCATE TABLE " . $this->table);
     }
 
 
@@ -1437,14 +1437,14 @@ class ConnectMySQL {
      * @since   LBF 0.3.0-beta
      */
 
-    public function set_log_path( string $path ): void {
-        if ( !file_exists( $path ) ) {
-            if ( !is_dir( dirname( $path ) ) ) {
-                mkdir( dirname( $path ), recursive: true );
+    public function set_log_path(string $path): void {
+        if (!file_exists($path)) {
+            if (!is_dir(dirname($path))) {
+                mkdir(dirname($path), recursive: true);
             }
-            touch( $path );
+            touch($path);
         }
-        $this->log_path = realpath( $path );
+        $this->log_path = realpath($path);
     }
 
 
@@ -1459,17 +1459,17 @@ class ConnectMySQL {
      * @since   LRS 3.7.0   Added @param $sql
      */
 
-    private function display_the_error( object $error, string $sql, ?array $bind = null ): void {
-        if ( $this->display_error ) {
+    private function display_the_error(object $error, string $sql, ?array $bind = null): void {
+        if ($this->display_error) {
             echo "<br><h1>ERROR</h1><br>";
             echo "<b>SQL:</b><p class='font_mono text_align_left'>{$sql}</p>";
-            if ( !is_null( $bind ) ) {
+            if (!is_null($bind)) {
                 echo "<b>Bind Params:</b>";
                 echo "<pre class='text_align_left'>";
-                var_dump( $bind );
+                var_dump($bind);
                 echo "</pre>";
             }
-            switch ( $error->getCode() ) {
+            switch ($error->getCode()) {
                 case 42000:
                     echo "<b>Check:</b> That you have included the bind array with prepared SQL statement!<br><br>";
                     break;
@@ -1491,26 +1491,26 @@ class ConnectMySQL {
      * @since   LRS 3.23.3
      */
 
-    private function log_sql( mixed $data ): void {
-        $timestamp = date( 'Y-m-d G:i:s' );
-        if ( is_null( $this->log_path ) ) {
-            throw new LogPathNotSet( "Please set a value for logging an SQL result." );
+    private function log_sql(mixed $data): void {
+        $timestamp = date('Y-m-d G:i:s');
+        if (is_null($this->log_path)) {
+            throw new LogPathNotSet("Please set a value for logging an SQL result.");
         }
 
-        if ( is_array( $data ) || is_object( $data ) ) {
-            $text = json_encode( $data, JSON_PRETTY_PRINT );
+        if (is_array($data) || is_object($data)) {
+            $text = json_encode($data, JSON_PRETTY_PRINT);
         } else {
             $text = $data;
         }
 
         try {
-            $fp = fopen( $this->log_path, 'a' );
-            if ( is_bool( $fp ) ) {
-                throw new FileNotWriteable( "Unable to write file to {$this->log_path}<br>" );
+            $fp = fopen($this->log_path, 'a');
+            if (is_bool($fp)) {
+                throw new FileNotWriteable("Unable to write file to {$this->log_path}<br>");
             }
-            fwrite( $fp, "{$timestamp}\t\t{$text}\n" );
-            fclose( $fp );
-        } catch ( FileNotWriteable $th ) {
+            fwrite($fp, "{$timestamp}\t\t{$text}\n");
+            fclose($fp);
+        } catch (FileNotWriteable $th) {
             echo "Error: {$th->getMessage()}";
         }
     }
@@ -1530,9 +1530,9 @@ class ConnectMySQL {
      * @since   LRS 3.27.0  Moved to ConnectMySQL, added param $class, return.
      */
 
-    protected function assign_data_to_properties( string $class, object|array $data ): object {
+    protected function assign_data_to_properties(string $class, object|array $data): object {
         $container_class = new $class;
-        foreach ( $data as $index => $entry ) {
+        foreach ($data as $index => $entry) {
             $container_class->$index = $entry;
         }
         return $container_class;
@@ -1548,7 +1548,7 @@ class ConnectMySQL {
      * @since   LRS 3.27.0
      */
 
-    public function set_table( string $table ): void {
+    public function set_table(string $table): void {
         $this->table = $table;
     }
 
@@ -1562,7 +1562,7 @@ class ConnectMySQL {
      * @since   LRS 3.27.0
      */
 
-    public function set_template_class( string $template_class ): void {
+    public function set_template_class(string $template_class): void {
         $this->template_class = $template_class;
     }
 
@@ -1578,9 +1578,9 @@ class ConnectMySQL {
      * @since   LRS 3.27.0
      */
 
-    public function set_index_data_by( string $index_data_by ): void {
-        if ( !in_array( $index_data_by, $this->unique_values ) ) {
-            throw new UniqueValueDulicate( "Index '{$index_data_by}' is not an a unque value for " . get_class( $this ) );
+    public function set_index_data_by(string $index_data_by): void {
+        if (!in_array($index_data_by, $this->unique_values)) {
+            throw new UniqueValueDulicate("Index '{$index_data_by}' is not an a unque value for " . get_class($this));
         }
         $this->index_data_by = $index_data_by;
     }
@@ -1598,20 +1598,20 @@ class ConnectMySQL {
     public function get_data_index(): string {
         return $this->index_data_by;
     }
-    
+
 
     /**
      * Get the Primary Key ID of the entry that was last inserted.
      * Note: Only works if the primary key is numeric.
      * 
-     * @return  string
+     * @return  string|null
      * 
      * @access  public
      * @since   LRS 3.27.0
      */
 
-    public function get_last_inserted_id(): string {
-        return $this->last_inserted_id;
+    public function get_last_inserted_id(): ?string {
+        return $this->last_inserted_id ?? null;
     }
 
 
@@ -1666,7 +1666,7 @@ class ConnectMySQL {
      * @since   LRS 3.27.0
      */
 
-    public function set_primary_key_as_index( bool $set ): void {
+    public function set_primary_key_as_index(bool $set): void {
         $this->set_primary_key_index = $set;
     }
 
@@ -1680,7 +1680,7 @@ class ConnectMySQL {
      * @since   LRS 3.27.0
      */
 
-    public function set_display_error( bool $set ): void {
+    public function set_display_error(bool $set): void {
         $this->display_error = $set;
     }
 
@@ -1694,7 +1694,7 @@ class ConnectMySQL {
      * @since   LRS 3.27.0
      */
 
-    public function set_echo_sql( bool $set ): void {
+    public function set_echo_sql(bool $set): void {
         $this->echo_sql = $set;
     }
 
@@ -1708,7 +1708,7 @@ class ConnectMySQL {
      * @since   LRS 3.27.0
      */
 
-    public function set_log_sql( bool $set ): void {
+    public function set_log_sql(bool $set): void {
         $this->log_sql = $set;
     }
 
@@ -1722,7 +1722,7 @@ class ConnectMySQL {
      * @since   LRS 3.27.0
      */
 
-    public function set_append_to_data( bool $set ): void {
+    public function set_append_to_data(bool $set): void {
         $this->append_to_data = $set;
     }
 
@@ -1738,10 +1738,10 @@ class ConnectMySQL {
      * @since   LBF 0.3.0-beta  Added param $log_to_path
      */
 
-    public function set_debug_mode( bool $set, ?string $log_to_path = null ): void {
+    public function set_debug_mode(bool $set, ?string $log_to_path = null): void {
         $this->debug_mode = $set;
-        if ( !is_null ( $log_to_path ) ) {
-            $this->set_log_path( $log_to_path );
+        if (!is_null($log_to_path)) {
+            $this->set_log_path($log_to_path);
         }
     }
 
@@ -1757,8 +1757,7 @@ class ConnectMySQL {
      * @since   LBF 0.1.5-beta
      */
 
-    public function database_exists( ?int $year = null ): bool {
-        return $this->connect_db( $year );
+    public function database_exists(?int $year = null): bool {
+        return $this->connect_db($year);
     }
-
 }

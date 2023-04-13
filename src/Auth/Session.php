@@ -27,7 +27,7 @@ class Session {
      */
 
     public static function start(): void {
-        if ( session_status() == PHP_SESSION_NONE && !headers_sent() ) {
+        if (session_status() == PHP_SESSION_NONE && !headers_sent()) {
             session_start();
         }
     }
@@ -43,7 +43,7 @@ class Session {
      * @since   LRS 3.15.11
      */
 
-    public static function set_value( string $id, mixed $value ): void {
+    public static function set_value(string $id, mixed $value): void {
         $_SESSION[$id] = $value;
     }
 
@@ -58,13 +58,13 @@ class Session {
      * @since   LRS 3.15.11
      */
 
-    public static function destroy_value( string $id, bool $strict_check = false ): void {
-        if ( $strict_check ) {
-            if ( !isset ( $_SESSION[$id] ) ) {
-                throw new \Exception( "\$_SESSION['{$id}'] does not exist." );
+    public static function destroy_value(string $id, bool $strict_check = false): void {
+        if ($strict_check) {
+            if (!isset($_SESSION[$id])) {
+                throw new \Exception("\$_SESSION['{$id}'] does not exist.");
             }
         }
-        unset( $_SESSION[$id] );
+        unset($_SESSION[$id]);
     }
 
 
@@ -76,11 +76,11 @@ class Session {
      */
 
     public static function destroy_all_values(): void {
-        if ( !self::has_started() ) {
+        if (!self::has_started()) {
             return;
         }
-        foreach ( $_SESSION as $id => $session ) {
-            self::destroy_value( $id );
+        foreach ($_SESSION as $id => $session) {
+            self::destroy_value($id);
         }
     }
 
@@ -95,7 +95,7 @@ class Session {
      */
 
     public static function has_started(): bool {
-        if ( session_id() == '' || !isset( $_SESSION ) || session_status() === PHP_SESSION_NONE ) {
+        if (session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
             return false;
         }
         return true;
@@ -113,8 +113,8 @@ class Session {
      * @since   LRS 3.15.11
      */
 
-    public static function value_exists( string $id ): bool {
-        return isset( $_SESSION[$id] );
+    public static function value_exists(string $id): bool {
+        return isset($_SESSION[$id]);
     }
 
 
@@ -132,17 +132,17 @@ class Session {
      * @since   LRS 3.15.11
      */
 
-    public static function value( string $id, ?string $index = null ): mixed {
-        if ( !isset( $_SESSION[$id] ) ) {
+    public static function value(string $id, ?string $index = null): mixed {
+        if (!isset($_SESSION[$id])) {
             return null;
         }
-        if ( !is_null ( $index ) ) {
-            if ( is_array( $_SESSION[$id] ) ) {
-                if ( isset( $_SESSION[$id][$index] ) ) {
+        if (!is_null($index)) {
+            if (is_array($_SESSION[$id])) {
+                if (isset($_SESSION[$id][$index])) {
                     return $_SESSION[$id][$index];
                 }
-            } else if ( is_object( $_SESSION[$id] ) ) {
-                if ( isset( $_SESSION[$id]->$index ) ) {
+            } else if (is_object($_SESSION[$id])) {
+                if (isset($_SESSION[$id]->$index)) {
                     return $_SESSION[$id]->$index;
                 }
             }
@@ -167,13 +167,13 @@ class Session {
      * @since   LRS 3.15.11
      */
 
-    public static function __callStatic( string $id, array $arguments ): mixed {
-        if ( is_array( $_SESSION[$id] ) ) {
-            if ( isset( $arguments[0] ) && isset( $_SESSION[$id][$arguments[0]] ) ) {
+    public static function __callStatic(string $id, array $arguments): mixed {
+        if (is_array($_SESSION[$id])) {
+            if (isset($arguments[0]) && isset($_SESSION[$id][$arguments[0]])) {
                 return $_SESSION[$id][$arguments[0]];
             }
-        } else if ( is_object( $_SESSION[$id] ) ) {
-            if ( isset( $arguments[0] ) && isset( $_SESSION[$id]->$arguments[0] ) ) {
+        } else if (is_object($_SESSION[$id])) {
+            if (isset($arguments[0]) && isset($_SESSION[$id]->$arguments[0])) {
                 return $_SESSION[$id]->$arguments[0];
             }
         }

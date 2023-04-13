@@ -20,12 +20,13 @@ trait InjectorMeta {
      * 
      * @static
      * @return  array
-     * @since   0.6.0-beta
+     * @since   LBF 0.6.0-beta
      */
 
     protected static function set_default_data(): array {
         return [
             PagePositions::IN_HEAD->id() => [
+                'map' => null,
                 'raw' => [],
                 'cdn' => [],
             ],
@@ -49,11 +50,11 @@ trait InjectorMeta {
      * @return  array
      * 
      * @access  public
-     * @since   0.6.0-beta
+     * @since   LBF 0.6.0-beta
      */
 
-    public function remove_duplicates( array $data ): array {
-        return array_unique( $data );
+    public function remove_duplicates(array $data): array {
+        return array_unique($data);
     }
 
 
@@ -65,11 +66,11 @@ trait InjectorMeta {
      * @return  string
      * 
      * @access  public
-     * @since   0.6.0-beta
+     * @since   LBF 0.6.0-beta
      */
 
-    public function merge( array $data ): string {
-        return implode( "\n", $data );
+    public function merge(array $data): string {
+        return implode("\n", $data);
     }
 
 
@@ -79,12 +80,31 @@ trait InjectorMeta {
      * @param   PagePositions   $position   The position to insert the Javascript & styles.
      * 
      * @access  public
-     * @since   0.6.0-beta
+     * @since   LBF 0.6.0-beta
      */
 
-    public function insert_js_and_css( PagePositions $position ): void {
-        $this->insert_js( $position );
-        $this->insert_css( $position );
+    public function insert_js_and_css(PagePositions $position): void {
+        $this->insert_js($position);
+        $this->insert_css($position);
     }
 
+
+    /**
+     * Return the timestamp uri component for validating file cache.
+     * 
+     * @param   string  $path   The path to the file being validated.
+     * 
+     * @return  string  Validation URI
+     * 
+     * @static
+     * @access  protected
+     * @since   LBF 0.6.0-beta
+     */
+
+    protected static function add_timestamp(string $path): string {
+        if ($path[0] === '/') {
+            $path = substr($path, 1);
+        }
+        return '?v=' . timestamp_cache_validation($path);
+    }
 }

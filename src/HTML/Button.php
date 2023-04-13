@@ -3,6 +3,7 @@
 namespace LBF\HTML;
 
 use Feather\Icons;
+use LBF\App\Config;
 use LBF\Auth\Hash;
 use LBF\Errors\IO\InvalidInput;
 use LBF\Errors\IO\MissingRequiredInput;
@@ -41,35 +42,35 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1
      */
 
-     private static function set_button_class( array $params ): array {
+    private static function set_button_class(array $params): array {
         $default_class = 'standard_button';
 
-        if ( $params['padding'] ) {
+        if ($params['padding']) {
             $default_class .= ' standard_button__padding';
         }
 
-        if ( !isset ( $params['container']['overwrite'] ) ) {
+        if (!isset($params['container']['overwrite'])) {
             $default_class .= ' standard_button__margin';
         } else {
-            if ( !$params['container']['overwrite'] ) {
+            if (!$params['container']['overwrite']) {
                 $default_class .= ' standard_button__margin';
             }
         }
 
         $permitted_colours = ['default', 'green', 'blue', 'red', 'orange'];
 
-        if ( !isset( $params['colour'] ) && isset( $params['color'] ) ) {
+        if (!isset($params['colour']) && isset($params['color'])) {
             $params['colour'] = $params['color'];
         }
 
-        if ( isset( $params['colour'] ) && $params['colour'] !== 'default' ) {
-            if ( !in_array( $params['colour'], $permitted_colours ) ) {
-                throw new InvalidInput( 'Button colour selected is not a permitted colour' );
+        if (isset($params['colour']) && $params['colour'] !== 'default') {
+            if (!in_array($params['colour'], $permitted_colours)) {
+                throw new InvalidInput('Button colour selected is not a permitted colour');
             }
-            $default_class .= " button_colour__{$params['colour']} coloured_button" ;
+            $default_class .= " button_colour__{$params['colour']} coloured_button";
         }
 
-        if ( !isset( $params['class'] ) ) {
+        if (!isset($params['class'])) {
             $params['class'] = $default_class;
         } else {
             $params['class'] = "{$default_class} {$params['class']}";
@@ -91,13 +92,13 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1
      */
 
-    private static function set_button_container( array $params, string $tag ): string {
+    private static function set_button_container(array $params, string $tag): string {
         $container_class = 'standard_button__container';
-        if ( $params['hidden'] ) {
+        if ($params['hidden']) {
             $container_class .= ' hidden';
         }
 
-        if ( isset( $params['container']['class'] ) ) {
+        if (isset($params['container']['class'])) {
             $container_class .= " {$params['container']['class']}";
         }
 
@@ -142,9 +143,9 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1  Revamped completely, now the base of almost all buttons. Removed params $content, $overwrite_class
      */
 
-    public static function general( array $params = [] ): string {
-        if ( !isset( $params['content'] ) ) {
-            throw new MissingRequiredInput( "Button \$param attribute 'content' has not been set. \$paramT['content'] must be set." );
+    public static function general(array $params = []): string {
+        if (!isset($params['content'])) {
+            throw new MissingRequiredInput("Button \$param attribute 'content' has not been set. \$paramT['content'] must be set.");
         }
         $skip_fields = [
             'content', 'container', 'inline', 'padding', 'hidden',
@@ -152,22 +153,22 @@ class Button extends HTMLMeta {
             'tab',
             // 'label', 'hint',
             /**
-             * @todo    Would like to add above but not sure how to do without
-             *          breaking inline integrity
-             */
+         * @todo    Would like to add above but not sure how to do without
+         *          breaking inline integrity
+         */
 
         ];
         $item = '';
 
-        if ( !isset( $params['id'] ) ) {
+        if (!isset($params['id'])) {
             $params['id'] = Hash::random_id_string();
         }
-        if ( isset( $params['linebreak'] ) && $params['linebreak'] == 'before' ) {
+        if (isset($params['linebreak']) && $params['linebreak'] == 'before') {
             $item .= "<div class='btn_lb'></div>";
         }
 
-        if ( isset( $params['reload'] ) && $params['reload' ] ) {
-            if ( isset( $params['onclick'] ) ) {
+        if (isset($params['reload']) && $params['reload']) {
+            if (isset($params['onclick'])) {
                 $params['onclick'] .= ' window.location.reload()';
             } else {
                 $params['onclick'] = 'window.location.reload()';
@@ -177,46 +178,46 @@ class Button extends HTMLMeta {
         /**
          * CONTAINER
          */
-        $container = isset( $params['container'] ) ? $params['container'] : [
+        $container = isset($params['container']) ? $params['container'] : [
             'overwrite' => false,
         ];
-        if ( !isset( $container['overwrite'] ) ) {
+        if (!isset($container['overwrite'])) {
             $container['overwrite'] = false;
         }
-        if ( !isset( $params['hidden'] ) ) {
+        if (!isset($params['hidden'])) {
             $params['hidden'] = false;
         }
-        if ( !isset( $params['inline'] ) ) {
+        if (!isset($params['inline'])) {
             $params['inline'] = true;
         }
         $container_tag = $params['inline'] ? 'span' : 'div';
 
-        if ( !$container['overwrite'] ) {
-            $item .= self::set_button_container( $params, $container_tag );
+        if (!$container['overwrite']) {
+            $item .= self::set_button_container($params, $container_tag);
         }
 
-        if ( !isset( $params['padding'] ) ) {
+        if (!isset($params['padding'])) {
             $params['padding'] = true;
         }
 
         /**
          * BUTTON CLASS
          */
-        $params = self::set_button_class( $params );
+        $params = self::set_button_class($params);
 
         $params['content'] = "<span id='{$params['id']}__spinner'></span>" . $params['content'];
 
-        $item .= self::html_element_container( 'button', $params, $skip_fields );
+        $item .= self::html_element_container('button', $params, $skip_fields);
 
-        if ( !$container['overwrite'] ) {
+        if (!$container['overwrite']) {
             $item .= "</$container_tag>";
         }
 
-        if ( isset( $params['linebreak'] ) && $params['linebreak'] == 'after' ) {
+        if (isset($params['linebreak']) && $params['linebreak'] == 'after') {
             $item .= "<div class='btn_lb'></div>";
         }
 
-        self::handle_echo( $item, $params );
+        self::handle_echo($item, $params);
         return $item;
     }
 
@@ -236,20 +237,20 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1
      */
 
-    private static function do_button( array $params, string $content, ?string $colour = null ): string {
+    private static function do_button(array $params, string $content, ?string $colour = null): string {
         $button = '';
 
-        if ( !isset( $params['content'] ) ) {
+        if (!isset($params['content'])) {
             $params['content'] = $content;
         }
 
-        if ( !is_null( $colour ) && !isset( $params['colour'] ) ) {
+        if (!is_null($colour) && !isset($params['colour'])) {
             $params['colour'] = $colour;
         }
 
-        $hold = self::temporary_change_echo( false );
-        $button .= self::general( $params );
-        self::restore_origonal_echo( $hold );
+        $hold = self::temporary_change_echo(false);
+        $button .= self::general($params);
+        self::restore_origonal_echo($hold);
 
         return $button;
     }
@@ -271,9 +272,9 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1  Removed param $overwrite_class
      */
 
-    public static function apply( array $params ): string {
-        $button = self::do_button( $params, 'Apply', 'green' );
-        self::handle_echo( $button, $params );
+    public static function apply(array $params): string {
+        $button = self::do_button($params, 'Apply', 'green');
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -291,9 +292,9 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1  Removed param $overwrite_class
      */
 
-    public static function edit( array $params ): string {
-        $button = self::do_button( $params, 'Edit' );
-        self::handle_echo( $button, $params );
+    public static function edit(array $params): string {
+        $button = self::do_button($params, 'Edit');
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -315,9 +316,9 @@ class Button extends HTMLMeta {
      * @since   LRS 3.13.0    Removed params $onclick, $id, added param $params - largely rewritten
      */
 
-    public static function save( array $params ): string {
-        $button = self::do_button( $params, 'Save', 'green' );
-        self::handle_echo( $button, $params );
+    public static function save(array $params): string {
+        $button = self::do_button($params, 'Save', 'green');
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -334,17 +335,17 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1
      */
 
-    public static function ok( array $params ): string {
-        if ( isset( $params['reload'] ) && $params['reload' ] ) {
-            if ( !isset( $params['padding'] ) ) {
+    public static function ok(array $params): string {
+        if (isset($params['reload']) && $params['reload']) {
+            if (!isset($params['padding'])) {
                 $params['padding'] = false;
             }
-            if ( !isset( $params['colour'] ) ) {
+            if (!isset($params['colour'])) {
                 $params['colour'] = 'default';
             }
         }
-        $button = self::do_button( $params, 'OK', 'green' );
-        self::handle_echo( $button, $params );
+        $button = self::do_button($params, 'OK', 'green');
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -361,10 +362,10 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1
      */
 
-    public static function search( array $params ): string {
+    public static function search(array $params): string {
         $icon = new Icons;
-        $button = self::do_button( $params, $icon->get( 'search', echo: false ) );
-        self::handle_echo( $button, $params );
+        $button = self::do_button($params, $icon->get('search', echo: false));
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -386,18 +387,18 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1  Revamped and turned into a simple button.
      */
 
-    public static function print( array $params, bool $print_dailogue = false ): string {
-        if ( $print_dailogue ) {
-            if ( isset( $params['onclick'] ) ) {
+    public static function print(array $params, bool $print_dailogue = false): string {
+        if ($print_dailogue) {
+            if (isset($params['onclick'])) {
                 $params['onclick'] .= " window.print()";
             } else {
                 $params['onclick'] = 'window.print()';
             }
         }
         $icon = new Icons;
-        $button = self::do_button( $params, $icon->get( 'printer', echo: false ) );
+        $button = self::do_button($params, $icon->get('printer', echo: false));
 
-        self::handle_echo( $button, $params );
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -416,16 +417,16 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1  Completely reworked to use new button methods.
      */
 
-    public static function reset( array $params = [] ): string {
-        $tab = isset ( $params['tab'] ) ? "&t={$params['tab']}" : '';
-        if ( isset ( $params['onclick'] ) ) {
-            $params['onclick'] .= " window.location.search=`?p={$_GET['p']}{$tab}`";
+    public static function reset(array $params = []): string {
+        $path = implode('/', Config::current_page());
+        if (isset($params['onclick'])) {
+            $params['onclick'] .= " window.location=`/{$path}`";
         } else {
-            $params['onclick'] = "window.location.search=`?p={$_GET['p']}{$tab}`";
+            $params['onclick'] = "window.location=`/{$path}`";
         }
-        $button = self::do_button( $params, 'Reset', 'blue' );
+        $button = self::do_button($params, 'Reset', 'blue');
 
-        self::handle_echo( $button, $params );
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -445,31 +446,31 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1
      */
 
-    private static function go_to_button_template( array $params, string $content ): string {
-        if ( !isset( $params['link'] ) ) {
-            throw new MissingRequiredInput( "Button \$param attribute 'link' has not been set. \$paramT['link'] must be set." );
+    private static function go_to_button_template(array $params, string $content): string {
+        if (!isset($params['link'])) {
+            throw new MissingRequiredInput("Button \$param attribute 'link' has not been set. \$paramT['link'] must be set.");
         }
         $button = '';
 
-        if ( !isset( $params['content'] ) ) {
+        if (!isset($params['content'])) {
             $params['content'] = $content;
         }
-        if ( !isset( $params['colour'] ) ) {
+        if (!isset($params['colour'])) {
             $params['colour'] = 'default';
         }
 
-        if ( isset( $params['class'] ) ) {
-            if ( str_contains( $params['class'], 'todobttns' ) ) {
+        if (isset($params['class'])) {
+            if (str_contains($params['class'], 'todobttns')) {
                 $button .= "<div class='backbutton'>";
             }
         }
 
-        $hold = self::temporary_change_echo( false );
-        $button .= self::general( $params );
-        self::restore_origonal_echo( $hold );
+        $hold = self::temporary_change_echo(false);
+        $button .= self::general($params);
+        self::restore_origonal_echo($hold);
 
-        if ( isset( $params['class'] ) ) {
-            if ( str_contains( $params['class'], 'todobttns' ) ) {
+        if (isset($params['class'])) {
+            if (str_contains($params['class'], 'todobttns')) {
                 $button .= "</div>";
             }
         }
@@ -492,9 +493,9 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1  Rewritten to use the new button method.
      */
 
-    public static function back( array $params ): string {
-        $button = self::go_to_button_template( $params, 'Back' );
-        self::handle_echo( $button, $params );
+    public static function back(array $params): string {
+        $button = self::go_to_button_template($params, 'Back');
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -514,12 +515,12 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1  Rewritten to use the new button method.
      */
 
-    public static function cancel( array $params ): string {
-        if ( !isset( $params['colour'] ) ) {
+    public static function cancel(array $params): string {
+        if (!isset($params['colour'])) {
             $params['colour'] = 'blue';
         }
-        $button = self::go_to_button_template( $params, 'Cancel' );
-        self::handle_echo( $button, $params );
+        $button = self::go_to_button_template($params, 'Cancel');
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -540,9 +541,9 @@ class Button extends HTMLMeta {
      * @since   LRS 3.16.1  Reworked again, moved to new button standard - removed params $button_type_submit, $overwrite_class
      */
 
-    public static function floating_submit( array $params = [] ): string {
+    public static function floating_submit(array $params = []): string {
         $button = '';
-        if ( !is_apple_mobile() ) {
+        if (!is_apple_mobile()) {
             $button .= "<div class='floaty_submit text_align_center' id='floaty_submit'>";
         } else {
             $button .= "<div class='floaty_submit text_align_center'>";
@@ -550,25 +551,25 @@ class Button extends HTMLMeta {
 
         $params['type'] = 'submit';
         $params['container'] = ['overwrite' => true];
-        if ( !isset( $params['id'] ) ) {
+        if (!isset($params['id'])) {
             $params['id'] = 'reg_submit_bttn';
         }
-        if ( !isset ( $params['content'] ) ) {
+        if (!isset($params['content'])) {
             $params['content'] = 'Submit';
         }
-        if ( isset ( $params['class'] ) ) {
+        if (isset($params['class'])) {
             $params['class'] .= " reg_submit_bttn";
         } else {
             $params['class'] = "reg_submit_bttn";
         }
 
-        $hold = self::temporary_change_echo( false );
-        $button .= self::general( $params );
-        self::restore_origonal_echo( $hold );
+        $hold = self::temporary_change_echo(false);
+        $button .= self::general($params);
+        self::restore_origonal_echo($hold);
 
         $button .= "</div>"; // floaty_submit
 
-        self::handle_echo( $button, $params );
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -582,11 +583,10 @@ class Button extends HTMLMeta {
      */
 
     public static function floating_top_bottom_buttons(): void {
-        if ( is_apple_mobile() ) {
-            return;
-        }
-        HTML::div( ['class' => 'floating_tb_buttons_contain'] );
-        $hold = JS::temporary_change_echo( false );
+        // if (is_apple_mobile()) {
+        //     return;
+        // }
+        HTML::div(['class' => 'floating_tb_buttons_contain']);
 
         /**
          * The JS which handles the buttons going up & down.
@@ -597,27 +597,31 @@ class Button extends HTMLMeta {
          * 
          * @since   LRS 3.21.0
          */
-        $js = function ( $id ) {
-            return "import { zoom_updown } from './vendor/projector22/lourie-basic-framework/src/js/ui.js';
+        $js = function ($id) {
+            return <<<JS
+            import { zoom_updown } from '/vendor/projector22/lourie-basic-framework/src/js/lib/ui.js';
             const btn = document.getElementById('{$id}');
             btn.addEventListener('click', function () {
                 zoom_updown(this.id);
-            });";
+            });
+            JS;
         };
 
         $icon = new Icons;
 
         HTML::div_container(
             ['class' => 'ftb_button', 'id' => 'ftb_up'],
-            JS::script_module( $js( 'ftb_up' ) ) . $icon->get( 'chevrons-up', echo: false )
+            $icon->get('chevrons-up', echo: false)
         );
 
         HTML::div_container(
             ['class' => 'ftb_button', 'id' => 'ftb_down'],
-            JS::script_module( $js( 'ftb_down' ) ) . $icon->get( 'chevrons-down', echo: false )
+            $icon->get('chevrons-down', echo: false)
         );
 
-        JS::restore_origonal_echo( $hold );
+        HTML::script($js('ftb_up'), ['echo' => true, 'type' => 'module']);
+        HTML::script($js('ftb_down'), ['echo' => true, 'type' => 'module']);
+
         HTML::close_div(); // floating_tb_buttons_contain
     }
 
@@ -652,10 +656,10 @@ class Button extends HTMLMeta {
      * @since   LRS 3.13.0  Revamped and removed params, $onclick, $extra_class, $id, added $params
      */
 
-    public static function interface( string $button_text, string $link, array $params = [] ): string {
+    public static function interface(string $button_text, string $link, array $params = []): string {
         $button = '';
         $button .= "<div class='general_button'>";
-        if ( isset( $params['class'] ) && $params['class'] != '' ) {
+        if (isset($params['class']) && $params['class'] != '') {
             $params['class'] .= ' interface_button ' . self::$interface_bttn_class;
         } else {
             $params['class'] = 'interface_button ' . self::$interface_bttn_class;
@@ -663,9 +667,9 @@ class Button extends HTMLMeta {
         $params['href'] = $link;
         $params['text'] = $button_text;
 
-        $button .= HTML::a( $params + ['echo' => false] );
+        $button .= HTML::a($params + ['echo' => false]);
         $button .= "</div>";
-        self::handle_echo( $button, $params );
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -682,14 +686,14 @@ class Button extends HTMLMeta {
      * @since   LRS 3.12.8
      */
 
-    public static function login_eye( array $params = [] ): string {
+    public static function login_eye(array $params = []): string {
         $button = '<button';
-        foreach ( $params as $index => $value ) {
+        foreach ($params as $index => $value) {
             $button .= " {$index}='{$value}'";
         }
         $icon = new Icons;
-        $button .= '>' . $icon->get( 'eye-off', echo: false ) . '</button>';
-        self::handle_echo( $button, $params );
+        $button .= '>' . $icon->get('eye-off', echo: false) . '</button>';
+        self::handle_echo($button, $params);
         return $button;
     }
 
@@ -710,13 +714,12 @@ class Button extends HTMLMeta {
      * @since   LRS 3.13.0
      */
 
-    public static function link_button ( string $text, array $params = [], string $function = 'void(0)' ): string {
+    public static function link_button(string $text, array $params = [], string $function = 'void(0)'): string {
         $params['href'] = "javascript:{$function}";
         $params['text'] = $text;
-        $button = HTML::a( $params );
+        $button = HTML::a($params);
 
-        self::handle_echo( $button, $params );
+        self::handle_echo($button, $params);
         return $button;
     }
-
 }

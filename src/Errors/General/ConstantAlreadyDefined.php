@@ -14,4 +14,5 @@ use LBF\Errors\Meta\ExceptionMeta;
  * @since   LBF 0.2.0-beta  Moved __construct to abstract class `ExceptionMeta`.
  */
 
-class ConstantAlreadyDefined extends ExceptionMeta {}
+class ConstantAlreadyDefined extends ExceptionMeta {
+}

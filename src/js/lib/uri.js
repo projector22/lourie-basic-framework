@@ -14,11 +14,19 @@
  * 
  * @since   LRS 3.21.1
  * @since   LBF 0.1.1-beta
+ * @since   LBF 0.6.0-beta  Added properties `pathname`, `pathname_parts`, `p`, `sp`, `t`
  */
 
 export default class URITools {
     constructor() {
-        this.uri = new URLSearchParams(location.search)
+        this.uri = new URLSearchParams(location.search);
+
+        this.pathname = window.location.pathname;
+        this.pathname_parts = this.pathname.split('/');
+
+        this.p = this.pathname_parts[1];            // "page"
+        this.sp = this.pathname_parts[2] ?? null;   // "subpage"
+        this.t = this.pathname_parts[3] ?? null;    // "tab"
 
         this.uri.forEach((element, index) => {
             this[index] = element;

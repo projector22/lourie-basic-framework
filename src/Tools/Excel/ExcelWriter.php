@@ -40,14 +40,14 @@ class ExcelWriter extends ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    public function add_new_sheet( string $name ): void {
-        if ( strlen( $name ) > 31 ) {
+    public function add_new_sheet(string $name): void {
+        if (strlen($name) > 31) {
             /**
              * The max length of a sheet name is 31 chars. This 
              * protects the sheet if the name is longer than 
              * 31 chars.
              */
-            $name = substr( $name, 0, 31 );
+            $name = substr($name, 0, 31);
         }
         $this->number_of_sheets++;
         $this->sheet_names[$this->number_of_sheets] = $name;
@@ -63,9 +63,9 @@ class ExcelWriter extends ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    public function set_active_sheet( int $sheet_id ): void {
-        if ( !isset( $this->sheet_names[$sheet_id] ) ) {
-            throw new Exception( "Invalid sheet number selection" );
+    public function set_active_sheet(int $sheet_id): void {
+        if (!isset($this->sheet_names[$sheet_id])) {
+            throw new Exception("Invalid sheet number selection");
         }
         $this->selected_sheet = $sheet_id;
     }
@@ -79,47 +79,50 @@ class ExcelWriter extends ExcelWriterBackend {
      */
 
     public function write(): void {
-        if ( $this->generate_verbose_feedback ) {
-            $this->start_time = microtime( true );
+        if ($this->generate_verbose_feedback) {
+            $this->start_time = microtime(true);
         }
-        if ( !isset ( $this->file_path ) ) {
+        if (!isset($this->file_path)) {
             echo "No file name and path set";
             die;
         }
 
-        if ( count( $this->sheet_names ) == 0 ) {
-            throw new Exception( 'You must add at least one sheet to your spreadsheet.' );
+        if (count($this->sheet_names) == 0) {
+            throw new Exception('You must add at least one sheet to your spreadsheet.');
         }
 
-        if ( substr( $this->file_path, -5 ) !== '.xlsx' ) {
+        if (substr($this->file_path, -5) !== '.xlsx') {
             // Add file extension if not present.
             $this->file_path .= '.xlsx';
         }
-        
+
         $this->file_name = array_values(
             array_slice(
-                explode( '/', $this->file_path ), -1, 1, true
+                explode('/', $this->file_path),
+                -1,
+                1,
+                true
             )
         )[0];
-        $this->file_name = str_replace( '.xlsx', '', $this->file_name );
+        $this->file_name = str_replace('.xlsx', '', $this->file_name);
 
-        $this->create_path = str_replace( $this->file_name . '.xlsx', '', $this->file_path );
+        $this->create_path = str_replace($this->file_name . '.xlsx', '', $this->file_path);
 
-        if ( !isset ( $this->data ) || !is_array( $this->data ) ) {
+        if (!isset($this->data) || !is_array($this->data)) {
             echo "Invalid data";
             die;
         }
 
         $required_files = self::REQUIRED_FILES;
 
-        foreach ( $this->sheet_names as $index => $name ) {
-            $required_files['xl']['worksheets']["sheet{$index}.xml"] = $this->worksheet_xml_creator( $index );
+        foreach ($this->sheet_names as $index => $name) {
+            $required_files['xl']['worksheets']["sheet{$index}.xml"] = $this->worksheet_xml_creator($index);
         }
         $required_files['xl']['_rels']['workbook.xml.rels'] = $this->build_rels();
         $required_files['xl']['workbook.xml'] = $this->build_workbook();
         $required_files['[Content_Types].xml'] = $this->build_content_types();
 
-        $this->generate_files( $required_files );
+        $this->generate_files($required_files);
     }
 
 
@@ -136,17 +139,17 @@ class ExcelWriter extends ExcelWriterBackend {
         ob_start();
         $this->write();
         ob_end_clean();
-        header( 'Content-Description: File Transfer' );
-        header( 'Content-Type: application/octet-stream'  );
-        header( 'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'  );
-        header( "Content-disposition: attachment; filename=\"" . basename( $this->file_path ) . "\"" );
-        header( 'Content-Transfer-Encoding: binary' );
-        header( 'Expires: 0' );
-        header( 'Cache-Control: must-revalidate' );
-        header( 'Pragma: public' );
-        readfile( $this->file_path );
-        unlink( $this->file_path );
-        if ( !$this->generate_basic_feedback && !$this->generate_verbose_feedback ) {
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-disposition: attachment; filename=\"" . basename($this->file_path) . "\"");
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        readfile($this->file_path);
+        unlink($this->file_path);
+        if (!$this->generate_basic_feedback && !$this->generate_verbose_feedback) {
             die;
         }
     }
@@ -161,7 +164,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    public function set_file_path( string $path ): void {
+    public function set_file_path(string $path): void {
         $this->file_path = $path;
     }
 
@@ -175,7 +178,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    public function set_data( array $data ): void {
+    public function set_data(array $data): void {
         $this->data[$this->selected_sheet] = $data;
     }
 
@@ -189,7 +192,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    public function append_to_data( array $data ): void {
+    public function append_to_data(array $data): void {
         $this->data[$this->selected_sheet][] = $data;
     }
 
@@ -203,7 +206,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    public function set_header_row( bool $is_header ): void {
+    public function set_header_row(bool $is_header): void {
         $this->header_row = $is_header;
     }
 
@@ -217,7 +220,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    public function set_basic_feedback( bool $set_feedback ): void {
+    public function set_basic_feedback(bool $set_feedback): void {
         $this->generate_basic_feedback = $set_feedback;
     }
 
@@ -233,7 +236,7 @@ class ExcelWriter extends ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    public function set_verbose_feedback( bool $set_feedback ): void {
+    public function set_verbose_feedback(bool $set_feedback): void {
         $this->generate_verbose_feedback = $set_feedback;
     }
 
@@ -269,14 +272,13 @@ class ExcelWriter extends ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    public function get_verbose_feedback( ?string $param = null ): string|array {
-        if ( !is_null ( $param ) ) {
-            if ( !isset( $this->verbose_feedback[$param] ) ) {
-                throw new Exception( "The parameter is not defined." );
+    public function get_verbose_feedback(?string $param = null): string|array {
+        if (!is_null($param)) {
+            if (!isset($this->verbose_feedback[$param])) {
+                throw new Exception("The parameter is not defined.");
             }
             return $this->verbose_feedback[$param];
         }
         return $this->verbose_feedback;
     }
-
 }

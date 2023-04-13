@@ -13,4 +13,5 @@ use LBF\Errors\Meta\ExceptionMeta;
  * @since   LBF 0.3.3-beta
  */
 
-class LogPathNotSet extends ExceptionMeta {}
+class LogPathNotSet extends ExceptionMeta {
+}

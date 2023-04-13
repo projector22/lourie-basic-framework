@@ -171,7 +171,7 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    public function __construct( string $id, bool $select_checkbox = true, bool $select_all_checkbox = true, bool $edit_link = true ) {
+    public function __construct(string $id, bool $select_checkbox = true, bool $select_all_checkbox = true, bool $edit_link = true) {
         $this->table_id            = $id;
         $this->select_checkbox     = $select_checkbox;
         $this->select_all_checkbox = $select_all_checkbox;
@@ -195,17 +195,17 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    public function table_start( array $headings = [], array $params = [] ): self {
-        if ( isset( $params['id'] ) ) {
-            throw new InvalidInput( "You cannot set an id for a Table" );
+    public function table_start(array $headings = [], array $params = []): self {
+        if (isset($params['id'])) {
+            throw new InvalidInput("You cannot set an id for a Table");
         }
         $params['id'] = $this->table_id . '_table';
 
         $class = 'standard_table';
-        if ( $this->full_width ) {
+        if ($this->full_width) {
             $class .= ' table_width--full';
         }
-        if ( isset( $params['class'] ) ) {
+        if (isset($params['class'])) {
             $params['class'] = "{$class} {$params['class']}";
         } else {
             $params['class'] = $class;
@@ -215,14 +215,14 @@ class Table {
 
         echo "<div class='table_container{$border}'>";
         $table = "<table";
-        foreach ( $params as $key => $value ) {
+        foreach ($params as $key => $value) {
             $table .= " {$key}='{$value}'";
         }
         $table .= ">";
         echo $table;
-        if ( count( $headings ) > 0 ) {
+        if (count($headings) > 0) {
             echo "<thead>";
-            $this->headings( $headings, ['alignment' => $this->heading_alignment] );
+            $this->headings($headings, ['alignment' => $this->heading_alignment]);
             echo "</thead>";
         }
         echo "<tbody id='{$this->table_id}_unfiltered_body'>";
@@ -243,16 +243,18 @@ class Table {
         echo "</table>";
         echo "</div>";
         JS::insert_shift_multiselect();
-        if ( $this->select_all_checkbox ) {
-            JS::script_module( "
-                import { select_all_checkboxes } from './vendor/projector22/lourie-basic-framework/src/js/table_filters.js';
-                document.getElementById('{$this->table_id}_select_all').onchange = function () {
-                    select_all_checkboxes(this, `{$this->table_id}_unfiltered_body`);
-                };
-                document.getElementById('{$this->table_id}_select_all_filtered').onchange = function () {
-                    select_all_checkboxes(this, `{$this->table_id}_filtered_body`);
-                };"
-            );
+        if ($this->select_all_checkbox) {
+            HTML::inject_js(<<<JS
+                import { select_all_checkboxes } from 'lrs-table-filters'
+            JS);
+            HTML::inject_js(<<<JS
+            document.getElementById('{$this->table_id}_select_all').onchange = function () {
+                select_all_checkboxes(this, `{$this->table_id}_unfiltered_body`);
+            };
+            document.getElementById('{$this->table_id}_select_all_filtered').onchange = function () {
+                select_all_checkboxes(this, `{$this->table_id}_filtered_body`);
+            };            
+            JS);
         }
     }
 
@@ -271,35 +273,35 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    public function row_start( array $params = [] ): self {
-        if ( isset( $params['id'] ) ) {
-            throw new InvalidInput( "You cannot set an id for a Table Row" );
+    public function row_start(array $params = []): self {
+        if (isset($params['id'])) {
+            throw new InvalidInput("You cannot set an id for a Table Row");
         }
 
         $class = 'standard_row';
 
-        if ( !isset( $params['heading'] ) || $params['heading'] == false ) {
+        if (!isset($params['heading']) || $params['heading'] == false) {
             $params['id'] = $this->table_id . '--row_' . $this->row_index;
             $class .= ' body_row';
         }
 
-        if ( $this->horizontal_lines ) {
+        if ($this->horizontal_lines) {
             $class .= ' table_horizontal_border';
         }
 
-        if ( isset( $params['highlight'] ) && $params['highlight'] == true ) {
+        if (isset($params['highlight']) && $params['highlight'] == true) {
             $class .= ' highlight_empty';
         }
 
-        if ( isset( $params['class'] ) ) {
+        if (isset($params['class'])) {
             $params['class'] = "{$class} {$params['class']}";
         } else {
             $params['class'] = $class;
         }
 
         $row = "<tr";
-        foreach ( $params as $key => $value ) {
-            if ( in_array ( $key, self::SKIP_KEYS ) ) {
+        foreach ($params as $key => $value) {
+            if (in_array($key, self::SKIP_KEYS)) {
                 continue;
             }
             $row .= " {$key}='{$value}'";
@@ -307,9 +309,9 @@ class Table {
         $row .= ">";
         echo $row;
         $this->cell_index = 0;
-        if ( $this->select_checkbox && !isset( $params['heading'] ) ) {
-            $disabled = isset( $params['disable_check'] ) ? $params['disable_check'] : false;
-            $this->select_checkbox( false, $disabled );
+        if ($this->select_checkbox && !isset($params['heading'])) {
+            $disabled = isset($params['disable_check']) ? $params['disable_check'] : false;
+            $this->select_checkbox(false, $disabled);
         }
         return $this;
     }
@@ -325,8 +327,8 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    public function row_end( bool $heading_row = false ): void {
-        if ( !$heading_row ) {
+    public function row_end(bool $heading_row = false): void {
+        if (!$heading_row) {
             $this->row_index++;
         }
         echo "</tr>";
@@ -347,35 +349,35 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    private function headings( array $headings = [], array $params = [] ): void {
-        $this->row_start( [
+    private function headings(array $headings = [], array $params = []): void {
+        $this->row_start([
             'class'   => 'table_header',
             'heading' => true
-        ] );
-        if ( $this->select_checkbox ) {
-            if ( $this->select_all_checkbox ) {
-                $this->select_checkbox( true );
+        ]);
+        if ($this->select_checkbox) {
+            if ($this->select_all_checkbox) {
+                $this->select_checkbox(true);
             } else {
                 echo "<th></th>";
             }
         }
-        if ( $this->edit_link ) {
+        if ($this->edit_link) {
             echo "<th></th>";
         }
 
-        $params = $this->set_text_alignment( $params );
+        $params = $this->set_text_alignment($params);
 
-        if ( $this->vertical_lines ) {
-            if ( isset( $params['class'] ) ) {
+        if ($this->vertical_lines) {
+            if (isset($params['class'])) {
                 $params['class'] .= ' table_vertical_border';
             } else {
                 $params['class'] = 'table_vertical_border';
             }
         }
-        foreach ( $headings as $heading ) {
+        foreach ($headings as $heading) {
             $cell = "<th";
-            foreach ( $params as $key => $value ) {
-                if ( in_array ( $key, self::SKIP_KEYS ) ) {
+            foreach ($params as $key => $value) {
+                if (in_array($key, self::SKIP_KEYS)) {
                     continue;
                 }
                 $cell .= " {$key}='{$value}'";
@@ -383,7 +385,7 @@ class Table {
             $cell .= ">{$heading}</th>";
             echo $cell;
         }
-        $this->row_end( true );
+        $this->row_end(true);
     }
 
 
@@ -404,29 +406,29 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    public function cell( mixed $content, array $params = [] ): self {
-        if ( isset( $params['id'] ) ) {
-            throw new InvalidInput( "You cannot set an id for a Table Cell" );
+    public function cell(mixed $content, array $params = []): self {
+        if (isset($params['id'])) {
+            throw new InvalidInput("You cannot set an id for a Table Cell");
         }
-        if ( !isset ( $params['heading'] ) || $params['heading'] == false ) {
+        if (!isset($params['heading']) || $params['heading'] == false) {
             $params['id'] = $this->get_cell_id();
         }
-        $params = $this->set_vertical_lines( $params );
-        $params = $this->set_text_alignment( $params );
+        $params = $this->set_vertical_lines($params);
+        $params = $this->set_text_alignment($params);
 
-        $tdh = isset ( $params['heading'] ) && $params['heading'] == true ? 'th' : 'td';
+        $tdh = isset($params['heading']) && $params['heading'] == true ? 'th' : 'td';
 
         $cell = "<{$tdh}";
 
-        foreach ( $params as $key => $value ) {
-            if ( in_array ( $key, self::SKIP_KEYS ) ) {
+        foreach ($params as $key => $value) {
+            if (in_array($key, self::SKIP_KEYS)) {
                 continue;
             }
             $cell .= " {$key}='{$value}'";
         }
         $cell .= ">{$content}</{$tdh}>";
         echo $cell;
-        if ( !isset ( $params['heading'] ) || $params['heading'] == false ) {
+        if (!isset($params['heading']) || $params['heading'] == false) {
             $this->cell_index++;
         }
         return $this;
@@ -450,26 +452,26 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    public function cell_edit_link( string $href, array $params = [] ): self {
-        if ( isset( $params['id'] ) ) {
-            throw new InvalidInput( "You cannot set an id for a Table Cell" );
+    public function cell_edit_link(string $href, array $params = []): self {
+        if (isset($params['id'])) {
+            throw new InvalidInput("You cannot set an id for a Table Cell");
         }
         $params['id'] = $this->get_cell_id();
-        $params = $this->set_vertical_lines( $params );
-        $params = $this->set_text_alignment( $params );
+        $params = $this->set_vertical_lines($params);
+        $params = $this->set_text_alignment($params);
 
-        if ( isset( $params['class'] ) ) {
+        if (isset($params['class'])) {
             $params['class'] .= ' edit_link_width';
         }
 
-        $link = HTML::a( [
-            'href'    => $href, 
+        $link = HTML::a([
+            'href'    => $href,
             'text'    => 'Edit',
             'new_tab' => true,
             'echo'    => false,
-        ] );
+        ]);
         $cell = "<td";
-        foreach ( $params as $key => $value ) {
+        foreach ($params as $key => $value) {
             $cell .= " {$key}='{$value}'";
         }
         $cell .= ">{$link}</td>";
@@ -493,14 +495,14 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    public function hidden_data( mixed $value, array $params = [] ): self {
-        if ( isset( $params['id'] ) ) {
-            throw new InvalidInput( "You cannot set an id for a Table Cell" );
+    public function hidden_data(mixed $value, array $params = []): self {
+        if (isset($params['id'])) {
+            throw new InvalidInput("You cannot set an id for a Table Cell");
         }
         $params['id'] = $this->get_cell_id();
 
         $input = "<input type='hidden' value='{$value}'";
-        foreach ( $params as $key => $value ) {
+        foreach ($params as $key => $value) {
             $input .= " {$key}='{$value}'";
         }
         $input .= '>';
@@ -522,34 +524,34 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    private function select_checkbox( bool $select_all_checkbox = false, bool $disabled = false  ): void {
-        $hold = Form::temporary_change_echo( false );
-        if ( $select_all_checkbox ) {
-            $checkboxs = Form::checkbox( [
+    private function select_checkbox(bool $select_all_checkbox = false, bool $disabled = false): void {
+        $hold = Form::temporary_change_echo(false);
+        if ($select_all_checkbox) {
+            $checkboxs = Form::checkbox([
                 'id'        => "{$this->table_id}_select_all",
                 'class'     => 'selectable_checkbox',
                 'disabled'  => $disabled,
                 'container' => ['overwrite' => true],
-            ] );
-            $checkboxs .= Form::checkbox( [
+            ]);
+            $checkboxs .= Form::checkbox([
                 'id'        => "{$this->table_id}_select_all_filtered",
                 'class'     => 'selectable_checkbox hidden',
                 'disabled'  => $disabled,
                 'container' => ['overwrite' => true],
-            ] );
-            $this->cell( $checkboxs, [
+            ]);
+            $this->cell($checkboxs, [
                 'class'   => 'selectable_checkbox_width',
                 'heading' => true,
-            ] );
+            ]);
         } else {
-            $this->cell( Form::checkbox( [
+            $this->cell(Form::checkbox([
                 'id' => "{$this->table_id}_checkbox{$this->row_index}",
                 'class' => 'selectable_checkbox',
                 'disabled' => $disabled,
                 'container' => ['overwrite' => true],
-            ] ), ['class' => 'selectable_checkbox_width'] );
+            ]), ['class' => 'selectable_checkbox_width']);
         }
-        Form::restore_origonal_echo( $hold );
+        Form::restore_origonal_echo($hold);
     }
 
 
@@ -578,9 +580,9 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    private function set_vertical_lines( array $params ): array {
-        if ( $this->vertical_lines ) {
-            if ( isset( $params['class'] ) ) {
+    private function set_vertical_lines(array $params): array {
+        if ($this->vertical_lines) {
+            if (isset($params['class'])) {
                 $params['class'] .= ' table_vertical_border';
             } else {
                 $params['class'] = 'table_vertical_border';
@@ -601,11 +603,11 @@ class Table {
      * @since   LRS 3.15.5
      */
 
-    private function set_text_alignment( array $params ): array {
-        if ( !isset( $params['alignment'] ) ) {
+    private function set_text_alignment(array $params): array {
+        if (!isset($params['alignment'])) {
             return $params;
         }
-        switch ( $params['alignment'] ) {
+        switch ($params['alignment']) {
             case 'L':
                 $align = 'text_align_left';
                 break;
@@ -619,7 +621,7 @@ class Table {
                 return $params;
         }
 
-        if ( isset( $params['class'] ) ) {
+        if (isset($params['class'])) {
             $params['class'] .= " {$align}";
         } else {
             $params['class'] = $align;
@@ -655,7 +657,6 @@ class Table {
     public function get_cell_index(): int {
         return $this->cell_index;
     }
-
 }
 
 

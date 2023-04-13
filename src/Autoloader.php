@@ -62,7 +62,26 @@ class Autoloader {
 
         private readonly bool $debug_mode = false,
 
-    ) {}
+    ) {
+    }
+
+
+    /**
+     * Init the class a static with or without assigning it to a variable.
+     * 
+     * @param   string  $path       The base path where the classes are saved. The full path to the called class
+     *                              will be `$this->src_path . namespace . class.php`.
+     * @param   bool    $debug_mode Whether to perform debug operations to the autoload process. Default: false
+     * 
+     * @return  Autoloader
+     * 
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function path(string $path, bool $debug = false): Autoloader {
+        return new Autoloader($path, $debug);
+    }
 
 
     /**
@@ -75,7 +94,7 @@ class Autoloader {
      */
 
     public function load(): bool {
-        return spl_autoload_register( [$this, 'load_class'] );
+        return spl_autoload_register([$this, 'load_class']);
     }
 
 
@@ -89,7 +108,7 @@ class Autoloader {
      */
 
     public function unload(): bool {
-        return spl_autoload_unregister( [$this, 'load_class'] );;
+        return spl_autoload_unregister([$this, 'load_class']);;
     }
 
 
@@ -101,7 +120,7 @@ class Autoloader {
      * @access  public
      * @since   LBF 0.1.7-beta
      */
-    public function change_path( string $src_path ): void {
+    public function change_path(string $src_path): void {
         $this->src_path = $src_path;
     }
 
@@ -118,28 +137,28 @@ class Autoloader {
      * @since   LBF 0.1.7-beta  Converted to a class method.
      */
 
-    private function load_class( string $class ): bool {
-        $file = str_replace( '\\', '/', $class ) . '.php';
+    private function load_class(string $class): bool {
+        $file = str_replace('\\', '/', $class) . '.php';
 
-        $file = implode( '/', array_map( function ( string $item ): string {
-            if ( str_contains( $item, '.php' ) ) {
+        $file = implode('/', array_map(function (string $item): string {
+            if (str_contains($item, '.php')) {
                 return $item;
             }
-            return strtolower( $item );
-        }, explode( '/', $file ) ) );
+            return strtolower($item);
+        }, explode('/', $file)));
 
-        $path = realpath( $this->src_path . $file );
-        if ( !file_exists ( $path ) ) {
-            if ( $this->debug_mode ) {
-                $this->draw_out_feedback_table( $class, $file, $path );
+        $path = realpath($this->src_path . $file);
+        if (!file_exists($path)) {
+            if ($this->debug_mode) {
+                $this->draw_out_feedback_table($class, $file, $path);
             } else {
-                throw new FileNotFound( "Called class {$class} not found.", 404 );
+                throw new FileNotFound("Called class {$class} not found.", 404);
             }
             return false;
         }
         require $path;
 
-        if ( method_exists( $class, '__constructStatic' ) ) {
+        if (method_exists($class, '__constructStatic')) {
             $class::__constructStatic();
         }
 
@@ -158,7 +177,7 @@ class Autoloader {
      * @since   LBF 0.1.7-beta
      */
 
-    private function draw_out_feedback_table( string $class, string $file, string $full_path ): void {
+    private function draw_out_feedback_table(string $class, string $file, string $full_path): void {
         $data = [
             'Called Class'        => $class,
             'Namespace File Name' => $file,
@@ -167,7 +186,7 @@ class Autoloader {
         ];
 
         echo "<table>";
-        foreach ( $data as $heading => $feedback ) {
+        foreach ($data as $heading => $feedback) {
             echo "<tr>";
             echo "<th>{$heading}</th>";
             echo "<td>{$feedback}</td>";
@@ -187,10 +206,9 @@ class Autoloader {
 
     public static function load_debugger(): void {
         ob_start();
-        if ( is_callable( ['\Debugger\Debug', '__constructStatic'] ) ) {
+        if (is_callable(['\Debugger\Debug', '__constructStatic'])) {
             \Debugger\Debug::__constructStatic();
         }
         ob_end_clean();
     }
-
 }

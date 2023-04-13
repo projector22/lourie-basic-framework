@@ -6,17 +6,17 @@
  * @since   LBF 0.1.1-beta
  */
 
- @import url('./lib/sizes.css');
- @import url('./lib/basic-tools.css');
- @import url('./lib/loaders.css');
- @import url('./lib/modal.css');
- @import url('./lib/buttons.css');
- @import url('./lib/template.css');
- @import url('./lib/form-elements.css');
- @import url('./lib/html-elements.css');
- @import url('./lib/table.css');
- @import url('./lib/input-validation.css');
- 
- @import url("./fonts/roboto.css");
- @import url("./fonts/NunitoEB.css");
- @import url("./fonts/UbuntuMono.css");
+@import url('./lib/sizes.css');
+@import url('./lib/basic-tools.css');
+@import url('./lib/loaders.css');
+@import url('./lib/modal.css');
+@import url('./lib/buttons.css');
+@import url('./lib/template.css');
+@import url('./lib/form-elements.css');
+@import url('./lib/html-elements.css');
+@import url('./lib/table.css');
+@import url('./lib/input-validation.css');
+
+@import url("./fonts/roboto.css");
+@import url("./fonts/NunitoEB.css");
+@import url("./fonts/UbuntuMono.css");

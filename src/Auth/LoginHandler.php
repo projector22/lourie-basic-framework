@@ -148,11 +148,11 @@ class LoginHandler {
 
         private readonly string $cookie_hash = '',
     ) {
-        $this->user_is_ldap = ( isset( $this->account->ldap_user ) && $this->account->ldap_user == 1 );
-        if ( isset( $this->account->data->ldap_password_fragment ) ) {
+        $this->user_is_ldap = (isset($this->account->ldap_user) && $this->account->ldap_user == 1);
+        if (isset($this->account->data->ldap_password_fragment)) {
             $this->password_fragment = $this->account->data->ldap_password_fragment;
         } else {
-            $this->password_fragment = $this->password_substr( $this->account->data->password ?? '' );
+            $this->password_fragment = $this->password_substr($this->account->data->password ?? '');
         }
     }
 
@@ -167,30 +167,29 @@ class LoginHandler {
      */
 
     public function perform_login(): bool {
-        if ( $this->account->number_of_records == 0 ) {
+        if ($this->account->number_of_records == 0) {
             $verified = false;
             $this->invalid_reason = "Username not found";
         } else {
-            if ( $this->use_ldap && $this->user_is_ldap ) {
-                $verified = $this->ldap_login( $this->password );
+            if ($this->use_ldap && $this->user_is_ldap) {
+                $verified = $this->ldap_login($this->password);
             } else {
-                $verified = $this->standard_login( $this->password );
+                $verified = $this->standard_login($this->password);
             }
-            if ( !$verified ) {
+            if (!$verified) {
                 $this->invalid_reason = "Invalid password";
             }
         }
 
         $this->status_code = $verified ? 200 : 401;
 
-        if ( $this->check_account_disabled ) {
+        if ($this->check_account_disabled) {
             /**
              * Check if Account is disabled
              * 
              * $this->set_status_code( 403 );
              * $this->invalid_reason = "Account Disabled";
              */
-
         }
         return $verified;
     }
@@ -219,7 +218,7 @@ class LoginHandler {
      * @since   LBF 0.1.6-beta
      */
 
-    public function set_status_code( int $code ): void {
+    public function set_status_code(int $code): void {
         $this->status_code = $code;
     }
 
@@ -235,7 +234,7 @@ class LoginHandler {
      */
 
     public function generate_session_id(): string {
-        return $this->account->data->account_name . '|' . hash( 'sha256', $this->account->data->account_name . $this->password_fragment . $this->cookie_hash );
+        return $this->account->data->account_name . '|' . hash('sha256', $this->account->data->account_name . $this->password_fragment . $this->cookie_hash);
     }
 
 
@@ -251,10 +250,10 @@ class LoginHandler {
      * @since   LBF 0.1.6-beta
      */
 
-    public function set_ldap( bool $set_ldap, ?LDAPHandler $ldap = null ): bool {
+    public function set_ldap(bool $set_ldap, ?LDAPHandler $ldap = null): bool {
         $this->use_ldap = $set_ldap;
-        if ( $set_ldap ) {
-            if ( !is_null( $ldap ) ) {
+        if ($set_ldap) {
+            if (!is_null($ldap)) {
                 $this->ldap = $ldap;
                 return true;
             } else {
@@ -277,8 +276,8 @@ class LoginHandler {
      * @since   LBF 0.1.6-beta
      */
 
-    public function password_substr( string $password ): string {
-        return substr( $password, 8, 4 );;
+    public function password_substr(string $password): string {
+        return substr($password, 8, 4);;
     }
 
 
@@ -303,16 +302,16 @@ class LoginHandler {
      * @since   0.1.6-beta
      */
 
-    public function check_user_is_logged_in( string $cookie ): bool {
-        $username = explode( '|', $cookie )[0];
-        $this->account->select_one( ['account_name' => $username] );
+    public function check_user_is_logged_in(string $cookie): bool {
+        $username = explode('|', $cookie)[0];
+        $this->account->select_one(['account_name' => $username]);
         $user = $this->account->data;
-        if ( $this->use_ldap && $this->user_is_ldap ) {
+        if ($this->use_ldap && $this->user_is_ldap) {
             // LDAP
             $this->password_fragment = $user->ldap_password_fragment;
         } else {
             // Not LDAP
-            $this->password_fragment = $this->password_substr( $user->password );
+            $this->password_fragment = $this->password_substr($user->password);
         }
         $session_test = self::generate_session_id();
         return $cookie == $session_test;
@@ -330,8 +329,8 @@ class LoginHandler {
      * @since   LBF 0.1.6-beta
      */
 
-    private function ldap_login( string $password ): bool {
-        if ( $this->ldap->ldap_login() && $password !== '' ) {
+    private function ldap_login(string $password): bool {
+        if ($this->ldap->ldap_login() && $password !== '') {
             return true;
         }
         return false;
@@ -349,8 +348,7 @@ class LoginHandler {
      * @since   LBF 0.1.6-beta
      */
 
-    private function standard_login( string $password ): bool {
-        return password_verify( $password, $this->account->data->password );
+    private function standard_login(string $password): bool {
+        return password_verify($password, $this->account->data->password);
     }
-
 }

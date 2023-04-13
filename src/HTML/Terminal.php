@@ -78,20 +78,20 @@ class Terminal {
      * @since   LRS 3.27.0
      */
 
-    public function draw( bool $use_default_heading = true, bool $open = true ): void {
+    public function draw(bool $use_default_heading = true, bool $open = true): void {
         $class = 'feedback_console';
 
-        if ( $open ) {
+        if ($open) {
             $class .= ' feedback_console_height';
         }
 
-        HTML::div( [
+        HTML::div([
             'class'                => $class,
             'id'                   => $this->console_id,
-            'data-default-heading' => htmlspecialchars ( self::DEFAULT_HEADING ),
-        ] );
+            'data-default-heading' => htmlspecialchars(self::DEFAULT_HEADING),
+        ]);
 
-        if ( $use_default_heading ) {
+        if ($use_default_heading) {
             echo self::DEFAULT_HEADING;
         }
 
@@ -124,12 +124,11 @@ class Terminal {
      * @since   LRS 3.27.0
      */
 
-    public function set_default_content( string $content, bool $append = false ): void {
-        if ( $append ) {
+    public function set_default_content(string $content, bool $append = false): void {
+        if ($append) {
             $this->content .= $content;
         } else {
             $this->content = $content;
         }
     }
-
 }

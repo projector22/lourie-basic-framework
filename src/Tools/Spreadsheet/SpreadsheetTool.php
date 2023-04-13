@@ -49,7 +49,7 @@ class SpreadsheetTool extends SpreadsheetEngine {
      * @access  public
      * @since   LRS 3.19.0
      */
-    
+
     public string $header;
 
 
@@ -65,7 +65,7 @@ class SpreadsheetTool extends SpreadsheetEngine {
      * @since   LRS 3.19.0
      */
 
-    public function __construct( 
+    public function __construct(
         /**
          * @access  protected
          * @since   LRS 3.19.0
@@ -97,19 +97,19 @@ class SpreadsheetTool extends SpreadsheetEngine {
      * @since   LRS 3.19.0
      */
 
-    public function construct_header( array $data ): void {
+    public function construct_header(array $data): void {
         $this->include_header = true;
         $this->header_data = '';
-        foreach ( $data as $entry ) {
-            $e_count = count( $entry );
-            if ( $e_count > $this->header_rows ) {
+        foreach ($data as $entry) {
+            $e_count = count($entry);
+            if ($e_count > $this->header_rows) {
                 $this->header_rows = $e_count;
             }
         }
 
-        for ( $this->column = 1; $this->column <= $this->max_columns; $this->column++ ) {
+        for ($this->column = 1; $this->column <= $this->max_columns; $this->column++) {
             $this->p = 1;
-            if ( !isset( $data[$this->column] ) ) {
+            if (!isset($data[$this->column])) {
                 $this->header_data .= "<div id='{$this->table_id}__header__row_{$this->row}__column_{$this->column}'
                                             class='{$this->table_id}__spreadsheet_header_cell'
                                             data-row='{$this->row}'
@@ -121,13 +121,13 @@ class SpreadsheetTool extends SpreadsheetEngine {
                 continue;
             }
             $cell = $data[$this->column];
-            foreach ( $cell as $this->row => $value ) {
+            foreach ($cell as $this->row => $value) {
                 $this->header_data .= "<div id='{$this->table_id}__header__row_{$this->row}__column_{$this->column}'
                                             class='{$this->table_id}__spreadsheet_header_cell'
                                             data-row='{$this->row}'
                                             data-column='{$this->column}'
                                             'data-selected='0'
-                                            style='{$this->set_header_grid_areas( $cell )}'
+                                            style='{$this->set_header_grid_areas($cell)}'
                                             name='{$this->table_id}__spreadsheet_header_cell'
                                        ><b>{$value}</b></div>";
             }
@@ -144,8 +144,8 @@ class SpreadsheetTool extends SpreadsheetEngine {
 
     public function construct_blank_sheet(): void {
         $this->start_spreadsheet();
-        for ( $this->row = 1; $this->row <= $this->max_rows; $this->row++ ) {
-            for ( $this->column = 1; $this->column <= $this->max_columns; $this->column++ ) {
+        for ($this->row = 1; $this->row <= $this->max_rows; $this->row++) {
+            for ($this->column = 1; $this->column <= $this->max_columns; $this->column++) {
                 echo "<input type='text'
                              class='{$this->table_id}__spreadsheet_cell'
                              data-row='{$this->row}'
@@ -170,16 +170,16 @@ class SpreadsheetTool extends SpreadsheetEngine {
      */
 
     public function start_spreadsheet(): void {
-        $this->max_columns = is_null( $this->max_columns ) ? self::MAX_DEFAULT_COLUMNS : $this->max_columns;
-        $this->max_rows    = is_null( $this->max_rows )    ? self::MAX_DEFAULT_ROWS    : $this->max_rows;
+        $this->max_columns = is_null($this->max_columns) ? self::MAX_DEFAULT_COLUMNS : $this->max_columns;
+        $this->max_rows    = is_null($this->max_rows)    ? self::MAX_DEFAULT_ROWS    : $this->max_rows;
         echo "<style>{$this->spreadsheet_styles()}</style>";
         // echo "<canvas id='xyzr' class='{$this->table_id}__spreadsheet_canvas'></canvas>";
         echo "<div id='{$this->table_id}__canvas' class='{$this->table_id}__spreadsheet_container' id='{$this->table_id}' name='spreadsheet'>";
-        if ( $this->include_header ) {
+        if ($this->include_header) {
             echo $this->header_data;
         }
         $this->row = 1;
-        if ( $this->include_header ) {
+        if ($this->include_header) {
             $this->row += $this->header_rows;
         }
     }
@@ -213,18 +213,18 @@ const spreadsheet = new SpreadsheetTool('{$this->table_id}');
      * @since   LRS 3.19.0
      */
 
-    public function construct_row( array $data = [] ): void {
+    public function construct_row(array $data = []): void {
         $this->column = 1;
-        foreach ( $data as $value ) {
-            switch ( $value['type'] ?? 'text' ) {
+        foreach ($data as $value) {
+            switch ($value['type'] ?? 'text') {
                 case 'checkbox':
-                    
+
                     break;
                 case 'select':
-                    echo $this->select_cell( $value );
+                    echo $this->select_cell($value);
                     break;
                 default:
-                    echo $this->text_cell( $data, $value );
+                    echo $this->text_cell($data, $value);
             }
             $this->column++;
         }
@@ -241,7 +241,7 @@ const spreadsheet = new SpreadsheetTool('{$this->table_id}');
      * @since   LRS 3.19.0
      */
 
-    public function set_max_rows( int $rows): void {
+    public function set_max_rows(int $rows): void {
         $this->max_rows = $rows;
     }
 
@@ -255,7 +255,7 @@ const spreadsheet = new SpreadsheetTool('{$this->table_id}');
      * @since   LRS 3.19.0
      */
 
-    public function set_max_columns( int $columns ): void {
+    public function set_max_columns(int $columns): void {
         $this->max_columns = $columns;
     }
 
@@ -275,13 +275,13 @@ const spreadsheet = new SpreadsheetTool('{$this->table_id}');
      * @since   LRS 3.19.0
      */
 
-    public function determine_max_columns ( array $rows ): void {
-        if ( is_null( $this->max_columns ) ) {
+    public function determine_max_columns(array $rows): void {
+        if (is_null($this->max_columns)) {
             $this->max_columns = 1;
         }
-        foreach ( $rows as $columns ) {
-            if ( count( $columns ) > $this->max_columns ) {
-                $this->set_max_columns( count( $columns ) );
+        foreach ($rows as $columns) {
+            if (count($columns) > $this->max_columns) {
+                $this->set_max_columns(count($columns));
             }
         }
     }
@@ -304,8 +304,8 @@ const spreadsheet = new SpreadsheetTool('{$this->table_id}');
      * @since   LRS 3.19.0
      */
 
-    public function set_default_width( string|int $width ): void {
-        if ( is_numeric( $width ) ) {
+    public function set_default_width(string|int $width): void {
+        if (is_numeric($width)) {
             $width .= $this->default_unit;
         }
         $this->default_column_width = $width;
@@ -325,9 +325,9 @@ const spreadsheet = new SpreadsheetTool('{$this->table_id}');
      * @since   LRS 3.19.0
      */
 
-    public function set_column_width_overwrite( array $entries ): void {
-        foreach ( $entries as $index => $value ) {
-            if ( is_numeric( $value ) ) {
+    public function set_column_width_overwrite(array $entries): void {
+        foreach ($entries as $index => $value) {
+            if (is_numeric($value)) {
                 $value .= $this->default_unit;
             }
             $this->column_width_overwrite[$index] = $value;
@@ -344,10 +344,10 @@ const spreadsheet = new SpreadsheetTool('{$this->table_id}');
      * @since   LRS 3.19.0
      */
 
-    public function set_default_measurement_unit( string $unit ): void {
+    public function set_default_measurement_unit(string $unit): void {
         $unit_types = ['cm', 'mm', 'in', 'px', 'pt', 'pc', 'em', 'ex', 'ch', 'rem', 'vw', 'vh', 'vmin', 'vmax', '%'];
-        if ( !in_array( $unit, $unit_types ) ) {
-            throw new Exception( "Invalid unit {$unit}. You must choose one of the following: " . implode( '; ', $unit_types ) );
+        if (!in_array($unit, $unit_types)) {
+            throw new Exception("Invalid unit {$unit}. You must choose one of the following: " . implode('; ', $unit_types));
         }
         $this->default_unit = $unit;
     }
@@ -393,5 +393,4 @@ const spreadsheet = new SpreadsheetTool('{$this->table_id}');
     public function get_current_row(): int {
         return $this->row;
     }
-
 }

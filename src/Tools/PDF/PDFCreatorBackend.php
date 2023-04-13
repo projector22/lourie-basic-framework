@@ -4,7 +4,7 @@ namespace LBF\Tools\PDF;
 
 use TCPDF;
 use Exception;
-use App\Templates\PDF\CustomHeaderFooter;
+use PDF\Templates\CustomHeaderFooter;
 
 /**
  * Class to interface with TCPDF and to simplify the generation of PDFs.
@@ -120,7 +120,7 @@ class PDFCreatorBackend {
 
     protected string $page_size = 'A4';
 
-    
+
     /**
      * Set page orientation to portrait.
      * 
@@ -129,7 +129,7 @@ class PDFCreatorBackend {
      * @access  public
      * @since   LRS 3.20.0
      */
-    
+
     const ORIENTATION_PORTRAIT = 'P';
 
 
@@ -141,7 +141,7 @@ class PDFCreatorBackend {
      * @access  public
      * @since   LRS 3.20.0
      */
-    
+
     const ORIENTATION_LANDSCAPE = 'L';
 
     /**
@@ -254,37 +254,37 @@ class PDFCreatorBackend {
     protected string $save_path;
 
     /**
-	 * ID of the custom header
+     * ID of the custom header
      * 
      * @var integer|null	$set_header_type	Default: null
-	 * 
+     * 
      * @access  protected
-	 * @since   LRS 3.6.0
-	 */
+     * @since   LRS 3.6.0
+     */
 
-	protected ?int $set_header_type = 1;
+    protected ?int $set_header_type = 1;
 
     /**
-	 * ID of the custom footer
+     * ID of the custom footer
      * 
      * @var string|null	$set_footer_type	Default: null
-	 * 
+     * 
      * @access  protected
-	 * @since   LRS 3.6.0
-	 */
+     * @since   LRS 3.6.0
+     */
 
     protected ?string $set_footer_type = null;
 
     /**
-	 * The date on the report
+     * The date on the report
      * 
      * @var string	$set_date	Default: date( 'Y-m-d' )
-	 * 
+     * 
      * @access  protected
-	 * @since   LRS 3.6.0
-	 */
+     * @since   LRS 3.6.0
+     */
 
-	protected string $set_date;
+    protected string $set_date;
 
     /**
      * Custom header text to apply
@@ -339,7 +339,7 @@ class PDFCreatorBackend {
      */
 
     public function __construct() {
-        throw new Exception( "You may not invoke this class directly. It is extented to LBF\Tools\PDF\PDFCreator" );
+        throw new Exception("You may not invoke this class directly. It is extented to LBF\Tools\PDF\PDFCreator");
     }
 
 
@@ -351,12 +351,12 @@ class PDFCreatorBackend {
      */
 
     protected function construct_pdf(): void {
-        if ( $this->use_custom_header_footer ) {
-            $this->pdf = new CustomHeaderFooter( 
-                orientation: $this->orientation, 
-                unit: PDF_UNIT, 
-                format: $this->page_size, 
-                unicode: true, 
+        if ($this->use_custom_header_footer) {
+            $this->pdf = new CustomHeaderFooter(
+                orientation: $this->orientation,
+                unit: PDF_UNIT,
+                format: $this->page_size,
+                unicode: true,
                 encoding: 'UTF-8'
             );
             $this->pdf->set_header_type = $this->set_header_type;
@@ -366,79 +366,79 @@ class PDFCreatorBackend {
             $this->pdf->set_date = $this->set_date;
         } else {
             // create new PDF document
-            $this->pdf = new TCPDF( 
-                orientation: $this->orientation, 
-                unit: PDF_UNIT, 
-                format: $this->page_size, 
-                unicode: true, 
+            $this->pdf = new TCPDF(
+                orientation: $this->orientation,
+                unit: PDF_UNIT,
+                format: $this->page_size,
+                unicode: true,
                 encoding: 'UTF-8'
             );
         }
 
         // set document information
-        $this->pdf->SetCreator( PDF_CREATOR );
-        $this->pdf->SetAuthor( $this->author ?? '' );
-        $this->pdf->SetTitle( $this->title ?? '' );
-        $this->pdf->SetSubject( $this->subject ?? '' );
-        $this->pdf->SetKeywords( $this->keywords ?? '' );
+        $this->pdf->SetCreator(PDF_CREATOR);
+        $this->pdf->SetAuthor($this->author ?? '');
+        $this->pdf->SetTitle($this->title ?? '');
+        $this->pdf->SetSubject($this->subject ?? '');
+        $this->pdf->SetKeywords($this->keywords ?? '');
 
         // Header
-        if ( !$this->use_custom_header_footer || is_null ( $this->set_header_type  ) ) {
-            if ( $this->include_header ) {
+        if (!$this->use_custom_header_footer || is_null($this->set_header_type)) {
+            if ($this->include_header) {
                 $logo = '';
-                if ( is_file ( site_logo() ) ) {
-                    $logo = HOME_PATH . site_logo() ;
+                if (is_file(site_logo())) {
+                    $logo = HOME_PATH . site_logo();
                 }
                 // Set PDF Data, Font & Margin header
-                $this->pdf->SetHeaderData( $logo, 10, SCHOOL_NAME, $this->title, [0,0,0], [0,64,128] );
-                $this->pdf->setHeaderFont( [PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN] );
-                $this->pdf->SetHeaderMargin( PDF_MARGIN_HEADER );
+                $this->pdf->SetHeaderData($logo, 10, SCHOOL_NAME, $this->title, [0, 0, 0], [0, 64, 128]);
+                $this->pdf->setHeaderFont([PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN]);
+                $this->pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
             } else {
                 // Disable header
-                $this->pdf->setPrintHeader( false );
+                $this->pdf->setPrintHeader(false);
             }
         }
 
         // Footer
-        if ( !$this->use_custom_header_footer || is_null ( $this->set_footer_type  ) || $this->set_footer_type = 'footer_with_date' ) {
-            if ( $this->include_footer ) {
+        if (!$this->use_custom_header_footer || is_null($this->set_footer_type) || $this->set_footer_type = 'footer_with_date') {
+            if ($this->include_footer) {
                 // Set PDF Data, Font & Margin footer
-                $this->pdf->setFooterData( [0,64,0], [0,64,128] );
-                $this->pdf->setFooterFont( [PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA] );
-                $this->pdf->SetFooterMargin( PDF_MARGIN_FOOTER );
+                $this->pdf->setFooterData([0, 64, 0], [0, 64, 128]);
+                $this->pdf->setFooterFont([PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA]);
+                $this->pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
             } else {
                 // Disable footer
-                $this->pdf->setPrintFooter( false );
+                $this->pdf->setPrintFooter(false);
             }
         }
 
         // set default monospaced font
-        $this->pdf->SetDefaultMonospacedFont( PDF_FONT_MONOSPACED );
+        $this->pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
         // set margins
-        if ( $this->set_header_type == 2 || $this->set_header_type == 3 || $this->set_header_type == 4  ) {
-            $this->pdf->SetHeaderMargin( PDF_MARGIN_HEADER );
-            $this->pdf->SetMargins( PDF_MARGIN_LEFT + 10, 60, PDF_MARGIN_RIGHT + 10 ); // Left, Top, Right
-        } else if ( $this->set_header_type == 1 ) {
-            $this->pdf->SetMargins( PDF_MARGIN_LEFT + 10, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT + 10 );
-        } else if ( $this->set_header_type == 5 ) {
-            $this->pdf->SetMargins( 0, 45, 0 );
+        if ($this->set_header_type == 2 || $this->set_header_type == 3 || $this->set_header_type == 4) {
+            $this->pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+            $this->pdf->SetMargins(PDF_MARGIN_LEFT + 10, 60, PDF_MARGIN_RIGHT + 10); // Left, Top, Right
+        } else if ($this->set_header_type == 1) {
+            $this->pdf->SetMargins(PDF_MARGIN_LEFT + 10, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT + 10);
+        } else if ($this->set_header_type == 5) {
+            $this->pdf->SetMargins(0, 45, 0);
         }
 
         // set auto page breaks
-        $this->pdf->SetAutoPageBreak( TRUE, PDF_MARGIN_BOTTOM );
+        $this->pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
         // set image scale factor
-        $this->pdf->setImageScale( PDF_IMAGE_SCALE_RATIO );
+        $this->pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
         // set some language-dependent strings ( optional )
-        if ( @file_exists( dirname( __FILE__ ) . '/lang/eng.php' ) ) {
-            require_once( dirname( __FILE__ ) . '/lang/eng.php' );
-            $this->pdf->setLanguageArray( $l );
+        if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
+            require_once(dirname(__FILE__) . '/lang/eng.php');
+            $this->pdf->setLanguageArray($l);
         }
 
         // set default font subsetting mode
-        $this->pdf->setFontSubsetting( true );
+        $this->pdf->setFontSubsetting(true);
     }
 
 
@@ -450,7 +450,7 @@ class PDFCreatorBackend {
      */
 
     protected function generate_pdf(): void {
-        if ( $this->missing_parameters() ) {
+        if ($this->missing_parameters()) {
             echo "An error has occured: Parameters not set";
             return;
         }
@@ -459,30 +459,29 @@ class PDFCreatorBackend {
         ob_end_clean();
 
         // Ensure the file name has a trailing '.pdf'
-        if ( !str_contains( $this->file_name ?? '', '.pdf' ) ) {
+        if (!str_contains($this->file_name ?? '', '.pdf')) {
             $this->file_name .= '.pdf';
         }
 
         // Close and output PDF document
-        switch ( $this->output_method ) {
+        switch ($this->output_method) {
             case self::OUTPUT_TO_SCREEN:
-                $this->pdf->Output( $this->file_name, 'I' );
+                $this->pdf->Output($this->file_name, 'I');
                 break;
             case self::OUTPUT_TO_DISK:
-                if ( !isset ( $this->save_path ) ) {
-                    throw new Exception( 'No save path is set.' );
+                if (!isset($this->save_path)) {
+                    throw new Exception('No save path is set.');
                 }
-                $this->pdf->Output( $this->save_path . $this->file_name, 'F' );
+                $this->pdf->Output($this->save_path . $this->file_name, 'F');
                 break;
             case self::OUTPUT_TO_EMAIL:
-                $this->pdf->Output( $this->file_name, 'E' );
+                $this->pdf->Output($this->file_name, 'E');
                 break;
             case self::OUTPUT_TO_DOWNLOAD:
                 // Appears to be mutually exclusive with 'I'
-                $this->pdf->Output( $this->file_name, 'D' );
+                $this->pdf->Output($this->file_name, 'D');
                 break;
         }
-
     }
 
 
@@ -519,8 +518,8 @@ class PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    protected function detect_style_tag( string $css ): bool {
-        return substr( $css, 0, 7 ) == '<style>';
+    protected function detect_style_tag(string $css): bool {
+        return substr($css, 0, 7) == '<style>';
     }
 
     /**
@@ -534,8 +533,8 @@ class PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    protected function add_style_tags( string $css ): string {
-        if ( $css == '' ) {
+    protected function add_style_tags(string $css): string {
+        if ($css == '') {
             return '';
         }
         return "<style>{$css}</style>";
@@ -557,5 +556,4 @@ class PDFCreatorBackend {
     public function debug_content(): void {
         echo $this->style . $this->content;
     }
-
 }

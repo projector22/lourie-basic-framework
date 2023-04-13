@@ -25,34 +25,34 @@ abstract class ExceptionMeta extends Exception implements ExceptionInterface {
      * @access  protected
      * @since   LBF 0.2.0-beta
      */
-    
+
     protected $message = "Unknown Exception"; // Exception message
-    
+
     /**
      * @inheritdoc
      * 
      * @access  protected
      * @since   LBF 0.2.0-beta
      */
-    
+
     protected $code = 0;                      // User-defined exception code
-    
+
     /**
      * @inheritdoc
      * 
      * @access  protected
      * @since   LBF 0.2.0-beta
      */
-    
+
     protected string $file;                   // Source filename of exception
-    
+
     /**
      * @inheritdoc
      * 
      * @access  protected
      * @since   LBF 0.2.0-beta
      */
-    
+
     protected int $line;                      // Source line of exception
 
 
@@ -70,8 +70,8 @@ abstract class ExceptionMeta extends Exception implements ExceptionInterface {
      * @since   LBF 0.2.0-beta
      */
 
-    public function __construct( $message, $code = 0, ?Throwable $previous = null ) {
-        parent::__construct( $message, $code, $previous );
+    public function __construct($message, $code = 0, ?Throwable $previous = null) {
+        parent::__construct($message, $code, $previous);
     }
 
 
@@ -85,7 +85,7 @@ abstract class ExceptionMeta extends Exception implements ExceptionInterface {
      */
     public function __toString() {
         return get_class($this) . " '{$this->message}' in {$this->file}({$this->line})\n"
-                                . "{$this->getTraceAsString()}";
+            . "{$this->getTraceAsString()}";
     }
 
 
@@ -99,12 +99,12 @@ abstract class ExceptionMeta extends Exception implements ExceptionInterface {
      */
 
     public function as_json(): string {
-        return json_encode( [
+        return json_encode([
             'message' => $this->message,
             'code'    => $this->code,
             'file'    => $this->file,
             'line'    => $this->line,
             'trace'   => $this->getTrace(),
-        ] );
+        ]);
     }
 }

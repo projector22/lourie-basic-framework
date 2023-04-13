@@ -84,14 +84,14 @@ export default class Ajax {
 
 
         /**
-         * The actions page to direct ajax requests to, by default 'src/app/actions/ActionHandler.php'.
+         * The actions page to direct ajax requests to, by default '/actions'.
          * 
          * @var {string} action_page
          * 
          * @since   LRS 3.13.0
          */
 
-        this.action_page = 'src/app/actions/ActionHandler.php';
+        this.action_page = '/actions';
 
 
         /**
@@ -361,6 +361,7 @@ export default class Ajax {
         }
         this.check_padding();
         this.xmlhttp.open("POST", this.action_page, true);
+        this.xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         this.xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         this.xmlhttp.send(this.post);
     }
@@ -380,6 +381,7 @@ export default class Ajax {
         }
         this.check_padding();
         this.xmlhttp.open("POST", this.action_page, true);
+        this.xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         this.xmlhttp.send(this.post);
     }
 

@@ -3,6 +3,8 @@
 namespace LBF\Auth;
 
 use Exception;
+use LBF\Errors\General\CantSetCookie;
+use Throwable;
 
 /**
  * This class handles the creation, update and deletion cookies and the variable $_COOKIE.
@@ -16,6 +18,18 @@ use Exception;
  */
 
 class Cookie {
+
+    /**
+     * Array for holding cookie details to be inserted at a defined point.
+     * 
+     * @var array   $cookie_list
+     * 
+     * @static
+     * @access  private
+     * @since   LBF 0.6.0
+     */
+
+    private static array $cookie_list = [];
 
     /**
      * Contains the default duration of any cookie that doesn't have a time explicity set.
@@ -102,22 +116,22 @@ class Cookie {
         string $path = "",
         string $domain = "",
         bool $secure = false,
-        bool $httponly = false 
+        bool $httponly = false
     ): bool {
-        if ( headers_sent() ) {
-            throw new Exception( "Cannot set cookie, Headers already sent." );
+        if (headers_sent()) {
+            throw new Exception("Cannot set cookie, Headers already sent.");
         }
-        if ( is_null( $expires ) ) {
-            if ( !isset( self::$duration ) ) {
-                self::set_default_duration( 60*60*24*30 );
+        if (is_null($expires)) {
+            if (!isset(self::$duration)) {
+                self::set_default_duration(60 * 60 * 24 * 30);
             }
             $expires = self::$duration;
         }
-        if ( is_array( $value ) || is_object( $value ) ) {
-            $value = json_encode( $value );
+        if (is_array($value) || is_object($value)) {
+            $value = json_encode($value);
         }
-        $value = self::encode_cookie( $value );
-        if ( strlen( $value ) > 4000 ) {
+        $value = self::encode_cookie($value);
+        if (strlen($value) > 4000) {
             /**
              * @todo    In the future, it would be nice to be able to split this into multiple parts
              *          if too big and handle this automatically.
@@ -126,17 +140,57 @@ class Cookie {
              * 
              * @since   0.1.2-beta
              */
-            throw new Exception( "Cookie size bigger than 4k limit. Size is " . strlen( $value ) );
+            throw new Exception("Cookie size bigger than 4k limit. Size is " . strlen($value));
         }
-        return setcookie( 
-            $name, 
-            $value,
-            $expires,
-            $path, 
-            $domain, 
-            $secure, 
-            $httponly
-        );
+
+        self::$cookie_list[] = [
+            'name' => $name,
+            'value' => $value,
+            'expires' => $expires,
+            'path' => $path,
+            'domain' => $domain,
+            'secure' => $secure,
+            'httponly' => $httponly,
+        ];
+
+        return true;
+    }
+
+
+    /**
+     * Injects any previously set cookies into the application.
+     * 
+     * @param   boolean $silent Whether to fail silently or not. Defaults to true.
+     * 
+     * @return  boolean
+     * 
+     * @throws  CantSetCookie   If a cookie cannot be set.
+     * 
+     * @access  public
+     * @since   
+     */
+
+    public function inject_cookies(bool $silent = true): bool {
+        $success = true;
+        foreach (self::$cookie_list as $cookie) {
+            try {
+                setcookie(
+                    $cookie['name'],
+                    $cookie['value'],
+                    $cookie['expires'],
+                    $cookie['path'],
+                    $cookie['domain'],
+                    $cookie['secure'],
+                    $cookie['httponly'],
+                );
+            } catch (Throwable $th) {
+                if (!$silent) {
+                    throw new CantSetCookie("Cannot set cookie {$cookie['name']}, Reason: {$th}");
+                }
+                $success = false;
+            }
+        }
+        return $success;
     }
 
 
@@ -160,15 +214,15 @@ class Cookie {
      * @since   0.1.2-beta
      */
 
-    public static function get_value( string $name, bool $decode_to_object = false, bool $decode_to_array = false ): string|array|object {
-        if ( !self::value_exists( $name ) ) {
-            throw new Exception( "Key '{$name}' not a cookie." );
+    public static function get_value(string $name, bool $decode_to_object = false, bool $decode_to_array = false): string|array|object {
+        if (!self::value_exists($name)) {
+            throw new Exception("Key '{$name}' not a cookie.");
         }
-        $data = self::decode_cookie( $_COOKIE[$name] );
-        if ( $decode_to_object ) {
-            return json_decode( $data );
-        } else if ( $decode_to_array ) {
-            return json_decode( $data, true );
+        $data = self::decode_cookie($_COOKIE[$name]);
+        if ($decode_to_object) {
+            return json_decode($data);
+        } else if ($decode_to_array) {
+            return json_decode($data, true);
         }
         return $data;
     }
@@ -179,29 +233,43 @@ class Cookie {
      * 
      * @param   string  $name   The key of the Cookie being destroyed.
      * 
-     * @static
-     * @access  public
-     * @since   0.1.2-beta
-     */
-
-    public static function destroy_value( string $name ): void {
-        setcookie( $name, '', 1 );
-        unset( $_COOKIE[$name] );
-    }
-
-
-    /**
-     * Unset all cookies on the site.
+     * @return  boolean
      * 
      * @static
      * @access  public
      * @since   0.1.2-beta
      */
 
-    public static function destroy_all_values(): void {
-        foreach( $_COOKIE as $name => $value ) {
-            self::destroy_value( $name );
+    public static function destroy_value(string $name): bool {
+        try {
+            setcookie($name, '', 1);
+            unset($_COOKIE[$name]);
+            return true;
+        } catch (Throwable) {
+            return false;
         }
+    }
+
+
+    /**
+     * Unset all cookies on the site.
+     * 
+     * @return  boolean
+     * 
+     * @static
+     * @access  public
+     * @since   0.1.2-beta
+     */
+
+    public static function destroy_all_values(): bool {
+        $completed = true;
+        foreach ($_COOKIE as $name => $value) {
+            $success = self::destroy_value($name);
+            if (!$success) {
+                $completed = false;
+            }
+        }
+        return $completed;
     }
 
 
@@ -217,8 +285,8 @@ class Cookie {
      * @since   0.1.2-beta
      */
 
-    public static function value_exists( string $name ): bool {
-        return isset( $_COOKIE[$name] );
+    public static function value_exists(string $name): bool {
+        return isset($_COOKIE[$name]);
     }
 
 
@@ -242,18 +310,21 @@ class Cookie {
      * @since   0.1.2-beta
      */
 
-    public static function __callStatic( string $id, array $arguments ): mixed {
-        $data = self::decode_cookie( $_COOKIE[$id] );
-        $args = array_flip( $arguments );
-        if ( isset( $args['object'] ) ) {
-            return json_decode( $data );
-        } else if ( isset( $args['array'] ) ) {
-            return json_decode( $data, true );
+    public static function __callStatic(string $id, array $arguments): mixed {
+        if (!isset($_COOKIE[$id])) {
+            throw new Exception("'{$id}' is not in Cookie.");
+        }
+        $data = self::decode_cookie($_COOKIE[$id]);
+        $args = array_flip($arguments);
+        if (isset($args['object'])) {
+            return json_decode($data);
+        } else if (isset($args['array'])) {
+            return json_decode($data, true);
         } else {
-            $hold_data = json_decode( $data, true );
-            if ( count( $hold_data ) > 0 ) {
-                if ( !isset( $hold_data[$arguments[0]] ) ) {
-                    throw new Exception( "Key '{$arguments[0]}' is not in Cookie '{$id}'" );
+            $hold_data = json_decode($data, true);
+            if (count($hold_data) > 0) {
+                if (!isset($hold_data[$arguments[0]])) {
+                    throw new Exception("Key '{$arguments[0]}' is not in Cookie '{$id}'.");
                 }
                 return $hold_data[$arguments[0]];
             }
@@ -274,10 +345,10 @@ class Cookie {
      * @since   0.1.2-beta
      */
 
-    private static function encode_cookie( string $value ): string {
-        $value = serialize( $value );
-        $value = gzcompress( $value );
-        $value = base64_encode( $value );
+    private static function encode_cookie(string $value): string {
+        $value = serialize($value);
+        $value = gzcompress($value);
+        $value = base64_encode($value);
         return $value;
     }
 
@@ -294,10 +365,10 @@ class Cookie {
      * @since   0.1.2-beta
      */
 
-    private static function decode_cookie( string $value ): string {
-        $value = base64_decode( $value );
-        $value = gzuncompress( $value );
-        $value = unserialize( $value );
+    private static function decode_cookie(string $value): string {
+        $value = base64_decode($value);
+        $value = gzuncompress($value);
+        $value = unserialize($value);
         return $value;
     }
 
@@ -332,14 +403,28 @@ class Cookie {
      * @since   LBF 0.1.2-beta
      */
 
-    public static function set_default_duration( int|string $duration, bool $include_time = true ): bool {
-        if ( is_string( $duration ) ) {
-            return self::$duration = strtotime( $duration );
+    public static function set_default_duration(int|string $duration, bool $include_time = true): bool {
+        if (is_string($duration)) {
+            return self::$duration = strtotime($duration);
         }
-        if ( $include_time ) {
+        if ($include_time) {
             return self::$duration = time() + $duration;
         }
-        return self::$duration = $duration;        
+        return self::$duration = $duration;
     }
 
+
+    /**
+     * Returns the list of sent cookies.
+     * 
+     * @return  array
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.6.0-beta
+     */
+
+    public static function get_cookie_list(): array {
+        return self::$cookie_list;
+    }
 }

@@ -805,7 +805,7 @@ class ExcelWriterBackend {
      */
 
     public function __construct() {
-        throw new Exception( "You may not invoke this class directly." );
+        throw new Exception("You may not invoke this class directly.");
     }
 
 
@@ -818,33 +818,33 @@ class ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    protected function generate_files( array $data ): void {
-        if ( $data == self::REQUIRED_FILES ) {
+    protected function generate_files(array $data): void {
+        if ($data == self::REQUIRED_FILES) {
             echo 'Data not properly formed. We cannot continue';
             die;
         }
 
         // Create the various files
-        foreach ( $data as $key => $value ) {
-            $this->create_files( $key, $value );
+        foreach ($data as $key => $value) {
+            $this->create_files($key, $value);
         }
 
         $folder_path = $this->create_path . $this->file_name;
 
         // Zip the file, create the excel
         $zip = new ZipArchive;
-        $zip->open( $this->file_path, ZipArchive::CREATE | ZipArchive::OVERWRITE );
+        $zip->open($this->file_path, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
         $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator( $folder_path ),
+            new RecursiveDirectoryIterator($folder_path),
             RecursiveIteratorIterator::LEAVES_ONLY
         );
 
-        foreach ( $files as $file ) {
-            if ( !$file->isDir() ) {
+        foreach ($files as $file) {
+            if (!$file->isDir()) {
                 $file_path = $file->getRealPath();
-                $relative_path = substr( $file_path, strlen( $folder_path ) + 1 );
-                $zip->addFile( $file_path, $relative_path );
+                $relative_path = substr($file_path, strlen($folder_path) + 1);
+                $zip->addFile($file_path, $relative_path);
             }
         }
 
@@ -852,34 +852,34 @@ class ExcelWriterBackend {
 
         // Delete the files
         $files = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator( $folder_path, RecursiveDirectoryIterator::SKIP_DOTS ),
+            new RecursiveDirectoryIterator($folder_path, RecursiveDirectoryIterator::SKIP_DOTS),
             RecursiveIteratorIterator::CHILD_FIRST
         );
-        foreach( $files as $file ) {
-            if ( $file->isDir() ) {
-                rmdir( $file->getRealPath() );
+        foreach ($files as $file) {
+            if ($file->isDir()) {
+                rmdir($file->getRealPath());
             } else {
-                unlink( $file->getRealPath() );
+                unlink($file->getRealPath());
             }
         }
-        rmdir( $folder_path );
-        
-        if ( $this->generate_basic_feedback ) {
+        rmdir($folder_path);
+
+        if ($this->generate_basic_feedback) {
             $this->basic_feedback = "{$this->file_name}.xlsx successfully generated";
         }
-        if ( $this->generate_verbose_feedback ) {
-            $this->end_time = microtime( true );
+        if ($this->generate_verbose_feedback) {
+            $this->end_time = microtime(true);
             $total_rows = $total_cols = 0;
-            foreach ( $this->data as $index => $name ) {
-                $total_rows   += $this->get_max_rows( $this->data[$index] );
-                $total_cols   += $this->get_max_columns( $this->data[$index] );
+            foreach ($this->data as $index => $name) {
+                $total_rows   += $this->get_max_rows($this->data[$index]);
+                $total_cols   += $this->get_max_columns($this->data[$index]);
             }
             $this->verbose_feedback = [
                 'file_path'    => $this->file_path,
                 'rows_created' => $total_rows,
                 'cols_created' => $total_cols,
                 'sheets_created' => $this->number_of_sheets,
-                'time_taken'   => ( $this->end_time - $this->start_time ),
+                'time_taken'   => ($this->end_time - $this->start_time),
             ];
         }
     }
@@ -895,17 +895,17 @@ class ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    private function create_files( string $folder, array|string $value ): void {
+    private function create_files(string $folder, array|string $value): void {
         $path = $this->create_path . $this->file_name . '/' . $folder;
-        if ( is_array( $value ) ) {
-            @mkdir( directory: $path, recursive: true );
-            foreach ( $value as $key => $item ) {
-                $this->create_files( $folder . '/' . $key, $item );
+        if (is_array($value)) {
+            @mkdir(directory: $path, recursive: true);
+            foreach ($value as $key => $item) {
+                $this->create_files($folder . '/' . $key, $item);
             }
         } else {
-            $file = fopen( $path, 'w' );
-            fwrite( $file, $value );
-            fclose( $file );
+            $file = fopen($path, 'w');
+            fwrite($file, $value);
+            fclose($file);
         }
     }
 
@@ -921,13 +921,13 @@ class ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    protected function worksheet_xml_creator( int $index ): string {
+    protected function worksheet_xml_creator(int $index): string {
         $xml = '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">';
 
-        $pos = self::A1NOTATION[$this->get_max_columns( $this->data[$index] )] . $this->get_max_rows( $this->data[$index] );
+        $pos = self::A1NOTATION[$this->get_max_columns($this->data[$index])] . $this->get_max_rows($this->data[$index]);
         $xml .= '<dimension ref="A1:' . $pos . '" />';
         $xml .= '<sheetViews>';
-        if ( $index == 1 ) {
+        if ($index == 1) {
             $xml .= '<sheetView tabSelected="1" workbookViewId="0" rightToLeft="false">';
         } else {
             $xml .= '<sheetView workbookViewId="0" rightToLeft="false">';
@@ -938,8 +938,8 @@ class ExcelWriterBackend {
 <sheetFormatPr defaultRowHeight="15" />';
         $xml .= '<sheetData>';
 
-        foreach ( $this->data[$index] as $row ) {
-            $xml .= $this->set_row( $row );
+        foreach ($this->data[$index] as $row) {
+            $xml .= $this->set_row($row);
         }
         $this->row = 1;
 
@@ -962,12 +962,12 @@ class ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    private function set_row( array $row ): string {
+    private function set_row(array $row): string {
         $xml = '<row outlineLevel="0" r="' . $this->row . '">';
 
-        foreach ( $row as $cell ) {
+        foreach ($row as $cell) {
             $pos = self::A1NOTATION[$this->column] . $this->row;
-            if ( is_integer( $cell ) ) {
+            if (is_integer($cell)) {
                 $format = $this->row == 1 && $this->header_row ? 2 : 5;
                 $xml .= '<c r="' . $pos . '" s="' . $format . '">
     <v>' . $cell . '</v>
@@ -1009,7 +1009,7 @@ class ExcelWriterBackend {
 </bookViews>
     <sheets>';
 
-        foreach ( $this->sheet_names as $index => $name ) {
+        foreach ($this->sheet_names as $index => $name) {
             $xml .= '<sheet name="' . $name . '" sheetId="' . $index . '" r:id="rId' . $index . '" />';
         }
 
@@ -1033,12 +1033,12 @@ class ExcelWriterBackend {
     protected function build_rels(): string {
         $xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">';
         $i = 0;
-        foreach ( $this->sheet_names as $index => $name ) {
+        foreach ($this->sheet_names as $index => $name) {
             $xml .= '<Relationship Id="rId' . $index . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet' . $index . '.xml" />';
             $i++;
         }
-        $xml .= '<Relationship Id="rId' . ( $i + 1 ) . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml" />';
-        $xml .= '<Relationship Id="rId' . ( $i + 2 ) . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme" Target="theme/theme1.xml" />';
+        $xml .= '<Relationship Id="rId' . ($i + 1) . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml" />';
+        $xml .= '<Relationship Id="rId' . ($i + 2) . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme" Target="theme/theme1.xml" />';
         $xml .= '</Relationships>';
         return $xml;
     }
@@ -1064,11 +1064,11 @@ class ExcelWriterBackend {
             <Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml" />
             <Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml" />';
 
-            foreach ( $this->sheet_names as $index => $name ) {
-                $xml .= '<Override PartName="/xl/worksheets/sheet' . $index .'.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" />';
-            }
-    
-            $xml .= '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml" />
+        foreach ($this->sheet_names as $index => $name) {
+            $xml .= '<Override PartName="/xl/worksheets/sheet' . $index . '.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml" />';
+        }
+
+        $xml .= '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml" />
         </Types>';
 
         return $xml;
@@ -1086,8 +1086,8 @@ class ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    private function get_max_rows( array $data ): int {
-        return count( $data );
+    private function get_max_rows(array $data): int {
+        return count($data);
     }
 
 
@@ -1102,21 +1102,20 @@ class ExcelWriterBackend {
      * @since   LRS 3.19.6
      */
 
-    private function get_max_columns( array $data ): int {
+    private function get_max_columns(array $data): int {
         $max = 1;
-        foreach ( $data as $line ) {
-            if ( !is_array( $line ) ) {
+        foreach ($data as $line) {
+            if (!is_array($line)) {
                 continue;
             }
-            $cols = count( $line );
-            if ( $cols > $max ) {
+            $cols = count($line);
+            if ($cols > $max) {
                 $max = $cols;
             }
         }
-        if ( !isset( self::A1NOTATION[$max] ) ) {
-            throw new Exception( "Number of columns exceed the maximum permitted columns (104)" );
+        if (!isset(self::A1NOTATION[$max])) {
+            throw new Exception("Number of columns exceed the maximum permitted columns (104)");
         }
         return $max;
     }
-
 }

@@ -26,11 +26,10 @@ enum PagePositions {
      */
 
     public function id(): int {
-        return match( $this ) {
+        return match ($this) {
             self::IN_HEAD        => 0,
             self::TOP_OF_PAGE    => 1,
             self::BOTTOM_OF_PAGE => 2,
         };
     }
-
 }

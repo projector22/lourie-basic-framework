@@ -26,6 +26,8 @@ namespace LBF\Tools\Router;
  * @author  Gareth Palmer  [Github & Gitlab /projector22]
  * 
  * @since   LBF 0.1.4-beta
+ * 
+ * @deprecated  LBF 0.6.0-beta
  */
 
 class Router {
@@ -89,7 +91,7 @@ class Router {
      */
 
     private int $status_code = 0;
-    
+
     /**
      * A set task. If applicable. If not applicable, set to `null`. Set by parsing `$_POST['task']` or `$_GET['task']`.
      * 
@@ -144,41 +146,41 @@ class Router {
         /**
          * Filter out subfolders if relevant, if the page is something like `example.com/page/page/subpage`.
          */
-        $self = explode( '/', $_SERVER['PHP_SELF'] );
-        $self = array_map( function ( $item ) {
-            if ( str_contains( $item, '.php' ) ) {
+        $self = explode('/', $_SERVER['PHP_SELF']);
+        $self = array_map(function ($item) {
+            if (str_contains($item, '.php')) {
                 return '';
             }
             return $item;
-        }, $self );
-        $self = rtrim( implode( '/', $self ), '/' );
+        }, $self);
+        $self = rtrim(implode('/', $self), '/');
 
         /**
          * Filter out entries in the URI which are behind a `#` or `?`.
          */
-        $request_uri = explode( '#', $_SERVER['REQUEST_URI'] )[0];
-        $request_uri = explode( '?', $request_uri )[0];
-        $set_route = str_replace( $self, '', $request_uri );
+        $request_uri = explode('#', $_SERVER['REQUEST_URI'])[0];
+        $request_uri = explode('?', $request_uri)[0];
+        $set_route = str_replace($self, '', $request_uri);
 
         /**
          * Set `$this->page` and `$this->subpage`.
          */
-        $route = explode( '/', $set_route );
+        $route = explode('/', $set_route);
         $this->page    = $route[1] ?? '';
         $this->subpage = $route[2] ?? '';
 
         /**
          * Perform the routing based on `$this->routing_data`.
          */
-        if ( isset( $this->routing_data[$set_route] ) ) {
+        if (isset($this->routing_data[$set_route])) {
             // If directly specified
             $this->class       = $this->routing_data[$set_route];
             $this->status_code = 200;
-        } else if ( $set_route == '/' && isset( $this->routing_data['/*'] ) ) {
+        } else if ($set_route == '/' && isset($this->routing_data['/*'])) {
             // If on the home page and a wildcard set.
             $this->class       = $this->routing_data['/*'];
             $this->status_code = 200;
-        } else if ( isset( $this->routing_data["/{$route[1]}/*"] ) ) {
+        } else if (isset($this->routing_data["/{$route[1]}/*"])) {
             // If Wildcard used.
             $this->class       = $this->routing_data["/{$route[1]}/*"];
             $this->status_code = 200;
@@ -270,5 +272,4 @@ class Router {
     public function get_task(): string {
         return $this->task;
     }
-
 }
