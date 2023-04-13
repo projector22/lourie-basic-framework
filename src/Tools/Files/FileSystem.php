@@ -60,8 +60,8 @@ class FileSystem {
      * @since   LRS 3.7.0
      */
 
-    public static function get_permissions( string $file ): string {
-        return substr( sprintf( "%o", fileperms( $file ) ), -4 );
+    public static function get_permissions(string $file): string {
+        return substr(sprintf("%o", fileperms($file)), -4);
     }
 
 
@@ -77,11 +77,11 @@ class FileSystem {
      * @since   LRS 3.7.0
      */
 
-    public static function correct_slashes( string $file ): string {
-        if ( PHP_OS === 'WINNT' ) {
-            return str_replace ( '/', '\\', $file );
+    public static function correct_slashes(string $file): string {
+        if (PHP_OS === 'WINNT') {
+            return str_replace('/', '\\', $file);
         } else {
-            return str_replace ( '\\', '/', $file );
+            return str_replace('\\', '/', $file);
         }
     }
 
@@ -104,14 +104,14 @@ class FileSystem {
      * @since   LRS 3.15.4
      */
 
-    public static function create_folder( string $path, string $permissions = '0755', ?string $owner = null ): bool {
+    public static function create_folder(string $path, string $permissions = '0755', ?string $owner = null): bool {
         $success = false;
         try {
-            $success = @mkdir( $path, $permissions, true );
-            if ( !is_dir( $path ) ) {
-                throw new Exception( "{$path} cannot be created, you do not have appropriate permissions.<br>" );
+            $success = @mkdir($path, $permissions, true);
+            if (!is_dir($path)) {
+                throw new Exception("{$path} cannot be created, you do not have appropriate permissions.<br>");
             }
-        } catch ( Exception $e )  {
+        } catch (Exception $e) {
             self::$last_error   = $e->getMessage();
             self::$all_errors[] = $e->getMessage();
             echo $e->getMessage();
@@ -123,19 +123,19 @@ class FileSystem {
          * 
          * @since   LRS 3.15.4
          */
-        if ( PHP_OS !== 'WINNT' ) {
-            exec( "find {$path} -type d -exec chmod {$permissions} {} +" );
+        if (PHP_OS !== 'WINNT') {
+            exec("find {$path} -type d -exec chmod {$permissions} {} +");
             try {
-                if ( !is_null( $owner ) ) {
-                    $permits = explode( ':', $owner );
-                    if ( isset( $permits[0] ) ) {
-                        chown( $path, $permits[0] );
+                if (!is_null($owner)) {
+                    $permits = explode(':', $owner);
+                    if (isset($permits[0])) {
+                        chown($path, $permits[0]);
                     }
-                    if ( isset( $permits[1] ) ) {
-                        chgrp( $path, $permits[1] );
+                    if (isset($permits[1])) {
+                        chgrp($path, $permits[1]);
                     }
                 }
-            } catch ( Exception $e )  {
+            } catch (Exception $e) {
                 self::$last_error   = $e->getMessage();
                 self::$all_errors[] = $e->getMessage();
                 $success = false;
@@ -175,17 +175,17 @@ class FileSystem {
      * @since   LRS 3.17.3
      */
 
-    public static function write_file( 
-        string $file_path, 
-        string $contents, 
+    public static function write_file(
+        string $file_path,
+        string $contents,
         string $method = 'w'
     ): bool {
         try {
-            $file = fopen( $file_path, $method );
-            fwrite( $file, $contents );
-            fclose( $file );
+            $file = fopen($file_path, $method);
+            fwrite($file, $contents);
+            fclose($file);
             return true;
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             self::$last_error   = $e->getMessage();
             self::$all_errors[] = $e->getMessage();
             return false;
@@ -207,9 +207,9 @@ class FileSystem {
      * @since   LRS 3.17.3
      */
 
-    public static function create_blank_file( string $file_path ): bool {
-        if ( !file_exists( $file_path ) ) {
-            return touch( $file_path );
+    public static function create_blank_file(string $file_path): bool {
+        if (!file_exists($file_path)) {
+            return touch($file_path);
         }
         return false;
     }
@@ -230,8 +230,8 @@ class FileSystem {
      * @since   LRS 3.17.3
      */
 
-    public static function append_to_file( string $file_path, string $contents ): bool {
-        return self::write_file( $file_path, $contents, 'a' );
+    public static function append_to_file(string $file_path, string $contents): bool {
+        return self::write_file($file_path, $contents, 'a');
     }
 
 
@@ -247,22 +247,22 @@ class FileSystem {
      * @since   LRS 3.19.6
      */
 
-    public static function delete_folder( string $folder_path ): bool {
+    public static function delete_folder(string $folder_path): bool {
         try {
             $files = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator( $folder_path, RecursiveDirectoryIterator::SKIP_DOTS ),
+                new RecursiveDirectoryIterator($folder_path, RecursiveDirectoryIterator::SKIP_DOTS),
                 RecursiveIteratorIterator::CHILD_FIRST
             );
-            foreach( $files as $file ) {
-                if ( $file->isDir() ) {
-                    rmdir( $file->getRealPath() );
+            foreach ($files as $file) {
+                if ($file->isDir()) {
+                    rmdir($file->getRealPath());
                 } else {
-                    unlink( $file->getRealPath() );
+                    unlink($file->getRealPath());
                 }
             }
-            rmdir( $folder_path );
+            rmdir($folder_path);
             return true;
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             self::$last_error   = $e->getMessage();
             self::$all_errors[] = $e->getMessage();
             return false;
@@ -282,14 +282,14 @@ class FileSystem {
      * @since   LRS 3.26.4
      */
 
-    public static function delete_files( string|array ...$files ): bool {
-        if ( $files == 'string' ) {
-            return unlink( $files );
+    public static function delete_files(string|array ...$files): bool {
+        if ($files == 'string') {
+            return unlink($files);
         } else {
             $status = true;
-            foreach ( $files as $file ) {
-                $status = unlink( $file );
-                if ( !$status ) {
+            foreach ($files as $file) {
+                $status = unlink($file);
+                if (!$status) {
                     break;
                 }
             }
@@ -310,17 +310,17 @@ class FileSystem {
      * @since   LRS 3.21.1
      */
 
-    public static function get_all_files_in_folder( string $path ): array {
-        if ( !is_dir( $path ) ) {
-            throw new Exception( "{$path} is not a folder." );
+    public static function get_all_files_in_folder(string $path): array {
+        if (!is_dir($path)) {
+            throw new Exception("{$path} is not a folder.");
         }
-        $files = scandir( $path );
-        foreach( $files as $i => $file ) {
-            if ( $file == '.' || $file == '..' ) {
-                unset( $files[$i] );
+        $files = scandir($path);
+        foreach ($files as $i => $file) {
+            if ($file == '.' || $file == '..') {
+                unset($files[$i]);
             }
         }
-        sort( $files );
+        sort($files);
         return $files;
     }
 
@@ -337,8 +337,8 @@ class FileSystem {
      * @since   LBF 0.1.6-beta
      */
 
-    public static function file_exists( string $path ): bool {
-        return file_exists( $path );
+    public static function file_exists(string $path): bool {
+        return file_exists($path);
     }
 
 
@@ -357,10 +357,10 @@ class FileSystem {
      * @since   LBF 0.2.3-beta
      */
 
-    public static function copy_file( string $source, string $destination ): bool {
+    public static function copy_file(string $source, string $destination): bool {
         try {
-            return copy( $source, $destination );
-        } catch ( \Throwable $th ) {
+            return copy($source, $destination);
+        } catch (\Throwable $th) {
             return false;
         }
     }
@@ -381,12 +381,11 @@ class FileSystem {
      * @since   LBF 0.2.3-beta
      */
 
-    public static function move_file( string $source, string $destination ): bool {
+    public static function move_file(string $source, string $destination): bool {
         try {
-            return rename( $source, $destination );
-        } catch ( \Throwable $th ) {
+            return rename($source, $destination);
+        } catch (\Throwable $th) {
             return false;
         }
     }
-
 }

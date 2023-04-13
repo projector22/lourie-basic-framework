@@ -23,10 +23,10 @@ interface ExceptionInterface {
     public function getLine();                    // Source line
     public function getTrace();                   // An array of the backtrace()
     public function getTraceAsString();           // Formated string of trace
-   
+
     /* Overrideable methods inherited from Exception class */
     public function __toString();                 // formated string for display
-    public function __construct( $message, $code = 0, ?Throwable $previous = null );
+    public function __construct($message, $code = 0, ?Throwable $previous = null);
 
     /* Custom Tools */
     public function as_json(): string;

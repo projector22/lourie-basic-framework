@@ -54,8 +54,8 @@ trait CSSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function inject_css( string $styles, PagePositions $position = PagePositions::IN_HEAD ): void {
-        if ( !isset( self::$injected_styles ) ) {
+    public static function inject_css(string $styles, PagePositions $position = PagePositions::IN_HEAD): void {
+        if (!isset(self::$injected_styles)) {
             self::$injected_styles = self::set_default_data();
         }
         self::$injected_styles[$position->id()]['raw'][] = $styles;
@@ -79,11 +79,11 @@ trait CSSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function inject_css_file( string $file_path, PagePositions $position = PagePositions::IN_HEAD ): void {
-        if ( !is_file( $file_path ) ) {
-            throw new FileNotFound( "File {$file_path} does not exist." );
+    public static function inject_css_file(string $file_path, PagePositions $position = PagePositions::IN_HEAD): void {
+        if (!is_file($file_path)) {
+            throw new FileNotFound("File {$file_path} does not exist.");
         }
-        if ( !isset( self::$injected_styles ) ) {
+        if (!isset(self::$injected_styles)) {
             self::$injected_styles = self::set_default_data();
         }
         self::$injected_styles[$position->id()]['raw'][] = file_get_contents($file_path);
@@ -105,12 +105,12 @@ trait CSSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function inject_css_cdn( string $url, PagePositions $position = PagePositions::IN_HEAD, bool $timestamp = false ): void {
-        if ( !isset( self::$injected_styles ) ) {
+    public static function inject_css_cdn(string $url, PagePositions $position = PagePositions::IN_HEAD, bool $timestamp = false): void {
+        if (!isset(self::$injected_styles)) {
             self::$injected_styles = self::set_default_data();
         }
-        if ( $timestamp ) {
-            $url .= self::add_timestamp( $url );
+        if ($timestamp) {
+            $url .= self::add_timestamp($url);
         }
         self::$injected_styles[$position->id()]['cdn'][] = "<link rel='stylesheet' href='{$url}'>";
     }
@@ -127,18 +127,17 @@ trait CSSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    public function insert_css( PagePositions $position ): string {
+    public function insert_css(PagePositions $position): string {
         $css = '';
-        if ( isset( self::$injected_styles ) ) {
-            $raw = $this->remove_duplicates( self::$injected_styles[$position->id()]['raw'] );
-            $insert = $this->merge( $raw );
-            if ( $insert !== '' ) {
+        if (isset(self::$injected_styles)) {
+            $raw = $this->remove_duplicates(self::$injected_styles[$position->id()]['raw']);
+            $insert = $this->merge($raw);
+            if ($insert !== '') {
                 $css .= "<style>{$insert}</style>";
             }
-            $cdn = $this->remove_duplicates( self::$injected_styles[$position->id()]['cdn'] );
-            $css .= $this->merge( $cdn );
+            $cdn = $this->remove_duplicates(self::$injected_styles[$position->id()]['cdn']);
+            $css .= $this->merge($cdn);
         }
         return $css;
     }
-
 }

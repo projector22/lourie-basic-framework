@@ -37,7 +37,7 @@ trait GetSet {
      * @since   LBF 0.4.4-beta
      */
 
-    public function __set( string $name, mixed $value): void {
+    public function __set(string $name, mixed $value): void {
         $this->properties[$name] = $value;
     }
 
@@ -55,9 +55,9 @@ trait GetSet {
      * @since   LBF 0.4.4-beta
      */
 
-    public function __get( string $name ): mixed {
-        if ( !isset( $this->properties[$name] ) ) {
-            throw new UndefinedProperty( "Property {$name} does not exist on " . __CLASS__ );
+    public function __get(string $name): mixed {
+        if (!isset($this->properties[$name])) {
+            throw new UndefinedProperty("Property {$name} does not exist on " . __CLASS__);
         }
         return $this->properties[$name];
     }
@@ -74,8 +74,7 @@ trait GetSet {
      * @since   LBF 0.4.6-beta
      */
 
-    public function __isset( string $name ): bool {
-        return isset( $this->properties[$name] );
+    public function __isset(string $name): bool {
+        return isset($this->properties[$name]);
     }
-
 }

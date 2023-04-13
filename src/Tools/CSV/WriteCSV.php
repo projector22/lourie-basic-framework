@@ -97,15 +97,15 @@ class WriteCSV {
 
     public function write_file(): void {
         $file = $this->save_path . $this->file_name;
-        $csv_file = fopen( $file, 'w') ;
+        $csv_file = fopen($file, 'w');
 
-        if ( count( $this->headings ) > 0 ) {
-            fputcsv( $csv_file, $this->headings );
+        if (count($this->headings) > 0) {
+            fputcsv($csv_file, $this->headings);
         }
-        foreach ($this->data as $fields ) {
-            fputcsv( $csv_file, $fields );
+        foreach ($this->data as $fields) {
+            fputcsv($csv_file, $fields);
         }
-        fclose( $csv_file );
+        fclose($csv_file);
     }
 
 
@@ -128,8 +128,8 @@ class WriteCSV {
      * @since   LRS 3.12.0
      */
     public function clean_up_files(): void {
-        if ( file_exists( $this->save_path . $this->file_name ) && !$this->keep_file ) {
-            unlink( $this->save_path . $this->file_name );
+        if (file_exists($this->save_path . $this->file_name) && !$this->keep_file) {
+            unlink($this->save_path . $this->file_name);
         }
     }
 
@@ -147,5 +147,4 @@ class WriteCSV {
     public function __destruct() {
         $this->clean_up_files();
     }
-
 }

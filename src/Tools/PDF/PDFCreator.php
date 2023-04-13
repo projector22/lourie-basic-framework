@@ -83,7 +83,7 @@ class PDFCreator extends PDFCreatorBackend {
 
         public ?string $keywords = null,
     ) {
-        $this->set_date = date( 'Y-m-d' );
+        $this->set_date = date('Y-m-d');
     }
 
 
@@ -127,7 +127,7 @@ class PDFCreator extends PDFCreatorBackend {
      */
 
     public function new_page(): static {
-        $this->pdf->AddPage( $this->orientation, $this->page_size );
+        $this->pdf->AddPage($this->orientation, $this->page_size);
         return $this;
     }
 
@@ -143,7 +143,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function add_content( string $text ): static {
+    public function add_content(string $text): static {
         $this->content .= $text;
         return $this;
     }
@@ -163,11 +163,11 @@ class PDFCreator extends PDFCreatorBackend {
     public function insert_block(
         string $alignment = 'L',
     ): static {
-        if ( !$this->detect_style_tag( $this->style ) ) {
-            $this->style = $this->add_style_tags( $this->style );
+        if (!$this->detect_style_tag($this->style)) {
+            $this->style = $this->add_style_tags($this->style);
         }
 
-        $this->pdf->setCellHeightRatio( $this->line_height );
+        $this->pdf->setCellHeightRatio($this->line_height);
 
         $this->pdf->SetFont(
             family: $this->font_name,
@@ -177,20 +177,20 @@ class PDFCreator extends PDFCreatorBackend {
         );
 
         // set text shadow effect
-        if ( $this->use_text_shadow ) {
-            $this->pdf->setTextShadow( [
+        if ($this->use_text_shadow) {
+            $this->pdf->setTextShadow([
                 'enabled'    => true,
                 'depth_w'    => 0.2,
                 'depth_h'    => 0.2,
-                'color'      => [196,196,196],
+                'color'      => [196, 196, 196],
                 'opacity'    => 1,
                 'blend_mode' => 'Normal'
-            ] );
+            ]);
         }
 
         $this->pdf->writeHTML(
-            html: $this->style . $this->content, 
-            reseth: true, 
+            html: $this->style . $this->content,
+            reseth: true,
             align: $alignment,
         );
         $this->empty_content_styles();
@@ -209,8 +209,8 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function set_style( string $style ): static {
-        if ( $this->detect_style_tag( $style ) ) {
+    public function set_style(string $style): static {
+        if ($this->detect_style_tag($style)) {
             $this->style = $style;
         } else {
             $this->style .= $style;
@@ -260,10 +260,10 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function set_custom_header_footer( bool $use_custom, ?int $header_id = null, ?string $footer_id = null ): static {
+    public function set_custom_header_footer(bool $use_custom, ?int $header_id = null, ?string $footer_id = null): static {
         $this->use_custom_header_footer = $use_custom;
-        if ( $use_custom ) {
-            $this->set_header_type = is_null( $header_id ) ? 1 : $header_id; // Default 1 if not explicitly called.
+        if ($use_custom) {
+            $this->set_header_type = is_null($header_id) ? 1 : $header_id; // Default 1 if not explicitly called.
             $this->set_footer_type = $footer_id; // Default null (not custom) if not explicitly called.
         }
         return $this;
@@ -281,7 +281,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function hide_header( bool $hide ): static {
+    public function hide_header(bool $hide): static {
         $this->include_header = !$hide;
         return $this;
     }
@@ -298,7 +298,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function hide_footer( bool $hide ): static {
+    public function hide_footer(bool $hide): static {
         $this->include_footer = !$hide;
         return $this;
     }
@@ -315,7 +315,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function set_font_size( int $size ): static {
+    public function set_font_size(int $size): static {
         $this->font_size = $size;
         return $this;
     }
@@ -334,13 +334,13 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function set_page_orientation( string $orientation ): static {
+    public function set_page_orientation(string $orientation): static {
         $allowed_orientations = [
             self::ORIENTATION_PORTRAIT,
             self::ORIENTATION_LANDSCAPE,
         ];
-        if ( !in_array( $orientation, $allowed_orientations, true ) ) {
-            throw new Exception( "Invalid orienatation" );
+        if (!in_array($orientation, $allowed_orientations, true)) {
+            throw new Exception("Invalid orienatation");
         }
         $this->orientation = $orientation;
         return $this;
@@ -362,9 +362,9 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function set_page_size( string $size ): static {
-        if ( !in_array( $size, TCPDF_STATIC::$page_formats, true ) ) {
-            throw new Exception( "Invalid page size" );
+    public function set_page_size(string $size): static {
+        if (!in_array($size, TCPDF_STATIC::$page_formats, true)) {
+            throw new Exception("Invalid page size");
         }
         $this->page_size = $size;
         return $this;
@@ -393,7 +393,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function set_font_style( string $style ): static {
+    public function set_font_style(string $style): static {
         $this->font_style = $style;
         return $this;
     }
@@ -410,7 +410,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function set_font( string $font ): static {
+    public function set_font(string $font): static {
         $this->font_name = $font;
         return $this;
     }
@@ -427,7 +427,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function set_text_shadow( bool $shadow ): static {
+    public function set_text_shadow(bool $shadow): static {
         $this->use_text_shadow = $shadow;
         return $this;
     }
@@ -444,15 +444,15 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function set_output_method( int $method ): static {
+    public function set_output_method(int $method): static {
         $available_methods = [
             self::OUTPUT_TO_SCREEN,
             self::OUTPUT_TO_DISK,
             self::OUTPUT_TO_EMAIL,
             self::OUTPUT_TO_DOWNLOAD,
         ];
-        if ( !in_array( $method, $available_methods, true ) ) {
-            throw new Exception( "Invalid output method." );
+        if (!in_array($method, $available_methods, true)) {
+            throw new Exception("Invalid output method.");
         }
         $this->output_method = $method;
         return $this;
@@ -470,7 +470,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.20.0
      */
 
-    public function set_save_path( string $path ): static {
+    public function set_save_path(string $path): static {
         $this->save_path = $path;
         return $this;
     }
@@ -503,7 +503,7 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.21.0
      */
 
-    public function add_custom_footer_text( string $text ): static {
+    public function add_custom_footer_text(string $text): static {
         $this->footer_custom_text .= $text;
         return $this;
     }
@@ -522,9 +522,9 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.26.0
      */
 
-    public function set_multi_columns( bool $use_multi_columns, int $number_of_columns = 2, int $width = 57 ): static {
-        if ( $use_multi_columns ) {
-            $this->pdf->setEqualColumns( $number_of_columns, $width );
+    public function set_multi_columns(bool $use_multi_columns, int $number_of_columns = 2, int $width = 57): static {
+        if ($use_multi_columns) {
+            $this->pdf->setEqualColumns($number_of_columns, $width);
         } else {
             $this->pdf->resetColumns();
         }
@@ -543,8 +543,8 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.26.0
      */
 
-    public function select_column( ?int $column ): static {
-        $this->pdf->selectColumn( $column );
+    public function select_column(?int $column): static {
+        $this->pdf->selectColumn($column);
         return $this;
     }
 
@@ -560,9 +560,8 @@ class PDFCreator extends PDFCreatorBackend {
      * @since   LRS 3.28.0
      */
 
-    public function set_line_height( float $height ): static {
+    public function set_line_height(float $height): static {
         $this->line_height = $height;
         return $this;
     }
-
 }

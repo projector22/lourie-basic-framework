@@ -53,8 +53,8 @@ trait InjectorMeta {
      * @since   LBF 0.6.0-beta
      */
 
-    public function remove_duplicates( array $data ): array {
-        return array_unique( $data );
+    public function remove_duplicates(array $data): array {
+        return array_unique($data);
     }
 
 
@@ -69,8 +69,8 @@ trait InjectorMeta {
      * @since   LBF 0.6.0-beta
      */
 
-    public function merge( array $data ): string {
-        return implode( "\n", $data );
+    public function merge(array $data): string {
+        return implode("\n", $data);
     }
 
 
@@ -83,9 +83,9 @@ trait InjectorMeta {
      * @since   LBF 0.6.0-beta
      */
 
-    public function insert_js_and_css( PagePositions $position ): void {
-        $this->insert_js( $position );
-        $this->insert_css( $position );
+    public function insert_js_and_css(PagePositions $position): void {
+        $this->insert_js($position);
+        $this->insert_css($position);
     }
 
 
@@ -101,11 +101,10 @@ trait InjectorMeta {
      * @since   LBF 0.6.0-beta
      */
 
-    protected static function add_timestamp( string $path ): string {
-        if ( $path[0] === '/' ) {
-            $path = substr( $path, 1 );
+    protected static function add_timestamp(string $path): string {
+        if ($path[0] === '/') {
+            $path = substr($path, 1);
         }
-        return '?v=' . timestamp_cache_validation( $path );
+        return '?v=' . timestamp_cache_validation($path);
     }
-
 }

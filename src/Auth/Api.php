@@ -33,17 +33,17 @@ class Api {
      * @since   LBF 0.5.2-beta  Changed how params are parsed so multiple may be parsed.
      */
 
-    public static function generate_api_key( string $id, string ...$random ): string {
-        $random = count( $random ) > 0 ? implode( '', $random ) : null;
-        return md5( 
-            $random ?? ( Hash::generate_cookie_hash(
+    public static function generate_api_key(string $id, string ...$random): string {
+        $random = count($random) > 0 ? implode('', $random) : null;
+        return md5(
+            $random ?? (Hash::generate_cookie_hash(
                 Hash::random_id_string(),
                 Hash::random_id_string(),
                 Hash::random_id_string(),
             ) . Hash::generate_session_hash(
                 Hash::random_id_string(),
                 Hash::random_id_string(),
-            ) ) . time() . $id
+            )) . time() . $id
         );
     }
 
@@ -59,10 +59,9 @@ class Api {
 
     public static function get_key(): ?string {
         $api_key = null;
-        if ( isset ( $_GET['auth_key'] ) || isset( $_POST['auth_key'] ) ) {
+        if (isset($_GET['auth_key']) || isset($_POST['auth_key'])) {
             $api_key = $_POST['auth_key'] ?? $_GET['auth_key'];
         }
         return $api_key;
     }
-
 }

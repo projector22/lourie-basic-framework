@@ -127,9 +127,9 @@ class ErrorExceptionHandler {
 
         private bool $hide_all_errors = false
     ) {
-        $this->is_cli = !isset( $_SERVER['REMOTE_ADDR'] );
-        if ( $this->hide_all_errors ) {
-            $this->set_error_handlers( DrawError::HIDDEN );
+        $this->is_cli = !isset($_SERVER['REMOTE_ADDR']);
+        if ($this->hide_all_errors) {
+            $this->set_error_handlers(DrawError::HIDDEN);
         }
     }
 
@@ -145,20 +145,20 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function set_log_to_file( bool $log, ?string $path = null, LogTypes $type = LogTypes::LOG ): void {
+    public function set_log_to_file(bool $log, ?string $path = null, LogTypes $type = LogTypes::LOG): void {
         $this->log_to_file = $log;
         $this->log_type = $type;
 
-        if ( !is_null( $path ) ) {
+        if (!is_null($path)) {
             $this->log_file = $path;
         }
 
-        if ( $log ) {
-            if ( !FileSystem::file_exists( $this->log_file ) ) {
-                FileSystem::create_blank_file( $this->log_file );
-                switch( $type ) {
+        if ($log) {
+            if (!FileSystem::file_exists($this->log_file)) {
+                FileSystem::create_blank_file($this->log_file);
+                switch ($type) {
                     case LogTypes::HTML:
-                        $file = '<style>' . file_get_contents( $this->css_path ) . ' </style>
+                        $file = '<style>' . file_get_contents($this->css_path) . ' </style>
 <h1> LOG FILE</h1>
 <table class=\'log-table\'>
     <tr>
@@ -171,17 +171,17 @@ class ErrorExceptionHandler {
         <th>Stack Trace</th>
     </tr>
 </table>';
-                        FileSystem::write_file( $this->log_file, $file );
+                        FileSystem::write_file($this->log_file, $file);
                         break;
                     case LogTypes::MD:
                         $file = '# LOG FILE
 
 | Timestamp | Error | Details | File | Line | Error Code | Stack Trace |
 | --------- | ----- | ------- | ---- | ---- | ---------- | ----------- |';
-                        FileSystem::write_file( $this->log_file, $file );
+                        FileSystem::write_file($this->log_file, $file);
                         break;
                     case LogTypes::JSON:
-                        JSONTools::write_json_file( $this->log_file, [] );
+                        JSONTools::write_json_file($this->log_file, []);
                         break;
                 }
             }
@@ -206,44 +206,44 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function set_error_handlers( DrawError $display = DrawError::STANDARD ): void {
-        if ( $this->is_cli || $display === DrawError::STANDARD ) {
+    public function set_error_handlers(DrawError $display = DrawError::STANDARD): void {
+        if ($this->is_cli || $display === DrawError::STANDARD) {
             return;
         }
-        if ( $this->hide_all_errors ) {
+        if ($this->hide_all_errors) {
             $display = DrawError::HIDDEN;
         }
 
         /**
          * @see src/Tools/Errors/DrawError.php
          */
-        switch ( $display ) {
+        switch ($display) {
             case DrawError::TEXT_INLINE:
-                set_exception_handler( [$this, 'text_inline'] );
-                set_error_handler( [$this, 'catch_error_text_inline'], E_ALL );
+                set_exception_handler([$this, 'text_inline']);
+                set_error_handler([$this, 'catch_error_text_inline'], E_ALL);
                 break;
             case DrawError::PRETTY_INLINE:
-                set_exception_handler( [$this, 'pretty_exception_table'] );
-                set_error_handler( [$this, 'catch_error_pretty'], E_ALL );
+                set_exception_handler([$this, 'pretty_exception_table']);
+                set_error_handler([$this, 'catch_error_pretty'], E_ALL);
                 break;
             case DrawError::BAR:
-                $fn = function ( $relative_path ): string {
-                    if ( PHP_OS === 'WINNT' ) {
-                        $realpath = str_replace( $_SERVER['DOCUMENT_ROOT'], '', str_replace( '\\', '/', $relative_path ) );
+                $fn = function ($relative_path): string {
+                    if (PHP_OS === 'WINNT') {
+                        $realpath = str_replace($_SERVER['DOCUMENT_ROOT'], '', str_replace('\\', '/', $relative_path));
                         return $realpath;
                     } else {
-                        $realpath = realpath( $relative_path );
-                        return str_replace( $_SERVER['DOCUMENT_ROOT'], '', $realpath );
+                        $realpath = realpath($relative_path);
+                        return str_replace($_SERVER['DOCUMENT_ROOT'], '', $realpath);
                     }
                 };
-                echo "<script src='{$fn( __DIR__ . '/js/scripts.min.js' )}' type='module'></script>";
-                echo "<style>" . file_get_contents( __DIR__ . '/css/error_bar.css' ) . "</style>";
-                set_exception_handler( [$this, 'log_exception_in_bar'] );
-                set_error_handler( [$this, 'log_error_in_bar'], E_ALL );
+                echo "<script src='{$fn(__DIR__ . '/js/scripts.min.js')}' type='module'></script>";
+                echo "<style>" . file_get_contents(__DIR__ . '/css/error_bar.css') . "</style>";
+                set_exception_handler([$this, 'log_exception_in_bar']);
+                set_error_handler([$this, 'log_error_in_bar'], E_ALL);
                 break;
             case DrawError::HIDDEN:
-                set_exception_handler( [$this, 'hidden_exception'] );
-                set_error_handler( [$this, 'hidden_error'], E_ALL );
+                set_exception_handler([$this, 'hidden_exception']);
+                set_error_handler([$this, 'hidden_error'], E_ALL);
                 break;
         }
     }
@@ -260,8 +260,8 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    private function error_title( int $error_code ): string {
-        return match( $error_code ) {
+    private function error_title(int $error_code): string {
+        return match ($error_code) {
             E_ERROR             => 'Error',
             E_RECOVERABLE_ERROR => 'Recoverable Error',
             E_WARNING           => 'Warning',
@@ -294,9 +294,9 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function catch_error_pretty( int $error_number, string $error_string, string $error_file, int $error_line ): void {
-        echo '<style>' . file_get_contents( $this->css_path ) . ' </style>';
-        echo "<div class='error-exception-container " . match ( $error_number ) {
+    public function catch_error_pretty(int $error_number, string $error_string, string $error_file, int $error_line): void {
+        echo '<style>' . file_get_contents($this->css_path) . ' </style>';
+        echo "<div class='error-exception-container " . match ($error_number) {
             E_NOTICE            => 'general-container',
             E_USER_NOTICE       => 'general-container',
             E_ERROR             => 'error-container',
@@ -306,17 +306,18 @@ class ErrorExceptionHandler {
             E_DEPRECATED        => 'deprecated-container',
             E_USER_DEPRECATED   => 'deprecated-container',
             default             => 'general-container',
-        } . "'>";
-        echo "<h1>{$this->error_title( $error_number )}</h1>";
+        }
+            . "'>";
+        echo "<h1>{$this->error_title($error_number)}</h1>";
         echo "{$error_string} in file <b>{$error_file}</b> on line <b>{$error_line}</b>";
         echo "</div>"; // exception-container
-        $this->log_errors( [
+        $this->log_errors([
             'error'   => $error_number,
             'details' => $error_string,
             'file'    => $error_file,
             'line'    => $error_line,
             'code'    => $error_number,
-        ] );
+        ]);
     }
 
 
@@ -329,10 +330,10 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function pretty_exception_table( Throwable $e ): void {
-        echo '<style>' . file_get_contents( $this->css_path ) . ' </style>';
+    public function pretty_exception_table(Throwable $e): void {
+        echo '<style>' . file_get_contents($this->css_path) . ' </style>';
         echo "<div class='error-exception-container exception-container'>";
-        echo "<h1>" . get_class( $e ) . "</h1>";
+        echo "<h1>" . get_class($e) . "</h1>";
         echo "'{$e->getMessage()}' in <b>{$e->getFile()}</b> ({$e->getLine()})\n";
         echo "<table class='error-table'>";
         echo "<tr>";
@@ -345,8 +346,8 @@ class ErrorExceptionHandler {
         echo "</thead>";
         echo "</tr>";
         $i = 0;
-        foreach ( $e->getTrace() as $id => $line ) {
-            $fn = ( $line['class'] ?? '' ) . ( $line['type'] ?? '' ) . $line['function'];
+        foreach ($e->getTrace() as $id => $line) {
+            $fn = ($line['class'] ?? '') . ($line['type'] ?? '') . $line['function'];
             $file = $line['file'] ?? '';
             $ln = $line['line'] ?? '';
             echo "<tr>";
@@ -354,7 +355,7 @@ class ErrorExceptionHandler {
             echo "<td>{$file}</td>";
             echo "<td>{$ln}</td>";
             echo "<td>{$fn}</td>";
-            echo "<td>" . implode( "<br>", $line['args'] ?? [] ) . "</td>";
+            echo "<td>" . implode("<br>", $line['args'] ?? []) . "</td>";
             echo "</tr>";
             $i = $id + 1;
         }
@@ -367,14 +368,14 @@ class ErrorExceptionHandler {
         echo "<tr>";
         echo "</table>";
         echo "</div>"; // exception-container
-        $this->log_errors( [
-            'error'   => get_class( $e ),
+        $this->log_errors([
+            'error'   => get_class($e),
             'details' => $e->getMessage(),
             'file'    => $e->getFile(),
             'line'    => $e->getLine(),
             'code'    => $e->getCode(),
             'trace'   => $e->getTraceAsString(),
-        ] );
+        ]);
     }
 
 
@@ -390,15 +391,15 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function catch_error_text_inline( int $error_number, string $error_string, string $error_file, int $error_line ): void {
-        echo "<b>{$this->error_title( $error_number )}</b>: {$error_string} in file <b>{$error_file}</b> on line <b>{$error_line}</b><br><br>";
-        $this->log_errors( [
+    public function catch_error_text_inline(int $error_number, string $error_string, string $error_file, int $error_line): void {
+        echo "<b>{$this->error_title($error_number)}</b>: {$error_string} in file <b>{$error_file}</b> on line <b>{$error_line}</b><br><br>";
+        $this->log_errors([
             'error'   => $error_number,
             'details' => $error_string,
             'file'    => $error_file,
             'line'    => $error_line,
             'code'    => $error_number,
-        ] );
+        ]);
     }
 
 
@@ -411,18 +412,18 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function text_inline( Throwable $e ): void {
-        echo "<b>" . get_class( $e ) . "</b> '{$e->getMessage()}' in <b>{$e->getFile()}</b>({$e->getLine()})<br>";
-        $trace = str_replace( "#", "\t#", $e->getTraceAsString() );
+    public function text_inline(Throwable $e): void {
+        echo "<b>" . get_class($e) . "</b> '{$e->getMessage()}' in <b>{$e->getFile()}</b>({$e->getLine()})<br>";
+        $trace = str_replace("#", "\t#", $e->getTraceAsString());
         echo "<pre>Stack Trace:\n{$trace}</pre><br><br>";
-        $this->log_errors( [
-            'error'   => get_class( $e ),
+        $this->log_errors([
+            'error'   => get_class($e),
             'details' => $e->getMessage(),
             'file'    => $e->getFile(),
             'line'    => $e->getLine(),
             'code'    => $e->getCode(),
             'trace'   => $e->getTraceAsString(),
-        ] );
+        ]);
     }
 
 
@@ -438,14 +439,14 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function hidden_error( int $error_number, string $error_string, string $error_file, int $error_line ): void {
-        $this->log_errors( [
+    public function hidden_error(int $error_number, string $error_string, string $error_file, int $error_line): void {
+        $this->log_errors([
             'error'   => $error_number,
             'details' => $error_string,
             'file'    => $error_file,
             'line'    => $error_line,
             'code'    => $error_number,
-        ] );
+        ]);
     }
 
 
@@ -458,15 +459,15 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function hidden_exception( Throwable $e ): void {
-        $this->log_errors( [
-            'error'   => get_class( $e ),
+    public function hidden_exception(Throwable $e): void {
+        $this->log_errors([
+            'error'   => get_class($e),
             'details' => $e->getMessage(),
             'file'    => $e->getFile(),
             'line'    => $e->getLine(),
             'code'    => $e->getCode(),
             'trace'   => $e->getTraceAsString(),
-        ] );
+        ]);
     }
 
 
@@ -482,9 +483,9 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function log_error_in_bar( int $error_number, string $error_string, string $error_file, int $error_line ): void {
+    public function log_error_in_bar(int $error_number, string $error_string, string $error_file, int $error_line): void {
         echo "<div class='error-bar-data'>";
-        $this->catch_error_pretty( $error_number, $error_string, $error_file, $error_line );
+        $this->catch_error_pretty($error_number, $error_string, $error_file, $error_line);
         echo "</div>";
     }
 
@@ -498,9 +499,9 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    public function log_exception_in_bar( Throwable $e ): void {
+    public function log_exception_in_bar(Throwable $e): void {
         echo "<div class='error-bar-data'>";
-        $this->pretty_exception_table( $e );
+        $this->pretty_exception_table($e);
         echo "</div>";
     }
 
@@ -514,11 +515,11 @@ class ErrorExceptionHandler {
      * @since   LBF 0.2.0-beta
      */
 
-    private function log_errors( array $log_data ): void {
-        if ( !$this->log_to_file ) {
+    private function log_errors(array $log_data): void {
+        if (!$this->log_to_file) {
             return;
         }
-        $log_data['error'] = match( $log_data['error'] ) {
+        $log_data['error'] = match ($log_data['error']) {
             E_ERROR             => 'E_ERROR',
             E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
             E_WARNING           => 'E_WARNING',
@@ -538,19 +539,19 @@ class ErrorExceptionHandler {
             default             => $log_data['error'],
         };
 
-        if ( !isset( $log_data['trace'] ) ) {
+        if (!isset($log_data['trace'])) {
             $log_data['trace'] = '';
         }
 
-        $timestamp = date( 'Y-m-d H:i:s' );
-        switch ( $this->log_type ) {
+        $timestamp = date('Y-m-d H:i:s');
+        switch ($this->log_type) {
             case LogTypes::LOG:
                 $log = "\n[{$timestamp}] - {$log_data['error']} | {$log_data['code']} | {$log_data['file']} | {$log_data['line']} | {$log_data['details']}";
-                if ( $log_data['trace'] !== '' ) {
-                    $log_data['trace'] = str_replace( "#", "\t#", $log_data['trace'] );
+                if ($log_data['trace'] !== '') {
+                    $log_data['trace'] = str_replace("#", "\t#", $log_data['trace']);
                     $log .= " | STACK TRACE:\n{$log_data['trace']}";
                 }
-                FileSystem::append_to_file( $this->log_file, $log );
+                FileSystem::append_to_file($this->log_file, $log);
                 break;
             case LogTypes::HTML:
                 $log_data['trace'] = '<pre>' . $log_data['trace'] . '</pre>';
@@ -564,21 +565,20 @@ class ErrorExceptionHandler {
         <td>{$log_data['trace']}</td>
     </tr>
 </table>";
-                $log = str_replace( '</table>', $new_log, file_get_contents( $this->log_file ) );
-                FileSystem::write_file( $this->log_file, $log );
+                $log = str_replace('</table>', $new_log, file_get_contents($this->log_file));
+                FileSystem::write_file($this->log_file, $log);
                 break;
             case LogTypes::MD:
-                $log_data['trace'] = str_replace( "\n", "<br>", $log_data['trace'] );
-                $log_data['trace'] = str_replace( "#", "\#", $log_data['trace'] );
+                $log_data['trace'] = str_replace("\n", "<br>", $log_data['trace']);
+                $log_data['trace'] = str_replace("#", "\#", $log_data['trace']);
                 $log = "\n| {$timestamp} | {$log_data['error']} | {$log_data['details']} | {$log_data['file']} | {$log_data['line']} | {$log_data['code']} | {$log_data['trace']} |";
-                FileSystem::append_to_file( $this->log_file, $log );
+                FileSystem::append_to_file($this->log_file, $log);
                 break;
             case LogTypes::JSON:
-                $data = JSONTools::read_json_file_to_array( $this->log_file );
+                $data = JSONTools::read_json_file_to_array($this->log_file);
                 $data[time()][] = $log_data;
-                JSONTools::write_json_file( $this->log_file, $data );
+                JSONTools::write_json_file($this->log_file, $data);
                 break;
         }
     }
-
 }

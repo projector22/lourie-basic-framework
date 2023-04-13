@@ -25,7 +25,7 @@ trait RetrieveData {
      */
 
     public function as_array(): array {
-        return JSONTools::read_json_file_to_array( $this->path() );
+        return JSONTools::read_json_file_to_array($this->path());
     }
 
 
@@ -39,7 +39,6 @@ trait RetrieveData {
      */
 
     public function as_object(): object {
-        return JSONTools::read_json_file_to_object( $this->path() );
+        return JSONTools::read_json_file_to_object($this->path());
     }
-    
 }

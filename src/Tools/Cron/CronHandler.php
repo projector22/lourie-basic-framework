@@ -181,7 +181,7 @@ class CronHandler {
      * @access  public
      * @since   LRS 3.17.4
      */
-    
+
     public string $cron_name;
 
     /**
@@ -304,13 +304,13 @@ class CronHandler {
      * @since   LRS 3.17.4
      */
 
-    private function fill_in_template( string $interval, string $schedule ): string {
+    private function fill_in_template(string $interval, string $schedule): string {
         $template = $this->environment == self::WINDOWS ? self::WINDOWS_TASK_TEMPLATE : self::UNIX_TASK_TEMPLATE;
-        if ( $this->environment == self::WINDOWS ) {
-            $template = str_replace( '%interval%', $schedule, $template ) . $interval;
+        if ($this->environment == self::WINDOWS) {
+            $template = str_replace('%interval%', $schedule, $template) . $interval;
         }
-        $template = str_replace( '%bat_file%', correct_win_slashes( CRON_BAT_PATH . "{$this->cron_name}.bat" ), $template );
-        $template = str_replace( '%event_name%', $this->cron_name, $template );
+        $template = str_replace('%bat_file%', correct_win_slashes(CRON_BAT_PATH . "{$this->cron_name}.bat"), $template);
+        $template = str_replace('%event_name%', $this->cron_name, $template);
         return $template;
     }
 
@@ -332,8 +332,8 @@ class CronHandler {
         string $minute
     ): string {
         $text = $this->environment == self::WINDOWS ? self::WINDOWS_SCHEDULE_OPTIONS[$schedule] : self::UNIX_SCHEDULE_OPTIONS[$schedule];
-        $text = str_replace( '%min%', $minute, $text );
-        return $this->fill_in_template( $text, $schedule );
+        $text = str_replace('%min%', $minute, $text);
+        return $this->fill_in_template($text, $schedule);
     }
 
 
@@ -354,8 +354,8 @@ class CronHandler {
         string $hour
     ): string {
         $text = $this->environment == self::WINDOWS ? self::WINDOWS_SCHEDULE_OPTIONS[$schedule] : self::UNIX_SCHEDULE_OPTIONS[$schedule];
-        $text = str_replace( '%hour%', $hour, $text );
-        return $this->fill_in_template( $text, $schedule );
+        $text = str_replace('%hour%', $hour, $text);
+        return $this->fill_in_template($text, $schedule);
     }
 
 
@@ -380,14 +380,14 @@ class CronHandler {
         ?int $hour = null
     ): string {
         $text = $this->environment == self::WINDOWS ? self::WINDOWS_SCHEDULE_OPTIONS[$schedule] : self::UNIX_SCHEDULE_OPTIONS[$schedule];
-        $string = str_replace( '%day%', $day, $text );
-        if ( !is_null( $min ) ) {
-            $string = str_replace( '%min%', $min, $string );
+        $string = str_replace('%day%', $day, $text);
+        if (!is_null($min)) {
+            $string = str_replace('%min%', $min, $string);
         }
-        if ( !is_null( $hour ) ) {
-            $string = str_replace( '%hour%', $hour, $string );
+        if (!is_null($hour)) {
+            $string = str_replace('%hour%', $hour, $string);
         }
-        return $this->fill_in_template( $string, $schedule );
+        return $this->fill_in_template($string, $schedule);
     }
 
 
@@ -414,15 +414,15 @@ class CronHandler {
         ?int $hour = null
     ): string {
         $text = $this->environment == self::WINDOWS ? self::WINDOWS_SCHEDULE_OPTIONS[$schedule] : self::UNIX_SCHEDULE_OPTIONS[$schedule];
-        $string = str_replace( '%week%', $week, $text );
-        $string = str_replace( '%week_day%', $week_day, $string );
-        if ( !is_null( $min ) ) {
-            $string = str_replace( '%min%', $min, $string );
+        $string = str_replace('%week%', $week, $text);
+        $string = str_replace('%week_day%', $week_day, $string);
+        if (!is_null($min)) {
+            $string = str_replace('%min%', $min, $string);
         }
-        if ( !is_null( $hour ) ) {
-            $string = str_replace( '%hour%', $hour, $string );
+        if (!is_null($hour)) {
+            $string = str_replace('%hour%', $hour, $string);
         }
-        return $this->fill_in_template( $string, $schedule );
+        return $this->fill_in_template($string, $schedule);
     }
 
 
@@ -449,15 +449,15 @@ class CronHandler {
         ?int $hour = null
     ): string {
         $text = $this->environment == self::WINDOWS ? self::WINDOWS_SCHEDULE_OPTIONS[$schedule] : self::UNIX_SCHEDULE_OPTIONS[$schedule];
-        $string = str_replace( '%month%', $month, $text );
-        $string = str_replace( '%month_day%', $month_day, $string );
-        if ( !is_null( $min ) ) {
-            $string = str_replace( '%min%', $min, $string );
+        $string = str_replace('%month%', $month, $text);
+        $string = str_replace('%month_day%', $month_day, $string);
+        if (!is_null($min)) {
+            $string = str_replace('%min%', $min, $string);
         }
-        if ( !is_null( $hour ) ) {
-            $string = str_replace( '%hour%', $hour, $string );
+        if (!is_null($hour)) {
+            $string = str_replace('%hour%', $hour, $string);
         }
-        return $this->fill_in_template( $string, $schedule );
+        return $this->fill_in_template($string, $schedule);
     }
 
 
@@ -472,32 +472,32 @@ class CronHandler {
      * @since   LRS 3.4.0
      */
 
-    public function delete_cron( string $cron_name ): bool {
-        $cron_name = $this->event_name_convention( $cron_name );
+    public function delete_cron(string $cron_name): bool {
+        $cron_name = $this->event_name_convention($cron_name);
         $success = true;
-        switch ( $this->environment ) {
+        switch ($this->environment) {
             case self::WINDOWS:
-                $bat_file = correct_win_slashes( CRON_BAT_PATH . "{$cron_name}.bat" );
-                $php_file = correct_win_slashes( CRON_PHP_PATH . "{$cron_name}.php" );
-                if ( file_exists( $bat_file ) && !unlink( $bat_file ) ) {
+                $bat_file = correct_win_slashes(CRON_BAT_PATH . "{$cron_name}.bat");
+                $php_file = correct_win_slashes(CRON_PHP_PATH . "{$cron_name}.php");
+                if (file_exists($bat_file) && !unlink($bat_file)) {
                     $success = false;
                 }
-                if ( file_exists( $php_file ) && !unlink( $php_file ) ) {
+                if (file_exists($php_file) && !unlink($php_file)) {
                     $success = false;
                 }
 
                 $cmd = "schtasks /delete /tn {$cron_name} /f";
-                $execute = shell_exec( $cmd . ' 2>&1' );
+                $execute = shell_exec($cmd . ' 2>&1');
 
                 echo "<span style='text-align:left'>";
-                if ( !str_contains( $execute, 'SUCCESS' ) ) {
+                if (!str_contains($execute, 'SUCCESS')) {
                     /**
                      * @todo    Check on 'run as' user and whether it should run without someone logged on, NB
                      * 
                      * @since   LRS 3.10.1
                      */
                     echo $this->scheduled_delete_failed . "<br>";
-                    Draw::copy_text_textbox( $cmd, 'sc_d' );
+                    Draw::copy_text_textbox($cmd, 'sc_d');
                     $success = false;
                 }
                 echo "</span>";
@@ -505,30 +505,30 @@ class CronHandler {
             case self::UNIX:
                 $sh_file  = CRON_SH_PATH  . "{$cron_name}.sh";
                 $php_file = CRON_PHP_PATH . "{$cron_name}.php";
-                if ( file_exists( $php_file ) && !unlink( $php_file ) ) {
+                if (file_exists($php_file) && !unlink($php_file)) {
                     $success = false;
                 }
-                if ( file_exists( $sh_file ) && !unlink( $sh_file ) ) {
+                if (file_exists($sh_file) && !unlink($sh_file)) {
                     $success = false;
                 }
 
                 $cmd = 'crontab -l | grep -v "bash /var/www/html/bin/crons/sh/' . $cron_name . '" | crontab -';
-                $execute = exec( $cmd . ' 2>&1' );
+                $execute = exec($cmd . ' 2>&1');
                 echo "<span style='text-align:left'>";
-                if ( $execute == ' ' ) {
+                if ($execute == ' ') {
                     echo $this->scheduled_delete_failed . "<br>";
-                    Draw::copy_text_textbox( $cmd, 'sc_d' );
+                    Draw::copy_text_textbox($cmd, 'sc_d');
                     $success = false;
                 }
                 echo "</span>";
                 break;
         }
-        if ( $success ) {
-            FileSystem::append_to_file( CRON_LOG_FILE, '[' . date( 'Y-m-d G:i:s' ) . "] - CRON Deleted:: SUCCESS - {$cron_name} - {$execute}\n" );
+        if ($success) {
+            FileSystem::append_to_file(CRON_LOG_FILE, '[' . date('Y-m-d G:i:s') . "] - CRON Deleted:: SUCCESS - {$cron_name} - {$execute}\n");
         } else {
-            FileSystem::append_to_file( CRON_LOG_FILE, '[' . date( 'Y-m-d G:i:s' ) . "] - CRON Deleted:: FAILED - {$cron_name} - {$execute}\n" );
+            FileSystem::append_to_file(CRON_LOG_FILE, '[' . date('Y-m-d G:i:s') . "] - CRON Deleted:: FAILED - {$cron_name} - {$execute}\n");
         }
-        return $success;                
+        return $success;
     }
 
 
@@ -540,24 +540,24 @@ class CronHandler {
      */
 
     protected function test_php_cli() {
-        switch ( $this->environment ) {
+        switch ($this->environment) {
             case self::WINDOWS:
-                if ( !php_executable_path() ) {
-                    Draw::action_error( 'The system cannot file where to find the php.exe file, please add it to PATH' );
+                if (!php_executable_path()) {
+                    Draw::action_error('The system cannot file where to find the php.exe file, please add it to PATH');
                     die;
                 }
                 break;
             case self::UNIX:
-                $test = shell_exec( 'php -v 2>&1' );
-                if ( str_contains( $test, "Command 'php' not found" ) ) {
-                    Draw::action_error( '<i>php-cli</i> not installed' );
+                $test = shell_exec('php -v 2>&1');
+                if (str_contains($test, "Command 'php' not found")) {
+                    Draw::action_error('<i>php-cli</i> not installed');
                     die;
                 }
                 break;
         }
     }
 
-    
+
     /**
      * Ensure the event name meets task naming conventions replacing spaces with underscores
      * 
@@ -569,7 +569,7 @@ class CronHandler {
      * @since   LRS 3.4.0
      */
 
-    protected function event_name_convention( $name ) {
-        return str_replace( ' ', '-', trim( $name ) );
+    protected function event_name_convention($name) {
+        return str_replace(' ', '-', trim($name));
     }
 }

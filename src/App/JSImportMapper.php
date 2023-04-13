@@ -11,7 +11,7 @@ namespace LBF\App;
  * JSImportMapper::import([
  *  'example' => '../../../example-path.js'
  *  ...
-  * ])->render();
+ * ])->render();
  * ```
  * 
  * use LBF\App\JSImportMapper;
@@ -83,16 +83,16 @@ class JSImportMapper {
 
 
     public function __construct() {
-        if ( Config::current_page( 'tab' ) !== null ) {
+        if (Config::current_page('tab') !== null) {
             $this->buffer = '../../../../../';
         } else {
             $this->buffer = '../../../../';
         }
         $map = [];
-        foreach ( self::LBF_MAP as $shortcut => $path ) {
+        foreach (self::LBF_MAP as $shortcut => $path) {
             $map[$shortcut] = $this->buffer . $path;
         }
-        $this->lbf_map = $map;        
+        $this->lbf_map = $map;
     }
 
 
@@ -108,7 +108,7 @@ class JSImportMapper {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function import( array $map ): JSImportMapper {
+    public static function import(array $map): JSImportMapper {
         $class = __CLASS__;
         $this_obj = new $class;
         $this_obj->map = array_merge(
@@ -127,6 +127,6 @@ class JSImportMapper {
      */
 
     public function render(): string {
-        return json_encode( ['imports' => $this->map] );
+        return json_encode(['imports' => $this->map]);
     }
 }

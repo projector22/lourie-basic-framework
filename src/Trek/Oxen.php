@@ -33,9 +33,9 @@ class Oxen extends ConnectMySQL {
      * @since   LRS 3.14.0  Moved to Oxen
      */
 
-    protected function define_new_table( string $table_const, string $table_name ): void {
-        if ( !defined ( $table_const ) ) {
-            define( $table_const, getenv( 'TABLE_PREFIX' ) . $table_name );
+    protected function define_new_table(string $table_const, string $table_name): void {
+        if (!defined($table_const)) {
+            define($table_const, getenv('TABLE_PREFIX') . $table_name);
         }
     }
 
@@ -55,19 +55,19 @@ class Oxen extends ConnectMySQL {
      * @since   LRS 3.14.0  Moved to Oxen
      */
 
-    protected function add_element_to_config( string $search_str, string $new_config_paste ): void {
-        if ( !defined( 'CONFIG_FILE' ) ) {
-            define( 'CONFIG_FILE', '' ); // hide the error.
-            throw new Exception( "No config file found. Please define 'CONFIG_FILE'", 404 );
+    protected function add_element_to_config(string $search_str, string $new_config_paste): void {
+        if (!defined('CONFIG_FILE')) {
+            define('CONFIG_FILE', ''); // hide the error.
+            throw new Exception("No config file found. Please define 'CONFIG_FILE'", 404);
         }
-        if ( !file_exists( CONFIG_FILE ) ) {
-            throw new Exception( "App configuration file " . CONFIG_FILE . " missing.", 404 );
+        if (!file_exists(CONFIG_FILE)) {
+            throw new Exception("App configuration file " . CONFIG_FILE . " missing.", 404);
         }
-        
+
         $new_config  = "{$search_str}\n{$new_config_paste}";
-        $file  = file_get_contents( CONFIG_FILE );
-        $paste = str_replace( $search_str, $new_config, $file );
-        file_put_contents( CONFIG_FILE, $paste );
+        $file  = file_get_contents(CONFIG_FILE);
+        $paste = str_replace($search_str, $new_config, $file);
+        file_put_contents(CONFIG_FILE, $paste);
     }
 
 
@@ -81,17 +81,16 @@ class Oxen extends ConnectMySQL {
      * @since   LRS 3.17.4
      */
 
-    protected function replace_config_element( string $search_str, string $new_config ): void {
-        if ( !defined( 'CONFIG_FILE' ) ) {
-            define( 'CONFIG_FILE', '' ); // hide the error.
-            throw new Exception( "No config file found. Please define 'CONFIG_FILE'", 404 );
+    protected function replace_config_element(string $search_str, string $new_config): void {
+        if (!defined('CONFIG_FILE')) {
+            define('CONFIG_FILE', ''); // hide the error.
+            throw new Exception("No config file found. Please define 'CONFIG_FILE'", 404);
         }
-        if ( !file_exists( CONFIG_FILE ) ) {
-            throw new Exception( "App configuration file " . CONFIG_FILE . " missing.", 404 );
+        if (!file_exists(CONFIG_FILE)) {
+            throw new Exception("App configuration file " . CONFIG_FILE . " missing.", 404);
         }
-        $file  = file_get_contents( CONFIG_FILE );
-        $paste = str_replace( $search_str, $new_config, $file );
-        file_put_contents( CONFIG_FILE, $paste );
+        $file  = file_get_contents(CONFIG_FILE);
+        $paste = str_replace($search_str, $new_config, $file);
+        file_put_contents(CONFIG_FILE, $paste);
     }
-
 }

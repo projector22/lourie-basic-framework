@@ -24,8 +24,8 @@ use LBF\HTML\HTML;
  * @since   LRS 3.15.4
  */
 
-function normalize_path_string( string $path ): string {
-    return str_replace( '\\', '/', $path );
+function normalize_path_string(string $path): string {
+    return str_replace('\\', '/', $path);
 }
 
 
@@ -40,13 +40,13 @@ function normalize_path_string( string $path ): string {
  * @since   LRS 3.17.0  Added array support
  */
 
-function protect( mixed $data ): mixed {
-    if ( is_null( $data ) ) {
+function protect(mixed $data): mixed {
+    if (is_null($data)) {
         return $data;
     }
-    if ( is_array( $data ) ) {
-        foreach ( $data as $index => $entry ) {
-            $data[$index] = protect( $entry );
+    if (is_array($data)) {
+        foreach ($data as $index => $entry) {
+            $data[$index] = protect($entry);
         }
     } else {
 
@@ -56,15 +56,15 @@ function protect( mixed $data ): mixed {
          * @link    https://www.w3schools.com/php/func_string_trim.asp
          */
 
-        $data = trim( $data );
+        $data = trim($data);
 
         /**
          * This removes backslashes 
          * 
          * @link    https://www.w3schools.com/php/func_string_stripslashes.asp
          */
-        
-        $data = stripslashes( $data );
+
+        $data = stripslashes($data);
 
         /**
          * The htmlspecialchars() function converts some predefined characters to HTML entities.
@@ -79,7 +79,7 @@ function protect( mixed $data ): mixed {
          * @link    https://www.w3schools.com/php/func_string_htmlspecialchars.asp
          */
 
-        $data = htmlspecialchars( $data, ENT_QUOTES );
+        $data = htmlspecialchars($data, ENT_QUOTES);
     }
 
     return $data;
@@ -114,7 +114,7 @@ function get_token(): ?string {
  * @since   LRS 3.15.0  Renamed from token() to set_token()
  */
 
-function set_token( string $token ): void {
+function set_token(string $token): void {
     echo "<input type='hidden' name='token' value='{$token}'>";
 }
 
@@ -134,17 +134,16 @@ function set_token( string $token ): void {
  * @since   LRS 3.15.4  Added param $return
  */
 
-function page( string $page, bool $load_pdf = false, bool $return = false ): string {
+function page(string $page, bool $load_pdf = false, bool $return = false): string {
     $text = "<input type='hidden' name='p' value='{$page}'>";
-    if ( $load_pdf ) {
+    if ($load_pdf) {
         $text .= "<input type='hidden' name='task' value='pdf'>";
     }
-    if ( !$return ) {
+    if (!$return) {
         echo $text;
         return '';
     }
     return $text;
-    
 }
 
 
@@ -160,9 +159,9 @@ function page( string $page, bool $load_pdf = false, bool $return = false ): str
  * @since   LRS 3.15.4
  */
 
-function tab( string $tab, bool $return = false ): string {
+function tab(string $tab, bool $return = false): string {
     $text = "<input type='hidden' name='t' value='{$tab}'>";
-    if ( $return ) {
+    if ($return) {
         return $text;
     } else {
         echo $text;
@@ -180,9 +179,9 @@ function tab( string $tab, bool $return = false ): string {
  * @since   LRS 3.8.5
  */
 
-function load_page( string $default ): string {
-    if ( isset( $_GET['p'] ) ) {
-        return protect( $_GET['p'] );
+function load_page(string $default): string {
+    if (isset($_GET['p'])) {
+        return protect($_GET['p']);
     } else {
         return $default;
     }
@@ -208,22 +207,22 @@ function load_page( string $default ): string {
  * @since   LRS 3.16.1  Entirely reworked, added param $num_of_zeros.
  */
 
-function add_leading_zero( mixed $input, int $num_of_zeros = 1 ): string {
+function add_leading_zero(mixed $input, int $num_of_zeros = 1): string {
     $input = "{$input}";
-    if ( $num_of_zeros < 1 ) {
-        throw new Exception( "You cannot set the parameter '\$num_of_zeros' to less than 1, you set it to {$num_of_zeros}" );
+    if ($num_of_zeros < 1) {
+        throw new Exception("You cannot set the parameter '\$num_of_zeros' to less than 1, you set it to {$num_of_zeros}");
     }
-    if ( !is_numeric( $input ) ) {
+    if (!is_numeric($input)) {
         return $input;
     }
 
-    $input_len = strlen( $input );
+    $input_len = strlen($input);
     $zero_string = '0';
-    for ( $i = 0; $i < $num_of_zeros; $i++ ) {
+    for ($i = 0; $i < $num_of_zeros; $i++) {
         $zero_string .= '0';
     }
 
-    return substr_replace( $zero_string, $input, intval( gmp_neg( $input_len ) ), $input_len  );
+    return substr_replace($zero_string, $input, intval(gmp_neg($input_len)), $input_len);
 }
 
 
@@ -238,9 +237,9 @@ function add_leading_zero( mixed $input, int $num_of_zeros = 1 ): string {
  * @since   LRS 3.0.0
  */
 
-function remove_trailing_chars( string $data, string $test ): string {
-    while ( substr( $data, -1 ) == $test ) {
-        $data = rtrim( $data, $test );  
+function remove_trailing_chars(string $data, string $test): string {
+    while (substr($data, -1) == $test) {
+        $data = rtrim($data, $test);
     }
     return $data;
 }
@@ -265,27 +264,27 @@ function remove_trailing_chars( string $data, string $test ): string {
  * @since   LRS 3.17.3  Added the ability to create the based on object properties.
  */
 
-function build_item_droplist( array|object $list, ?array $value = null, string|int|null $selected_option = '', array $hidden_entries = [] ): string {
+function build_item_droplist(array|object $list, ?array $value = null, string|int|null $selected_option = '', array $hidden_entries = []): string {
     $option = '';
-    if ( is_object( $list ) ) {
-        foreach ( $list as $key => $item ) {
+    if (is_object($list)) {
+        foreach ($list as $key => $item) {
             $selected = (string)$key == $selected_option ? ' selected' : '';
-            $hidden   = in_array( $key, $hidden_entries ) ? ' hidden' : '';
+            $hidden   = in_array($key, $hidden_entries) ? ' hidden' : '';
             $option .= "<option value='{$key}'{$selected}{$hidden}>{$item}</option>";
         }
     } else {
-        if ( !is_null ( $value ) ) {
+        if (!is_null($value)) {
             $i = 0;
-            foreach ( $list as $item ) {
+            foreach ($list as $item) {
                 $selected = (string)$value[$i] == $selected_option ? ' selected' : '';
-                $hidden   = in_array( $value[$i], $hidden_entries ) ? ' hidden' : '';
+                $hidden   = in_array($value[$i], $hidden_entries) ? ' hidden' : '';
                 $option .= "<option value='{$value[$i]}'{$selected}{$hidden}>{$item}</option>";
                 $i++;
             }
         } else {
-            foreach ( $list as $i => $item ) {
+            foreach ($list as $i => $item) {
                 $selected = (string)$item == $selected_option ? ' selected' : '';
-                $hidden   = in_array( $item, $hidden_entries ) ? ' hidden' : '';
+                $hidden   = in_array($item, $hidden_entries) ? ' hidden' : '';
                 $option .= "<option value='{$item}'{$selected}{$hidden}>{$item}</option>";
             }
         }
@@ -309,15 +308,15 @@ function build_item_droplist( array|object $list, ?array $value = null, string|i
  * @since   LRS 3.1.0
  */
 
-function get_string_between( string $string, string $start, string $end ): string {
+function get_string_between(string $string, string $start, string $end): string {
     $string = ' ' . $string;
-    $ini = strpos( $string, $start );
-    if ( $ini == 0 ) {
+    $ini = strpos($string, $start);
+    if ($ini == 0) {
         return '';
     }
-    $ini += strlen( $start );
-    $len = strpos( $string, $end, $ini ) - $ini;
-    return substr( $string, $ini, $len );
+    $ini += strlen($start);
+    $len = strpos($string, $end, $ini) - $ini;
+    return substr($string, $ini, $len);
 }
 
 
@@ -335,29 +334,29 @@ function get_string_between( string $string, string $start, string $end ): strin
  * @since   LRS 3.23.0  Added param $add_all
  */
 
-function week_select( ?string $selected_week = null, ?int $year = null, bool $add_all = false ): string {
-    if ( is_null( $year ) ) {
-        $year  = date( 'Y' );
+function week_select(?string $selected_week = null, ?int $year = null, bool $add_all = false): string {
+    if (is_null($year)) {
+        $year  = date('Y');
     }
 
     $t = $w = [];
 
-    if ( $add_all ) {
+    if ($add_all) {
         $t[] = 'All';
         $w[] = 'all';
     }
 
-    for ( $i = 1; $i <= 52; $i++ ) {
-        $date = new \DateTime(); 
-        $date->setISODate( $year, $i );
-        $t[] = "Week {$i} : {$date->format( 'jS F' )} - {$date->modify( '+6 days' )->format( 'jS F' )}";
+    for ($i = 1; $i <= 52; $i++) {
+        $date = new \DateTime();
+        $date->setISODate($year, $i);
+        $t[] = "Week {$i} : {$date->format('jS F')} - {$date->modify('+6 days')->format('jS F')}";
         $w[] = $i;
     }
-    if ( is_null( $selected_week ) ) {
-        $selected_week = date( 'W' );
+    if (is_null($selected_week)) {
+        $selected_week = date('W');
     }
 
-    return build_item_droplist( $t, $w, $selected_week );
+    return build_item_droplist($t, $w, $selected_week);
 }
 
 
@@ -373,7 +372,7 @@ function week_select( ?string $selected_week = null, ?int $year = null, bool $ad
  * @since   LRS 3.3.2
  */
 
-function month_select( ?string $selected_month = null, ?int $year = null ): string {
+function month_select(?string $selected_month = null, ?int $year = null): string {
     $months = [
         1  => 'January',
         2  => 'February',
@@ -388,15 +387,15 @@ function month_select( ?string $selected_month = null, ?int $year = null ): stri
         11 => 'November',
         12 => 'December'
     ];
-    if ( is_null( $year ) ) {
-        $year  = date( 'Y' );
-    }        
-
-    if ( is_null( $selected_month ) ) {
-        $selected_month = date( 'n' );
+    if (is_null($year)) {
+        $year  = date('Y');
     }
 
-    return build_item_droplist( $months, array_keys( $months ), $selected_month );
+    if (is_null($selected_month)) {
+        $selected_month = date('n');
+    }
+
+    return build_item_droplist($months, array_keys($months), $selected_month);
 }
 
 
@@ -413,35 +412,35 @@ function month_select( ?string $selected_month = null, ?int $year = null ): stri
  */
 
 function php_executable_path(): string|bool {
-    if ( PHP_OS !== 'WINNT' ) {
+    if (PHP_OS !== 'WINNT') {
         return 'php';
     }
-    if ( defined( 'PHP_BINARY' ) && PHP_BINARY && in_array( PHP_SAPI, array( 'cli', 'cli-server' ) ) && is_file( PHP_BINARY ) ) {
+    if (defined('PHP_BINARY') && PHP_BINARY && in_array(PHP_SAPI, array('cli', 'cli-server')) && is_file(PHP_BINARY)) {
         return PHP_BINARY;
-    } else if ( strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN' ) {
-        $paths = explode( ';', $_SERVER['PATH'] );
-        foreach ( $paths as $path ) {
-            if ( str_contains( $path, 'php' ) ) {
-                if ( is_file( $path . DIRECTORY_SEPARATOR . 'php.exe') ) {
+    } else if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        $paths = explode(';', $_SERVER['PATH']);
+        foreach ($paths as $path) {
+            if (str_contains($path, 'php')) {
+                if (is_file($path . DIRECTORY_SEPARATOR . 'php.exe')) {
                     return $path . DIRECTORY_SEPARATOR . 'php.exe';
                 }
             }
         }
     } else {
-        $paths = explode( PATH_SEPARATOR, getenv( 'PATH' ) );
-        foreach ( $paths as $path ) {
-            if ( substr( $path, strlen( $path )-1 ) == DIRECTORY_SEPARATOR ) {
-                $path = substr( $path, strlen( $path )-1 );
+        $paths = explode(PATH_SEPARATOR, getenv('PATH'));
+        foreach ($paths as $path) {
+            if (substr($path, strlen($path) - 1) == DIRECTORY_SEPARATOR) {
+                $path = substr($path, strlen($path) - 1);
             }
-            if ( substr( $path, strlen( $path ) - strlen( 'php' ) ) == 'php' ) {
-                if ( is_file( $path ) ) {
+            if (substr($path, strlen($path) - strlen('php')) == 'php') {
+                if (is_file($path)) {
                     return $path;
                 }
                 $response = $path . DIRECTORY_SEPARATOR . 'php';
-                if ( is_file( $response ) ) {
+                if (is_file($response)) {
                     return $response;
                 }
-            }               
+            }
         }
     }
     return false;
@@ -458,8 +457,8 @@ function php_executable_path(): string|bool {
  * @since   LRS 3.4.0
  */
 
-function correct_win_slashes( string $path ): string {
-    return str_replace( '/', '\\', trim( $path ) );
+function correct_win_slashes(string $path): string {
+    return str_replace('/', '\\', trim($path));
 }
 
 
@@ -475,22 +474,22 @@ function correct_win_slashes( string $path ): string {
  * @since   LRS 3.17.0
  */
 
-function correct_path_for_windows( string $path ): string {
-    if ( $path == '' ) {
+function correct_path_for_windows(string $path): string {
+    if ($path == '') {
         return $path;
     }
-    if ( PHP_OS === 'WINNT' ) {
+    if (PHP_OS === 'WINNT') {
         /**
          * If the path is something like C:\
          */
-        if ( $path[1] == ':' ) {
-            $path = correct_win_slashes( $path );
+        if ($path[1] == ':') {
+            $path = correct_win_slashes($path);
         }
         /**
          * If the path begins with \\, eg. \\192.168.1.1
          */
-        if ( $path[0] == '/' && $path[1] == '/' ) {
-            $path = correct_win_slashes( $path );
+        if ($path[0] == '/' && $path[1] == '/') {
+            $path = correct_win_slashes($path);
         }
     }
     return $path;
@@ -507,16 +506,16 @@ function correct_path_for_windows( string $path ): string {
  * @since   LRS 3.4.0
  */
 
-function async_execute( ?string $command = null ): void {
-    if( !$command ) {
+function async_execute(?string $command = null): void {
+    if (!$command) {
         echo "<pre>";
-        throw new Exception( "No command given" );
+        throw new Exception("No command given");
         echo "</pre>";
     }
-    if ( PHP_OS === 'WINNT' ) {
-        system( $command . " > NUL" );
+    if (PHP_OS === 'WINNT') {
+        system($command . " > NUL");
     } else {
-        shell_exec( "/usr/bin/nohup " . $command . " >/dev/null 2>&1 &" );
+        shell_exec("/usr/bin/nohup " . $command . " >/dev/null 2>&1 &");
     }
 }
 
@@ -538,15 +537,15 @@ function async_execute( ?string $command = null ): void {
  * @since   LRS 3.6.0   Added param $is_object
  */
 
-function order_by( array &$data, string $field, bool $is_object = false ): array|object {
-    if ( $is_object ) {
-        usort( $data, function ( $a, $b ) use ( $field ) { 
-            return strnatcmp( strtoupper( $a->$field ?? '' ), strtoupper( $b->$field ?? '' ) ); 
-        } );
+function order_by(array &$data, string $field, bool $is_object = false): array|object {
+    if ($is_object) {
+        usort($data, function ($a, $b) use ($field) {
+            return strnatcmp(strtoupper($a->$field ?? ''), strtoupper($b->$field ?? ''));
+        });
     } else {
-        usort( $data, function ( $a, $b ) use ( $field ) { 
-            return strnatcmp( strtoupper( $a[$field] ?? '' ), strtoupper( $b[$field] ?? '' ) ); 
-        } );
+        usort($data, function ($a, $b) use ($field) {
+            return strnatcmp(strtoupper($a[$field] ?? ''), strtoupper($b[$field] ?? ''));
+        });
     }
     return $data;
 }
@@ -563,18 +562,15 @@ function order_by( array &$data, string $field, bool $is_object = false ): array
  */
 
 function site_logo(): string|bool {
-    /**
-     * @todo Figure out how this should be used.
-     */
-    if ( !defined( "SITE_LOGO" ) ) {
-        define( "SITE_LOGO", "" );
+    if (!defined("SITE_LOGO")) {
+        define("SITE_LOGO", "");
         return false;
     }
-    if ( file_exists ( SITE_LOGO . '.png' ) ) {
+    if (file_exists(SITE_LOGO . '.png')) {
         return SITE_LOGO . '.png';
-    } else if ( file_exists ( SITE_LOGO . '.jpg' ) ) {
+    } else if (file_exists(SITE_LOGO . '.jpg')) {
         return SITE_LOGO . '.jpg';
-    } else if ( file_exists ( SITE_LOGO ) ) {
+    } else if (file_exists(SITE_LOGO)) {
         return SITE_LOGO;
     } else {
         return false;
@@ -595,13 +591,13 @@ function site_logo(): string|bool {
  * @since   LRS 3.9.1   Added consideration for windows type paths
  */
 
-function html_path( string $relative_path ): string {
-    if ( PHP_OS === 'WINNT' ) {
-        $realpath = str_replace( $_SERVER['DOCUMENT_ROOT'], '', normalize_path_string( $relative_path ) );
+function html_path(string $relative_path): string {
+    if (PHP_OS === 'WINNT') {
+        $realpath = str_replace($_SERVER['DOCUMENT_ROOT'], '', normalize_path_string($relative_path));
         return $realpath;
     } else {
-        $realpath = realpath( $relative_path );
-        return str_replace( $_SERVER['DOCUMENT_ROOT'], '', $realpath );
+        $realpath = realpath($relative_path);
+        return str_replace($_SERVER['DOCUMENT_ROOT'], '', $realpath);
     }
 }
 
@@ -615,9 +611,9 @@ function html_path( string $relative_path ): string {
  */
 
 function is_apple_mobile(): bool {
-    if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-        return ( str_contains( $_SERVER['HTTP_USER_AGENT'], 'iPhone' ) || 
-                 str_contains( $_SERVER['HTTP_USER_AGENT'], 'iPad' ) );
+    if (isset($_SERVER['HTTP_USER_AGENT'])) {
+        return (str_contains($_SERVER['HTTP_USER_AGENT'], 'iPhone') ||
+            str_contains($_SERVER['HTTP_USER_AGENT'], 'iPad'));
     }
     return false;
 }
@@ -633,8 +629,8 @@ function is_apple_mobile(): bool {
  * @since   LRS 3.9.0
  */
 
-function minute_to_hour_minute( int $time_in_minutes ): array {
-    $time['hour']    = floor( $time_in_minutes / 60 );
+function minute_to_hour_minute(int $time_in_minutes): array {
+    $time['hour']    = floor($time_in_minutes / 60);
     $time['minute']  = $time_in_minutes % 60;
     return $time;
 }
@@ -652,8 +648,8 @@ function minute_to_hour_minute( int $time_in_minutes ): array {
  * @since   LRS 3.9.0
  */
 
-function hour_string( int $length, string $format = 'hour' ): string {
-    if ( $length == 1 ) {
+function hour_string(int $length, string $format = 'hour'): string {
+    if ($length == 1) {
         return "1 $format";
     } else {
         return "$length {$format}s";
@@ -673,8 +669,8 @@ function hour_string( int $length, string $format = 'hour' ): string {
  * @since   LRS 3.9.0
  */
 
-function minutes_string ( int $length, string $format = 'minute' ): string {
-    if ( $length == 1 ) {
+function minutes_string(int $length, string $format = 'minute'): string {
+    if ($length == 1) {
         return "1 $format";
     } else {
         return "$length {$format}s";
@@ -696,9 +692,9 @@ function minutes_string ( int $length, string $format = 'minute' ): string {
  * @since   LRS 3.9.0
  */
 
-function validate_date( string $date, string $format = 'Y-m-d H:i:s' ): bool {
-    $d = DateTime::createFromFormat( $format, $date );
-    return $d && $d->format( $format ) == $date;
+function validate_date(string $date, string $format = 'Y-m-d H:i:s'): bool {
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) == $date;
 }
 
 
@@ -712,11 +708,11 @@ function validate_date( string $date, string $format = 'Y-m-d H:i:s' ): bool {
  * @since   LRS 3.9.0
  */
 
-function add_number_suffix( int $number ): string {
-    if ( $number < 1 ) {
+function add_number_suffix(int $number): string {
+    if ($number < 1) {
         return $number;
     }
-    switch ( $number ) {
+    switch ($number) {
         case 1:
             return $number . 'st';
         case 2:
@@ -741,9 +737,9 @@ function add_number_suffix( int $number ): string {
  * @since   LRS 3.12.1
  */
 
-function url_file_exists( string $url ): bool {
-    $headers = get_headers( $url );
-    return stripos( $headers[0], "200 OK" ) ? true : false;
+function url_file_exists(string $url): bool {
+    $headers = get_headers($url);
+    return stripos($headers[0], "200 OK") ? true : false;
 }
 
 
@@ -757,8 +753,8 @@ function url_file_exists( string $url ): bool {
  * @since   LRS 3.14.3
  */
 
-function get_tab( string $default = '' ): string {
-    return Config::current_page( 'tab' ) ?? $default;
+function get_tab(string $default = ''): string {
+    return Config::current_page('tab') ?? $default;
 }
 
 
@@ -772,8 +768,8 @@ function get_tab( string $default = '' ): string {
  * @since   LRS 3.15.0
  */
 
-function prepare_method_name( string $method_name ): string {
-    return strtolower( str_replace( '-', '_', $method_name ) );
+function prepare_method_name(string $method_name): string {
+    return strtolower(str_replace('-', '_', $method_name));
 }
 
 
@@ -789,9 +785,9 @@ function prepare_method_name( string $method_name ): string {
  * @since   LRS 3.24.0  Revamped to function in one line.
  */
 
-function prepare_routed_filename( string $name ): string {
-    $name = str_replace( '_', '-', $name );
-    return implode( '', array_map( 'ucfirst', explode( '-', $name ) ) );
+function prepare_routed_filename(string $name): string {
+    $name = str_replace('_', '-', $name);
+    return implode('', array_map('ucfirst', explode('-', $name)));
 }
 
 
@@ -808,19 +804,19 @@ function prepare_routed_filename( string $name ): string {
  * @since   LRS 3.17.2
  */
 
-function get_offences_text( object $entry, object $config, int $line_breaks = 1 ): string {
+function get_offences_text(object $entry, object $config, int $line_breaks = 1): string {
     $offences_text = [];
-    $offence_list = explode ( ';', $entry->offences );
-    foreach ( $offence_list as $offence ) {
-        if ( isset ( $config->data[$offence]->config_value ) ) {
+    $offence_list = explode(';', $entry->offences);
+    foreach ($offence_list as $offence) {
+        if (isset($config->data[$offence]->config_value)) {
             $offences_text[] = $config->data[$offence]->config_value;
         }
     }
     $br = '';
-    for ( $i = 0; $i < $line_breaks; $i++ ) {
+    for ($i = 0; $i < $line_breaks; $i++) {
         $br .= '<br>';
     }
-    return implode( ", {$br}", $offences_text );
+    return implode(", {$br}", $offences_text);
 }
 
 
@@ -837,19 +833,19 @@ function get_offences_text( object $entry, object $config, int $line_breaks = 1 
  * @since   LRS 3.17.2
  */
 
-function get_sanctions_text( object $entry, object $config, int $line_breaks = 1 ): string {
+function get_sanctions_text(object $entry, object $config, int $line_breaks = 1): string {
     $sanctions_text = [];
-    $sanction_list = explode( ';', $entry->sanctions );
-    foreach ( $sanction_list as $sanction ) {
-        if ( isset( $config->data[$sanction]->config_value ) ) {
+    $sanction_list = explode(';', $entry->sanctions);
+    foreach ($sanction_list as $sanction) {
+        if (isset($config->data[$sanction]->config_value)) {
             $sanctions_text[] = $config->data[$sanction]->config_value;
         }
     }
     $br = '';
-    for ( $i = 0; $i < $line_breaks; $i++ ) {
+    for ($i = 0; $i < $line_breaks; $i++) {
         $br .= '<br>';
     }
-    return implode( ", {$br}", $sanctions_text );
+    return implode(", {$br}", $sanctions_text);
 }
 
 
@@ -863,9 +859,9 @@ function get_sanctions_text( object $entry, object $config, int $line_breaks = 1
  * @since   LRS 3.19.3
  */
 
-function validate_year( string|int $year ): bool {
-    $date = DateTime::createFromFormat( 'Y', $year );
-    return $date && $date->format( 'Y' ) == $year;
+function validate_year(string|int $year): bool {
+    $date = DateTime::createFromFormat('Y', $year);
+    return $date && $date->format('Y') == $year;
 }
 
 
@@ -882,17 +878,17 @@ function validate_year( string|int $year ): bool {
  * @since   LRS 3.20.0
  */
 
-function number_ordinal_suffix( int $num ): string {
-    $converted_num = substr( (string)$num, -1 );
-    if ( $num == 0 ) {
+function number_ordinal_suffix(int $num): string {
+    $converted_num = substr((string)$num, -1);
+    if ($num == 0) {
         return "0";
-    } else if ( $num > 10 && $num < 20 ) {
+    } else if ($num > 10 && $num < 20) {
         return "{$num}th";
-    } else if ( $converted_num == 1 ) {
+    } else if ($converted_num == 1) {
         return "{$num}st";
-    } else if ( $converted_num == 2 ) {
+    } else if ($converted_num == 2) {
         return "{$num}nd";
-    } else if ( $converted_num == 3 ) {
+    } else if ($converted_num == 3) {
         return "{$num}rd";
     } else {
         return "{$num}th";
@@ -914,25 +910,25 @@ function number_ordinal_suffix( int $num ): string {
  * @since   LRS 3.20.0
  */
 
-function abreviate_outcome( string $outcome, int $aprox_max_length = 100 ): string {
-    if ( $outcome == '' ) {
+function abreviate_outcome(string $outcome, int $aprox_max_length = 100): string {
+    if ($outcome == '') {
         return '';
     }
-    if ( strlen( $outcome ) < $aprox_max_length ) {
+    if (strlen($outcome) < $aprox_max_length) {
         return $outcome;
     }
-    $pos = strpos( $outcome, ' ', $aprox_max_length );
-    if ( $pos == false ) {
+    $pos = strpos($outcome, ' ', $aprox_max_length);
+    if ($pos == false) {
         $pos = $aprox_max_length;
     }
-    $abreviated = substr( $outcome, 0, $pos );
-    $link = HTML::a( [
+    $abreviated = substr($outcome, 0, $pos);
+    $link = HTML::a([
         'href'  => 'javascript::void(0)',
         'text'  => 'View all',
         'title' => $outcome,
         'echo'  => false,
-    ] );
-    return str_replace( "\n", '<br>', $abreviated ) . '... ' . $link;
+    ]);
+    return str_replace("\n", '<br>', $abreviated) . '... ' . $link;
 }
 
 
@@ -946,11 +942,11 @@ function abreviate_outcome( string $outcome, int $aprox_max_length = 100 ): stri
  * @since   LRS 3.27.1
  */
 
-function uri_compose( array $fields ): string {
+function uri_compose(array $fields): string {
     $i = 0;
     $uri = '';
-    foreach ( $fields as $key => $value ) {
-        if ( $i == 0 ) {
+    foreach ($fields as $key => $value) {
+        if ($i == 0) {
             $uri .= '?';
             $i++;
         } else {
@@ -981,10 +977,10 @@ function uri_compose( array $fields ): string {
  * @since   LBF 0.1.3-beta  Removed as a method and generalized here.
  */
 
-function timestamp_cache_validation( string $file ): string {
-    $timestamp = @filemtime( $file );
-    if ( $timestamp == '' ) {
-        return md5( $file . time() );
+function timestamp_cache_validation(string $file): string {
+    $timestamp = @filemtime($file);
+    if ($timestamp == '') {
+        return md5($file . time());
     }
     return $timestamp;
 }

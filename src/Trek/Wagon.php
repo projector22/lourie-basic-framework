@@ -33,5 +33,4 @@ interface Wagon {
      */
 
     public function back();
-
 }

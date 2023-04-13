@@ -611,7 +611,7 @@ class Button extends HTMLMeta {
 
         HTML::div_container(
             ['class' => 'ftb_button', 'id' => 'ftb_up'],
-            $icon->get('chevrons-up', echo: false) 
+            $icon->get('chevrons-up', echo: false)
         );
 
         HTML::div_container(

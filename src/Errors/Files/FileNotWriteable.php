@@ -13,4 +13,5 @@ use LBF\Errors\Meta\ExceptionMeta;
  * @since   LBF 0.1.11-beta
  */
 
-class FileNotWriteable extends ExceptionMeta {}
+class FileNotWriteable extends ExceptionMeta {
+}

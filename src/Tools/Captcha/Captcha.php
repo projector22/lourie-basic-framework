@@ -13,7 +13,7 @@ use LBF\HTML\Button;
  * @since   LBF 0.3.2-beta
  */
 
- class Captcha {
+class Captcha {
 
     /**
      * Inject the basic reCAPTCHA scripts to a form.
@@ -25,7 +25,7 @@ use LBF\HTML\Button;
      * @since   LBF 0.3.2-beta
      */
 
-    public static function scripts( string $form_id ): void {
+    public static function scripts(string $form_id): void {
         echo '<script src="https://www.google.com/recaptcha/api.js"></script>';
         echo "<script>
     function onSubmit(token) {
@@ -45,18 +45,17 @@ use LBF\HTML\Button;
      * @since   LBF 0.3.2-beta
      */
 
-    public static function submit( array $params ): void {
+    public static function submit(array $params): void {
         $params['data-sitekey']  = $_ENV['CAPTCHA_SITE_KEY'];
         $params['data-callback'] = 'onSubmit';
         $params['data-action']   = 'submit';
 
-        if ( isset( $params['class'] ) ) {
+        if (isset($params['class'])) {
             $params['class'] .= ' g-recaptcha';
         } else {
             $params['class'] = 'g-recaptcha';
         }
 
-        Button::general( $params );
+        Button::general($params);
     }
-
 }

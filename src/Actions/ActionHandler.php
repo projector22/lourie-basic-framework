@@ -52,19 +52,19 @@ abstract class ActionHandler implements ActionsTemplate {
      */
 
     public function __construct() {
-        $route_token = str_replace( '.php', '', $_POST['route_token'] );
-        if ( $route_token == 'home' ) {
+        $route_token = str_replace('.php', '', $_POST['route_token']);
+        if ($route_token == 'home') {
             $route_token = 'index';
         }
-        if ( Config::ENVIRONMENT() == AppMode::MAINTENANCE ) {
+        if (Config::ENVIRONMENT() == AppMode::MAINTENANCE) {
             $route_token = 'maintenance';
         }
 
-        if ( file_exists( Config::paths( 'HOME_PATH' ) . 'FIRST_RUN' ) ) {
+        if (file_exists(Config::paths('HOME_PATH') . 'FIRST_RUN')) {
             $route_token = 'FirstRun';
         }
 
-        $this->routing_class = 'Actions\\Pages\\' . prepare_routed_filename( $route_token ) . 'Actions';
+        $this->routing_class = 'Actions\\Pages\\' . prepare_routed_filename($route_token) . 'Actions';
 
         $this->token = get_token();
     }
@@ -81,12 +81,12 @@ abstract class ActionHandler implements ActionsTemplate {
      * @since   LBF 0.6.0-beta
      */
 
-    public function execute_default_action( object $actions ): void {
-        if ( $this->token == '' || is_null( $this->token ) ) {
+    public function execute_default_action(object $actions): void {
+        if ($this->token == '' || is_null($this->token)) {
             return;
         }
-        if ( !method_exists( $actions, $this->token ) ) {
-            throw new MethodNotFound( "Method '{$this->token}' does not exist on in Class '{$this->routing_class}'", 404 );
+        if (!method_exists($actions, $this->token)) {
+            throw new MethodNotFound("Method '{$this->token}' does not exist on in Class '{$this->routing_class}'", 404);
         }
         $task = $this->token;
         $actions->$task();

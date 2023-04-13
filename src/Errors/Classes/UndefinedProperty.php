@@ -13,4 +13,5 @@ use LBF\Errors\Meta\ExceptionMeta;
  * @since   LBF 0.4.3-beta
  */
 
-class UndefinedProperty extends ExceptionMeta {}
+class UndefinedProperty extends ExceptionMeta {
+}

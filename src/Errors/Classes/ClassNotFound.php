@@ -13,4 +13,5 @@ use LBF\Errors\Meta\ExceptionMeta;
  * @since   LBF 0.6.0-beta
  */
 
-class ClassNotFound extends ExceptionMeta {}
+class ClassNotFound extends ExceptionMeta {
+}

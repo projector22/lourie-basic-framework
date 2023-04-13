@@ -51,8 +51,8 @@ trait JSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function inject_js( string $js, PagePositions $position = PagePositions::IN_HEAD ): void {
-        if ( !isset( self::$injected_js ) ) {
+    public static function inject_js(string $js, PagePositions $position = PagePositions::IN_HEAD): void {
+        if (!isset(self::$injected_js)) {
             self::$injected_js = self::set_default_data();
         }
         self::$injected_js[$position->id()]['raw'][] = $js;
@@ -76,14 +76,14 @@ trait JSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function inject_js_file( string $file_path, PagePositions $position = PagePositions::IN_HEAD ): void {
-        if ( !is_file( $file_path ) ) {
-            throw new FileNotFound( "File {$file_path} does not exist." );
+    public static function inject_js_file(string $file_path, PagePositions $position = PagePositions::IN_HEAD): void {
+        if (!is_file($file_path)) {
+            throw new FileNotFound("File {$file_path} does not exist.");
         }
-        if ( !isset( self::$injected_js ) ) {
+        if (!isset(self::$injected_js)) {
             self::$injected_js = self::set_default_data();
         }
-        self::$injected_js[$position->id()]['raw'][] = file_get_contents($file_path);   
+        self::$injected_js[$position->id()]['raw'][] = file_get_contents($file_path);
     }
 
 
@@ -113,21 +113,21 @@ trait JSInjector {
         bool $module = false,
         bool $timestamp = false
     ): void {
-        if ( !isset( self::$injected_js ) ) {
+        if (!isset(self::$injected_js)) {
             self::$injected_js = self::set_default_data();
         }
         $insert_async = $insert_defer = $insert_module = '';
-        if ( $async ) {
+        if ($async) {
             $insert_async = ' async';
         }
-        if ( $defer ) {
+        if ($defer) {
             $insert_defer = ' defer';
         }
-        if ( $module ) {
+        if ($module) {
             $insert_module = " type='module'";
         }
-        if ( $timestamp ) {
-            $url .= self::add_timestamp( $url );
+        if ($timestamp) {
+            $url .= self::add_timestamp($url);
         }
         self::$injected_js[$position->id()]['cdn'][] = "<script src='{$url}'{$insert_async}{$insert_defer}{$insert_module}></script>";
     }
@@ -143,7 +143,7 @@ trait JSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function inject_module_map( string $map ): void {
+    public static function inject_module_map(string $map): void {
         self::$injected_js[PagePositions::IN_HEAD->id()]['map'] = $map;
     }
 
@@ -159,20 +159,20 @@ trait JSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-     public function insert_js( PagePositions $position ): string {
+    public function insert_js(PagePositions $position): string {
         $js = '';
-        if ( isset( self::$injected_js ) ) {
-            if ( $position === PagePositions::IN_HEAD && self::$injected_js[$position->id()]['map'] !== null ) {
-                $js .= $this->insert_module_map( self::$injected_js[$position->id()]['map'] );
+        if (isset(self::$injected_js)) {
+            if ($position === PagePositions::IN_HEAD && self::$injected_js[$position->id()]['map'] !== null) {
+                $js .= $this->insert_module_map(self::$injected_js[$position->id()]['map']);
             }
 
-            $raw = $this->remove_duplicates( self::$injected_js[$position->id()]['raw'] );
-            $insert = $this->merge( $raw );
-            if ( $insert !== '' ) {
+            $raw = $this->remove_duplicates(self::$injected_js[$position->id()]['raw']);
+            $insert = $this->merge($raw);
+            if ($insert !== '') {
                 $js .= "<script type='module'>{$insert}</script>";
             }
-            $cdn = $this->remove_duplicates( self::$injected_js[$position->id()]['cdn'] );
-            $js .= $this->merge( $cdn );
+            $cdn = $this->remove_duplicates(self::$injected_js[$position->id()]['cdn']);
+            $js .= $this->merge($cdn);
         }
         return $js;
     }
@@ -189,8 +189,7 @@ trait JSInjector {
      * @since   LBF 0.6.0-beta
      */
 
-    private function insert_module_map( string $map ): string {
+    private function insert_module_map(string $map): string {
         return "<script type='importmap'>{$map}</script>";
     }
-
 }

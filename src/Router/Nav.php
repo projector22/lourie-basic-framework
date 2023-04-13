@@ -26,9 +26,8 @@ class Nav {
      * @since   LBF 0.6.0-beta
      */
 
-    public static function redirect( string $location ): never {
-        header( "Location: {$location}" );
+    public static function redirect(string $location): never {
+        header("Location: {$location}");
         die;
     }
-
 }

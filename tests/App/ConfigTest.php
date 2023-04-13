@@ -11,7 +11,7 @@ use stdClass;
 final class ConfigTest extends TestCase {
 
     public function test_standard_load() {
-        Config::load( ['cheese' => [
+        Config::load(['cheese' => [
             'cake' => 'chocolate',
             'mouse' => 'trap',
         ]]);
@@ -32,18 +32,18 @@ final class ConfigTest extends TestCase {
             'cake' => 'chocolate',
             'mouse' => 'trap',
         ];
-        $this->assertEquals( Config::$payload, $test );
+        $this->assertEquals(Config::$payload, $test);
     }
 
 
     public function test_multi_load() {
-        Config::load( ['cheese' => [
+        Config::load(['cheese' => [
             'cake' => 'chocolate',
             'mouse' => 'trap',
-        ]] );
-        Config::load( ['cat' => [
+        ]]);
+        Config::load(['cat' => [
             'rat' => 'trap',
-        ]] );
+        ]]);
 
         $test = new stdClass;
         $test->meta = [
@@ -62,18 +62,18 @@ final class ConfigTest extends TestCase {
             'mouse' => 'trap',
         ];
         $test->cat = ['rat' => 'trap'];
-        $this->assertEquals( Config::$payload, $test );
+        $this->assertEquals(Config::$payload, $test);
     }
 
 
     public function test_overwrite_load() {
-        Config::load( ['cheese' => [
+        Config::load(['cheese' => [
             'cake' => 'chocolate',
             'mouse' => 'trap',
-        ]] );
-        Config::load( ['cat' => [
+        ]]);
+        Config::load(['cat' => [
             'rat' => 'trap',
-        ]], true );
+        ]], true);
 
         $test = new stdClass;
         $test->meta = [
@@ -88,7 +88,6 @@ final class ConfigTest extends TestCase {
         ];
         $test->static_routes = [];
         $test->cat = ['rat' => 'trap'];
-        $this->assertEquals( Config::$payload, $test );
+        $this->assertEquals(Config::$payload, $test);
     }
-
 }

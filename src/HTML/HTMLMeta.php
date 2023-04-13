@@ -52,12 +52,12 @@ class HTMLMeta {
      * @since   LBF 0.1.5-beta
      */
 
-    protected static function handle_echo( string $element, array $params = []  ): void {
-        if ( isset( $params['echo'] ) ) {
-            if ( $params['echo'] ) {
+    protected static function handle_echo(string $element, array $params = []): void {
+        if (isset($params['echo'])) {
+            if ($params['echo']) {
                 echo $element;
             }
-        } else if ( self::$echo ) {
+        } else if (self::$echo) {
             echo $element;
         }
     }
@@ -77,7 +77,7 @@ class HTMLMeta {
      * @since   LBF 0.1.6-beta
      */
 
-    public static function temporary_change_echo( bool $temp_echo ): string {
+    public static function temporary_change_echo(bool $temp_echo): string {
         $id = Hash::random_id_string();
         self::$temporary_echo[$id] = self::$echo;
         self::$echo = $temp_echo;
@@ -96,9 +96,9 @@ class HTMLMeta {
      * @access  public
      * @since   LBF 0.1.6-beta
      */
-    public static function restore_origonal_echo( string $id ): void {
+    public static function restore_origonal_echo(string $id): void {
         self::$echo = self::$temporary_echo[$id];
-        unset( self::$temporary_echo[$id] );
+        unset(self::$temporary_echo[$id]);
     }
 
 
@@ -136,17 +136,17 @@ class HTMLMeta {
      * @since   LBF 0.1.6-beta
      */
 
-    protected static function html_element_container( string $tag, array $params, array $skip_params_extra = [] ): string {
-        $skip_params = array_merge( self::$default_skip_params, $skip_params_extra );
-        if ( $tag == 'textarea' ) {
-            if ( isset( $params['value'] ) ) {
+    protected static function html_element_container(string $tag, array $params, array $skip_params_extra = []): string {
+        $skip_params = array_merge(self::$default_skip_params, $skip_params_extra);
+        if ($tag == 'textarea') {
+            if (isset($params['value'])) {
                 $params['text'] = $params['value'];
-                unset( $params['value'] );
+                unset($params['value']);
             }
         }
         $inner_text = $params['text'] ?? $params['content'] ?? $params['data'] ?? '';
         $element = "<{$tag}";
-        $element .= self::assign_key_values( $params, $skip_params );
+        $element .= self::assign_key_values($params, $skip_params);
         $element .= ">{$inner_text}</{$tag}>";
         return $element;
     }
@@ -166,10 +166,10 @@ class HTMLMeta {
      * @since   LBF 0.1.5-beta
      */
 
-    protected static function html_tag_open( string $tag, array $params, array $skip_params_extra = [] ): string {
-        $skip_params = array_merge( self::$default_skip_params, $skip_params_extra );
+    protected static function html_tag_open(string $tag, array $params, array $skip_params_extra = []): string {
+        $skip_params = array_merge(self::$default_skip_params, $skip_params_extra);
         $element = "<{$tag}";
-        $element .= self::assign_key_values( $params, $skip_params );
+        $element .= self::assign_key_values($params, $skip_params);
         $element .= '>';
         return $element;
     }
@@ -188,15 +188,15 @@ class HTMLMeta {
      * @since   LBF 0.1.6-beta
      */
 
-    private static function assign_key_values( array $params, array $skip_params ): string {
+    private static function assign_key_values(array $params, array $skip_params): string {
         $element = '';
-        foreach ( $params as $key => $value ) {
-            if ( in_array( $key, $skip_params ) ) {
+        foreach ($params as $key => $value) {
+            if (in_array($key, $skip_params)) {
                 continue;
             }
-            switch ( $key ) {
+            switch ($key) {
                 case 'new_tab':
-                    if ( !isset( $params['link'] ) ) {
+                    if (!isset($params['link'])) {
                         $element .= $value ? " target='_blank' rel='noopener'" : '';
                     }
                     break;
@@ -222,7 +222,7 @@ class HTMLMeta {
                     $element .= $value ? ' indeterminate' : '';
                     break;
                 case 'link':
-                    if ( isset( $params['new_tab'] ) && $params['new_tab'] ) {
+                    if (isset($params['new_tab']) && $params['new_tab']) {
                         $element .= " onClick='javascript:window.open(\"{$value}\", \"_blank\")'";
                     } else {
                         $element .= " onClick='window.location.href = \"{$value}\"'";
@@ -251,15 +251,14 @@ class HTMLMeta {
      * @since   LBF 0.1.5-beta
      */
 
-    protected static function html_tag_close( string $tag, int $count, ?string $comment ): string {
+    protected static function html_tag_close(string $tag, int $count, ?string $comment): string {
         $element = '';
-        for ( $i = 0; $i < $count; $i++ ) {
+        for ($i = 0; $i < $count; $i++) {
             $element .= "</{$tag}>";
         }
-        if ( !is_null ( $comment ) ) {
+        if (!is_null($comment)) {
             $element .= "<!-- {$comment} -->";
         }
         return $element;
     }
-
 }

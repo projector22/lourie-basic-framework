@@ -82,7 +82,7 @@ class ReadExcel {
      */
 
     public object $extracted_data;
-    
+
     /**
      * Converted data extracted from self::SHARED_STRINGS_DATA
      * 
@@ -150,7 +150,7 @@ class ReadExcel {
      * @since   LRS 3.11.1
      */
 
-    public function __construct( 
+    public function __construct(
         /**
          * The path to the .xlsx file to be read. This can be set as a property or assigned as a parameter when this object is created
          * 
@@ -172,12 +172,12 @@ class ReadExcel {
          */
 
         public ?string $folder_path = null,
-     ) {
-        if ( !is_file( $this->excel_file_path ) ) {
+    ) {
+        if (!is_file($this->excel_file_path)) {
             echo "File not found";
             die;
         }
-        if ( is_null( $this->folder_path ) ) {
+        if (is_null($this->folder_path)) {
             $this->folder_path = getcwd();
         }
     }
@@ -205,26 +205,26 @@ class ReadExcel {
      */
 
     public function unzip_excel(): void {
-        $this->excel_file_path = normalize_path_string( $this->excel_file_path );
-        $folder_name = explode( '.', explode( '/', $this->excel_file_path )[count( explode( '/', $this->excel_file_path ) ) - 1] )[0];
+        $this->excel_file_path = normalize_path_string($this->excel_file_path);
+        $folder_name = explode('.', explode('/', $this->excel_file_path)[count(explode('/', $this->excel_file_path)) - 1])[0];
         $this->folder_path .= $folder_name;
         $rename_file = $this->folder_path . '.zip';
-        copy( $this->excel_file_path, $rename_file );
+        copy($this->excel_file_path, $rename_file);
         $zip = new ZipArchive;
-        $res = $zip->open( "$rename_file" );
-        if ( $res === TRUE ) {
-            $zip->extractTo( $this->folder_path );
+        $res = $zip->open("$rename_file");
+        if ($res === TRUE) {
+            $zip->extractTo($this->folder_path);
             $zip->close();
         }
 
         $this->data_xml           = $this->folder_path . self::DEFAULT_SHEET_DATA;
         $this->shared_strings_xml = $this->folder_path . self::SHARED_STRINGS_DATA;
 
-        if ( !is_file( $this->data_xml ) ) {
+        if (!is_file($this->data_xml)) {
             echo "File unzipping failed";
             die;
         }
-        if ( is_file ( $this->shared_strings_xml ) ) {
+        if (is_file($this->shared_strings_xml)) {
             $this->compressed = true;
         }
     }
@@ -239,41 +239,41 @@ class ReadExcel {
      */
 
     public function set_all_data(): void {
-        $this->extracted_data = $this->extract_data( $this->data_xml );
-        if ( $this->compressed ) {
-            $this->parsed_strings = $this->extract_data( $this->shared_strings_xml );
-            foreach ( $this->extracted_data->sheetData->row as $i => $row ) {
-                foreach ( $row->c as $k => $cell ) {
-                    if ( $i == 0 ) {
-                        if ( $this->header_row ) {
-                            $this->headers[$k] = protect( $this->get_compressed_value( $cell ) );
+        $this->extracted_data = $this->extract_data($this->data_xml);
+        if ($this->compressed) {
+            $this->parsed_strings = $this->extract_data($this->shared_strings_xml);
+            foreach ($this->extracted_data->sheetData->row as $i => $row) {
+                foreach ($row->c as $k => $cell) {
+                    if ($i == 0) {
+                        if ($this->header_row) {
+                            $this->headers[$k] = protect($this->get_compressed_value($cell));
                         } else {
-                            $this->data[$i][$k] = protect( $this->get_compressed_value( $cell ) );
+                            $this->data[$i][$k] = protect($this->get_compressed_value($cell));
                         }
                     } else {
-                        if ( $this->header_row ) {
-                            $value = $this->get_compressed_value( $cell );
-                            $this->data[$i][$this->headers[$k]] = is_string( $value ) ? protect( $value ) : '';
+                        if ($this->header_row) {
+                            $value = $this->get_compressed_value($cell);
+                            $this->data[$i][$this->headers[$k]] = is_string($value) ? protect($value) : '';
                         } else {
-                            $this->data[$i][$k] = protect( $this->get_compressed_value( $cell ) );
+                            $this->data[$i][$k] = protect($this->get_compressed_value($cell));
                         }
                     }
                 }
             }
         } else {
-            foreach ( $this->extracted_data->sheetData->row as $i => $row ) {
-                foreach ( $row->c as $k => $cell ) {
-                    if ( $i == 0 ) {
-                        if ( $this->header_row ) {
-                            $this->headers[$k] = protect( $this->get_uncompressed_value( $cell ) );
+            foreach ($this->extracted_data->sheetData->row as $i => $row) {
+                foreach ($row->c as $k => $cell) {
+                    if ($i == 0) {
+                        if ($this->header_row) {
+                            $this->headers[$k] = protect($this->get_uncompressed_value($cell));
                         } else {
-                            $this->data[$i][$k] = protect( $this->get_uncompressed_value( $cell ) );
+                            $this->data[$i][$k] = protect($this->get_uncompressed_value($cell));
                         }
                     } else {
-                        if ( $this->header_row ) {
-                            $this->data[$i][$this->headers[$k]] = protect( $this->get_uncompressed_value( $cell ) );
+                        if ($this->header_row) {
+                            $this->data[$i][$this->headers[$k]] = protect($this->get_uncompressed_value($cell));
                         } else {
-                            $this->data[$i][$k] = protect( $this->get_uncompressed_value( $cell ) );
+                            $this->data[$i][$k] = protect($this->get_uncompressed_value($cell));
                         }
                     }
                 }
@@ -293,9 +293,9 @@ class ReadExcel {
      * @since   LRS 3.11.1
      */
 
-    private function get_compressed_value( object $cell ): string {
-        if ( isset( $cell->attributes->t ) && $cell->attributes->t == 's' ) {
-            if ( gettype( $this->parsed_strings->si[$cell->v]->t ) == 'object' ) {
+    private function get_compressed_value(object $cell): string {
+        if (isset($cell->attributes->t) && $cell->attributes->t == 's') {
+            if (gettype($this->parsed_strings->si[$cell->v]->t) == 'object') {
                 // If the value is an object, assume the cell is blank
                 return '';
             }
@@ -317,9 +317,9 @@ class ReadExcel {
      * @since   LRS 3.11.1
      */
 
-    private function get_uncompressed_value( object $cell ): string {
-        $value = isset( $cell->is->t ) ? $cell->is->t : $cell->v;
-        if ( is_object( $value ) ) {
+    private function get_uncompressed_value(object $cell): string {
+        $value = isset($cell->is->t) ? $cell->is->t : $cell->v;
+        if (is_object($value)) {
             $value = '';
         }
         return $value;
@@ -337,8 +337,8 @@ class ReadExcel {
      * @since   LRS 3.11.1
      */
 
-    private function extract_data( string $path ): object {
-        $container = new SimpleXMLElement( file_get_contents( $path ) );
+    private function extract_data(string $path): object {
+        $container = new SimpleXMLElement(file_get_contents($path));
         /**
          * Would've preferred to do it as one, but larger spreadsheets cause a fatal error, memory limit to be thrown.
          * On even larger sheets, we may have to increase the memory limit, but in the mean time:
@@ -346,11 +346,11 @@ class ReadExcel {
          * 
          * @since   LRS 3.12.0
          */
-        $data = json_encode( $container );
-        unset( $container );
-        $data1 = str_replace( '@', '', $data );
-        unset( $data );
-        return json_decode( $data1 );
+        $data = json_encode($container);
+        unset($container);
+        $data1 = str_replace('@', '', $data);
+        unset($data);
+        return json_decode($data1);
     }
 
 
@@ -367,23 +367,23 @@ class ReadExcel {
      * @since   LRS 3.11.1  Moved from App\Admin\ImportHandler to Framework\Tools\Excel\ReadExcel
      */
 
-    private function delete_files( string $target ): void {
+    private function delete_files(string $target): void {
         // This bit for deleting the stupid hidden file that the next bit won't
-        $files = glob( $target . '_rels/{,.}*', GLOB_BRACE );
-        foreach ( $files as $file ) {
-            if ( is_file( $file ) ) {
-                unlink( $file );
+        $files = glob($target . '_rels/{,.}*', GLOB_BRACE);
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
             }
         }
-            
-        if ( is_dir( $target ) ) {
-            $files = glob( $target . '*', GLOB_MARK ); // GLOB_MARK adds a slash to directories returned
-            foreach( $files as $f ) {
-                $this->delete_files( $f );
+
+        if (is_dir($target)) {
+            $files = glob($target . '*', GLOB_MARK); // GLOB_MARK adds a slash to directories returned
+            foreach ($files as $f) {
+                $this->delete_files($f);
             }
-            rmdir( $target );
-        } else if( is_file( $target ) ) {
-            unlink( $target );
+            rmdir($target);
+        } else if (is_file($target)) {
+            unlink($target);
         }
     }
 
@@ -397,10 +397,10 @@ class ReadExcel {
      */
 
     public function clean_up_files(): void {
-        unlink( $this->folder_path . '.zip' );
-        $this->delete_files( $this->folder_path . '/' );
-        if ( !$this->keep_xlsx ) {
-            unlink( $this->excel_file_path );
+        unlink($this->folder_path . '.zip');
+        $this->delete_files($this->folder_path . '/');
+        if (!$this->keep_xlsx) {
+            unlink($this->excel_file_path);
         }
     }
 
@@ -418,5 +418,4 @@ class ReadExcel {
     public function __destruct() {
         $this->clean_up_files();
     }
-
 }

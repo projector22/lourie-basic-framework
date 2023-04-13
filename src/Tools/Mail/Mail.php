@@ -45,7 +45,7 @@ class Mail {
      */
 
     public string $default_from;
-    
+
     /**
      * Default smtp address defined in the database. Value is defined in __construct and are taken from the database
      * 
@@ -56,7 +56,7 @@ class Mail {
      */
 
     private string $smtp_address;
-    
+
     /**
      * Default username defined in the database. Value is defined in __construct and are taken from the database
      * 
@@ -67,7 +67,7 @@ class Mail {
      */
 
     private string $username;
-    
+
     /**
      * Default password defined in the database. NB. stored in plain text. Value is defined in __construct and are taken from the database
      * 
@@ -78,7 +78,7 @@ class Mail {
      */
 
     private string $password;
-    
+
     /**
      * Whether or not to use authentication, defined in database. Value is defined in __construct and are taken from the database
      * 
@@ -89,7 +89,7 @@ class Mail {
      */
 
     private string $requires_auth;
-    
+
     /**
      * Choice of encryption types, Choices: None, SSL, TSL. Defined in database. Value is defined in __construct and are taken from the database
      * 
@@ -100,7 +100,7 @@ class Mail {
      */
 
     private string $encrypt_type;
-    
+
     /**
      * Which port to use, typically 25, 465 or 587. Defined in database. Value is defined in __construct and are taken from the database
      * 
@@ -120,9 +120,9 @@ class Mail {
      * @access  public
      * @since   LRS 3.12.2
      */
-    
+
     public bool $echo_error = true;
-    
+
     /**
      * The attachment type to apply
      * Options: 
@@ -218,19 +218,19 @@ class Mail {
      * @since   LRS 3.4.0
      */
 
-    public function send_mail( 
-        string $to, 
-        string $subject, 
-        string $body, 
-        ?array $attachment = null, 
-        ?string $from_name = null, 
-        bool $body_is_html = false, 
-        ?string $from = null, 
-        string|array|null $cc = null, 
-        string|array|null $bcc = null, 
+    public function send_mail(
+        string $to,
+        string $subject,
+        string $body,
+        ?array $attachment = null,
+        ?string $from_name = null,
+        bool $body_is_html = false,
+        ?string $from = null,
+        string|array|null $cc = null,
+        string|array|null $bcc = null,
         ?string $to_name = null
     ): bool {
-        $mail = new PHPMailer( true );
+        $mail = new PHPMailer(true);
         try {
 
             /**
@@ -239,7 +239,7 @@ class Mail {
              * @since   LRS 3.4.0
              */
 
-            if ( is_null( $from ) ) {
+            if (is_null($from)) {
                 $from = $this->default_from;
             }
 
@@ -249,11 +249,11 @@ class Mail {
              * @since   LRS 3.4.0
              */
 
-            if ( is_null( $from_name ) ) {
+            if (is_null($from_name)) {
                 $from_name = $this->default_from_name;
             }
 
-            $mail->setFrom( $from, $from_name );
+            $mail->setFrom($from, $from_name);
 
 
             /**
@@ -262,14 +262,14 @@ class Mail {
              * @since   LRS 3.4.0
              */
 
-            $send_to = $this->split_multi_send_addresses( $to );
-            if ( is_null( $to_name ) ) {
-                foreach ( $send_to as $s_to ) {
-                    $mail->addAddress( $s_to );
+            $send_to = $this->split_multi_send_addresses($to);
+            if (is_null($to_name)) {
+                foreach ($send_to as $s_to) {
+                    $mail->addAddress($s_to);
                 }
             } else {
-                foreach ( $send_to as $s_to ) {
-                    $mail->addAddress( $s_to, $to_name );
+                foreach ($send_to as $s_to) {
+                    $mail->addAddress($s_to, $to_name);
                 }
             }
 
@@ -279,18 +279,18 @@ class Mail {
              * @since   LRS 3.4.0
              */
 
-            if ( !is_null( $attachment ) ) {
-                switch ( $this->attachment_type ) {
+            if (!is_null($attachment)) {
+                switch ($this->attachment_type) {
                     case 'str':
-                        $mail->AddStringAttachment( $attachment[0], $attachment[1], encoding: $this->encoding, type: $this->type );
+                        $mail->AddStringAttachment($attachment[0], $attachment[1], encoding: $this->encoding, type: $this->type);
                         break;
                     default:
-                        if ( is_array( $attachment[0] ) ) {
-                            foreach( $attachment as $attach ) {
-                                $mail->addAttachment( $attach[0], $attach[1] );
+                        if (is_array($attachment[0])) {
+                            foreach ($attachment as $attach) {
+                                $mail->addAttachment($attach[0], $attach[1]);
                             }
                         } else {
-                            $mail->addAttachment( $attachment[0], $attachment[1] );
+                            $mail->addAttachment($attachment[0], $attachment[1]);
                         }
                 }
             }
@@ -301,14 +301,14 @@ class Mail {
              * @since   LRS 3.4.0
              */
 
-            if ( !is_null( $cc ) ) {
-                if ( is_string( $cc ) ) {
-                    $cc_to = $this->split_multi_send_addresses( $cc );
+            if (!is_null($cc)) {
+                if (is_string($cc)) {
+                    $cc_to = $this->split_multi_send_addresses($cc);
                 } else {
                     $cc_to =  $cc;
                 }
-                foreach ( $cc_to as $cc_s) {
-                    $mail->addCC( $cc_s );
+                foreach ($cc_to as $cc_s) {
+                    $mail->addCC($cc_s);
                 }
             }
 
@@ -318,14 +318,14 @@ class Mail {
              * @since   LRS 3.4.0
              */
 
-            if ( !is_null( $bcc ) ) {
-                if ( is_string( $bcc) ) {
-                    $bcc_to = $this->split_multi_send_addresses( $bcc );
+            if (!is_null($bcc)) {
+                if (is_string($bcc)) {
+                    $bcc_to = $this->split_multi_send_addresses($bcc);
                 } else {
                     $bcc_to = $bcc;
                 }
-                foreach ( $bcc_to as $bcc_s ) {
-                    $mail->addBCC( $bcc_s );
+                foreach ($bcc_to as $bcc_s) {
+                    $mail->addBCC($bcc_s);
                 }
             }
 
@@ -343,8 +343,8 @@ class Mail {
              * @since   LRS 3.4.0
              */
 
-            if ( $body_is_html ) {
-                $mail->isHTML( true );
+            if ($body_is_html) {
+                $mail->isHTML(true);
             }
             $mail->Body = $body;
 
@@ -359,25 +359,25 @@ class Mail {
             $mail->Username   = $this->username;
             $mail->Password   = $this->password;
             $mail->Port       = $this->port;
-            if ( $this->requires_auth == '1' ) {
+            if ($this->requires_auth == '1') {
                 $mail->SMTPAuth   = true;
                 $mail->SMTPSecure = $this->encrypt_type;
             }
 
-            $save_limit = ini_get( 'memory_limit' );
-            ini_set( 'memory_limit', '256M' );
-            $time_limit = ini_get( 'max_execution_time' );
-            ini_set( 'max_execution_time', '3600' );
+            $save_limit = ini_get('memory_limit');
+            ini_set('memory_limit', '256M');
+            $time_limit = ini_get('max_execution_time');
+            ini_set('max_execution_time', '3600');
             $mail->send();
-            ini_set( 'memory_limit', $save_limit );
-            ini_set( 'max_execution_time', $time_limit );
-        } catch ( Exception $e ) {
-            if ( $this->echo_error ) {
+            ini_set('memory_limit', $save_limit);
+            ini_set('max_execution_time', $time_limit);
+        } catch (Exception $e) {
+            if ($this->echo_error) {
                 echo $e->errorMessage();
             }
             return false;
-        } catch ( \Exception $e ) {
-            if ( $this->echo_error ) {
+        } catch (\Exception $e) {
+            if ($this->echo_error) {
                 echo $e->getMessage();
             }
             return false;
@@ -398,17 +398,16 @@ class Mail {
      * @since   LRS 3.12.2  Added handling for split by semicolon
      */
 
-    private function split_multi_send_addresses( string $address ): array {
+    private function split_multi_send_addresses(string $address): array {
         $parts = [];
-        $split_one = explode( ',', $address );
-        foreach ( $split_one as $split ) {
-            $split_two = explode( ';', $split );
-            $parts = array_merge( $parts, $split_two );
+        $split_one = explode(',', $address);
+        foreach ($split_one as $split) {
+            $split_two = explode(';', $split);
+            $parts = array_merge($parts, $split_two);
         }
-        foreach ( $parts as $part ) {
+        foreach ($parts as $part) {
             $addresses[] = trim($part);
         }
         return $addresses;
     }
-
 }

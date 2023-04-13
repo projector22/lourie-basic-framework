@@ -120,7 +120,7 @@ class DatabaseControl {
      */
 
     protected function connect_db() {
-        throw new Exception( "You cannot use DatabaseControl directly. It should be an extension of a `connectDB` class" );
+        throw new Exception("You cannot use DatabaseControl directly. It should be an extension of a `connectDB` class");
     }
 
 
@@ -133,24 +133,24 @@ class DatabaseControl {
      * 
      * @access  public
      * @since   LRS 3.0.1
-     */    
+     */
 
-    public function sql_select( string $sql ): array {
+    public function sql_select(string $sql): array {
         try {
-            $statement = $this->conn->prepare( $sql );
+            $statement = $this->conn->prepare($sql);
             $statement->execute();
-            if ( $this->get_number_of_rows_affected ) {
+            if ($this->get_number_of_rows_affected) {
                 $this->number_of_rows = $statement->rowCount();
             }
-            $statement->setFetchMode( PDO::FETCH_ASSOC );
-            if ( $this->log_sql ) {
-                $this->log_sql( $sql );
-                $this->log_sql( 'Number of Rows Found: ' . $statement->rowCount() );
+            $statement->setFetchMode(PDO::FETCH_ASSOC);
+            if ($this->log_sql) {
+                $this->log_sql($sql);
+                $this->log_sql('Number of Rows Found: ' . $statement->rowCount());
             }
-    
+
             return $statement->fetchAll();
-        } catch( PDOException $e ) {
-            $this->display_the_error( $e, $sql );
+        } catch (PDOException $e) {
+            $this->display_the_error($e, $sql);
             return [];
         }
     }
@@ -168,25 +168,25 @@ class DatabaseControl {
      * @since   LRS 3.1.0
      */
 
-    public function sql_execute( string $sql ): bool {
+    public function sql_execute(string $sql): bool {
         try {
             $this->check_db_connection();
-            $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-            $exec = $this->conn->prepare( $sql );
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $exec = $this->conn->prepare($sql);
             $exec->execute();
-            if ( $this->return_last_inserted_id ) {
+            if ($this->return_last_inserted_id) {
                 $this->last_inserted_id = $this->conn->lastInsertId();
             }
-            if ( $this->get_number_of_rows_affected ) {
+            if ($this->get_number_of_rows_affected) {
                 $this->number_of_rows = $exec->rowCount();
             }
-            if ( $this->log_sql ) {
-                $this->log_sql( $sql );
-                $this->log_sql( 'Number of Rows Affected: ' . $exec->rowCount() );
+            if ($this->log_sql) {
+                $this->log_sql($sql);
+                $this->log_sql('Number of Rows Affected: ' . $exec->rowCount());
             }
             return true;
-        } catch( PDOException $e ) {
-            $this->display_the_error( $e, $sql );
+        } catch (PDOException $e) {
+            $this->display_the_error($e, $sql);
             return false;
         }
     }
@@ -206,16 +206,16 @@ class DatabaseControl {
      * @deprecated  3.27.0
      */
 
-    public function sql_execute_return_error( string $sql ): bool|PDOException {
+    public function sql_execute_return_error(string $sql): bool|PDOException {
         try {
             $this->check_db_connection();
-            $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-            $this->conn->exec( $sql );
-            if ( $this->return_last_inserted_id ) {
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->conn->exec($sql);
+            if ($this->return_last_inserted_id) {
                 $this->last_inserted_id = $this->conn->lastInsertId();
             }
             return true;
-        } catch( PDOException $e ) {
+        } catch (PDOException $e) {
             return $e;
         }
     }
@@ -232,8 +232,8 @@ class DatabaseControl {
      * @since   LRS 3.7.0   Added @param $sql
      */
 
-    private function display_the_error( object $error, string $sql ): void {
-        if ( $this->display_error ) {
+    private function display_the_error(object $error, string $sql): void {
+        if ($this->display_error) {
             echo "<br><h1>ERROR</h1><br>";
             echo "<b>SQL:</b> $sql<br><br>";
             echo "<b>Error:</b> " . $error->getMessage() . "<br><br>";
@@ -249,7 +249,7 @@ class DatabaseControl {
      */
 
     protected function check_db_connection(): void {
-        if ( !isset( $this->conn ) ) {
+        if (!isset($this->conn)) {
             $this->conn = $this->connect_db();
         }
     }
@@ -264,23 +264,23 @@ class DatabaseControl {
      * @since   LRS 3.23.3
      */
 
-    private function log_sql( mixed $data ): void {
-        $timestamp = date( 'Y-m-d G:i:s' );
-        $path = realpath( "./bin/logs/sql.log" );
+    private function log_sql(mixed $data): void {
+        $timestamp = date('Y-m-d G:i:s');
+        $path = realpath("./bin/logs/sql.log");
 
-        if ( is_array( $data ) || is_object( $data ) ) {
-            $text = json_encode( $data, JSON_PRETTY_PRINT );
+        if (is_array($data) || is_object($data)) {
+            $text = json_encode($data, JSON_PRETTY_PRINT);
         } else {
             $text = $data;
         }
 
         try {
-            $fp = fopen( $path, 'a' );
-            if ( is_bool( $fp ) ) {
-                throw new Exception( "Unable to write file to {$path}<br>" );
+            $fp = fopen($path, 'a');
+            if (is_bool($fp)) {
+                throw new Exception("Unable to write file to {$path}<br>");
             }
-            fwrite( $fp, "{$timestamp}\t\t{$text}\n" );
-            fclose( $fp );
+            fwrite($fp, "{$timestamp}\t\t{$text}\n");
+            fclose($fp);
         } catch (\Throwable $th) {
             echo "Error: {$th->getMessage()}";
         }
@@ -295,11 +295,10 @@ class DatabaseControl {
      */
 
     protected function close_connection(): void {
-        if ( isset( $this->conn ) ) {
+        if (isset($this->conn)) {
             // Enable the line below to check how many database connections are being called 
             // echo __FILE__  . "<br>";
             $this->conn = null;
         }
     }
-
 }
