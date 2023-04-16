@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.6.2-beta - 2023-04-16
+
+- Added method `nav` to `src/js/lib/uri.js`.
+
+---
+
 ## Version 0.6.1-beta - 2023-04-16
 
 - Fixed bug with ConnectMySQL which was causing undesirable feedback occasionally.

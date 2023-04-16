@@ -342,4 +342,24 @@ export default class URITools {
         }
         return uri;
     }
+
+
+    /**
+     * Navigate to a specified URL.
+     * 
+     * @param {string} location The location to load up. Something like `/page/subpage/tab`.
+     * @param {object} params   The params to generate the uri string (?a=b&c=d). Should be a `{ key: value }` set.
+     * @param {boolean} new_tab Default: true
+     * 
+     * @since   LBF 0.6.2
+     */
+
+    static nav(location, params = {}, new_tab = true) {
+        const href = location + this.generate_url_from_list(params);
+        if (new_tab) {
+            window.open(href, '_blank');
+        } else {
+            window.location.href = href;
+        }
+    }
 }
