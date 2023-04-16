@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.6.1-beta - 2023-04-16
+
+- Fixed bug with ConnectMySQL which was causing undesirable feedback occasionally.
+
+---
+
 ## Version 0.6.0-beta - 2023-04-13
 
 ### Added

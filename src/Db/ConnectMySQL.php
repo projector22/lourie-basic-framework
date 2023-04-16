@@ -436,7 +436,9 @@ class ConnectMySQL {
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return true;
         } catch (PDOException $e) {
-            echo "<pre>{$e}</pre>\n";
+            if ($this->debug_mode) {
+                echo "<pre>{$e}</pre>\n";
+            }
             $this->last_error = $e;
             return false;
         }
