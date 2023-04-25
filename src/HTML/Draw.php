@@ -104,9 +104,7 @@ class Draw extends HTMLMeta {
      */
 
     public static function lines(int $k): string {
-        if (!isset(self::$cli)) {
-            self::$cli = php_sapi_name() == 'cli';
-        }
+        self::$cli ??= php_sapi_name() == 'cli';
         $lb = self::$cli ? "\n" : "<br>";
         $line = '';
         for ($i = 0; $i < $k; $i++) {
@@ -892,5 +890,80 @@ class Draw extends HTMLMeta {
 
     public static function close_align_entries_left(): void {
         echo "</div>";
+    }
+
+
+    /**
+     * When in CLI mode, draw the text in red.
+     * 
+     * @param   string  $text   The text to print.
+     * 
+     * @access  public
+     * @since   LBF 0.7.0
+     */
+
+    public static function print_red(string $text): void {
+        self::$cli ??= php_sapi_name() == 'cli';
+        if (self::$cli) {
+            echo "\033[31m{$text}\033[0m";
+        } else {
+            echo $text;
+        }
+    }
+
+
+    /**
+     * When in CLI mode, draw the text in green.
+     * 
+     * @param   string  $text   The text to print.
+     * 
+     * @access  public
+     * @since   LBF 0.7.0
+     */
+
+    public static function print_green(string $text): void {
+        self::$cli ??= php_sapi_name() == 'cli';
+        if (self::$cli) {
+            echo "\033[32m{$text}\033[0m";
+        } else {
+            echo $text;
+        }
+    }
+
+
+    /**
+     * When in CLI mode, draw the text in yellow.
+     * 
+     * @param   string  $text   The text to print.
+     * 
+     * @access  public
+     * @since   LBF 0.7.0
+     */
+
+    public static function print_yellow(string $text): void {
+        self::$cli ??= php_sapi_name() == 'cli';
+        if (self::$cli) {
+            echo "\033[33m{$text}\033[0m";
+        } else {
+            echo $text;
+        }
+    }
+
+    /**
+     * When in CLI mode, draw the text in blue.
+     * 
+     * @param   string  $text   The text to print.
+     * 
+     * @access  public
+     * @since   LBF 0.7.0
+     */
+
+    public static function print_blue(string $text): void {
+        self::$cli ??= php_sapi_name() == 'cli';
+        if (self::$cli) {
+            echo "\033[34m{$text}\033[0m";
+        } else {
+            echo $text;
+        }
     }
 }

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.7.0-beta - UNRELEASED
+
+### Added
+
+- Added CLI text colour modifiers to `Draw`.
+
+---
+
 ## Version 0.6.2-beta - 2023-04-16
 
 - Added method `nav` to `src/js/lib/uri.js`.
