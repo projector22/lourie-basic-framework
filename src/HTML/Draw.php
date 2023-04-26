@@ -78,9 +78,7 @@ class Draw extends HTMLMeta {
      */
 
     public static function dot(int $k = 1): void {
-        if (!isset(self::$cli)) {
-            self::$cli = php_sapi_name() == 'cli';
-        }
+        self::$cli ??= php_sapi_name() == 'cli';
         $dot = self::$cli ? '.' : '<b>.</b> ';
         for ($i = 0; $i < $k; $i++) {
             echo $dot;
@@ -331,8 +329,13 @@ class Draw extends HTMLMeta {
      * @since   LRS 3.6.0
      */
 
-    public static function console_header($header): void {
-        echo "<h2>$header</h2>";
+    public static function console_header(string $header): void {
+        self::$cli ??= php_sapi_name() == 'cli';
+        if (self::$cli) {
+            echo "### " . strtoupper($header) . " ###";
+        } else {
+            echo "<h2 class='console_header'>{$header}</h2>";
+        }
     }
 
 
