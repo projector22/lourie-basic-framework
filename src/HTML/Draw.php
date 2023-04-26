@@ -128,9 +128,14 @@ class Draw extends HTMLMeta {
      */
 
     public static function line_separator(int $k = 1): string {
+        self::$cli ??= php_sapi_name() == 'cli';
         $line = '';
         for ($i = 0; $i < $k; $i++) {
-            $line .= '<hr>';
+            if (self::$cli) {
+                $line .= "\n--------------------------------------------------------------------------------------\n";
+            } else {
+                $line .= '<hr>';
+            }
         }
 
         self::handle_echo($line);
