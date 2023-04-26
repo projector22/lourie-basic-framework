@@ -6,6 +6,10 @@
 
 - Added CLI text colour modifiers to `Draw`.
 
+### Issues Closed
+
+- #76 WIP
+
 ---
 
 ## Version 0.6.2-beta - 2023-04-16
