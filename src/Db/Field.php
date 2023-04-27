@@ -84,6 +84,11 @@ class Field {
                 break;
             case PrimaryKey::UUID_PLACEHOLDER:
                 $this->Type = 'VARCHAR(36)';
+                /** @todo Merge in with above */
+                break;
+            case PrimaryKey::UUID_PLACEHOLDER2:
+                $this->Type = 'CHAR(36)';
+                /** @todo Merge in with above */
                 break;
             case PrimaryKey::MD5:
                 $this->Type = 'VARCHAR(32)';
