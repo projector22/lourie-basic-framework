@@ -74,7 +74,7 @@ class Field {
                 $this->default(SQLFunctions::UUID);
                 break;
             case PrimaryKey::MD5:
-                $this->Type = 'CHAR(32)';
+                $this->Type = 'VARCHAR(32)';
                 break;
             case PrimaryKey::TXT:
                 $this->Type = "VARCHAR({$txt_length})";
