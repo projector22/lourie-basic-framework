@@ -48,6 +48,7 @@ final class ArrayToolTest extends TestCase {
 
     protected function tearDown(): void {
         $this->test_array = null;
+        $this->test_object = null;
     }
 
 
@@ -237,5 +238,28 @@ final class ArrayToolTest extends TestCase {
         $test_data = [$obj];
         $this->expectException(PropertyNotInObject::class);
         ArrayTool::column($test_data, 'b');
+    }
+
+
+    public function testAdd(): void {
+        $test_nums = [3, 5, 12, 44, 3.2, 0.75, 1];
+        $this->assertIsNumeric(ArrayTool::add($test_nums));
+        $this->assertEquals(68.95, ArrayTool::add($test_nums));
+        $test_nums = [1];
+        $this->assertIsNumeric(ArrayTool::add($test_nums));
+        $this->assertEquals(1, ArrayTool::add($test_nums));
+        $test_nums = ["1"];
+        $this->assertIsNumeric(ArrayTool::add($test_nums));
+        $this->assertEquals(1, ArrayTool::add($test_nums));
+        $test_nums = [null];
+        $this->assertIsNumeric(ArrayTool::add($test_nums));
+        $this->assertEquals(0, ArrayTool::add($test_nums));
+        $test_nums = [['a' => 'b'], 1];
+        $this->assertIsNumeric(ArrayTool::add($test_nums));
+        $this->assertEquals(1, ArrayTool::add($test_nums));
+        $test_nums = [new stdClass, 2, 5];
+        $this->assertIsNumeric(ArrayTool::add($test_nums));
+        $this->assertEquals(7, ArrayTool::add($test_nums));
+        $test_nums = [1, 2, 3, 4, 5.5];
     }
 }

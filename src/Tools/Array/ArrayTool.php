@@ -176,4 +176,24 @@ class ArrayTool {
             }
         }, $array);
     }
+
+
+    /**
+     * Returns the sum of all the numberic numbers within a simple array.
+     * 
+     * Any non numberic numbers are simply ignored.
+     * 
+     * @param   array   $array  The array to add up.
+     * 
+     * @return  int|float
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.7.0-beta
+     */
+
+    public static function add(array $array): int|float {
+        return array_sum($array);
+    }
+    
 }
