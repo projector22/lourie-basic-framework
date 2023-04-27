@@ -82,11 +82,15 @@ class Field {
                 $this->Type = 'CHAR(36)';
                 $this->default(SQLFunctions::UUID);
                 break;
+            case PrimaryKey::UUID_PLACEHOLDER:
+                $this->Type = 'VARCHAR(36)';
+                break;
             case PrimaryKey::MD5:
                 $this->Type = 'VARCHAR(32)';
                 break;
             case PrimaryKey::MD5_CHAR:
-                $this->Type = 'CHAR(32)'; /** @todo Merge in with above */
+                $this->Type = 'CHAR(32)';
+                /** @todo Merge in with above */
                 break;
             case PrimaryKey::TXT:
                 $this->Type = "VARCHAR({$txt_length})";
