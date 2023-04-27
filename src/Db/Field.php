@@ -146,7 +146,7 @@ class Field {
             }
             $this->test->Extra = 'DEFAULT_GENERATED';
         } else {
-            $this->Default = $default;
+            $this->Default .= $default;
             $this->test->Default = strtolower($default);
             if (preg_match('/\(.+?\)/', $default) || $default == 'CURRENT_TIMESTAMP' || $default == 'CURRENT_DATE' || $default == 'CURRENT_TIME' ) {
                 $this->Default = "({$default})";
