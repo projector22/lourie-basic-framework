@@ -52,7 +52,7 @@ class Field {
         return implode(' ', $field);
     }
 
-    public function validate($object): bool {
+    public function validate(stdClass $object): bool {
         return $object == $this->test;
     }
 
