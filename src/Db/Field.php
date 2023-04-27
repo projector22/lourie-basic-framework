@@ -3,6 +3,7 @@
 namespace LBF\Db;
 
 use Exception;
+use LBF\Db\FieldAssets\PrimaryKey;
 use LBF\Db\FieldAssets\SQLFunctions;
 use stdClass;
 
@@ -55,20 +56,28 @@ class Field {
         return $object == $this->test;
     }
 
-    public function primary_key(bool $auto_increment = true): static {
-        $this->Type ??= 'INT';
-        $this->Null = 'NOT NULL';
-        $this->Key = 'PRIMARY KEY';
-        if ($auto_increment) {
-            $this->Extra = 'auto_increment';
+    public function primary_key(PrimaryKey $type, bool $auto_increment = true): static {
+        switch ($type) {
+            case PrimaryKey::AUTO_INT:
+                $this->Type = 'INT';
+                if ($auto_increment) {
+                    $this->Extra = 'auto_increment';
+                    $this->test->Extra = 'auto_increment';
+                }
+                break;
+            case PrimaryKey::UUID:
+                $this->Type = 'CHAR(36)';
+                $this->default(SQLFunctions::UUID);
+                break;
+            case PrimaryKey::MD5:
+                $this->Type = 'CHAR(32)';
+                break;
         }
         $this->test->Type = strtolower($this->Type);
+        $this->Null = 'NOT NULL';
         $this->test->Null = 'NO';
+        $this->Key = 'PRIMARY KEY';
         $this->test->Key = 'PRI';
-        if ($auto_increment) {
-            $this->test->Extra = 'auto_increment';
-        }
-
         return $this;
     }
 
