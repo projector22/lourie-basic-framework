@@ -104,9 +104,11 @@ class Field {
         return $this;
     }
 
-    public function type(string $type, ?int $limit = null): static {
+    public function type(string $type, ?int $limit = null, ?int $decimal = null): static {
         $this->Type = $type;
-        if (!is_null($limit)) {
+        if (!is_null($decimal)) {
+            $this->Type .= "({$limit}, {$decimal})";
+        } else if (!is_null($limit)) {
             $this->Type .= "({$limit})";
         }
         $this->test->Type = strtolower($this->Type);
