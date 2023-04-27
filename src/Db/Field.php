@@ -85,6 +85,9 @@ class Field {
             case PrimaryKey::MD5:
                 $this->Type = 'VARCHAR(32)';
                 break;
+            case PrimaryKey::MD5_CHAR:
+                $this->Type = 'CHAR(32)'; /** @todo Merge in with above */
+                break;
             case PrimaryKey::TXT:
                 $this->Type = "VARCHAR({$txt_length})";
                 break;
@@ -148,7 +151,7 @@ class Field {
         } else {
             $this->Default .= $default;
             $this->test->Default = strtolower($default);
-            if (preg_match('/\(.+?\)/', $default) || $default == 'CURRENT_TIMESTAMP' || $default == 'CURRENT_DATE' || $default == 'CURRENT_TIME' ) {
+            if (preg_match('/\(.+?\)/', $default) || $default == 'CURRENT_TIMESTAMP' || $default == 'CURRENT_DATE' || $default == 'CURRENT_TIME') {
                 $this->Default = "({$default})";
                 if ($default == 'CURRENT_TIMESTAMP') {
                     $this->test->Default = 'now()';
