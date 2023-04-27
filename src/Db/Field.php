@@ -135,6 +135,15 @@ class Field {
                 $this->Default .= "({$default->fn()})";
             }
             $this->test->Default = strtolower(!is_null($fn_value) ? $default->fn($fn_value) : $default->fn());
+            if ($default == SQLFunctions::CURRENT_TIMESTAMP) {
+                $this->test->Default = 'now()';
+            }
+            if ($default == SQLFunctions::CURRENT_DATE) {
+                $this->test->Default = 'curdate()';
+            }
+            if ($default == SQLFunctions::CURRENT_TIME) {
+                $this->test->Default = 'curtime()';
+            }
             $this->test->Extra = 'DEFAULT_GENERATED';
         } else {
             $this->Default = $default;
