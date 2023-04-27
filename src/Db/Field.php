@@ -107,7 +107,7 @@ class Field {
     public function type(string $type, ?int $limit = null, ?int $decimal = null): static {
         $this->Type = $type;
         if (!is_null($decimal)) {
-            $this->Type .= "({$limit}, {$decimal})";
+            $this->Type .= "({$limit},{$decimal})";
         } else if (!is_null($limit)) {
             $this->Type .= "({$limit})";
         }
