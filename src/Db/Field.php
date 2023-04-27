@@ -14,6 +14,7 @@ class Field {
     public string $Key;
     public string $Default;
     public string $Extra;
+    public string $After;
 
     public stdClass $test;
 
@@ -48,6 +49,9 @@ class Field {
         }
         if (isset($this->Extra)) {
             $field[] = $this->Extra;
+        }
+        if (isset($this->After)) {
+            $field[] = $this->After;
         }
         return implode(' ', $field);
     }
@@ -128,6 +132,11 @@ class Field {
                 $this->test->Extra = 'DEFAULT_GENERATED';
             }
         }
+        return $this;
+    }
+
+    public function after(string $after) {
+        $this->After = "AFTER {$after}";
         return $this;
     }
 }
