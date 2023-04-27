@@ -5,6 +5,7 @@
 ### Added
 
 - Added CLI text colour modifiers to `Draw`.
+- Added a tool for generating SQL table fields.
 
 ### Issues Closed
 

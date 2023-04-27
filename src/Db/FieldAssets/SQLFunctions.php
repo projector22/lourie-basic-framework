@@ -3,66 +3,142 @@
 namespace LBF\Db\FieldAssets;
 
 /**
+ * Enum of various usable SQL functions for default values on an SQL field.
+ * 
+ * use LBF\Db\FieldAssets\SQLFunctions;
+ * 
+ * @author  Gareth Palmer  [Github & Gitlab /projector22]
+ * 
  * @see https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html
+ * 
+ * @since   LBF 0.7.0-beta
  */
 
 enum SQLFunctions {
     /**
-     * Return the current date and time
+     * Return the current date and time.
+     * 
+     * `NOW()`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case NOW;
     /**
-     * Synonym for DAYOFMONTH()
+     * Synonym for DAYOFMONTH().
+     * 
+     * `DATE()`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case DATE;
     /**
-     * Return the year
+     * Return the year.
+     * 
+     * `YEAR()`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case YEAR;
     /**
-     * Return the month from the date passed
+     * Return the month from the date passed.
+     * 
+     * `YEAR()`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case MONTH;
     /**
-     * Synonym for DAYOFMONTH()
+     * Synonym for DAYOFMONTH().
+     * 
+     * `MONTH()`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case DAY;
     /**
-     * Return a random floating-point value
+     * Return a random floating-point value.
+     * 
+     * `RAND()`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case RAND;
     /**
-     * Return the current date
+     * Return the current date.
+     * 
+     * `CURDATE()`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case CURDATE;
     /**
-     * Return the current time
+     * Return the current time.
+     * 
+     * `CURTIME()`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case CURTIME;
     /**
-     * Synonyms for CURDATE()
+     * Synonyms for CURDATE().
+     * 
+     * `CURRENT_DATE`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case CURRENT_DATE;
     /**
-     * Synonyms for CURTIME()
+     * Synonyms for CURTIME().
+     * 
+     * `CURRENT_TIME`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case CURRENT_TIME;
     /**
-     * Synonyms for NOW()
+     * Synonyms for NOW().
+     * 
+     * `CURRENT_TIMESTAMP`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case CURRENT_TIMESTAMP;
     /**
-     * With a single argument, this function returns the date or datetime expression; with two arguments, the sum of the arguments
+     * With a single argument, this function returns the date or datetime expression; with two arguments, the sum of the arguments.
+     * 
+     * `TIMESTAMP(x)`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case TIMESTAMP;
     /**
-     * Return a Unix timestamp
+     * Return a Unix timestamp.
+     * 
+     * `UNIX_TIMESTAMP`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case UNIX_TIMESTAMP;
     /**
      * Return a Universal Unique Identifier (UUID)
+     * 
+     * `UUID()`
+     * 
+     * @since   LBF 0.7.0-beta
      */
     case UUID;
+
+
+    /**
+     * Return the actual function string of the requested ENUM.
+     * 
+     * @param   string  $value  Default: ''. The param to pass to the function
+     * 
+     * @return  string
+     * 
+     * @access  public
+     * @since   LBF 0.7.0-beta
+     */
 
     public function fn(string $value = ''): string {
         return match ($this) {
