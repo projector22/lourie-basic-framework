@@ -13,36 +13,15 @@ use stdClass;
 
 final class ArrayToolTest extends TestCase {
 
-    public function testIndexBy(): void {
-        $test_data = [
+    private ?array $test_array;
+    private ?array $test_object;
+
+    protected function setUp(): void {
+        $this->test_array = [
             ['a' => 'Cheese', 'b' => 'Cake', 'c' => 'United'],
             ['a' => 'Mouse', 'b' => 'Rat', 'c' => 'Dog'],
             ['a' => 'Water', 'b' => 'Wind', 'c' => 'Fire'],
         ];
-
-        $this->assertIsArray(ArrayTool::index_by('a', $test_data));
-
-        $index = ArrayTool::index_by('a', $test_data, false);
-
-        $this->assertEquals(
-            [
-                'Cheese' => ['a' => 'Cheese', 'b' => 'Cake', 'c' => 'United'],
-                'Mouse' => ['a' => 'Mouse', 'b' => 'Rat', 'c' => 'Dog'],
-                'Water' => ['a' => 'Water', 'b' => 'Wind', 'c' => 'Fire'],
-            ],
-            $index
-        );
-
-        $index = ArrayTool::index_by('a', $test_data, true);
-
-        $this->assertEquals(
-            [
-                'Cheese' => ['b' => 'Cake', 'c' => 'United'],
-                'Mouse' => ['b' => 'Rat', 'c' => 'Dog'],
-                'Water' => ['b' => 'Wind', 'c' => 'Fire'],
-            ],
-            $index
-        );
 
         $obja = new stdClass;
         $obja->a = 'Cheese';
@@ -59,13 +38,46 @@ final class ArrayToolTest extends TestCase {
         $objc->b = 'Wind';
         $objc->c = 'Fire';
 
-        $test_data = [
+        $this->test_object = [
             $obja,
             $objb,
             $objc,
         ];
+    }
 
-        $index = ArrayTool::index_by('a', $test_data, false);
+
+    protected function tearDown(): void {
+        $this->test_array = null;
+    }
+
+
+    public function testIndexBy(): void {
+        $this->assertIsArray(ArrayTool::index_by('a', $this->test_array));
+
+        $index = ArrayTool::index_by('a', $this->test_array, false);
+
+        $this->assertEquals(
+            [
+                'Cheese' => ['a' => 'Cheese', 'b' => 'Cake', 'c' => 'United'],
+                'Mouse' => ['a' => 'Mouse', 'b' => 'Rat', 'c' => 'Dog'],
+                'Water' => ['a' => 'Water', 'b' => 'Wind', 'c' => 'Fire'],
+            ],
+            $index
+        );
+
+        $index = ArrayTool::index_by('a', $this->test_array, true);
+
+        $this->assertEquals(
+            [
+                'Cheese' => ['b' => 'Cake', 'c' => 'United'],
+                'Mouse' => ['b' => 'Rat', 'c' => 'Dog'],
+                'Water' => ['b' => 'Wind', 'c' => 'Fire'],
+            ],
+            $index
+        );
+
+        $index = ArrayTool::index_by('a', $this->test_object, false);
+        list($obja, $objb, $objc) = $this->test_object;
 
         $this->assertEquals(
             [
@@ -76,11 +88,11 @@ final class ArrayToolTest extends TestCase {
             $index
         );
 
-        $index = ArrayTool::index_by('a', $test_data, true);
+        $index = ArrayTool::index_by('a', $this->test_object, true);
 
-        unset($obja->a);
-        unset($objb->a);
-        unset($objc->a);
+        foreach ($this->test_object as &$obj) {
+            unset($obj->a);
+        }
 
         $this->assertEquals(
             [
@@ -94,10 +106,10 @@ final class ArrayToolTest extends TestCase {
 
 
     public function testScalarVariableExceptionForIndexBy(): void {
-        $test_data = [null, false, true, 100, 'cheese'];
+        $test_data = [null, 'a' => false, true, 100, 'cheese'];
         $this->expectException(ScalarVariable::class);
         $index = ArrayTool::index_by('a', $test_data);
-    } 
+    }
 
 
     public function testIndexNotInArrayExceptionForIndexBy(): void {
@@ -119,45 +131,19 @@ final class ArrayToolTest extends TestCase {
 
 
     public function testMap(): void {
-        $test_data = [
-            ['a' => 'Cheese', 'b' => 'Cake', 'c' => 'United'],
-            ['a' => 'Mouse', 'b' => 'Rat', 'c' => 'Dog'],
-            ['a' => 'Water', 'b' => 'Wind', 'c' => 'Fire'],
-        ];
+        $this->assertIsArray(ArrayTool::map($this->test_array, 'a', 'c'));
 
-        $this->assertIsArray(ArrayTool::map($test_data, 'a', 'c'));
-
-        $test = ArrayTool::map($test_data, 'a', 'c');
+        $test = ArrayTool::map($this->test_array, 'a', 'c');
         $this->assertEquals([
             'Cheese' => 'United',
             'Mouse' => 'Dog',
             'Water' => 'Fire',
         ], $test);
 
-        $obja = new stdClass;
-        $obja->a = 'Cheese';
-        $obja->b = 'Cake';
-        $obja->c = 'United';
 
-        $objb = new stdClass;
-        $objb->a = 'Mouse';
-        $objb->b = 'Rat';
-        $objb->c = 'Dog';
+        $this->assertIsArray(ArrayTool::map($this->test_object, 'a', 'c'));
 
-        $objc = new stdClass;
-        $objc->a = 'Water';
-        $objc->b = 'Wind';
-        $objc->c = 'Fire';
-
-        $test_data = [
-            $obja,
-            $objb,
-            $objc,
-        ];
-
-        $this->assertIsArray(ArrayTool::map($test_data, 'a', 'c'));
-
-        $test = ArrayTool::map($test_data, 'a', 'c');
+        $test = ArrayTool::map($this->test_object, 'a', 'c');
         $this->assertEquals([
             'Cheese' => 'United',
             'Mouse' => 'Dog',
@@ -167,10 +153,10 @@ final class ArrayToolTest extends TestCase {
 
 
     public function testScalarVariableExceptionForMap(): void {
-        $test_data = [null, false, true, 100, 'cheese'];
+        $test_data = [null, 'a' => false, 'b' => true, 100, 'cheese'];
         $this->expectException(ScalarVariable::class);
         ArrayTool::map($test_data, 'a', 'b');
-    } 
+    }
 
 
     public function testIndexNotInArrayExceptionForMapMissingA(): void {
@@ -210,4 +196,46 @@ final class ArrayToolTest extends TestCase {
         ArrayTool::map($test_data, 'a', 'b');
     }
 
+
+    public function testColumn(): void {
+        $this->assertIsArray(ArrayTool::column($this->test_array, 'b'));
+
+        $test = ArrayTool::column($this->test_array, 'b');
+        $this->assertEquals(
+            ['Cake', 'Rat', 'Wind'],
+            $test
+        );
+
+        $test = ArrayTool::column($this->test_object, 'b');
+        $this->assertEquals(
+            ['Cake', 'Rat', 'Wind'],
+            $test
+        );
+    }
+
+
+    public function testScalarVariableExceptionForColumn(): void {
+        $test_data = [null, 'b' => false, true, 100, 'cheese'];
+        $this->expectException(ScalarVariable::class);
+        ArrayTool::column($test_data, 'b');
+    }
+
+
+    public function testIndexNotInArrayExceptionForColumn(): void {
+        $test_data = [
+            [null, 'a' => false, true, 100, 'cheese'],
+            [null, 'c' => false, true, 100, 'cheese'],
+        ];
+        $this->expectException(IndexNotInArray::class);
+        ArrayTool::column($test_data, 'b');
+    }
+
+
+    public function testPropertyNotInObjectForColumn(): void {
+        $obj = new stdClass;
+        $obj->a = 'cheese';
+        $test_data = [$obj];
+        $this->expectException(PropertyNotInObject::class);
+        ArrayTool::column($test_data, 'b');
+    }
 }

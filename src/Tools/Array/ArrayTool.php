@@ -7,7 +7,7 @@ namespace LBF\Tools\Array;
  * 
  * - [x] index_by   set a common index as parent index.
  * - [x] map        map two common values within each subarray or object properties as key => value pairs
- * - [ ] column     Get the values of a common key as a simple array.
+ * - [x] column     Get the values of a common key as a simple array.
  * - [ ] add        Add all the values of an array for a total.
  * - [ ] average    Get the average of the values for an array.
  */
@@ -143,5 +143,37 @@ class ArrayTool {
             }
         }
         return $new_array;
+    }
+
+
+    /**
+     * Returns a simple array of the values of the parsed key to each subarray or subobject.
+     * 
+     * @param   array       $array  The array of data to work with.
+     * @param   string|int  $key    The key to look for within each subarray or subobject.
+     * 
+     * @return  array
+     * 
+     * @throws  IndexNotInArray Via `check_index_in_array()`
+     * @throws  PropertyNotInObject Via `check_property_in_object()`
+     * @throws  ScalarVariable
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.7.0-beta
+     */
+
+    public static function column(array $array, string|int $key): array {
+        return array_map(function ($sub) use ($key) {
+            if (is_array($sub)) {
+                self::check_index_in_array($sub, $key);
+                return $sub[$key];
+            } else if (is_object($sub)) {
+                self::check_property_in_object($sub, $key);
+                return $sub->$key;
+            } else {
+                throw new ScalarVariable("The subvalue is scalar, and does not have a property, field or index");
+            }
+        }, $array);
     }
 }
