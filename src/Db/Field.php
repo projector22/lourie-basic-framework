@@ -5,6 +5,7 @@ namespace LBF\Db;
 use Exception;
 use LBF\Db\FieldAssets\PrimaryKey;
 use LBF\Db\FieldAssets\SQLFunctions;
+use LBF\HTML\Draw;
 use stdClass;
 
 class Field {
@@ -57,6 +58,14 @@ class Field {
     }
 
     public function validate(stdClass $object): bool {
+        // if ($object != $this->test) {
+        //     Draw::line_separator();
+        //     Draw::print_red("ON DATABASE");
+        //     print_r($object);
+        //     Draw::print_red("ON STRUCTURE");
+        //     print_r($this->test);
+        //     Draw::line_separator();
+        // }
         return $object == $this->test;
     }
 
@@ -130,8 +139,17 @@ class Field {
         } else {
             $this->Default = $default;
             $this->test->Default = strtolower($default);
-            if (preg_match('/\(.+?\)/', $default) || $default == 'CURRENT_TIMESTAMP' || $default == 'CURRENT_DATE' || $default == 'CURRENT_TIME' || $default == 'CURRENT_USER') {
+            if (preg_match('/\(.+?\)/', $default) || $default == 'CURRENT_TIMESTAMP' || $default == 'CURRENT_DATE' || $default == 'CURRENT_TIME' ) {
                 $this->Default = "({$default})";
+                if ($default == 'CURRENT_TIMESTAMP') {
+                    $this->test->Default = 'now()';
+                }
+                if ($default == 'CURRENT_DATE') {
+                    $this->test->Default = 'curdate()';
+                }
+                if ($default == 'CURRENT_TIME') {
+                    $this->test->Default = 'curtime()';
+                }
                 $this->test->Extra = 'DEFAULT_GENERATED';
             }
         }
