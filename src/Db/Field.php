@@ -60,7 +60,7 @@ class Field {
         return $object == $this->test;
     }
 
-    public function primary_key(PrimaryKey $type = PrimaryKey::AUTO_INT, bool $auto_increment = true): static {
+    public function primary_key(PrimaryKey $type = PrimaryKey::AUTO_INT, bool $auto_increment = true, int $txt_length = 10): static {
         switch ($type) {
             case PrimaryKey::AUTO_INT:
                 $this->Type = 'INT';
@@ -75,6 +75,9 @@ class Field {
                 break;
             case PrimaryKey::MD5:
                 $this->Type = 'CHAR(32)';
+                break;
+            case PrimaryKey::TXT:
+                $this->Type = "VARCHAR({$txt_length})";
                 break;
         }
         $this->test->Type = strtolower($this->Type);

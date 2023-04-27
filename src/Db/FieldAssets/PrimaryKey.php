@@ -6,4 +6,5 @@ enum PrimaryKey {
     case AUTO_INT;
     case UUID;
     case MD5;
+    case TXT;
 }
