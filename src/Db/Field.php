@@ -56,7 +56,7 @@ class Field {
         return $object == $this->test;
     }
 
-    public function primary_key(PrimaryKey $type, bool $auto_increment = true): static {
+    public function primary_key(PrimaryKey $type = PrimaryKey::AUTO_INT, bool $auto_increment = true): static {
         switch ($type) {
             case PrimaryKey::AUTO_INT:
                 $this->Type = 'INT';
