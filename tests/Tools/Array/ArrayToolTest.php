@@ -20,6 +20,8 @@ final class ArrayToolTest extends TestCase {
             ['a' => 'Water', 'b' => 'Wind', 'c' => 'Fire'],
         ];
 
+        $this->assertIsArray(ArrayTool::index_by('a', $test_data));
+
         $index = ArrayTool::index_by('a', $test_data, false);
 
         $this->assertEquals(
@@ -116,5 +118,96 @@ final class ArrayToolTest extends TestCase {
     }
 
 
-    
+    public function testMap(): void {
+        $test_data = [
+            ['a' => 'Cheese', 'b' => 'Cake', 'c' => 'United'],
+            ['a' => 'Mouse', 'b' => 'Rat', 'c' => 'Dog'],
+            ['a' => 'Water', 'b' => 'Wind', 'c' => 'Fire'],
+        ];
+
+        $this->assertIsArray(ArrayTool::map($test_data, 'a', 'c'));
+
+        $test = ArrayTool::map($test_data, 'a', 'c');
+        $this->assertEquals([
+            'Cheese' => 'United',
+            'Mouse' => 'Dog',
+            'Water' => 'Fire',
+        ], $test);
+
+        $obja = new stdClass;
+        $obja->a = 'Cheese';
+        $obja->b = 'Cake';
+        $obja->c = 'United';
+
+        $objb = new stdClass;
+        $objb->a = 'Mouse';
+        $objb->b = 'Rat';
+        $objb->c = 'Dog';
+
+        $objc = new stdClass;
+        $objc->a = 'Water';
+        $objc->b = 'Wind';
+        $objc->c = 'Fire';
+
+        $test_data = [
+            $obja,
+            $objb,
+            $objc,
+        ];
+
+        $this->assertIsArray(ArrayTool::map($test_data, 'a', 'c'));
+
+        $test = ArrayTool::map($test_data, 'a', 'c');
+        $this->assertEquals([
+            'Cheese' => 'United',
+            'Mouse' => 'Dog',
+            'Water' => 'Fire',
+        ], $test);
+    }
+
+
+    public function testScalarVariableExceptionForMap(): void {
+        $test_data = [null, false, true, 100, 'cheese'];
+        $this->expectException(ScalarVariable::class);
+        ArrayTool::map($test_data, 'a', 'b');
+    } 
+
+
+    public function testIndexNotInArrayExceptionForMapMissingA(): void {
+        $test_data = [
+            [null, 'a' => false, true, 100, 'cheese'],
+            [null, 'b' => false, true, 100, 'cheese'],
+        ];
+        $this->expectException(IndexNotInArray::class);
+        ArrayTool::map($test_data, 'a', 'b');
+    }
+
+
+    public function testIndexNotInArrayExceptionForMapMissingB(): void {
+        $test_data = [
+            [null, 'a' => false, true, 100, 'cheese'],
+            [null, 'b' => false, true, 100, 'cheese'],
+        ];
+        $this->expectException(IndexNotInArray::class);
+        ArrayTool::map($test_data, 'a', 'b');
+    }
+
+
+    public function testPropertyNotInObjectForMapMissingA(): void {
+        $obj = new stdClass;
+        $obj->b = 'cheese';
+        $test_data = [$obj];
+        $this->expectException(PropertyNotInObject::class);
+        ArrayTool::map($test_data, 'a', 'b');
+    }
+
+
+    public function testPropertyNotInObjectForMapMissingB(): void {
+        $obj = new stdClass;
+        $obj->a = 'cheese';
+        $test_data = [$obj];
+        $this->expectException(PropertyNotInObject::class);
+        ArrayTool::map($test_data, 'a', 'b');
+    }
+
 }
