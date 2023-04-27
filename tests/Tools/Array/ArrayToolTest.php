@@ -260,6 +260,33 @@ final class ArrayToolTest extends TestCase {
         $test_nums = [new stdClass, 2, 5];
         $this->assertIsNumeric(ArrayTool::add($test_nums));
         $this->assertEquals(7, ArrayTool::add($test_nums));
-        $test_nums = [1, 2, 3, 4, 5.5];
+        $test_nums = [true, true, true];
+        $this->assertIsNumeric(ArrayTool::add($test_nums));
+        $this->assertEquals(0, ArrayTool::add($test_nums));
+    }
+
+
+    public function testAverage(): void {
+        $test_nums = [3, 5, 12, 44, 3.2, 0.75, 1];
+        $this->assertIsNumeric(ArrayTool::average($test_nums));
+        $this->assertEquals(9.85, ArrayTool::average($test_nums));
+        $test_nums = [1];
+        $this->assertIsNumeric(ArrayTool::average($test_nums));
+        $this->assertEquals(1, ArrayTool::average($test_nums));
+        $test_nums = ["1"];
+        $this->assertIsNumeric(ArrayTool::average($test_nums));
+        $this->assertEquals(1, ArrayTool::average($test_nums));
+        $test_nums = [null];
+        $this->assertIsNumeric(ArrayTool::average($test_nums));
+        $this->assertEquals(0, ArrayTool::average($test_nums));
+        $test_nums = [['a' => 'b'], 1];
+        $this->assertIsNumeric(ArrayTool::average($test_nums));
+        $this->assertEquals(1, ArrayTool::average($test_nums));
+        $test_nums = [new stdClass, 2, 5];
+        $this->assertIsNumeric(ArrayTool::average($test_nums));
+        $this->assertEquals(3.5, ArrayTool::average($test_nums));
+        $test_nums = [true, true, true];
+        $this->assertIsNumeric(ArrayTool::add($test_nums));
+        $this->assertEquals(0, ArrayTool::add($test_nums));
     }
 }

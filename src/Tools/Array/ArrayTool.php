@@ -8,8 +8,10 @@ namespace LBF\Tools\Array;
  * - [x] index_by   set a common index as parent index.
  * - [x] map        map two common values within each subarray or object properties as key => value pairs
  * - [x] column     Get the values of a common key as a simple array.
- * - [ ] add        Add all the values of an array for a total.
- * - [ ] average    Get the average of the values for an array.
+ * - [x] add        Add all the values of an array for a total.
+ * - [x] average    Get the average of the values for an array.
+ * - [ ] max        Get the average of the values for an array.
+ * - [ ] min        Get the average of the values for an array.
  */
 
 use LBF\Errors\Array\IndexNotInArray;
@@ -181,7 +183,10 @@ class ArrayTool {
     /**
      * Returns the sum of all the numberic numbers within a simple array.
      * 
-     * Any non numberic numbers are simply ignored.
+     * Note: `true` and `false` are filtered out, which would otherwise be counted
+     *       as `1` & `0` respectively.
+     * 
+     * All non numberic values are simply ignored.
      * 
      * @param   array   $array  The array to add up.
      * 
@@ -193,7 +198,37 @@ class ArrayTool {
      */
 
     public static function add(array $array): int|float {
-        return array_sum($array);
+        $numeric = array_filter($array, 'is_numeric');
+        return array_sum($numeric);
     }
-    
+
+
+    /**
+     * Returns the average of all the numberic numbers within a simple array.
+     * 
+     * Note: `true` and `false` are filtered out, which would otherwise be counted
+     *       as `1` & `0` respectively.
+     * 
+     * All non numberic values are simply ignored.
+     * 
+     * @param   array   $array  The array to average up.
+     * 
+     * @return  int|float
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.7.0-beta
+     */
+
+
+    public static function average(array $array): int|float {
+        $numeric = array_filter($array, 'is_numeric');
+        $count = count($numeric);
+        $total = array_sum($numeric);
+        // Avoid DivideByZero Error.
+        if ($count == 0) {
+            return 0;
+        }
+        return $total / $count;
+    }
 }
