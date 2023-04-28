@@ -12,6 +12,7 @@ namespace LBF\Tools\Array;
  * - [x] average    Get the average of the values for an array.
  * - [ ] max        Get the average of the values for an array.
  * - [ ] min        Get the average of the values for an array.
+ * - [ ] remove     The removes a key => value from a simple array and returns the removed array value.
  */
 
 use LBF\Errors\Array\IndexNotInArray;
