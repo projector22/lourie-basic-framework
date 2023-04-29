@@ -347,4 +347,48 @@ final class ArrayToolTest extends TestCase {
         $this->expectException(\ValueError::class);
         $this->assertIsNumeric(ArrayTool::min($test_nums));
     }
+
+
+    public function testRemove(): void {
+        $test_array = [
+            'a' => 'b',
+            'c' => 'd',
+            'e' => 'f',
+        ];
+        $test = ArrayTool::remove('c', $test_array);
+
+        $this->assertIsArray($test_array);
+        $this->assertIsString($test);
+        $this->assertArrayNotHasKey('c', $test_array);
+        $this->assertEquals([
+            'a' => 'b',
+            'e' => 'f',
+        ], $test_array);
+        $this->assertEquals('d', $test);
+
+        // Test the case where there are 2 of the same key (should discard the first one automatically).
+        $test_array = [
+            'a' => 'b',
+            'c' => 'd',
+            'e' => 'f',
+            'c' => 'g',
+        ];
+        $test = ArrayTool::remove('c', $test_array);
+        $this->assertIsArray($test_array);
+        $this->assertIsString($test);
+        $this->assertArrayNotHasKey('c', $test_array);
+        $this->assertEquals([
+            'a' => 'b',
+            'e' => 'f',
+        ], $test_array);
+        $this->assertEquals('g', $test);
+
+        $test_array = [
+            'a' => 'b',
+            'c' => 'd',
+            'e' => 'f',
+        ];
+        $this->expectException(IndexNotInArray::class);
+        $test = ArrayTool::remove('g', $test_array);
+    }
 }

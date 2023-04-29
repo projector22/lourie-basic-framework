@@ -284,4 +284,32 @@ class ArrayTool {
         $numeric = array_filter($array, 'is_numeric');
         return min($numeric);
     }
+
+
+    /**
+     * Removes a value from the array (by key) as returns it. The rest of the array is preserved.
+     * 
+     * @param   mixed   $key    The key to remove.
+     * @param   array   &$array The array to search from.
+     * 
+     * @return  mixed   Whatever the value of the key is.
+     * 
+     * @throws  IndexNotInArray
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.7.0-beta
+     */
+
+    public static function remove(mixed $key, array &$array): mixed {
+        if (!isset($array[$key])) {
+            throw new IndexNotInArray("Can't remove key that is not in the array.");
+        }
+        $value = $array[$key];
+        unset($array[$key]);
+        return $value;
+    }
+
+
+    
 }
