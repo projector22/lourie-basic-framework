@@ -289,4 +289,62 @@ final class ArrayToolTest extends TestCase {
         $this->assertIsNumeric(ArrayTool::add($test_nums));
         $this->assertEquals(0, ArrayTool::add($test_nums));
     }
+
+
+    public function testMax(): void {
+        $test_nums = [3, 5, 12, 44, 3.2, 0.75, 1];
+        $this->assertIsNumeric(ArrayTool::max($test_nums));
+        $this->assertEquals(44, ArrayTool::max($test_nums));
+        $test_nums = [1];
+        $this->assertIsNumeric(ArrayTool::max($test_nums));
+        $this->assertEquals(1, ArrayTool::max($test_nums));
+        $test_nums = ["1"];
+        $this->assertIsNumeric(ArrayTool::max($test_nums));
+        $this->assertEquals(1, ArrayTool::max($test_nums));
+        $test_nums = [['a' => 'b'], 1];
+        $this->assertIsNumeric(ArrayTool::max($test_nums));
+        $this->assertEquals(1, ArrayTool::max($test_nums));
+        $test_nums = [new stdClass, 2, 5];
+        $this->assertIsNumeric(ArrayTool::max($test_nums));
+        $this->assertEquals(5, ArrayTool::max($test_nums));
+        $test_nums = [true, true, true];
+        $this->expectException(\ValueError::class);
+        $this->assertIsNumeric(ArrayTool::max($test_nums));
+    }
+
+
+    public function testMaxException(): void {
+        $test_nums = [null];
+        $this->expectException(\ValueError::class);
+        $this->assertIsNumeric(ArrayTool::max($test_nums));
+    }
+
+
+    public function testMin(): void {
+        $test_nums = [3, 5, 12, 44, 3.2, 0.75, 1];
+        $this->assertIsNumeric(ArrayTool::min($test_nums));
+        $this->assertEquals(0.75, ArrayTool::min($test_nums));
+        $test_nums = [1];
+        $this->assertIsNumeric(ArrayTool::min($test_nums));
+        $this->assertEquals(1, ArrayTool::min($test_nums));
+        $test_nums = ["1"];
+        $this->assertIsNumeric(ArrayTool::min($test_nums));
+        $this->assertEquals(1, ArrayTool::min($test_nums));
+        $test_nums = [['a' => 'b'], 1];
+        $this->assertIsNumeric(ArrayTool::min($test_nums));
+        $this->assertEquals(1, ArrayTool::min($test_nums));
+        $test_nums = [new stdClass, 2, 5];
+        $this->assertIsNumeric(ArrayTool::min($test_nums));
+        $this->assertEquals(2, ArrayTool::min($test_nums));
+        $test_nums = [true, true, true];
+        $this->expectException(\ValueError::class);
+        $this->assertIsNumeric(ArrayTool::min($test_nums));
+    }
+
+
+    public function testMinException(): void {
+        $test_nums = [null];
+        $this->expectException(\ValueError::class);
+        $this->assertIsNumeric(ArrayTool::min($test_nums));
+    }
 }

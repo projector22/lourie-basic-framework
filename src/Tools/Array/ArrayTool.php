@@ -10,9 +10,11 @@ namespace LBF\Tools\Array;
  * - [x] column     Get the values of a common key as a simple array.
  * - [x] add        Add all the values of an array for a total.
  * - [x] average    Get the average of the values for an array.
- * - [ ] max        Get the average of the values for an array.
- * - [ ] min        Get the average of the values for an array.
+ * - [x] max        Get the average of the values for an array.
+ * - [x] min        Get the average of the values for an array.
  * - [ ] remove     The removes a key => value from a simple array and returns the removed array value.
+ * - [ ] remove_max
+ * - [ ] remove_min
  */
 
 use LBF\Errors\Array\IndexNotInArray;
@@ -199,6 +201,7 @@ class ArrayTool {
      */
 
     public static function add(array $array): int|float {
+        // filters out true, false and other non numeric data types.
         $numeric = array_filter($array, 'is_numeric');
         return array_sum($numeric);
     }
@@ -223,6 +226,7 @@ class ArrayTool {
 
 
     public static function average(array $array): int|float {
+        // filters out true, false and other non numeric data types.
         $numeric = array_filter($array, 'is_numeric');
         $count = count($numeric);
         $total = array_sum($numeric);
@@ -231,5 +235,53 @@ class ArrayTool {
             return 0;
         }
         return $total / $count;
+    }
+
+
+    /**
+     * Fix the maximum value in a simple array of numbers.
+     * 
+     * Note: `true` and `false` are filtered out, which would otherwise be counted
+     *       as `1` & `0` respectively.
+     * 
+     * All non numberic values are simply ignored.
+     * 
+     * @param   array   $array  The array to average up.
+     * 
+     * @return  int|float
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.7.0-beta
+     */
+
+    public static function max(array $array): int|float {
+        // filters out true, false and other non numeric data types.
+        $numeric = array_filter($array, 'is_numeric');
+        return max($numeric);
+    }
+
+
+    /**
+     * Fix the minimum value in a simple array of numbers.
+     * 
+     * Note: `true` and `false` are filtered out, which would otherwise be counted
+     *       as `1` & `0` respectively.
+     * 
+     * All non numberic values are simply ignored.
+     * 
+     * @param   array   $array  The array to average up.
+     * 
+     * @return  int|float
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.7.0-beta
+     */
+
+    public static function min(array $array): int|float {
+        // filters out true, false and other non numeric data types.
+        $numeric = array_filter($array, 'is_numeric');
+        return min($numeric);
     }
 }
