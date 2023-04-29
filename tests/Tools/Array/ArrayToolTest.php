@@ -52,6 +52,16 @@ final class ArrayToolTest extends TestCase {
     }
 
 
+    public function testIsAssociative(): void {
+        $test = ['name' => 'John', 'age' => 30];
+        $this->assertFalse(ArrayTool::is_associative($test));
+        $test = ['apple', 'banana', 'cherry'];
+        $this->assertTrue(ArrayTool::is_associative($test));
+        $test = [0 => 'apple', 2 => 'banana', 1 => 'cherry'];
+        $this->assertFalse(ArrayTool::is_associative($test));
+    }
+
+
     public function testIndexBy(): void {
         $this->assertIsArray(ArrayTool::index_by('a', $this->test_array));
 
@@ -390,5 +400,55 @@ final class ArrayToolTest extends TestCase {
         ];
         $this->expectException(IndexNotInArray::class);
         $test = ArrayTool::remove('g', $test_array);
+    }
+
+
+    public function testRemoveMax(): void {
+        $test_nums = [3, 5, 12, 44, 3.2, 0.75, 1];
+        $max = ArrayTool::remove_max($test_nums);
+        $this->assertIsNumeric($max);
+        $this->assertEquals(44, $max);
+        $this->assertEquals([3, 5, 12, 3.2, 0.75, 1], $test_nums);
+
+        $test_nums = [3, 5, 12, 44, 3.2, 0.75, 1];
+        $max = ArrayTool::remove_max($test_nums, false);
+        $this->assertIsNumeric($max);
+        $this->assertEquals(44, $max);
+        $this->assertEquals([0 => 3, 1 => 5, 2 => 12, 4 => 3.2, 5 => 0.75, 6 => 1], $test_nums);
+
+        $test_nums = [3, true, 12, 44, [], 0.75, new stdClass];
+        $max = ArrayTool::remove_max($test_nums);
+        $this->assertIsNumeric($max);
+        $this->assertEquals(44, $max);
+        $this->assertEquals([3, true, 12, [], 0.75, new StdClass], $test_nums);
+
+        $test_nums = [null, [], new stdClass, true];
+        $this->expectException(\ValueError::class);
+        ArrayTool::remove_max($test_nums);
+    }
+
+
+    public function testRemoveMin(): void {
+        $test_nums = [3, 5, 12, 44, 3.2, 0.75, 1];
+        $min = ArrayTool::remove_min($test_nums);
+        $this->assertIsNumeric($min);
+        $this->assertEquals(0.75, $min);
+        $this->assertEquals([3, 5, 12, 44, 3.2, 1], $test_nums);
+
+        $test_nums = [3, 5, 12, 44, 3.2, 0.75, 1];
+        $min = ArrayTool::remove_min($test_nums, false);
+        $this->assertIsNumeric($min);
+        $this->assertEquals(0.75, $min);
+        $this->assertEquals([0 => 3, 1 => 5, 2 => 12, 3 => 44, 4 => 3.2, 6 => 1], $test_nums);
+
+        $test_nums = [3, true, 12, 44, [], 0.75, new stdClass];
+        $min = ArrayTool::remove_min($test_nums);
+        $this->assertIsNumeric($min);
+        $this->assertEquals(0.75, $min);
+        $this->assertEquals([3, true, 12, 44, [], new StdClass], $test_nums);
+
+        $test_nums = [null, [], new stdClass, true];
+        $this->expectException(\ValueError::class);
+        ArrayTool::remove_min($test_nums);
     }
 }

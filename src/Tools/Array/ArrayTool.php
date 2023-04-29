@@ -2,21 +2,6 @@
 
 namespace LBF\Tools\Array;
 
-/**
- * @todo
- * 
- * - [x] index_by   set a common index as parent index.
- * - [x] map        map two common values within each subarray or object properties as key => value pairs
- * - [x] column     Get the values of a common key as a simple array.
- * - [x] add        Add all the values of an array for a total.
- * - [x] average    Get the average of the values for an array.
- * - [x] max        Get the average of the values for an array.
- * - [x] min        Get the average of the values for an array.
- * - [ ] remove     The removes a key => value from a simple array and returns the removed array value.
- * - [ ] remove_max
- * - [ ] remove_min
- */
-
 use LBF\Errors\Array\IndexNotInArray;
 use LBF\Errors\Array\PropertyNotInObject;
 use LBF\Errors\Array\ScalarVariable;
@@ -69,6 +54,23 @@ class ArrayTool {
         if (!isset($object->$property)) {
             throw new PropertyNotInObject("'{$property}' not in a property of the object in your array");
         }
+    }
+
+
+    /**
+     * Detects if the array is an associative array or not.
+     * 
+     * @param   array   $array  The array to test.
+     * 
+     * @return  bool
+     * 
+     * @static
+     * @access  private
+     * @since   LBF 0.7.0-beta
+     */
+
+    public static function is_associative(array $array): bool {
+        return array_keys($array) === range(0, count($array) - 1);
     }
 
 
@@ -311,5 +313,62 @@ class ArrayTool {
     }
 
 
-    
+    /**
+     * Removes the maximum integer or float value from an array. If the array is associative
+     * You have the option to reindex the values, otherwise the previously non associative
+     * becomes associative.
+     * 
+     * Reindexing is the default behaviour.
+     * 
+     * @param   array   &$array     The array to operate on.
+     * @param   bool    $reindex    Whether or not to reindex the array. Default: true.
+     *                              Will do nothing if the array is an associative array.
+     * 
+     * @return  int|float
+     * 
+     * @throws  ValueError  See `self::max`
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.7.0-beta
+     */
+
+    public static function remove_max(array &$array, bool $reindex = true): int|float {
+        if (self::is_associative($array) && $reindex) {
+            $remove = self::remove(array_search(self::max($array), $array, true), $array);
+            $array = array_values($array);
+            return $remove;
+        }
+        return self::remove(array_search(self::max($array), $array, true), $array);
+    }
+
+
+    /**
+     * Removes the minimum integer or float value from an array. If the array is associative
+     * You have the option to reindex the values, otherwise the previously non associative
+     * becomes associative.
+     * 
+     * Reindexing is the default behaviour.
+     * 
+     * @param   array   &$array     The array to operate on.
+     * @param   bool    $reindex    Whether or not to reindex the array. Default: true.
+     *                              Will do nothing if the array is an associative array.
+     * 
+     * @return  int|float
+     * 
+     * @throws  ValueError  See `self::max`
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.7.0-beta
+     */
+
+    public static function remove_min(array &$array, bool $reindex = true): int|float {
+        if (self::is_associative($array) && $reindex) {
+            $remove = self::remove(array_search(self::min($array), $array, true), $array);
+            $array = array_values($array);
+            return $remove;
+        }
+        return self::remove(array_search(self::min($array), $array, true), $array);
+    }
 }
