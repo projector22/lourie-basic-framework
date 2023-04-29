@@ -5,6 +5,23 @@
 ### Added
 
 - Added CLI text colour modifiers to `Draw`.
+- Added a tool for generating SQL table fields.
+- Added the following ArrayTool methods: #76
+  - `is_associative`
+  - `index_by`
+  - `map`
+  - `column`
+  - `add`
+  - `average`
+  - `max`
+  - `min`
+  - `remove`
+  - `remove_max`
+  - `remove_min`
+
+### Issues Closed
+
+- #76
 
 ---
 
