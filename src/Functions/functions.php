@@ -984,3 +984,27 @@ function timestamp_cache_validation(string $file): string {
     }
     return $timestamp;
 }
+
+
+/**
+ * Function for detecting the luminance of a colour, whether is it light
+ * or dark. If true, a dark text colour should be used, if false, a light
+ * text colour should be used.
+ * 
+ * @param   string  $colour     The hex value of a colour, with the # up front.
+ * 
+ * @return  bool
+ * 
+ * @since   LBF 0.7.1-beta
+ */
+
+function is_light(string $colour): bool {
+    $r = hexdec(substr($colour, 1, 2));
+    $g = hexdec(substr($colour, 3, 2));
+    $b = hexdec(substr($colour, 5, 2));
+
+    // calculate the relative luminance using the formula from the WCAG 2.0 guidelines
+    $luminance = (0.2126 * $r + 0.7152 * $g + 0.0722 * $b) / 255;
+
+    return $luminance > 0.5;
+}

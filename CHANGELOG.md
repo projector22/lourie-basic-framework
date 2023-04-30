@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.7.1-beta - 2023-04-30
+
+### Added
+
+- Added function for detecting the luminosity of a colour hex.
+
+---
+
 ## Version 0.7.0-beta - 2023-04-29
 
 ### Added
