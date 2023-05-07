@@ -85,6 +85,29 @@ class Hash {
 
 
     /**
+     * Generate a random string.
+     * 
+     * @param   int     $len                The length of the string returned.
+     * @param   bool    $alpha_numeric_only Whether or not the string should be alpha numeric characters only. Default: false
+     * 
+     * @return  string
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.7.3-beta
+     */
+
+    public static function random_string(int $len, bool $alpha_numeric_only = false): string {
+        if ($alpha_numeric_only) {
+            $bytes = random_bytes(ceil($len / 2));
+            return substr(str_replace(['/', '+', '='], '', base64_encode($bytes)), 0, $len);
+        }
+        $bytes = random_bytes($len);
+        return bin2hex($bytes);
+    }
+
+
+    /**
      * Generate a cookie hash used by the system.
      * 
      * @param   string  $part1  A random string to be a part of the hash. In LRS this should be parsed as `getenv( 'TABLE_PREFIX' )`.
@@ -95,6 +118,8 @@ class Hash {
      * 
      * @access  public
      * @since   LRS 3.28.0
+     * 
+     * @deprecated  LBF 0.7.3-beta
      */
 
     public static function generate_cookie_hash(string $part1, string $part2, string $part3): string {
@@ -118,6 +143,8 @@ class Hash {
      * 
      * @access  public
      * @since   LRS 3.28.0
+     * 
+     * @deprecated  LBF 0.7.3-beta
      */
 
     public static function generate_session_hash(string $part1, string $part2): string {

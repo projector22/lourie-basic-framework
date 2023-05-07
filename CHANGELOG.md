@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## Version 0.7.3-beta - 2012-05-07
+
+### Added
+
+- Added `random_string` method to hash.
+
+### Deprecated
+
+- `generate_cookie_hash`
+- `generate_session_hash`
+
+---
+
 ## Version 0.7.2-beta - 2023-05-07
 
 ### Changed
