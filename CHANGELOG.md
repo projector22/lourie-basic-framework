@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.7.2-beta - 2023-05-07
+
+### Changed
+
+- Revamped the Captcha class.
+
+---
+
 ## Version 0.7.1-beta - 2023-04-30
 
 ### Added
