@@ -60,10 +60,6 @@ abstract class ActionHandler implements ActionsTemplate {
             $route_token = 'maintenance';
         }
 
-        if (file_exists(Config::paths('HOME_PATH') . 'FIRST_RUN')) {
-            $route_token = 'FirstRun';
-        }
-
         $this->routing_class = 'Actions\\Pages\\' . prepare_routed_filename($route_token) . 'Actions';
 
         $this->token = get_token();
