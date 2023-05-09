@@ -1,6 +1,15 @@
 # CHANGELOG
 
-## Version 0.7.3-beta - 2012-05-07
+## 0.7.4-beta - 2023-05-09
+
+### Changed
+
+- Changed JSON Tools to include a group setting
+- Removed first run from actionhandler
+
+---
+
+## Version 0.7.3-beta - 2023-05-07
 
 ### Added
 
