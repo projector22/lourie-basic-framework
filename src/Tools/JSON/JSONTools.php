@@ -53,6 +53,7 @@ class JSONTools {
             fwrite($new_config_write, $json);
             fclose($new_config_write);
             try {
+                @chgrp($file, 'www-data');
                 return @chmod($file, 0664);
             } catch (Exception) {
                 return false;
