@@ -451,4 +451,23 @@ final class ArrayToolTest extends TestCase {
         $this->expectException(\ValueError::class);
         ArrayTool::remove_min($test_nums);
     }
+
+
+    public function testKeysExist(): void {
+        $data = [
+            'a' => 'cheese',
+            'b' => 'cheese',
+            'c' => 'cheese',
+            'd' => null,
+            'e' => 'cheese',
+            'f' => 'cheese',
+        ];
+
+        $this->assertTrue(ArrayTool::keys_exists($data, ['c']));
+        $this->assertTrue(ArrayTool::keys_exists($data, ['d']));
+        $this->assertFalse(ArrayTool::keys_exists($data, ['g']));
+        $this->assertTrue(ArrayTool::keys_exists($data, ['a', 'e']));
+        $this->assertFalse(ArrayTool::keys_exists($data, ['a', 'h']));
+        $this->assertTrue(ArrayTool::keys_exists($data, ['c', 'd']));
+    }
 }

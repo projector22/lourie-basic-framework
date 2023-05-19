@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 0.7.5-beta - UNRELEASED
+
+### Added
+
+- Added ArrayTool method `keys_exist` #78
+
+### Issues Closed
+
+- #78
+
+---
+
 ## 0.7.4-beta - 2023-05-09
 
 ### Changed
