@@ -371,4 +371,23 @@ class ArrayTool {
         }
         return self::remove(array_search(self::min($array), $array, true), $array);
     }
+
+
+    /**
+     * Test if a key or especially multiple keys exist within an array.
+     * 
+     * @param   array   $array  The array to examine.
+     * @param   array   $array  An array of keys to test against.
+     * 
+     * @return  bool
+     * 
+     * @static
+     * @access  public
+     * @since   LBF 0.7.5-beta
+     */
+
+    public static function keys_exists(array $array, array $keys): bool {
+        $diff = array_diff_key(array_flip($keys), $array);
+        return count($diff) === 0;
+    }
 }
