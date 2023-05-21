@@ -3,6 +3,7 @@
 namespace LBF\Tools\LDAP;
 
 use LBF\Errors\IO\LDAPConnect;
+use LBF\Errors\IO\LDAPDisabled;
 use LDAP\Connection;
 
 final class LDAP {
@@ -15,6 +16,9 @@ final class LDAP {
         private readonly string $server,
         private readonly int $port = 389,
     ) {
+        if (!$this->ldap_enabled()) {
+            throw new LDAPDisabled("Please install and enable the LDAP php extension.");
+        }
     }
 
 
@@ -25,6 +29,10 @@ final class LDAP {
         }
         ldap_set_option($this->conn, LDAP_OPT_REFERRALS, 0);
         ldap_set_option($this->conn, LDAP_OPT_PROTOCOL_VERSION, 3);
+    }
+
+    public function ldap_enabled(): bool {
+        return extension_loaded('ldap');
     }
 
     public function get_dn(): string {

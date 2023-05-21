@@ -25,8 +25,11 @@ final class LDAPTest extends TestCase {
 
     public function testInit(): void {
         $this->assertTrue(class_exists(LDAP::class, true));
-
+        $this->assertTrue($this->ldap->ldap_enabled());
         $this->assertEquals($this->ldap->get_dn(), 'ou=cheese');
+        $this->assertEquals($this->ldap->get_password(), 'abc123');
+        $this->assertEquals($this->ldap->get_server(), 'ldap://test.example.net');
+        $this->assertEquals($this->ldap->get_port(), 389);
     }
 
 }
