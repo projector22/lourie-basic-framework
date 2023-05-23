@@ -31,6 +31,11 @@ final class LDAP {
         ldap_set_option($this->conn, LDAP_OPT_PROTOCOL_VERSION, 3);
     }
 
+
+    public function bind(): bool {
+        return @ldap_bind($this->conn, $this->dn, $this->password) ?? false;
+    }
+
     public function ldap_enabled(): bool {
         return extension_loaded('ldap');
     }
