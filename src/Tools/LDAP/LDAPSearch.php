@@ -60,10 +60,9 @@ final class LDAPSearch extends BaseLDAP {
     /**
      * Find the user specified or all users within a nominated OU.
      * 
-     * @param   string  $ou     The OU in which to search.
-     * @param   string  $sam_account_name   The LDAP attribute `sAMAccountName` 
-     *                                      which is tied to a user account. 
-     *                                      Default '*' which searches for all users within the ou.
+     * @param   string  $ou                 The OU in which to search.
+     * @param   string  $sam_account_name   The LDAP attribute `sAMAccountName` which is tied to a user account. 
+     *                                      Default '*' which searches for all users within the OU.
      * 
      * @return  array|false
      * 
@@ -79,17 +78,50 @@ final class LDAPSearch extends BaseLDAP {
         return false;
     }
 
-    /**
-     * @todo build this
-     */
-
-    // public function find_groups() {};
 
     /**
-     * @todo build this
+     * Find the group specified or all groups within a nominated OU.
+     * 
+     * @param   string  $ou     The OU in which to search.
+     * @param   string  $cn     The LDAP attribute `cn` which is tied to a specific group.
+     *                          Default '*' which searches for all groups within the OU.
+     * 
+     * @return  array|false
+     * 
+     * @access  public
+     * @since   LBF 0.8.0-beta
+     * 
      */
 
-    // public function find_ous() {};
+    public function find_groups(string $ou, string $cn = '*'): array|false {
+        if ($this->ldap->bind()) {
+            $filter = "(&(objectCategory=group)(cn={$cn}))";
+            return $this->search($ou, $filter);
+        }
+        return false;
+    }
+
+
+    /**
+     * Find the OU specified or all Organizational Units within an nominated OU.
+     * 
+     * @param   string  $ou     The OU in which to search.
+     * @param   string  $name   The LDAP attribute `ou` which is tied to a specific Organizational Unit.
+     *                          Default '*' which searches for all OUs within the OU.
+     * 
+     * @return  array|false
+     * 
+     * @access  public
+     * @since   LBF 0.8.0-beta
+     */
+
+    public function find_ous(string $ou, string $name = '*'): array|false {
+        if ($this->ldap->bind()) {
+            $filter = "(&(objectCategory=organizationalUnit)(ou={$name}))";
+            return $this->search($ou, $filter);
+        }
+        return false;
+    }
 
 
     /**
@@ -101,7 +133,7 @@ final class LDAPSearch extends BaseLDAP {
      * 
      * @access  public
      * @since   LRS 3.11.0
-     * @since   LRS 3.12.1  Added recursiveness to get members of groups within the defined group
+     * @since   LRS 3.12.1      Added recursiveness to get members of groups within the defined group
      * @since   LBF 0.8.0-beta  Renamed from `get_group_members` to `find_group_members`
      */
 
@@ -176,6 +208,18 @@ final class LDAPSearch extends BaseLDAP {
 
 
     // public function user_exists(string $user): bool {}
+
+
+    /**
+     * Check if a specified group exists.
+     * 
+     * @param   string  $group  The `distinguishedName` for the group being searched for.
+     * 
+     * @return  bool
+     * 
+     * @access  public
+     * @since   LBF 0.8.0-beta
+     */
 
     public function group_exists(string $group): bool {
         if (empty($group)) {
