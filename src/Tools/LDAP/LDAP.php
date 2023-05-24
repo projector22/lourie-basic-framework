@@ -22,7 +22,7 @@ final class LDAP {
     }
 
     public function __destruct() {
-        if ($this->conn !== false) {
+        if (isset($this->conn) && $this->conn !== false) {
             /**
              * @see https://www.php.net/manual/en/function.ldap-unbind.php
              */
