@@ -207,7 +207,25 @@ final class LDAPSearch extends BaseLDAP {
      */
 
 
-    // public function user_exists(string $user): bool {}
+    public function user_exists(string $user): bool {
+        if (empty($user)) {
+            return false;
+        }
+        if ($this->ldap->bind()) {
+            $user_location = $this->get_group_location($user);
+            $filter = "(&(objectClass=user)(distinguishedName={$user}))";
+            $results = @ldap_search($this->ldap->conn, $user_location, $filter);
+            if (!$results) {
+                return false;
+            }
+            $entries = @ldap_get_entries($this->ldap->conn, $results);
+            if (!$entries) {
+                return false;
+            }
+            return ($entries['count'] > 0 ? true : false);
+        }
+        return false;
+    }
 
 
     /**
