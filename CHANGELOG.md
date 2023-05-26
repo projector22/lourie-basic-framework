@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.8.0-beta - UNRELEASED
+
+### Issues Closed
+
+- #80 WIP
+
+---
+
 ## 0.7.5-beta - 2023-05-19
 
 ### Added

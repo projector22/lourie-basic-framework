@@ -107,6 +107,8 @@ class LDAPHandler {
      * @since   LRS 3.1.0
      * @since   LRS 3.11.0  Removed param $search_ou
      * @since   LRS 3.28.0  Added param `$config_object`.
+     * 
+     * @deprecated  LBF 0.8.0-beta
      */
 
     public function __construct(
