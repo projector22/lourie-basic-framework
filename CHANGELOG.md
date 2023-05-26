@@ -1,10 +1,14 @@
 # CHANGELOG
 
-## 0.8.0-beta - UNRELEASED
+## 0.8.0-beta - 2023-05-26
+
+### Changed
+
+- Added and revamped the LDAP tools. #80
 
 ### Issues Closed
 
-- #80 WIP
+- #80
 
 ---
 
