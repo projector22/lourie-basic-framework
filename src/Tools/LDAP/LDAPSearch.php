@@ -202,17 +202,24 @@ final class LDAPSearch extends BaseLDAP {
         return $this->find_users($location);
     }
 
-    /**
-     * @todo build this
-     */
 
+    /**
+     * Check if a specified user exists.
+     * 
+     * @param   string  $user  The `distinguishedName` for the user being searched for.
+     * 
+     * @return  bool
+     * 
+     * @access  public
+     * @since   LBF 0.8.0-beta
+     */
 
     public function user_exists(string $user): bool {
         if (empty($user)) {
             return false;
         }
         if ($this->ldap->bind()) {
-            $user_location = $this->get_group_location($user);
+            $user_location = $this->get_location($user);
             $filter = "(&(objectClass=user)(distinguishedName={$user}))";
             $results = @ldap_search($this->ldap->conn, $user_location, $filter);
             if (!$results) {
@@ -244,7 +251,7 @@ final class LDAPSearch extends BaseLDAP {
             return false;
         }
         if ($this->ldap->bind()) {
-            $group_location = $this->get_group_location($group);
+            $group_location = $this->get_location($group);
             $filter = "(&(objectClass=group)(distinguishedName={$group}))";
             $results = @ldap_search($this->ldap->conn, $group_location, $filter);
             if (!$results) {
@@ -278,8 +285,19 @@ final class LDAPSearch extends BaseLDAP {
     }
 
 
-    private function get_group_location(string $group): string {
-        $hold = array_reverse(explode(',', $group));
+    /**
+     * Get the location of the the item being searched for.
+     * 
+     * @param   string  $item   The item from which the location is taken.
+     * 
+     * @return string
+     * 
+     * @access  private
+     * @since   LBF 0.8.0-beta
+     */
+
+    private function get_location(string $item): string {
+        $hold = array_reverse(explode(',', $item));
         $skip = false;
         foreach ($hold as $i => $item) {
             if ($skip) {
